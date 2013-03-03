@@ -1,10 +1,15 @@
 <?php
+$this->Breadcrumb->add('Dashboard', array('controller' => 'admin', 'action' => 'index'));
+$this->Breadcrumb->add($model->pluralName, array('model' => $this->params['model']));
+
 $this->Paginator->options(array(
 	'url' => array('model' => $this->params['model'])
 )); ?>
 
-<div class="buttons">
-	<?php echo $this->Html->link(sprintf('Add %s', $model->singularName), array('action' => 'create', 'model' => $this->params['model']), array('class' => 'btn btn-primary')); ?>
+<div class="pull-right">
+	<?php echo $this->Html->link('<span class="icon-plus icon-white"></span> ' . __('Add %s', $model->singularName),
+		array('action' => 'create', 'model' => $this->params['model']),
+		array('class' => 'btn btn-primary', 'escape' => false)); ?>
 </div>
 
 <h2><?php echo $model->pluralName; ?></h2>
@@ -36,6 +41,9 @@ $this->Paginator->options(array(
 
 							} else if ($data['type'] === 'boolean' || $data['type'] === 'enum') {
 								$element = $data['type'];
+
+							} else if ($field === $model->primaryKey) {
+								$element = 'id';
 							}
 
 							echo $this->element('field/' . $element, array(
@@ -63,3 +71,11 @@ $this->Paginator->options(array(
 </table>
 
 <?php echo $this->element('pagination'); ?>
+
+<script type="text/javascript">
+	$(function() {
+		$('.sortable tr').click(function() {
+			location.href = $(this).find('a:first').attr('href');
+		});
+	});
+</script>

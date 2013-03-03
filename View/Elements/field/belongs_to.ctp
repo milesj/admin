@@ -11,7 +11,7 @@ foreach ($data['belongsTo'] as $bt) {
 
 if (!$belongsTo) { ?>
 
-	<span class="belongs-to text-error">INVALID</span>
+	<span class="belongs-to text-error">INVALID_ASSOC</span>
 
 <?php } else {
 	$foreignModel = $belongsTo['assoc'];

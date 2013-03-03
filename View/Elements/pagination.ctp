@@ -5,7 +5,11 @@ if ($params['count'] > 0) { ?>
 
 	<nav class="pagination pagination-right">
 		<div class="results">
-			<?php echo $this->Paginator->counter('Showing <span>{:start}</span>-<span>{:end}</span> of <span>{:count}</span>'); ?>
+			<?php echo $this->Paginator->counter(__('Showing %s-%s of %s', array(
+				'<span>{:start}</span>',
+				'<span>{:end}</span>',
+				'<span>{:count}</span>'
+			))); ?>
 		</div>
 
 		<ul>

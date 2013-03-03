@@ -1,9 +1,10 @@
-<?php if ($value === null || $value === '') {
-	echo '<div class="muted align-center">-</div>';
+<?php if ($value === null || $value === '') { ?>
 
-} else if (is_numeric($value)) {
+	<div class="muted align-center">-</div>
+
+<?php } else if (is_numeric($value)) {
 	echo number_format($value);
 
 } else {
-	echo h($value);
+	echo $this->Text->truncate(h($value), 100);
 }

@@ -55,7 +55,7 @@ class AdminHelper extends AppHelper {
 		foreach ($models as $i => $model) {
 			$object = ClassRegistry::init($plugin . $model);
 
-			if (!$object->useTable) {
+			if (!$object->useTable || (isset($object->admin) && !$object->admin)) {
 				unset($models[$i]);
 			}
 		}

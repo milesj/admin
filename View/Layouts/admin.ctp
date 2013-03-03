@@ -25,7 +25,14 @@ echo $this->Html->docType(); ?>
 
 							<?php foreach ($models as $model) { ?>
 								<li>
-									<?php echo $this->Html->link($model['model'], array(
+									<?php echo $this->Html->link('<span class="icon-plus"></span>', array(
+										'plugin' => 'admin',
+										'controller' => 'crud',
+										'action' => 'create',
+										'model' => $model['url']
+									), array('class' => 'pull-right', 'escape' => false));
+
+									echo $this->Html->link($model['model'], array(
 										'plugin' => 'admin',
 										'controller' => 'crud',
 										'action' => 'index',
@@ -39,6 +46,17 @@ echo $this->Html->docType(); ?>
 
 			<!-- Right Column -->
 			<div class="span10">
+				<div class="well well-small breadcrumbs">
+					<ul class="breadcrumb">
+						<?php foreach ($this->Breadcrumb->get() as $crumb) { ?>
+							<li>
+								<?php echo $this->Html->link($crumb['title'], $crumb['url']); ?>
+								<span class="divider">&raquo;</span>
+							</li>
+						<?php } ?>
+					</ul>
+				</div>
+
 				<?php echo $this->fetch('content'); ?>
 			</div>
 

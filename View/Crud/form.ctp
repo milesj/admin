@@ -1,4 +1,4 @@
-<h2><?php echo sprintf('Add %s', $model->singularName); ?></h2>
+<h2><?php echo __('Add %s', $model->singularName); ?></h2>
 
 <?php
 echo $this->Form->create($model->alias, array('class' => 'form-horizontal'));
