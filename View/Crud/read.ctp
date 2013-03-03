@@ -1,9 +1,6 @@
 <?php
-$displayField = $id = $result[$model->alias][$model->primaryKey];
-
-if (isset($result[$model->alias][$model->displayField])) {
-	$displayField = $result[$model->alias][$model->displayField];
-}
+$id = $result[$model->alias][$model->primaryKey];
+$displayField = $this->Admin->getDisplayField($result, $model);
 
 $this->Breadcrumb->add(__('Dashboard'), array('controller' => 'admin', 'action' => 'index'));
 $this->Breadcrumb->add($model->pluralName, array('action' => 'index', 'model' => $this->params['model']));
@@ -43,3 +40,5 @@ $this->Breadcrumb->add($displayField, array('action' => 'read', $id, 'model' => 
 		<?php } ?>
 	</tbody>
 </table>
+
+<?php debug($result); ?>

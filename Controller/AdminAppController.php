@@ -113,8 +113,6 @@ class AdminAppController extends AppController {
 			}
 
 			$this->Model->admin = $adminSettings;
-
-			$this->set('model', $this->Model);
 		}
 	}
 
@@ -124,6 +122,7 @@ class AdminAppController extends AppController {
 	public function beforeRender() {
 		$this->set('user', $this->Auth->user());
 		$this->set('config', $this->config);
+		$this->set('model', $this->Model);
 	}
 
 }

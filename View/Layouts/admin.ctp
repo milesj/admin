@@ -94,7 +94,9 @@ echo $this->Html->docType(); ?>
 				</ul>
 			</div>
 
-			<?php echo $this->fetch('content'); ?>
+			<?php
+			echo $this->Session->flash();
+			echo $this->fetch('content'); ?>
 		</div>
 	</div>
 

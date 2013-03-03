@@ -37,7 +37,10 @@ body {
 
 /* Define custom styles for tables */
 
-.sortable { margin-bottom: 15px; }
+.sortable {
+	margin-bottom: 15px;
+	background: #fff; }
+
 .sortable tbody tr { cursor: pointer; }
 .sortable tr a { display: block; }
 .sortable tr th,

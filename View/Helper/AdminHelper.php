@@ -3,6 +3,23 @@
 class AdminHelper extends AppHelper {
 
 	/**
+	 * Return the display field. If field does not exist, use the ID.
+	 *
+	 * @param array $result
+	 * @param Model $model
+	 * @return string
+	 */
+	public function getDisplayField($result, Model $model) {
+		$displayField = '#' . $result[$model->alias][$model->primaryKey];
+
+		if ($model->displayField != $model->primaryKey && isset($result[$model->alias][$model->displayField])) {
+			$displayField = $result[$model->alias][$model->displayField];
+		}
+
+		return $displayField;
+	}
+
+	/**
 	 * Return a list of models grouped by plugin, to use in the navigation menu.
 	 *
 	 * @return array
@@ -51,11 +68,11 @@ class AdminHelper extends AppHelper {
 			return (strpos($value, 'AppModel') === false);
 		});
 
-		// Filter out models that don't connect to the database
+		// Filter out models that don't connect to the database or are admin disabled
 		foreach ($models as $i => $model) {
 			$object = ClassRegistry::init($plugin . $model);
 
-			if (!$object->useTable || (isset($object->admin) && !$object->admin)) {
+			if (!$object->useTable || (isset($object->admin) && $object->admin === false)) {
 				unset($models[$i]);
 			}
 		}

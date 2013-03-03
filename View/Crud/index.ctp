@@ -82,13 +82,15 @@ echo $this->element('pagination'); ?>
 <?php
 echo $this->element('pagination');
 
-if ($batchDelete) { ?>
+if ($batchDelete && $results) { ?>
+
 	<div class="well align-center">
-		<?php echo $this->Form->submit(__('Batch Delete'), array(
-			'class' => 'btn btn-large btn-danger',
-			'onclick' => "return confirm('Are you sure? This can not be reversed.');"
-		)); ?>
+		<button type="submit" class="btn btn-large btn-danger" onclick="return confirm('<?php echo __('Are you sure? This can not be reversed.'); ?>');">
+			<span class="icon-remove-sign icon-white"></span>
+			<?php echo __('Batch Delete'); ?>
+		</button>
 	</div>
+
 <?php }
 
 echo $this->Form->end(); ?>
