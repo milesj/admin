@@ -1,0 +1,72 @@
+
+.align-left { text-align: left; }
+.align-center { text-align: center; }
+.align-right { text-align: right; }
+
+.buttons {
+	float: right;
+	margin-top: 15px; }
+
+.sidebar-nav {
+	margin-top: 20px;
+	padding: 10px 0; }
+
+/* Custom form styles since we have to use Cakes HTML */
+
+.input { margin-bottom: 15px; }
+
+.input:not(.checkbox) label {
+	display: inline-block;
+	margin-right: 15px;
+	width: 15%;
+	text-align: right; }
+
+.input.checkbox { padding-left: 15%; }
+
+/* Format table cells according to the content type */
+
+.type-integer,
+.type-boolean,
+.type-enum { text-align: center !important; }
+.type-datetime { text-align: right !important; }
+
+.type-datetime,
+.col-name,
+.col-title,
+.belongs-to { white-space: nowrap; }
+
+.belongs-to { display: block; }
+
+/* Define custom styles for tables */
+
+.sortable tr th { padding: 0; }
+
+.sortable tr th a {
+	display: block;
+	padding: 8px 10px;
+	background: #1B1B1B;
+	color: #c4c4c4;
+	white-space: nowrap; }
+
+.sortable tr th a:hover {
+	color: #fff;
+	text-decoration: none; }
+
+.table-bordered.sortable th { border-left-color: #4b4b4b; }
+
+td.no-results {
+	padding: 50px;
+	text-align: center; }
+
+/* Bootstrap enhancements */
+
+.pagination {
+	height: 32px;
+	overflow: hidden;
+	margin: 10px 0; }
+
+.pagination .results {
+	padding-top: 8px;
+	float: left; }
+
+.pagination .results span { font-weight: bold; }
