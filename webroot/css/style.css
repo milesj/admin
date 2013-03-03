@@ -1,14 +1,27 @@
 
+body {
+	padding-top: 40px;
+	background-color: #F5F5F5; }
+
 .align-left { text-align: left; }
 .align-center { text-align: center; }
 .align-right { text-align: right; }
 
-.sidebar-nav {
-	margin-top: 20px;
-	padding: 10px 0; }
+.body {
+	padding: 20px;
+	background: #fff; }
 
-.sidebar-nav li .pull-right { display: none; }
-.sidebar-nav li:hover .pull-right { display: block; }
+.foot {
+	border-top: 1px solid #E5E5E5;
+	padding: 30px;
+	text-align: center; }
+
+.buttons { float: right; }
+
+.buttons .btn-large {
+	margin-left: 15px;
+	position: relative;
+	top: -7px; }
 
 /* Custom form styles since we have to use Cakes HTML */
 
@@ -21,6 +34,34 @@
 	text-align: right; }
 
 .input.checkbox { padding-left: 15%; }
+
+/* Define custom styles for tables */
+
+.sortable { margin-bottom: 15px; }
+.sortable tbody tr { cursor: pointer; }
+.sortable tr a { display: block; }
+.sortable tr th,
+.sortable tr td { vertical-align: middle; }
+
+.sortable tr th {
+	background: #1B1B1B;
+	padding: 0; }
+
+.sortable tr th a {
+	padding: 8px 10px;
+	color: #c4c4c4;
+	text-align: left;
+	white-space: nowrap; }
+
+.sortable tr th a:hover {
+	color: #fff;
+	text-decoration: none; }
+
+.table-bordered.sortable th { border-left-color: #4b4b4b; }
+
+td.no-results {
+	padding: 50px;
+	text-align: center; }
 
 /* Format table cells according to the content type */
 
@@ -38,37 +79,16 @@
 	display: block;
 	text-align: left; }
 
-.col-id {
+.col-id,
+.col-batch-delete {
 	width: 15px;
-	font-weight: bold; }
+	font-weight: bold;
+	text-align: center !important;
+	padding: 0 8px !important; }
 
-/* Define custom styles for tables */
-
-.sortable tr { cursor: pointer; }
-.sortable tr a { display: block; }
-
-.sortable tr th {
-	background: #1B1B1B;
-	padding: 0; }
-
-.sortable tr th a {
-	padding: 8px 10px;
-	color: #c4c4c4;
-	white-space: nowrap; }
-
-.sortable tr th a:hover {
-	color: #fff;
-	text-decoration: none; }
-
-.table-bordered.sortable th { border-left-color: #4b4b4b; }
-
-td.no-results {
-	padding: 50px;
-	text-align: center; }
+.col-batch-delete input { margin: 0; }
 
 /* Bootstrap enhancements */
-
-.breadcrumbs { margin-top: 20px; }
 
 .breadcrumbs ul {
 	margin: 0;
@@ -79,10 +99,19 @@ td.no-results {
 .pagination {
 	height: 32px;
 	overflow: hidden;
-	margin: 10px 0; }
+	margin: 15px 0; }
 
 .pagination .results {
 	padding-top: 8px;
 	float: left; }
 
 .pagination .results span { font-weight: bold; }
+
+.dropdown-menu > li > a { padding: 3px 10px; }
+
+/* Overrides */
+
+.action-read .table {
+	margin: 0 auto;
+	min-width: 50%;
+	width: auto; }

@@ -104,6 +104,16 @@ class AdminAppController extends AppController {
 			$this->Model->pluralName = Inflector::pluralize($name);
 			$this->Model->fields = $fields;
 
+			// Apply default admin settings
+			$adminSettings = isset($this->Model->admin) ? $this->Model->admin : array();
+			$adminSettings = array_merge($this->config['settings'], $adminSettings);
+
+			if (!$adminSettings['deletable']) {
+				$adminSettings['batchDelete'] = false;
+			}
+
+			$this->Model->admin = $adminSettings;
+
 			$this->set('model', $this->Model);
 		}
 	}

@@ -3,7 +3,7 @@ $displayField = $value;
 $belongsTo = null;
 
 foreach ($data['belongsTo'] as $bt) {
-	if (isset($result[$bt['assoc']])) {
+	if (!empty($result[$bt['assoc']]['id'])) {
 		$belongsTo = $bt;
 		break;
 	}
@@ -25,7 +25,7 @@ if (!$belongsTo) { ?>
 		'controller' => 'crud',
 		'action' => 'read',
 		'model' => Inflector::underscore($belongsTo['model']),
-		$result[$model->alias][$model->primaryKey]
+		$result[$model->alias][$field]
 	), array(
 		'class' => 'belongs-to'
 	));

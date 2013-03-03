@@ -12,55 +12,101 @@ echo $this->Html->docType(); ?>
 	echo $this->Html->script('//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js');
 	echo $this->Html->script('Admin.bootstrap.min'); ?>
 </head>
-<body>
-	<div class="container-fluid">
-		<div class="row-fluid">
+<body class="action-<?php echo $this->action; ?>">
+	<div class="head navbar navbar-inverse navbar-fixed-top">
+		<div class="navbar-inner">
+			<div class="container-fluid">
+				<a data-target=".navbar-inverse-collapse" data-toggle="collapse" class="btn btn-navbar">
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+				</a>
 
-			<!-- Left Column -->
-			<div class="span2">
-				<div class="well sidebar-nav">
-					<ul class="nav nav-list">
-						<?php foreach ($this->Admin->getNavigation() as $plugin => $models) { ?>
-							<li class="nav-header"><?php echo $plugin; ?></li>
+				<?php echo $this->Html->link($config['app'], array(
+					'controller' => 'admin',
+					'action' => 'index'
+				), array('class' => 'brand')); ?>
 
-							<?php foreach ($models as $model) { ?>
+				<div class="nav-collapse collapse navbar-inverse-collapse">
+					<ul class="nav">
+						<?php
+						$navigation = $this->Admin->getNavigation();
+
+						// No plugins, so show all models
+						if (count($navigation) === 1) {
+							$navigation = array_values($navigation);
+
+							foreach ($navigation[0] as $model) { ?>
+
 								<li>
-									<?php echo $this->Html->link('<span class="icon-plus"></span>', array(
-										'plugin' => 'admin',
-										'controller' => 'crud',
-										'action' => 'create',
-										'model' => $model['url']
-									), array('class' => 'pull-right', 'escape' => false));
-
-									echo $this->Html->link($model['model'], array(
+									<?php echo $this->Html->link($model['model'], array(
 										'plugin' => 'admin',
 										'controller' => 'crud',
 										'action' => 'index',
 										'model' => $model['url']
 									)); ?>
 								</li>
-						<?php } } ?>
+
+							<?php }
+
+						// Or group by plugin
+						} else {
+							foreach ($navigation as $plugin => $models) { ?>
+
+								<li class="dropdown">
+									<a data-toggle="dropdown" class="dropdown-toggle" href="javascript:;">
+										<?php echo $plugin; ?>
+										<span class="caret"></span>
+									</a>
+
+									<ul class="dropdown-menu">
+										<?php foreach ($models as $model) { ?>
+											<li>
+												<?php echo $this->Html->link($model['model'], array(
+													'plugin' => 'admin',
+													'controller' => 'crud',
+													'action' => 'index',
+													'model' => $model['url']
+												)); ?>
+											</li>
+										<?php } ?>
+									</ul>
+								</li>
+
+							<?php }
+						} ?>
 					</ul>
 				</div>
 			</div>
-
-			<!-- Right Column -->
-			<div class="span10">
-				<div class="well well-small breadcrumbs">
-					<ul class="breadcrumb">
-						<?php foreach ($this->Breadcrumb->get() as $crumb) { ?>
-							<li>
-								<?php echo $this->Html->link($crumb['title'], $crumb['url']); ?>
-								<span class="divider">&raquo;</span>
-							</li>
-						<?php } ?>
-					</ul>
-				</div>
-
-				<?php echo $this->fetch('content'); ?>
-			</div>
-
 		</div>
 	</div>
+
+	<div class="body container-fluid">
+		<div class="row-fluid">
+			<div class="well well-small breadcrumbs">
+				<ul class="breadcrumb">
+					<?php foreach ($this->Breadcrumb->get() as $crumb) { ?>
+						<li>
+							<?php echo $this->Html->link($crumb['title'], $crumb['url']); ?>
+							<span class="divider">&raquo;</span>
+						</li>
+					<?php } ?>
+				</ul>
+			</div>
+
+			<?php echo $this->fetch('content'); ?>
+		</div>
+	</div>
+
+	<footer class="foot">
+		<div class="copyright">
+			<?php printf(__d('forum', 'Powered by the %s v%s'), $this->Html->link('Admin Plugin', 'http://milesj.me/code/cakephp/admin'), strtoupper($config['version'])); ?><br>
+			<?php printf(__d('forum', 'Created by %s'), $this->Html->link('Miles Johnson', 'http://milesj.me')); ?>
+		</div>
+
+		<?php if (!CakePlugin::loaded('DebugKit')) {
+			echo $this->element('sql_dump');
+		} ?>
+	</footer>
 </body>
 </html>
