@@ -25,15 +25,23 @@ body {
 
 /* Custom form styles since we have to use Cakes HTML */
 
+.form-horizontal { margin: 20px 0; }
+
+.form-horizontal select {
+	width: auto;
+	margin-right: 2px; }
+
 .input { margin-bottom: 15px; }
 
 .input:not(.checkbox) label {
 	display: inline-block;
 	margin-right: 15px;
-	width: 15%;
-	text-align: right; }
+	width: 25%;
+	text-align: right;
+	font-weight: bold; }
 
-.input.checkbox { padding-left: 15%; }
+.input.checkbox {
+	padding-left: 25%; }
 
 /* Define custom styles for tables */
 

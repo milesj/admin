@@ -14,8 +14,11 @@ Configure::write('Admin.version', file_get_contents(dirname(__DIR__) . '/version
 Configure::write('Admin.app', 'Admin');
 
 Configure::write('Admin.settings', array(
-	'imageFields' => array('image', 'avatar'),
+	'imageFields' => array('image'),
+	'fileFields' => array('image', 'file'),
+	'hideFields' => array(),
 	'paginateLimit' => 25,
+	'associationLimit' => 100,
 	'batchDelete' => true,
 	'deletable' => true
 ));

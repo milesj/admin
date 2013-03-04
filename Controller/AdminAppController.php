@@ -19,7 +19,7 @@ class AdminAppController extends AppController {
 	 */
 	public $components = array(
 		'Session', 'Security', 'Cookie', 'Acl',
-		'Auth' => array(
+		'RequestHandler', 'Auth' => array(
 			'authorize' => array('Controller')
 		),
 		'Utility.AutoLogin'
@@ -82,6 +82,11 @@ class AdminAppController extends AppController {
 			$this->Model = ClassRegistry::init($plugin . $model);
 			$this->Model->Behaviors->unload('Utility.Cacheable');
 
+			// Use inherited enums also
+			if (isset($this->Model->enum)) {
+				$this->Model->enum = $this->Model->enum();
+			}
+
 			// Set convenience fields
 			$fields = $this->Model->schema();
 
@@ -111,6 +116,8 @@ class AdminAppController extends AppController {
 			if (!$adminSettings['deletable']) {
 				$adminSettings['batchDelete'] = false;
 			}
+
+			$adminSettings['fileFields'] = array_merge($adminSettings['fileFields'], $adminSettings['imageFields']);
 
 			$this->Model->admin = $adminSettings;
 		}

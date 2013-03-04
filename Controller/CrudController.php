@@ -30,6 +30,8 @@ class CrudController extends AdminAppController {
 	public function create() {
 		$this->Model->create();
 
+		$this->setAssociations();
+
 		$this->render('form');
 	}
 
@@ -53,6 +55,24 @@ class CrudController extends AdminAppController {
 	public function update($id) {
 		$this->Model->id = $id;
 
+		$result = $this->Model->find('first', array(
+			'conditions' => array($this->Model->alias . '.' . $this->Model->primaryKey => $id),
+			'contain' => array_keys($this->Model->belongsTo)
+		));
+
+		if (!$result) {
+			throw new NotFoundException();
+		}
+
+		$this->setAssociations();
+
+		if ($this->request->is('put')) {
+			debug($this->request->data);
+		} else {
+			$this->request->data = $result;
+		}
+
+		$this->set('result', $result);
 		$this->render('form');
 	}
 
@@ -68,7 +88,9 @@ class CrudController extends AdminAppController {
 			throw new ForbiddenException();
 		}
 
-		$result = $this->Model->read(null, $id);
+		$this->Model->id = $id;
+
+		$result = $this->Model->read();
 
 		if (!$result) {
 			throw new NotFoundException();
@@ -88,12 +110,77 @@ class CrudController extends AdminAppController {
 	}
 
 	/**
+	 * Query the model for a list of records that match the term.
+	 *
+	 * @throws BadRequestException
+	 */
+	public function type_ahead() {
+		$this->viewClass = 'Json';
+		$this->layout = 'ajax';
+
+		if (!$this->request->query) {
+			throw new BadRequestException();
+		}
+
+		$model = ClassRegistry::init($this->request->query['model']);
+		$results = $model->find('list', array(
+			'conditions' => array($model->alias . '.' . $model->displayField . ' LIKE' => '%' . $this->request->query['query'] . '%'),
+			'contain' => false,
+		));
+
+		$this->set('results', $results);
+		$this->set('_serialize', 'results');
+	}
+
+	/**
 	 * Before filter.
 	 */
 	public function beforeFilter() {
 		parent::beforeFilter();
 
 		$this->Auth->allow();
+	}
+
+	/**
+	 * Set belongsTo data for select inputs. If there are too many records, switch to type ahead.
+	 */
+	protected function setAssociations() {
+		$typeAhead = array();
+
+		foreach ($this->Model->belongsTo as $alias => $assoc) {
+			$belongsTo = $this->Model->{$alias};
+			$count = $belongsTo->find('count');
+
+			// Add to type ahead if too many records
+			if ($count > $this->Model->admin['associationLimit']) {
+				$typeAhead[$assoc['foreignKey']] = array(
+					'alias' => $alias,
+					'model' => $assoc['className']
+				);
+
+			} else {
+				$variable = Inflector::variable(Inflector::pluralize(preg_replace('/(?:_id)$/', '', $assoc['foreignKey'])));
+				$list = array();
+
+				// Display ID and field in the list
+				if ($results = $belongsTo->find('all')) {
+					foreach ($results as $result) {
+						$id = $result[$alias][$belongsTo->primaryKey];
+						$display = $result[$alias][$belongsTo->displayField];
+
+						if ($display != $id) {
+							$display = $id . ' - ' . $display;
+						}
+
+						$list[$id] = $display;
+					}
+				}
+
+				$this->set($variable, $list);
+			}
+		}
+
+		$this->set('typeAhead', $typeAhead);
 	}
 
 }
