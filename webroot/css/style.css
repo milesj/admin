@@ -31,6 +31,19 @@ body {
 	width: auto;
 	margin-right: 2px; }
 
+.form-horizontal .control-label {
+	font-weight: bold;
+	width: 20%; }
+
+.form-horizontal .controls { margin-left: 21.5%; }
+
+.form-redirect-to { margin-bottom: 15px; }
+
+.form-redirect-to label {
+	display: inline-block;
+	font-weight: bold;
+	margin-right: 10px; }
+
 .input { margin-bottom: 15px; }
 
 .input:not(.checkbox) label {

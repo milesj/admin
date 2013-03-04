@@ -27,15 +27,35 @@ class CrudController extends AdminAppController {
 		$this->set('results', $this->paginate($this->Model));
 	}
 
+	/**
+	 * Create a new record.
+	 */
 	public function create() {
 		$this->Model->create();
-
 		$this->setAssociations();
+
+		if ($this->request->is('post')) {
+			if ($this->Model->saveAssociated($this->request->data, array('validate' => 'first', 'atomic' => true, 'deep' => true))) {
+				$this->Session->setFlash(__('Successfully created a new %s', $this->Model->alias), 'flash', array('class' => 'success'));
+				$this->redirectAfter($this->request->data[$this->Model->alias]['redirect_to']);
+
+			} else {
+				$this->Session->setFlash(__('Failed to create a new %s', $this->Model->alias), 'flash', array('class' => 'error'));
+			}
+		}
 
 		$this->render('form');
 	}
 
+	/**
+	 * Read a record and associated records.
+	 *
+	 * @param int $id
+	 * @throws NotFoundException
+	 */
 	public function read($id) {
+		$this->Model->id = $id;
+
 		$result = $this->Model->find('first', array(
 			'conditions' => array($this->Model->alias . '.' . $this->Model->primaryKey => $id),
 			'contain' => $this->getDeepRelations()
@@ -48,12 +68,18 @@ class CrudController extends AdminAppController {
 		$this->set('result', $result);
 	}
 
+	/**
+	 * Update a record.
+	 *
+	 * @param int $id
+	 * @throws NotFoundException
+	 */
 	public function update($id) {
 		$this->Model->id = $id;
 
 		$result = $this->Model->find('first', array(
 			'conditions' => array($this->Model->alias . '.' . $this->Model->primaryKey => $id),
-			'contain' => array_keys($this->Model->belongsTo)
+			'contain' => $this->getDeepRelations(false)
 		));
 
 		if (!$result) {
@@ -63,7 +89,13 @@ class CrudController extends AdminAppController {
 		$this->setAssociations();
 
 		if ($this->request->is('put')) {
-			debug($this->request->data);
+			if ($this->Model->saveAssociated($this->request->data, array('validate' => 'first', 'atomic' => true, 'deep' => true))) {
+				$this->Session->setFlash(__('Successfully updated %s with ID %s', array($this->Model->alias, $id)), 'flash', array('class' => 'success'));
+				$this->redirectAfter($this->request->data[$this->Model->alias]['redirect_to']);
+
+			} else {
+				$this->Session->setFlash(__('Failed to update %s with ID %s', array($this->Model->alias, $id)), 'flash', array('class' => 'error'));
+			}
 		} else {
 			$this->request->data = $result;
 		}
@@ -73,7 +105,7 @@ class CrudController extends AdminAppController {
 	}
 
 	/**
-	 * Delete a record and all associated dependencies after delete confirmation.
+	 * Delete a record and all associated records after delete confirmation.
 	 *
 	 * @param int $id
 	 * @throws NotFoundException
@@ -94,11 +126,11 @@ class CrudController extends AdminAppController {
 
 		if ($this->request->is('post')) {
 			if ($this->Model->delete($id, true)) {
-				$this->Session->setFlash(__('The %s with ID %s has been deleted', array($this->Model->alias, $id)), 'flash', array('class' => 'success'));
+				$this->Session->setFlash(__('Successfully deleted %s with ID %s', array($this->Model->alias, $id)), 'flash', array('class' => 'success'));
 				$this->redirect(array('action' => 'index', 'model' => $this->params['model']));
 
 			} else {
-				$this->Session->setFlash(__('The %s with ID %s failed to delete', array($this->Model->alias, $id)), 'flash', array('class' => 'error'));
+				$this->Session->setFlash(__('Failed to delete %s with ID %s', array($this->Model->alias, $id)), 'flash', array('class' => 'error'));
 			}
 		}
 
@@ -141,19 +173,41 @@ class CrudController extends AdminAppController {
 	 * Get a list of valid containable model relations.
 	 * Should also get belongsTo data for hasOne and hasMany.
 	 *
+	 * @param bool $extended
 	 * @return array
 	 */
-	protected function getDeepRelations() {
+	protected function getDeepRelations($extended = true) {
 		$contain = array_keys($this->Model->belongsTo);
 		$contain = array_merge($contain, array_keys($this->Model->hasAndBelongsToMany));
 
-		foreach (array($this->Model->hasOne, $this->Model->hasMany) as $assocs) {
-			foreach ($assocs as $alias => $assoc) {
-				$contain[$alias] = array_keys($this->Model->{$alias}->belongsTo);
+		if ($extended) {
+			foreach (array($this->Model->hasOne, $this->Model->hasMany) as $assocs) {
+				foreach ($assocs as $alias => $assoc) {
+					$contain[$alias] = array_keys($this->Model->{$alias}->belongsTo);
+				}
 			}
 		}
 
 		return $contain;
+	}
+
+	/**
+	 * Redirect after a create or update.
+	 *
+	 * @param string $action
+	 */
+	protected function redirectAfter($action) {
+		$url = array('controller' => 'crud', 'action' => $action, 'model' => $this->Model->urlSlug);
+
+		switch ($action) {
+			case 'read':
+			case 'update':
+			case 'delete':
+				$url[] = $this->Model->id;
+			break;
+		}
+
+		$this->redirect($url);
 	}
 
 	/**

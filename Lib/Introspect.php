@@ -42,12 +42,18 @@ class Introspect {
 
 		// Generate a list of field (database column) data
 		$fields = $object->schema();
+		$hideFields = array();
 
 		foreach ($fields as $field => &$data) {
 			$data['title'] = str_replace('Id', 'ID', Inflector::humanize(Inflector::underscore($field)));
 
 			if (isset($object->enum[$field])) {
 				$data['type'] = 'enum';
+			}
+
+			// Hide counter cache and auto-date fields
+			if (in_array($field, array('created', 'modified')) || substr($field, -6) === '_count') {
+				$hideFields[] = $field;
 			}
 		}
 
@@ -69,6 +75,7 @@ class Introspect {
 		}
 
 		$settings['fileFields'] = array_merge($settings['fileFields'], $settings['imageFields']);
+		$settings['hideFields'] = array_merge($settings['hideFields'], $hideFields);
 
 		$object->admin = $settings;
 		self::$_cache[$model] = $object;

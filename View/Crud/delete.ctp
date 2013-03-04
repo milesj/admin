@@ -22,7 +22,7 @@ $dependencies = array_unique($dependencies); ?>
 
 <h2><?php echo __('Delete %s', $model->singularName); ?></h2>
 
-<p><?php echo __('Are you sure you want to delete %s?', $this->Html->link($displayField, array('action' => 'read', $id, 'model' => $this->params['model']))); ?></p>
+<p><?php echo __('Are you sure you want to delete %s?', $this->Html->link($displayField, array('action' => 'read', $id, 'model' => $model->urlSlug))); ?></p>
 
 <?php // List out dependencies as a warning
 if ($dependencies) { ?>

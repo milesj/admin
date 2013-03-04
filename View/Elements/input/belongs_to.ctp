@@ -26,7 +26,7 @@ if (empty($typeAhead[$field])) {
 				minLength: 2,
 				source: function(query, process) {
 					return $.ajax({
-						url: '<?php echo $this->Html->url(array('model' => $this->params['model'], 'action' => 'type_ahead')); ?>',
+						url: '<?php echo $this->Html->url(array('model' => $model->urlSlug, 'action' => 'type_ahead')); ?>',
 						type: 'get',
 						data: {
 							query: query,

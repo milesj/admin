@@ -5,13 +5,17 @@ $id = $result[$model->alias][$model->primaryKey]; ?>
 
 <div class="buttons">
 	<?php
+	echo $this->Html->link('<span class="icon-plus icon-white"></span> ' . __('Add %s', $model->singularName),
+		array('action' => 'create', 'model' => $model->urlSlug),
+		array('class' => 'btn btn-primary btn-large', 'escape' => false));
+
 	echo $this->Html->link('<span class="icon-edit icon-white"></span> ' . __('Edit %s', $model->singularName),
-		array('action' => 'update', $id, 'model' => $this->params['model']),
+		array('action' => 'update', $id, 'model' => $model->urlSlug),
 		array('class' => 'btn btn-success btn-large', 'escape' => false));
 
 	if ($model->admin['deletable']) {
 		echo $this->Html->link('<span class="icon-remove icon-white"></span> ' . __('Delete %s', $model->singularName),
-			array('action' => 'delete', $id, 'model' => $this->params['model']),
+			array('action' => 'delete', $id, 'model' => $model->urlSlug),
 			array('class' => 'btn btn-danger btn-large', 'escape' => false));
 	} ?>
 </div>
