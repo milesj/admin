@@ -3,38 +3,20 @@ $this->Admin->setBreadcrumbs($model, $result, $this->action);
 
 $id = $result[$model->alias][$model->primaryKey];
 $displayField = $this->Admin->getDisplayField($model, $result);
-$dependencies = array();
-
-foreach (array($model->hasOne, $model->hasMany, $model->hasAndBelongsToMany) as $assocGroup) {
-	foreach ($assocGroup as $assoc) {
-		// hasOne, hasMany
-		if (isset($assoc['dependent']) && $assoc['dependent']) {
-			$dependencies[] = $assoc['className'];
-
-		// hasAndBelongsToMany
-		} else if (isset($assoc['joinTable'])) {
-			$dependencies[] = $assoc['with'];
-		}
-	}
-}
-
-$dependencies = array_unique($dependencies); ?>
+$dependencies = $this->Admin->getDependencies($model); ?>
 
 <h2><?php echo __('Delete %s', $model->singularName); ?></h2>
 
 <p><?php echo __('Are you sure you want to delete %s?', $this->Html->link($displayField, array('action' => 'read', $id, 'model' => $model->urlSlug))); ?></p>
 
 <?php // List out dependencies as a warning
-if ($dependencies) { ?>
+if ($dependencies) {
+	$excludeDeps = array(); ?>
 
-	<p><?php echo __('If so, the records in the following associated models will also be deleted.'); ?></p>
+	<p><?php echo __('The associated records in the following models will also be deleted.'); ?></p>
 
 	<div class="alert alert-block">
-		<ul>
-			<?php foreach ($dependencies as $dependent) { ?>
-				<li><?php echo $dependent; ?></li>
-			<?php } ?>
-		</ul>
+		<?php echo $this->Admin->loopDependencies($dependencies, $excludeDeps); ?>
 	</div>
 
 <?php }

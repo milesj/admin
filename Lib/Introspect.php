@@ -29,6 +29,10 @@ class Introspect {
 		$object->Behaviors->load('Containable');
 		$object->Behaviors->unload('Utility.Cacheable');
 
+		// Override model
+		$object->cacheQueries = true;
+		$object->recursive = -1;
+
 		// Inherit enums from parent classes
 		if ($object->Behaviors->hasMethod('enum')) {
 			$object->enum = $object->enum();

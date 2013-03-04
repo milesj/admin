@@ -12,6 +12,39 @@ class AdminHelper extends AppHelper {
 	public $helpers = array('Utility.Breadcrumb');
 
 	/**
+	 * Generate a nested list of dependencies by looping and drilling down through all the model associations.
+	 *
+	 * @param Model $model
+	 * @return array
+	 */
+	public function getDependencies(Model $model) {
+		$dependencies = array();
+
+		foreach (array($model->hasOne, $model->hasMany, $model->hasAndBelongsToMany) as $assocGroup) {
+			foreach ($assocGroup as $assoc) {
+				// hasOne, hasMany
+				if (isset($assoc['dependent']) && $assoc['dependent']) {
+					$class = $assoc['className'];
+
+				// hasAndBelongsToMany
+				} else if (isset($assoc['joinTable'])) {
+					$class = $assoc['with'];
+
+				} else {
+					continue;
+				}
+
+				$dependencies[] = array(
+					'model' => $class,
+					'dependencies' => $this->getDependencies($this->introspect($class))
+				);
+			}
+		}
+
+		return $dependencies;
+	}
+
+	/**
 	 * Return the display field. If field does not exist, use the ID.
 	 *
 	 * @param Model $model
@@ -97,6 +130,37 @@ class AdminHelper extends AppHelper {
 	 */
 	public function introspect($model) {
 		return Introspect::load($model);
+	}
+
+	/**
+	 * Generate a nested list of deletion model dependencies.
+	 *
+	 * @param $list
+	 * @param array $exclude
+	 * @return string
+	 */
+	public function loopDependencies($list, &$exclude = array()) {
+		if (!$list) {
+			return null;
+		}
+
+		$output = '<ul>';
+
+		foreach ($list as $dependent) {
+			if (in_array($dependent['model'], $exclude)) {
+				continue;
+			}
+
+			$exclude[] = $dependent['model'];
+
+			$output .= sprintf('<li>%s %s</li>',
+				$dependent['model'],
+				$this->loopDependencies($dependent['dependencies'], $exclude));
+		}
+
+		$output .= '</ul>';
+
+		return $output;
 	}
 
 	/**
