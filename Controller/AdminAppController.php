@@ -68,14 +68,6 @@ class AdminAppController extends AppController {
 		parent::beforeFilter();
 
 		$this->config = Configure::read('Admin');
-
-		if (isset($this->params['model'])) {
-			list($plugin, $model) = pluginSplit($this->params['model']);
-			$plugin = Inflector::camelize($plugin);
-			$model = Inflector::camelize($model);
-
-			$this->Model = Introspect::load($plugin . '.' . $model);
-		}
 	}
 
 	/**

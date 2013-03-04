@@ -150,10 +150,9 @@ class CrudController extends AdminAppController {
 			throw new BadRequestException();
 		}
 
-		$model = ClassRegistry::init($this->request->query['model']);
-		$results = $model->find('list', array(
-			'conditions' => array($model->alias . '.' . $model->displayField . ' LIKE' => '%' . $this->request->query['query'] . '%'),
-			'contain' => false,
+		$results = $this->Model->find('list', array(
+			'conditions' => array($this->Model->alias . '.' . $this->Model->displayField . ' LIKE' => '%' . $this->request->query['query'] . '%'),
+			'contain' => false
 		));
 
 		$this->set('results', $results);
@@ -167,6 +166,14 @@ class CrudController extends AdminAppController {
 		parent::beforeFilter();
 
 		$this->Auth->allow();
+
+		if (isset($this->params['model'])) {
+			list($plugin, $model) = pluginSplit($this->params['model']);
+			$plugin = Inflector::camelize($plugin);
+			$model = Inflector::camelize($model);
+
+			$this->Model = Introspect::load($plugin . '.' . $model);
+		}
 	}
 
 	/**
@@ -231,7 +238,6 @@ class CrudController extends AdminAppController {
 				$variable = Inflector::variable(Inflector::pluralize(preg_replace('/(?:_id)$/', '', $assoc['foreignKey'])));
 				$list = array();
 
-				// Display ID and field in the list
 				if ($results = $belongsTo->find('all')) {
 					foreach ($results as $result) {
 						$id = $result[$alias][$belongsTo->primaryKey];

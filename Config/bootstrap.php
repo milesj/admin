@@ -18,7 +18,7 @@ Configure::write('Admin.settings', array(
 	'fileFields' => array('image', 'file'),
 	'hideFields' => array(),
 	'paginateLimit' => 25,
-	'associationLimit' => 100,
+	'associationLimit' => 75,
 	'batchDelete' => true,
 	'deletable' => true
 ));
