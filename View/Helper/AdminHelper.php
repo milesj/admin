@@ -110,7 +110,7 @@ class AdminHelper extends AppHelper {
 		$this->Breadcrumb->add(__('Dashboard'), array('controller' => 'admin', 'action' => 'index'));
 
 		if ($plugin = $model->plugin) {
-			$this->Breadcrumb->add($plugin, array('controller' => 'admin', 'action' => 'plugin', Inflector::underscore($plugin)));
+			$this->Breadcrumb->add($plugin, array('controller' => 'admin', 'action' => 'index', '#' => Inflector::underscore($plugin)));
 		}
 
 		$this->Breadcrumb->add($model->pluralName, array('controller' => 'crud', 'action' => 'index', 'model' => $model->urlSlug));
@@ -123,7 +123,7 @@ class AdminHelper extends AppHelper {
 			case 'update':
 			case 'delete':
 				$id = $result[$model->alias][$model->primaryKey];
-				$displayField = $this->Admin->getDisplayField($model, $result);
+				$displayField = $this->getDisplayField($model, $result);
 
 				$this->Breadcrumb->add($displayField, array('action' => 'read', $id, 'model' => $model->urlSlug));
 

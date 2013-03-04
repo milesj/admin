@@ -21,7 +21,7 @@ class Introspect {
 		}
 
 		$object = ClassRegistry::init($model);
-		$qualifiedName = $model;
+		$qualifiedName = trim($model, '.');
 
 		list($plugin, $model) = pluginSplit($model);
 

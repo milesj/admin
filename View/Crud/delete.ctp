@@ -1,6 +1,7 @@
 <?php
 $this->Admin->setBreadcrumbs($model, $result, $this->action);
 
+$id = $result[$model->alias][$model->primaryKey];
 $displayField = $this->Admin->getDisplayField($model, $result);
 $dependencies = array();
 
