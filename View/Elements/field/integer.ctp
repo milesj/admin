@@ -1,0 +1,1 @@
+<?php echo number_format($value);

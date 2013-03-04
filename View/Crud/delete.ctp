@@ -1,13 +1,7 @@
 <?php
-$id = $result[$model->alias][$model->primaryKey];
-$displayField = $this->Admin->getDisplayField($result, $model);
+$this->Admin->setBreadcrumbs($model, $result, $this->action);
 
-$this->Breadcrumb->add(__('Dashboard'), array('controller' => 'admin', 'action' => 'index'));
-$this->Breadcrumb->add($model->pluralName, array('action' => 'index', 'model' => $this->params['model']));
-$this->Breadcrumb->add($displayField, array('action' => 'read', $id, 'model' => $this->params['model']));
-$this->Breadcrumb->add(__('Delete'), array('action' => 'delete', $id, 'model' => $this->params['model']));
-
-// Gather dependencies
+$displayField = $this->Admin->getDisplayField($model, $result);
 $dependencies = array();
 
 foreach (array($model->hasOne, $model->hasMany, $model->hasAndBelongsToMany) as $assocGroup) {
@@ -27,16 +21,12 @@ $dependencies = array_unique($dependencies); ?>
 
 <h2><?php echo __('Delete %s', $model->singularName); ?></h2>
 
-<p>
-	<?php echo __('Are you sure you want to delete %s?', $this->Html->link($displayField, array('action' => 'read', $id, 'model' => $this->params['model']))) . ' ';
-
-	if ($dependencies) {
-		echo __('If so, the records in the following associated tables will also be deleted.');
-	} ?>
-</p>
+<p><?php echo __('Are you sure you want to delete %s?', $this->Html->link($displayField, array('action' => 'read', $id, 'model' => $this->params['model']))); ?></p>
 
 <?php // List out dependencies as a warning
 if ($dependencies) { ?>
+
+	<p><?php echo __('If so, the records in the following associated models will also be deleted.'); ?></p>
 
 	<div class="alert alert-block">
 		<ul>

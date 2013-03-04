@@ -10,7 +10,8 @@ echo $this->Html->docType(); ?>
 	echo $this->Html->css('Admin.bootstrap-responsive.min');
 	echo $this->Html->css('Admin.style');
 	echo $this->Html->script('//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js');
-	echo $this->Html->script('Admin.bootstrap.min'); ?>
+	echo $this->Html->script('Admin.bootstrap.min');
+	echo $this->Html->script('Admin.admin'); ?>
 </head>
 <body class="action-<?php echo $this->action; ?>">
 	<div class="head navbar navbar-inverse navbar-fixed-top">

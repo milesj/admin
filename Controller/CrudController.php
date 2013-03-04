@@ -36,13 +36,9 @@ class CrudController extends AdminAppController {
 	}
 
 	public function read($id) {
-		$contain = array_keys($this->Model->belongsTo);
-		$contain = array_merge($contain, array_keys($this->Model->hasOne));
-		$contain = array_merge($contain, array_keys($this->Model->hasAndBelongsToMany));
-
 		$result = $this->Model->find('first', array(
 			'conditions' => array($this->Model->alias . '.' . $this->Model->primaryKey => $id),
-			'contain' => $contain
+			'contain' => $this->getDeepRelations()
 		));
 
 		if (!$result) {
@@ -139,6 +135,25 @@ class CrudController extends AdminAppController {
 		parent::beforeFilter();
 
 		$this->Auth->allow();
+	}
+
+	/**
+	 * Get a list of valid containable model relations.
+	 * Should also get belongsTo data for hasOne and hasMany.
+	 *
+	 * @return array
+	 */
+	protected function getDeepRelations() {
+		$contain = array_keys($this->Model->belongsTo);
+		$contain = array_merge($contain, array_keys($this->Model->hasAndBelongsToMany));
+
+		foreach (array($this->Model->hasOne, $this->Model->hasMany) as $assocs) {
+			foreach ($assocs as $alias => $assoc) {
+				$contain[$alias] = array_keys($this->Model->{$alias}->belongsTo);
+			}
+		}
+
+		return $contain;
 	}
 
 	/**

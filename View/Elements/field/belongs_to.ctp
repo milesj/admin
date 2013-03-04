@@ -1,9 +1,8 @@
 <?php
-$displayField = $value;
 $belongsTo = null;
 
 foreach ($data['belongsTo'] as $bt) {
-	if (!empty($result[$bt['assoc']]['id'])) {
+	if (!empty($result[$bt['alias']]['id'])) {
 		$belongsTo = $bt;
 		break;
 	}
@@ -11,21 +10,18 @@ foreach ($data['belongsTo'] as $bt) {
 
 if (!$belongsTo) { ?>
 
-	<span class="belongs-to text-error">INVALID_ASSOC</span>
+	<span class="belongs-to text-error">INVALID ASSOC</span>
 
 <?php } else {
-	$foreignModel = $belongsTo['assoc'];
-
-	if (isset($result[$foreignModel][$model->{$foreignModel}->displayField])) {
-		$displayField = $result[$foreignModel][$model->{$foreignModel}->displayField];
-	}
+	$foreignModel = $belongsTo['alias'];
+	$displayField = $result[$foreignModel][$model->{$foreignModel}->displayField];
 
 	echo $this->Html->link($displayField, array(
 		'plugin' => 'admin',
 		'controller' => 'crud',
 		'action' => 'read',
 		'model' => Inflector::underscore($belongsTo['model']),
-		$result[$model->alias][$field]
+		$value
 	), array(
 		'class' => 'belongs-to'
 	));

@@ -1,19 +1,28 @@
 <?php
 
+App::uses('Introspect', 'Admin.Lib');
+
 class AdminHelper extends AppHelper {
+
+	/**
+	 * Helpers.
+	 *
+	 * @var array
+	 */
+	public $helpers = array('Utility.Breadcrumb');
 
 	/**
 	 * Return the display field. If field does not exist, use the ID.
 	 *
-	 * @param array $result
 	 * @param Model $model
+	 * @param array $result
 	 * @return string
 	 */
-	public function getDisplayField($result, Model $model) {
-		$displayField = '#' . $result[$model->alias][$model->primaryKey];
+	public function getDisplayField(Model $model, $result) {
+		$displayField = $result[$model->alias][$model->displayField];
 
-		if ($model->displayField != $model->primaryKey && isset($result[$model->alias][$model->displayField])) {
-			$displayField = $result[$model->alias][$model->displayField];
+		if ($model->displayField == $model->primaryKey) {
+			$displayField = '#' . $displayField;
 		}
 
 		return $displayField;
@@ -72,12 +81,57 @@ class AdminHelper extends AppHelper {
 		foreach ($models as $i => $model) {
 			$object = ClassRegistry::init($plugin . $model);
 
-			if (!$object->useTable || (isset($object->admin) && $object->admin === false)) {
+			if (empty($object->useTable) || (isset($object->admin) && $object->admin === false)) {
 				unset($models[$i]);
 			}
 		}
 
 		return $models;
+	}
+
+	/**
+	 * Return a modified model object.
+	 *
+	 * @param string $model
+	 * @return Model
+	 */
+	public function introspect($model) {
+		return Introspect::load($model);
+	}
+
+	/**
+	 * Set the breadcrumbs for the respective model and action.
+	 *
+	 * @param Model $model
+	 * @param array $result
+	 * @param string $action
+	 */
+	public function setBreadcrumbs(Model $model, $result, $action) {
+		$this->Breadcrumb->add(__('Dashboard'), array('controller' => 'admin', 'action' => 'index'));
+
+		if ($plugin = $model->plugin) {
+			$this->Breadcrumb->add($plugin, array('controller' => 'admin', 'action' => 'plugin', Inflector::underscore($plugin)));
+		}
+
+		$this->Breadcrumb->add($model->pluralName, array('controller' => 'crud', 'action' => 'index', 'model' => $model->urlSlug));
+
+		switch ($action) {
+			case 'create':
+				$this->Breadcrumb->add(__('Add'), array('action' => 'create', 'model' => $model->urlSlug));
+			break;
+			case 'read':
+			case 'update':
+			case 'delete':
+				$id = $result[$model->alias][$model->primaryKey];
+				$displayField = $this->Admin->getDisplayField($model, $result);
+
+				$this->Breadcrumb->add($displayField, array('action' => 'read', $id, 'model' => $model->urlSlug));
+
+				if ($action === 'update' || $action === 'delete') {
+					$this->Breadcrumb->add(__(($action === 'update') ? 'Update' : 'Delete'), array('action' => $action, $id, 'model' => $model->urlSlug));
+				}
+			break;
+		}
 	}
 
 }

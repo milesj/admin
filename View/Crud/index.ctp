@@ -1,16 +1,12 @@
 <?php
-$batchDelete = ($model->admin['batchDelete'] && $model->admin['deletable']);
-
-$this->Breadcrumb->add('Dashboard', array('controller' => 'admin', 'action' => 'index'));
-$this->Breadcrumb->add($model->pluralName, array('model' => $this->params['model']));
-
+$this->Admin->setBreadcrumbs($model, null, $this->action);
 $this->Paginator->options(array(
-	'url' => array('model' => $this->params['model'])
+	'url' => array('model' => $model->urlSlug)
 )); ?>
 
 <div class="buttons">
 	<?php echo $this->Html->link('<span class="icon-plus icon-white"></span> ' . __('Add %s', $model->singularName),
-		array('action' => 'create', 'model' => $this->params['model']),
+		array('action' => 'create', 'model' => $model->urlSlug),
 		array('class' => 'btn btn-primary btn-large', 'escape' => false)); ?>
 </div>
 
@@ -20,10 +16,10 @@ $this->Paginator->options(array(
 echo $this->Form->create($model->alias);
 echo $this->element('pagination'); ?>
 
-	<table id="table" class="table table-striped table-bordered table-hover sortable">
+	<table id="table" class="table table-striped table-bordered table-hover sortable clickable">
 		<thead>
 			<tr>
-				<?php if ($batchDelete) { ?>
+				<?php if ($model->admin['batchDelete']) { ?>
 					<th class="col-batch-delete">
 						<input type="checkbox" id="check-all">
 					</th>
@@ -38,11 +34,12 @@ echo $this->element('pagination'); ?>
 		</thead>
 		<tbody>
 			<?php if ($results) {
-				foreach ($results as $result) {
-					$id = $result[$model->alias][$model->primaryKey]; ?>
+				foreach ($results as $result) { ?>
 
 					<tr>
-						<?php if ($model->admin['batchDelete']) { ?>
+						<?php if ($model->admin['batchDelete']) {
+							$id = $result[$model->alias][$model->primaryKey]; ?>
+
 							<td class="col-batch-delete">
 								<?php echo $this->Form->input($id, array(
 									'type' => 'checkbox',
@@ -51,6 +48,7 @@ echo $this->element('pagination'); ?>
 									'div' => false
 								)); ?>
 							</td>
+
 						<?php }
 
 						foreach ($model->fields as $field => $data) { ?>
@@ -59,7 +57,8 @@ echo $this->element('pagination'); ?>
 								<?php echo $this->element('field', array(
 									'result' => $result,
 									'field' => $field,
-									'data' => $data
+									'data' => $data,
+									'value' => $result[$model->alias][$field]
 								)); ?>
 							</td>
 
@@ -70,7 +69,7 @@ echo $this->element('pagination'); ?>
 			} else { ?>
 
 			<tr>
-				<td colspan="<?php echo count($model->fields) + $batchDelete; ?>" class="no-results">
+				<td colspan="<?php echo count($model->fields) + $model->admin['batchDelete']; ?>" class="no-results">
 					<?php echo __('No results to display'); ?>
 				</td>
 			</tr>
@@ -82,7 +81,7 @@ echo $this->element('pagination'); ?>
 <?php
 echo $this->element('pagination');
 
-if ($batchDelete && $results) { ?>
+if ($model->admin['batchDelete'] && $results) { ?>
 
 	<div class="well align-center">
 		<button type="submit" class="btn btn-large btn-danger" onclick="return confirm('<?php echo __('Are you sure? This can not be reversed.'); ?>');">
@@ -93,16 +92,4 @@ if ($batchDelete && $results) { ?>
 
 <?php }
 
-echo $this->Form->end(); ?>
-
-<script type="text/javascript">
-	$(function() {
-		$('.sortable tbody tr').click(function() {
-			location.href = $(this).find('a:first').attr('href');
-		});
-
-		$('#check-all').click(function() {
-			$('#table input:checkbox').prop('checked', $(this).prop('checked'));
-		});
-	});
-</script>
+echo $this->Form->end();

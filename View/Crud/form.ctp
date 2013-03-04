@@ -1,23 +1,14 @@
 <?php
-$this->Breadcrumb->add(__('Dashboard'), array('controller' => 'admin', 'action' => 'index'));
-$this->Breadcrumb->add($model->pluralName, array('action' => 'index', 'model' => $this->params['model']));
-
 if ($this->action === 'create') {
 	$pageTitle = __('Add %s', $model->singularName);
 	$buttonTitle = __('Create');
-
-	$this->Breadcrumb->add(__('Add'), array('action' => 'create', 'model' => $this->params['model']));
-
+	$result = null;
 } else {
 	$pageTitle = __('Edit %s', $model->singularName);
 	$buttonTitle = __('Update');
+}
 
-	$id = $result[$model->alias][$model->primaryKey];
-	$displayField = $this->Admin->getDisplayField($result, $model);
-
-	$this->Breadcrumb->add($displayField, array('action' => 'read', $id, 'model' => $this->params['model']));
-	$this->Breadcrumb->add(__('Edit'), array('action' => 'edit', $id, 'model' => $this->params['model']));
-} ?>
+$this->Admin->setBreadcrumbs($model, $result, $this->action); ?>
 
 <h2><?php echo $pageTitle; ?></h2>
 

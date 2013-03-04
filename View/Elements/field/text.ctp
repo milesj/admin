@@ -1,0 +1,1 @@
+<?php echo $this->Text->truncate(h($value), 100);

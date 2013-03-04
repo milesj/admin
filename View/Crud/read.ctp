@@ -1,10 +1,7 @@
 <?php
-$id = $result[$model->alias][$model->primaryKey];
-$displayField = $this->Admin->getDisplayField($result, $model);
+$this->Admin->setBreadcrumbs($model, $result, $this->action);
 
-$this->Breadcrumb->add(__('Dashboard'), array('controller' => 'admin', 'action' => 'index'));
-$this->Breadcrumb->add($model->pluralName, array('action' => 'index', 'model' => $this->params['model']));
-$this->Breadcrumb->add($displayField, array('action' => 'read', $id, 'model' => $this->params['model'])); ?>
+$id = $result[$model->alias][$model->primaryKey]; ?>
 
 <div class="buttons">
 	<?php
@@ -19,26 +16,52 @@ $this->Breadcrumb->add($displayField, array('action' => 'read', $id, 'model' => 
 	} ?>
 </div>
 
-<h2><?php echo $displayField; ?></h2>
+<h2><?php echo $this->Admin->getDisplayField($model, $result); ?></h2>
 
-<table class="table table-striped table-bordered">
-	<tbody>
-		<?php foreach ($model->fields as $field => $data) { ?>
+<div class="row-fluid">
+	<table class="table table-striped table-bordered">
+		<tbody>
+			<?php foreach ($model->fields as $field => $data) { ?>
 
-			<tr>
-				<td>
-					<b><?php echo $data['title']; ?></b>
-				</td>
-				<td>
-					<?php echo $this->element('field', array(
-						'field' => $field,
-						'data' => $data
-					)); ?>
-				</td>
-			</tr>
+				<tr>
+					<td class="span5">
+						<b><?php echo $data['title']; ?></b>
+					</td>
+					<td>
+						<?php echo $this->element('field', array(
+							'field' => $field,
+							'data' => $data,
+							'value' => $result[$model->alias][$field]
+						)); ?>
+					</td>
+				</tr>
 
-		<?php } ?>
-	</tbody>
-</table>
+			<?php } ?>
+		</tbody>
+	</table>
+</div>
 
-<?php debug($result); ?>
+<?php // Loop over the types of associations
+foreach (array(
+	'hasOne' => 'Has One',
+	'hasMany' => 'Has Many',
+	'hasAndBelongsToMany' => 'Has and Belongs to Many'
+) as $property => $title) {
+	if ($associations = $model->{$property}) { ?>
+
+	<div class="row-fluid">
+		<h3 class="text-info"><?php echo __($title); ?></h3>
+
+		<?php // Loop over the model relations
+		foreach ($associations as $alias => $assoc) {
+			if (!empty($result[$alias])) {
+				echo $this->element('assoc/' . Inflector::underscore($property), array(
+					'alias' => $alias,
+					'assoc' => $assoc,
+					'results' => $result[$alias]
+				));
+			}
+		} ?>
+	</div>
+
+<?php } } ?>

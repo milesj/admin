@@ -1,5 +1,7 @@
 <?php
 
+App::uses('Introspect', 'Admin.Lib');
+
 /**
  * @property Model $Model
  */
@@ -67,59 +69,12 @@ class AdminAppController extends AppController {
 
 		$this->config = Configure::read('Admin');
 
-		// Introspect the model if it is present
 		if (isset($this->params['model'])) {
 			list($plugin, $model) = pluginSplit($this->params['model']);
-
-			if ($plugin) {
-				$plugin = Inflector::camelize($plugin) . '.';
-			}
-
-			$name = Inflector::humanize($model);
+			$plugin = Inflector::camelize($plugin);
 			$model = Inflector::camelize($model);
 
-			// Load model and unload risky behaviors
-			$this->Model = ClassRegistry::init($plugin . $model);
-			$this->Model->Behaviors->unload('Utility.Cacheable');
-
-			// Use inherited enums also
-			if (isset($this->Model->enum)) {
-				$this->Model->enum = $this->Model->enum();
-			}
-
-			// Set convenience fields
-			$fields = $this->Model->schema();
-
-			foreach ($fields as $field => &$data) {
-				$data['title'] = str_replace('Id', 'ID', Inflector::humanize(Inflector::underscore($field)));
-
-				if (isset($this->Model->enum[$field])) {
-					$data['type'] = 'enum';
-				}
-			}
-
-			foreach ($this->Model->belongsTo as $belongsTo => $assoc) {
-				$fields[$assoc['foreignKey']]['belongsTo'][] = array(
-					'assoc' => $belongsTo,
-					'model' => $assoc['className']
-				);
-			}
-
-			$this->Model->singularName = $name;
-			$this->Model->pluralName = Inflector::pluralize($name);
-			$this->Model->fields = $fields;
-
-			// Apply default admin settings
-			$adminSettings = isset($this->Model->admin) ? $this->Model->admin : array();
-			$adminSettings = array_merge($this->config['settings'], $adminSettings);
-
-			if (!$adminSettings['deletable']) {
-				$adminSettings['batchDelete'] = false;
-			}
-
-			$adminSettings['fileFields'] = array_merge($adminSettings['fileFields'], $adminSettings['imageFields']);
-
-			$this->Model->admin = $adminSettings;
+			$this->Model = Introspect::load($plugin . '.' . $model);
 		}
 	}
 
