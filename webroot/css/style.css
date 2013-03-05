@@ -56,6 +56,10 @@ body {
 .input.checkbox {
 	padding-left: 25%; }
 
+.error-message {
+	display: inline-block;
+	margin-left: 10px; }
+
 /* Define custom styles for tables */
 
 .sortable {
