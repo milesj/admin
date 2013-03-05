@@ -20,11 +20,10 @@ class AdminAppController extends AppController {
 	 * @var array
 	 */
 	public $components = array(
-		'Session', 'Cookie', 'Acl', 'RequestHandler',
+		'Session', 'Cookie', 'Acl', 'RequestHandler', 'Utility.AutoLogin',
 		'Auth' => array(
 			'authorize' => array('Controller')
-		),
-		'Utility.AutoLogin'
+		)
 	);
 
 	/**

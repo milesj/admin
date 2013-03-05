@@ -1,6 +1,5 @@
 <?php
 
-
 /**
  * Plugin constants.
  */
@@ -9,11 +8,17 @@ define('ADMIN_PLUGIN', dirname(__DIR__) . '/');
 /**
  * Current version.
  */
-Configure::write('Admin.version', file_get_contents(dirname(__DIR__) . '/version.md'));
+Configure::write('Admin.version', file_get_contents(ADMIN_PLUGIN . 'version.md'));
 
-Configure::write('Admin.app', 'Admin');
+/**
+ * Application name.
+ */
+Configure::write('Admin.appName', 'Admin');
 
-Configure::write('Admin.settings', array(
+/**
+ * Default settings for each model.
+ */
+Configure::write('Admin.modelDefaults', array(
 	'imageFields' => array('image'),
 	'fileFields' => array('image', 'file'),
 	'hideFields' => array(),

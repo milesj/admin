@@ -69,7 +69,7 @@ class Introspect {
 
 		// Apply default admin settings
 		$settings = isset($object->admin) ? $object->admin : array();
-		$settings = array_merge(Configure::read('Admin.settings'), $settings);
+		$settings = array_merge(Configure::read('Admin.modelDefaults'), $settings);
 
 		if (!$settings['deletable']) {
 			$settings['batchDelete'] = false;
