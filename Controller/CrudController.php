@@ -20,8 +20,6 @@ class CrudController extends AdminAppController {
 			if (!$this->Model->admin['deletable']) {
 				throw new ForbiddenException();
 			}
-
-			debug($this->request->data);
 		}
 
 		$this->set('results', $this->paginate($this->Model));
@@ -35,12 +33,12 @@ class CrudController extends AdminAppController {
 		$this->setAssociatedData();
 
 		if ($this->request->is('post')) {
-			if ($this->Model->saveAssociated($this->request->data, array('validate' => 'first', 'atomic' => true, 'deep' => true))) {
-				$this->Session->setFlash(__('Successfully created a new %s', $this->Model->alias), 'flash', array('class' => 'success'));
-				$this->redirectAfter($this->request->data[$this->Model->alias]['redirect_to']);
+			if ($this->Model->saveAssociated($this->getRequestData(), array('validate' => 'first', 'atomic' => true, 'deep' => true))) {
+				$this->setFlashMessage('Successfully created a new %s');
+				$this->redirectAfter();
 
 			} else {
-				$this->Session->setFlash(__('Failed to create a new %s', $this->Model->alias), 'flash', array('class' => 'error'));
+				$this->setFlashMessage('Failed to create a new %s', null, 'error');
 			}
 		}
 
@@ -89,12 +87,12 @@ class CrudController extends AdminAppController {
 		$this->setAssociatedData();
 
 		if ($this->request->is('put')) {
-			if ($this->Model->saveAssociated($this->request->data, array('validate' => 'first', 'atomic' => true, 'deep' => true))) {
-				$this->Session->setFlash(__('Successfully updated %s with ID %s', array($this->Model->alias, $id)), 'flash', array('class' => 'success'));
-				$this->redirectAfter($this->request->data[$this->Model->alias]['redirect_to']);
+			if ($this->Model->saveAssociated($this->getRequestData(), array('validate' => 'first', 'atomic' => true, 'deep' => true))) {
+				$this->setFlashMessage('Successfully updated %s with ID %s', $id);
+				$this->redirectAfter();
 
 			} else {
-				$this->Session->setFlash(__('Failed to update %s with ID %s', array($this->Model->alias, $id)), 'flash', array('class' => 'error'));
+				$this->setFlashMessage('Failed to update %s with ID %s', $id, 'error');
 			}
 		} else {
 			$this->request->data = $result;
@@ -126,11 +124,11 @@ class CrudController extends AdminAppController {
 
 		if ($this->request->is('post')) {
 			if ($this->Model->delete($id, true)) {
-				$this->Session->setFlash(__('Successfully deleted %s with ID %s', array($this->Model->alias, $id)), 'flash', array('class' => 'success'));
-				$this->redirect(array('action' => 'index', 'model' => $this->params['model']));
+				$this->setFlashMessage('Successfully deleted %s with ID %s', $id);
+				$this->redirectAfter();
 
 			} else {
-				$this->Session->setFlash(__('Failed to delete %s with ID %s', array($this->Model->alias, $id)), 'flash', array('class' => 'error'));
+				$this->setFlashMessage('Failed to delete %s with ID %s', $id, 'error');
 			}
 		}
 
@@ -176,22 +174,12 @@ class CrudController extends AdminAppController {
 			$this->Model = Introspect::load($plugin . '.' . $model);
 		}
 
-		// Parse request data
+		// Parse request and set null fields to null
 		if ($data = $this->request->data) {
 			foreach ($data as $model => $fields) {
 				foreach ($fields as $key => $value) {
-					// Remove null fields and set parent to null
-					if (substr($key, -5) === '_null') {
-						if ($value) {
-							$data[$model][str_replace('_null', '', $key)] = null;
-						}
-
-						unset($data[$model][$key]);
-					}
-
-					// Remove type ahead fields
-					if (substr($key, -11) === '_type_ahead') {
-						unset($data[$model][$key]);
+					if (substr($key, -5) === '_null' && $value) {
+						$data[$model][str_replace('_null', '', $key)] = null;
 					}
 				}
 			}
@@ -223,11 +211,40 @@ class CrudController extends AdminAppController {
 	}
 
 	/**
+	 * Return the request data after processing the fields.
+	 *
+	 * @return array
+	 */
+	protected function getRequestData() {
+		$data = $this->request->data;
+
+		if ($data) {
+			foreach ($data as $model => $fields) {
+				foreach ($fields as $key => $value) {
+					if (
+						(substr($key, -5) === '_null') ||
+						(substr($key, -11) === '_type_ahead') ||
+						in_array($key, array('redirect_to'))
+					) {
+						unset($data[$model][$key]);
+					}
+				}
+			}
+		}
+
+		return $data;
+	}
+
+	/**
 	 * Redirect after a create or update.
 	 *
 	 * @param string $action
 	 */
-	protected function redirectAfter($action) {
+	protected function redirectAfter($action = null) {
+		if (!$action) {
+			$action = $this->request->data[$this->Model->alias]['redirect_to'];
+		}
+
 		$url = array('controller' => 'crud', 'action' => $action, 'model' => $this->Model->urlSlug);
 
 		switch ($action) {
@@ -280,6 +297,21 @@ class CrudController extends AdminAppController {
 		}
 
 		$this->set('typeAhead', $typeAhead);
+	}
+
+	/**
+	 * Convenience method to set a flash message.
+	 *
+	 * @param string $message
+	 * @param int $id
+	 * @param string $type
+	 */
+	protected function setFlashMessage($message, $id = null, $type = 'success') {
+		if (!$id) {
+			$id = $this->Model->id;
+		}
+
+		$this->Session->setFlash(__($message, array(strtolower($this->Model->singularName), $id)), 'flash', array('class' => $type));
 	}
 
 }

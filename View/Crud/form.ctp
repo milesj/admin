@@ -29,17 +29,7 @@ foreach ($model->fields as $field => $data) {
 } ?>
 
 <div class="well align-center">
-	<div class="form-redirect-to">
-		<?php echo $this->Form->input('redirect_to', array(
-			'div' => false,
-			'options' => array(
-				'update' => __('Continue Editing'),
-				'index' => __('List of %s', $model->pluralName),
-				'create' => __('Create new %s', $model->singularName),
-				'read' => __('%s Overview', $model->singularName)
-			)
-		)); ?>
-	</div>
+	<?php echo $this->element('redirect_to'); ?>
 
 	<button type="submit" class="btn btn-large btn-success">
 		<span class="icon-edit icon-white"></span>

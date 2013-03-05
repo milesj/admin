@@ -22,9 +22,11 @@ if ($dependencies) {
 <?php }
 
 // Confirm delete form
-echo $this->Form->create($model->alias); ?>
+echo $this->Form->create($model->alias, array('class' => 'form-horizontal')); ?>
 
 	<div class="well align-center">
+		<?php echo $this->element('redirect_to'); ?>
+
 		<button type="submit" class="btn btn-large btn-danger">
 			<span class="icon-remove icon-white"></span>
 			<?php echo __('Yes, Delete'); ?>

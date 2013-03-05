@@ -53,13 +53,19 @@ if ($hasError) {
 		));
 
 		// Show a null checkbox for fields that support it
-		if ($data['null']) { ?>
+		if ($data['null']) {
+			if (isset($this->data[$model->alias][$field])) {
+				$null = $this->data[$model->alias][$field];
+				$checked = ($null === null || $null === '');
+			} else {
+				$checked = ($data['default'] === null);
+			} ?>
 
 			<div class="controls-null">
 				<?php
 				echo $this->Form->input($field . '_null', array(
 					'type' => 'checkbox',
-					'checked' => (empty($this->data[$model->alias][$field]) && $data['default'] === null),
+					'checked' => $checked,
 					'div' => false,
 					'error' => false,
 					'label' => __('Null?')
