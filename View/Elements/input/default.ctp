@@ -19,5 +19,6 @@ echo $this->Form->input($field, array(
 	'div' => false,
 	'label' => false,
 	'options' => $options,
-	'class' => $class
+	'class' => $class,
+	'default' => $data['default']
 ));

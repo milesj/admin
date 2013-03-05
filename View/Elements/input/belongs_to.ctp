@@ -1,11 +1,21 @@
 <?php
+
+// Display a select menu of options
 if (empty($typeAhead[$field])) {
 	echo $this->Form->input($field, array(
 		'div' => false,
 		'label' => false
 	));
 
+// Use a text box with type ahead via AJAX
 } else {
+	$value = null;
+	$alias = $typeAhead[$field]['alias'];
+
+	if (isset($this->data[$alias][$model->{$alias}->displayField])) {
+		$value = $this->data[$alias][$model->{$alias}->displayField];
+	}
+
 	echo $this->Form->input($field, array('type' => 'hidden'));
 	echo $this->Form->input($field . '_type_ahead', array(
 		'div' => false,
@@ -14,7 +24,8 @@ if (empty($typeAhead[$field])) {
 		'class' => 'span2',
 		'data-provide' => 'typeahead',
 		'autocomplete' => 'off',
-		'value' => $this->data[$typeAhead[$field]['alias']][$model->{$typeAhead[$field]['alias']}->displayField]
+		'value' => $value,
+		'default' => $data['default']
 	)); ?>
 
 	<script type="text/javascript">

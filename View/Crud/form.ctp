@@ -8,7 +8,9 @@ if ($this->action === 'create') {
 	$buttonTitle = __('Update');
 }
 
-$this->Admin->setBreadcrumbs($model, $result, $this->action); ?>
+$this->Admin->setBreadcrumbs($model, $result, $this->action);
+
+echo $this->element('action_buttons'); ?>
 
 <h2><?php echo $pageTitle; ?></h2>
 

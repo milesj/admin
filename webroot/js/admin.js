@@ -16,6 +16,8 @@ var Admin = {
 		$('#check-all').click(function() {
 			$('#table').find('input:checkbox').prop('checked', $(this).prop('checked'));
 		});
+
+		Admin.nullChecks();
 	},
 
 	/**
@@ -58,6 +60,29 @@ var Admin = {
 				$('#' + id.replace('TypeAhead', '')).val(item[0]);
 
 				return item[1];
+			}
+		});
+	},
+
+	/**
+	 * Monitor null input fields and toggle the checkbox depending on the input length.
+	 * Does not support date selects.
+	 */
+	nullChecks: function() {
+		$('.controls-null input:checkbox').each(function() {
+			var self = $(this),
+				related = $('#' + self.attr('id').replace('Null', ''));
+
+			if (related.length) {
+				var callback = function() {
+					self.prop('checked', !(this.value));
+				};
+
+				if (self.prop('tagName').toLowerCase() === 'input') {
+					related.keyup(callback);
+				} else {
+					related.change(callback);
+				}
 			}
 		});
 	}

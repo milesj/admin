@@ -32,7 +32,7 @@ class CrudController extends AdminAppController {
 	 */
 	public function create() {
 		$this->Model->create();
-		$this->setAssociations();
+		$this->setAssociatedData();
 
 		if ($this->request->is('post')) {
 			if ($this->Model->saveAssociated($this->request->data, array('validate' => 'first', 'atomic' => true, 'deep' => true))) {
@@ -86,7 +86,7 @@ class CrudController extends AdminAppController {
 			throw new NotFoundException();
 		}
 
-		$this->setAssociations();
+		$this->setAssociatedData();
 
 		if ($this->request->is('put')) {
 			if ($this->Model->saveAssociated($this->request->data, array('validate' => 'first', 'atomic' => true, 'deep' => true))) {
@@ -167,12 +167,36 @@ class CrudController extends AdminAppController {
 
 		$this->Auth->allow();
 
+		// Introspect model
 		if (isset($this->params['model'])) {
 			list($plugin, $model) = pluginSplit($this->params['model']);
 			$plugin = Inflector::camelize($plugin);
 			$model = Inflector::camelize($model);
 
 			$this->Model = Introspect::load($plugin . '.' . $model);
+		}
+
+		// Parse request data
+		if ($data = $this->request->data) {
+			foreach ($data as $model => $fields) {
+				foreach ($fields as $key => $value) {
+					// Remove null fields and set parent to null
+					if (substr($key, -5) === '_null') {
+						if ($value) {
+							$data[$model][str_replace('_null', '', $key)] = null;
+						}
+
+						unset($data[$model][$key]);
+					}
+
+					// Remove type ahead fields
+					if (substr($key, -11) === '_type_ahead') {
+						unset($data[$model][$key]);
+					}
+				}
+			}
+
+			$this->request->data = $data;
 		}
 	}
 
@@ -220,7 +244,7 @@ class CrudController extends AdminAppController {
 	/**
 	 * Set belongsTo data for select inputs. If there are too many records, switch to type ahead.
 	 */
-	protected function setAssociations() {
+	protected function setAssociatedData() {
 		$typeAhead = array();
 
 		foreach ($this->Model->belongsTo as $alias => $assoc) {

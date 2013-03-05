@@ -56,9 +56,14 @@ body {
 .input.checkbox {
 	padding-left: 25%; }
 
-.error-message {
+.error-message,
+.controls-null,
+.controls-null label {
 	display: inline-block;
 	margin-left: 10px; }
+
+.controls-null label { margin-left: 5px; }
+.controls-null input { margin-top: -1px; }
 
 /* Define custom styles for tables */
 

@@ -2,13 +2,9 @@
 $this->Admin->setBreadcrumbs($model, null, $this->action);
 $this->Paginator->options(array(
 	'url' => array('model' => $model->urlSlug)
-)); ?>
+));
 
-<div class="buttons">
-	<?php echo $this->Html->link('<span class="icon-plus icon-white"></span> ' . __('Add %s', $model->singularName),
-		array('action' => 'create', 'model' => $model->urlSlug),
-		array('class' => 'btn btn-primary btn-large', 'escape' => false)); ?>
-</div>
+echo $this->element('action_buttons'); ?>
 
 <h2><?php echo $model->pluralName; ?></h2>
 

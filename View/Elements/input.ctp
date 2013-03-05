@@ -42,11 +42,30 @@ if ($hasError) {
 
 		} else if (in_array($field, $model->admin['fileFields'])) {
 			$element = 'file';
+
+		} else if (in_array($data['type'], array('datetime', 'date', 'time'))) {
+			$element = 'datetime';
 		}
 
 		echo $this->element('input/' . $element, array(
 			'field' => $field,
 			'data' => $data
-		)); ?>
+		));
+
+		// Show a null checkbox for fields that support it
+		if ($data['null']) { ?>
+
+			<div class="controls-null">
+				<?php
+				echo $this->Form->input($field . '_null', array(
+					'type' => 'checkbox',
+					'checked' => (empty($this->data[$model->alias][$field]) && $data['default'] === null),
+					'div' => false,
+					'error' => false,
+					'label' => __('Null?')
+				)); ?>
+			</div>
+
+		<?php } ?>
 	</div>
 </div>

@@ -62,10 +62,7 @@ class Introspect {
 		}
 
 		foreach ($object->belongsTo as $alias => $assoc) {
-			$fields[$assoc['foreignKey']]['belongsTo'][] = array(
-				'alias' => $alias,
-				'model' => $assoc['className']
-			);
+			$fields[$assoc['foreignKey']]['belongsTo'][$alias] = $assoc['className'];
 		}
 
 		$object->fields = $fields;

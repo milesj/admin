@@ -1,28 +1,28 @@
 <?php
-$belongsTo = null;
+$rendered = false;
 
-foreach ($data['belongsTo'] as $bt) {
-	if (!empty($result[$bt['alias']]['id'])) {
-		$belongsTo = $bt;
+foreach ($data['belongsTo'] as $foreignModel => $className) {
+	$belongsTo = $model->{$foreignModel};
+
+	if (!empty($result[$foreignModel][$belongsTo->primaryKey])) {
+
+		echo $this->Html->link($result[$foreignModel][$belongsTo->displayField], array(
+			'plugin' => 'admin',
+			'controller' => 'crud',
+			'action' => 'read',
+			'model' => Inflector::underscore($className),
+			$value
+		), array(
+			'class' => 'belongs-to'
+		));
+
+		$rendered = true;
 		break;
 	}
 }
 
-if (!$belongsTo) { ?>
+if (!$rendered) { ?>
 
 	<span class="belongs-to text-error">INVALID ASSOC</span>
 
-<?php } else {
-	$foreignModel = $belongsTo['alias'];
-	$displayField = $result[$foreignModel][$model->{$foreignModel}->displayField];
-
-	echo $this->Html->link($displayField, array(
-		'plugin' => 'admin',
-		'controller' => 'crud',
-		'action' => 'read',
-		'model' => Inflector::underscore($belongsTo['model']),
-		$value
-	), array(
-		'class' => 'belongs-to'
-	));
-}
+<?php }
