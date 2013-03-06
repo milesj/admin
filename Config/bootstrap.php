@@ -11,9 +11,14 @@ define('ADMIN_PLUGIN', dirname(__DIR__) . '/');
 Configure::write('Admin.version', file_get_contents(ADMIN_PLUGIN . 'version.md'));
 
 /**
- * Application name.
+ * Plugin settings.
  */
-Configure::write('Admin.appName', 'Admin');
+Configure::write('Admin.settings', array(
+	'name' => __('Admin'),
+	'titleSeparator' => ' - ',
+));
+
+Configure::write('Admin.ignoreModels', array('User'));
 
 /**
  * Default settings for each model.

@@ -135,7 +135,7 @@ class AdminHelper extends AppHelper {
 	/**
 	 * Generate a nested list of deletion model dependencies.
 	 *
-	 * @param $list
+	 * @param array $list
 	 * @param array $exclude
 	 * @return string
 	 */

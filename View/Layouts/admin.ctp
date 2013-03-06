@@ -3,7 +3,13 @@ echo $this->Html->docType(); ?>
 <html lang="en">
 <head>
 	<?php echo $this->Html->charset(); ?>
-	<title><?php echo $this->Breadcrumb->pageTitle($config['appName'], array('reverse' => true, 'depth' => 3)); ?></title>
+	<title>
+		<?php echo $this->Breadcrumb->pageTitle($config['settings']['name'], array(
+			'reverse' => true,
+			'depth' => 3,
+			'separator' => $config['settings']['titleSeparator']
+		)); ?>
+	</title>
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<?php
 	echo $this->Html->css('Admin.bootstrap.min');
@@ -23,7 +29,7 @@ echo $this->Html->docType(); ?>
 					<span class="icon-bar"></span>
 				</a>
 
-				<?php echo $this->Html->link($config['appName'], array(
+				<?php echo $this->Html->link($config['settings']['name'], array(
 					'controller' => 'admin',
 					'action' => 'index'
 				), array('class' => 'brand')); ?>
