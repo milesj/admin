@@ -19,7 +19,7 @@ echo $this->Html->docType(); ?>
 	echo $this->Html->script('Admin.bootstrap.min');
 	echo $this->Html->script('Admin.admin'); ?>
 </head>
-<body class="action-<?php echo $this->action; ?>">
+<body class="controller-<?php echo $this->params['controller']; ?> action-<?php echo $this->action; ?>">
 	<div class="head navbar navbar-inverse navbar-fixed-top">
 		<div class="navbar-inner">
 			<div class="container-fluid">
@@ -41,9 +41,7 @@ echo $this->Html->docType(); ?>
 
 						// No plugins, so show all models
 						if (count($navigation) === 1) {
-							$navigation = array_values($navigation);
-
-							foreach ($navigation[0] as $model) { ?>
+							foreach ($navigation[0]['models'] as $model) { ?>
 
 								<li>
 									<?php echo $this->Html->link($model['model'], array(
@@ -58,18 +56,18 @@ echo $this->Html->docType(); ?>
 
 						// Or group by plugin
 						} else {
-							foreach ($navigation as $plugin => $models) { ?>
+							foreach ($navigation as $plugin) { ?>
 
 								<li class="dropdown">
 									<a data-toggle="dropdown" class="dropdown-toggle" href="javascript:;">
-										<?php echo $plugin; ?>
+										<?php echo $plugin['title']; ?>
 										<span class="caret"></span>
 									</a>
 
 									<ul class="dropdown-menu">
-										<?php foreach ($models as $model) { ?>
+										<?php foreach ($plugin['models'] as $model) { ?>
 											<li>
-												<?php echo $this->Html->link($model['model'], array(
+												<?php echo $this->Html->link($model['title'], array(
 													'plugin' => 'admin',
 													'controller' => 'crud',
 													'action' => 'index',

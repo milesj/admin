@@ -1,5 +1,5 @@
 
-<div class="buttons">
+<div class="action-buttons">
 	<?php
 	if ($this->action !== 'create') {
 		echo $this->Html->link('<span class="icon-plus icon-white"></span> ' . __('Add %s', $model->singularName),

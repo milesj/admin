@@ -91,4 +91,8 @@ var Admin = {
 
 $(function() {
 	Admin.initialize();
+
+	$('.tip').tooltip({
+		placement: 'right'
+	});
 });

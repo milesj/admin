@@ -1,6 +1,6 @@
 <?php
 
-App::uses('Introspect', 'Admin.Lib');
+App::uses('Admin', 'Admin.Lib');
 
 /**
  * @property Model $Model
@@ -57,7 +57,18 @@ class AdminAppController extends AppController {
 	 * @return bool
 	 */
 	public function isAuthorized($user) {
-		return true;
+		if (empty($this->params['model'])) {
+			return true;
+		}
+
+		list($plugin, $model, $pluginModel) = Admin::parseModelName($this->params['model']);
+		$action = $this->action;
+
+		if (!in_array($action, array('create', 'update', 'delete'))) {
+			$action = 'read';
+		}
+
+		return $this->Acl->check(array('User' => $user), $pluginModel, $action);
 	}
 
 	/**

@@ -16,12 +16,12 @@ body {
 	padding: 30px;
 	text-align: center; }
 
-.buttons { float: right; }
-
-.buttons .btn-large {
-	margin-left: 15px;
+.action-buttons {
+	float: right;
 	position: relative;
 	top: -7px; }
+
+.action-buttons .btn { margin-left: 15px; }
 
 /* Custom form styles since we have to use Cakes HTML */
 
@@ -145,3 +145,20 @@ td.col-id,
 .pagination .results span { font-weight: bold; }
 
 .dropdown-menu > li > a { padding: 3px 10px; }
+
+/* Page specific */
+
+.controller-admin .well h3 {
+	line-height: 100%;
+	margin: 0 0 15px 0; }
+
+
+.controller-admin .nav { margin: 0; }
+
+.controller-admin .nav .pull-right {
+	margin: 0;
+	padding: 7px 10px;
+	display: none; }
+
+.controller-admin .nav .label { margin-left: 2px; }
+.controller-admin .nav li:hover .pull-right { display: block; }

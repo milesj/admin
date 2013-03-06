@@ -1,6 +1,6 @@
 <?php
 
-App::uses('Introspect', 'Admin.Lib');
+App::uses('Admin', 'Admin.Lib');
 
 class AdminHelper extends AppHelper {
 
@@ -67,59 +67,7 @@ class AdminHelper extends AppHelper {
 	 * @return array
 	 */
 	public function getNavigation() {
-		$plugins = array_merge(array('Core'), App::objects('plugins'));
-		$navigation = array();
-
-		foreach ($plugins as $plugin) {
-			if ($plugin === 'Admin') {
-				continue;
-			}
-
-			if ($models = $this->getModels($plugin)) {
-				foreach ($models as $model) {
-					$url = Inflector::underscore($model);
-
-					if ($plugin !== 'Core') {
-						$url = Inflector::underscore($plugin) . '.' . $url;
-					}
-
-					$navigation[$plugin][] = array(
-						'model' => $model,
-						'url' => $url
-					);
-				}
-			}
-		}
-
-		return $navigation;
-	}
-
-	/**
-	 * Return a list of available models from the defined plugin.
-	 *
-	 * @param string $plugin
-	 * @return array
-	 */
-	public function getModels($plugin = null) {
-		if ($plugin) {
-			$plugin = ($plugin === 'Core') ? '' : $plugin . '.';
-		}
-
-		// Fetch models and filter out AppModel's
-		$models = array_filter(App::objects($plugin . 'Model'), function($value) {
-			return (strpos($value, 'AppModel') === false);
-		});
-
-		// Filter out models that don't connect to the database or are admin disabled
-		foreach ($models as $i => $model) {
-			$object = ClassRegistry::init($plugin . $model);
-
-			if (empty($object->useTable) || (isset($object->admin) && $object->admin === false)) {
-				unset($models[$i]);
-			}
-		}
-
-		return $models;
+		return Admin::getModels();
 	}
 
 	/**
@@ -129,7 +77,7 @@ class AdminHelper extends AppHelper {
 	 * @return Model
 	 */
 	public function introspect($model) {
-		return Introspect::load($model);
+		return Admin::introspectModel($model);
 	}
 
 	/**

@@ -3,13 +3,23 @@
 class AdminController extends AdminAppController {
 
 	public function index() {
+		$plugins = Admin::getModels();
+		$counts = array();
 
-	}
+		// Gather record counts
+		foreach ($plugins as $plugin) {
+			foreach ($plugin['models'] as $model) {
+				if ($model['installed']) {
+					$counts[$model['class']] = Admin::introspectModel($model['class'])->find('count', array(
+						'cache' => array($model['class'], 'count'),
+						'cacheExpires' => '+24 hours'
+					));
+				}
+			}
+		}
 
-	public function beforeFilter() {
-		parent::beforeFilter();
-
-		$this->Auth->allow();
+		$this->set('plugins', $plugins);
+		$this->set('counts', $counts);
 	}
 
 }
