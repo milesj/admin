@@ -34,20 +34,26 @@ foreach (array(
 	'hasMany' => 'Has Many',
 	'hasAndBelongsToMany' => 'Has and Belongs to Many'
 ) as $property => $title) {
-	if ($associations = $model->{$property}) { ?>
+	$associations = array();
+
+	foreach ($model->{$property} as $alias => $assoc) {
+		if (!empty($result[$alias])) {
+			$associations[$alias] = $assoc;
+		}
+	}
+
+	if ($associations) { ?>
 
 	<div class="row-fluid">
 		<h3 class="text-info"><?php echo __($title); ?></h3>
 
 		<?php // Loop over the model relations
 		foreach ($associations as $alias => $assoc) {
-			if (!empty($result[$alias])) {
-				echo $this->element('assoc/' . Inflector::underscore($property), array(
-					'alias' => $alias,
-					'assoc' => $assoc,
-					'results' => $result[$alias]
-				));
-			}
+			echo $this->element('assoc/' . Inflector::underscore($property), array(
+				'alias' => $alias,
+				'assoc' => $assoc,
+				'results' => $result[$alias]
+			));
 		} ?>
 	</div>
 

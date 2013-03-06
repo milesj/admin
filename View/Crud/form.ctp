@@ -31,7 +31,15 @@ echo $this->element('action_buttons'); ?>
 </fieldset>
 
 <?php // Display HABTM fields
-if ($habtm = $model->hasAndBelongsToMany) { ?>
+$habtm = array();
+
+foreach ($model->hasAndBelongsToMany as $alias => $assoc) {
+	if ($assoc['showInForm']) {
+		$habtm[$alias] = $assoc;
+	}
+}
+
+if ($habtm) { ?>
 
 	<fieldset>
 		<legend><?php echo __('Associate With'); ?></legend>

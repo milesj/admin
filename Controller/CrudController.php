@@ -319,6 +319,10 @@ class CrudController extends AdminAppController {
 	 */
 	protected function setHabtmData() {
 		foreach ($this->Model->hasAndBelongsToMany as $alias => $assoc) {
+			if (!$assoc['showInForm']) {
+				continue;
+			}
+
 			$model = $this->Model->{$alias};
 			$variable = Inflector::variable(Inflector::pluralize(preg_replace('/(?:_id)$/', '', $assoc['associationForeignKey'])));
 			$results = $model->find('list', array(

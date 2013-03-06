@@ -16,12 +16,13 @@ class Introspect {
 	 * @return Model
 	 */
 	public static function load($model) {
-		if (isset(self::$_cache[$model])) {
-			return self::$_cache[$model];
+		$qualifiedName = trim($model, '.');
+
+		if (isset(self::$_cache[$qualifiedName])) {
+			return self::$_cache[$qualifiedName];
 		}
 
 		$object = ClassRegistry::init($model);
-		$qualifiedName = trim($model, '.');
 
 		list($plugin, $model) = pluginSplit($model);
 
@@ -66,17 +67,27 @@ class Introspect {
 
 		// Apply default admin settings
 		$settings = isset($object->admin) ? $object->admin : array();
-		$settings = array_merge(Configure::read('Admin.modelDefaults'), $settings);
 
-		if (!$settings['deletable']) {
-			$settings['batchDelete'] = false;
+		if (is_array($settings)) {
+			$settings = array_merge(Configure::read('Admin.modelDefaults'), $settings);
+
+			if (!$settings['deletable']) {
+				$settings['batchDelete'] = false;
+			}
+
+			$settings['fileFields'] = array_merge($settings['fileFields'], $settings['imageFields']);
+			$settings['hideFields'] = array_merge($settings['hideFields'], $hideFields);
+
+			$object->admin = $settings;
 		}
 
-		$settings['fileFields'] = array_merge($settings['fileFields'], $settings['imageFields']);
-		$settings['hideFields'] = array_merge($settings['hideFields'], $hideFields);
+		// Update associated settings
+		foreach ($object->hasAndBelongsToMany as &$assoc) {
+			$assoc = array_merge(array('showInForm' => true), $assoc);
+		}
 
-		$object->admin = $settings;
-		self::$_cache[$model] = $object;
+		// Cache the model
+		self::$_cache[$qualifiedName] = $object;
 
 		return $object;
 	}
