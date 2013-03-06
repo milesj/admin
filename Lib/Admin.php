@@ -145,6 +145,10 @@ class Admin {
 		$object->singularName = Inflector::humanize(Inflector::underscore($model));
 		$object->pluralName = Inflector::pluralize($object->singularName);
 
+		if (in_array($model, array('Aco', 'Aro'))) {
+			$object->displayField = 'alias';
+		}
+
 		// Generate a list of field (database column) data
 		$fields = $object->schema();
 		$hideFields = array();

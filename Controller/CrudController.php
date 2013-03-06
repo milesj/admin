@@ -23,6 +23,7 @@ class CrudController extends AdminAppController {
 		}
 
 		$this->set('results', $this->paginate($this->Model));
+		$this->render('Crud/index');
 	}
 
 	/**
@@ -43,7 +44,7 @@ class CrudController extends AdminAppController {
 			}
 		}
 
-		$this->render('form');
+		$this->render('Crud/form');
 	}
 
 	/**
@@ -65,6 +66,7 @@ class CrudController extends AdminAppController {
 		}
 
 		$this->set('result', $result);
+		$this->render('Crud/read');
 	}
 
 	/**
@@ -101,7 +103,7 @@ class CrudController extends AdminAppController {
 		}
 
 		$this->set('result', $result);
-		$this->render('form');
+		$this->render('Crud/form');
 	}
 
 	/**
@@ -135,6 +137,7 @@ class CrudController extends AdminAppController {
 		}
 
 		$this->set('result', $result);
+		$this->render('Crud/delete');
 	}
 
 	/**
@@ -248,7 +251,7 @@ class CrudController extends AdminAppController {
 			$action = $this->request->data[$this->Model->alias]['redirect_to'];
 		}
 
-		$url = array('controller' => 'crud', 'action' => $action, 'model' => $this->Model->urlSlug);
+		$url = array('controller' => strtolower($this->name), 'action' => $action, 'model' => $this->Model->urlSlug);
 
 		switch ($action) {
 			case 'read':
@@ -268,7 +271,7 @@ class CrudController extends AdminAppController {
 		$typeAhead = array();
 
 		foreach ($this->Model->belongsTo as $alias => $assoc) {
-			$model = $this->Model->{$alias};
+			$model = Admin::introspectModel($assoc['className']);
 			$count = $model->find('count');
 
 			// Add to type ahead if too many records
@@ -280,25 +283,10 @@ class CrudController extends AdminAppController {
 
 			} else {
 				$variable = Inflector::variable(Inflector::pluralize(preg_replace('/(?:_id)$/', '', $assoc['foreignKey'])));
-				$list = array();
-				$results = $model->find('all', array(
-					'order' => array($alias . '.' . $model->displayField => 'ASC')
-				));
 
-				if ($results) {
-					foreach ($results as $result) {
-						$id = $result[$alias][$model->primaryKey];
-						$display = $result[$alias][$model->displayField];
-
-						if ($display != $id) {
-							$display = $id . ' - ' . $display;
-						}
-
-						$list[$id] = $display;
-					}
-				}
-
-				$this->set($variable, $list);
+				$this->set($variable, $model->find('list', array(
+					'order' => array($model->alias . '.' . $model->displayField => 'ASC')
+				)));
 			}
 		}
 
@@ -309,18 +297,17 @@ class CrudController extends AdminAppController {
 	 * Set hasAndBelongsToMany data for forms. This allows for saving of associated data.
 	 */
 	protected function setHabtmData() {
-		foreach ($this->Model->hasAndBelongsToMany as $alias => $assoc) {
+		foreach ($this->Model->hasAndBelongsToMany as $assoc) {
 			if (!$assoc['showInForm']) {
 				continue;
 			}
 
-			$model = $this->Model->{$alias};
+			$model = Admin::introspectModel($assoc['className']);
 			$variable = Inflector::variable(Inflector::pluralize(preg_replace('/(?:_id)$/', '', $assoc['associationForeignKey'])));
-			$results = $model->find('list', array(
-				'order' => array($alias . '.' . $model->displayField => 'ASC')
-			));
 
-			$this->set($variable, $results);
+			$this->set($variable, $model->find('list', array(
+				'order' => array($model->alias . '.' . $model->displayField => 'ASC')
+			)));
 		}
 	}
 

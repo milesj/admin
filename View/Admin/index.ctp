@@ -17,7 +17,7 @@
 						<?php if ($model['installed']) {
 							echo $this->Html->link('<span class="icon-plus"></span>', array(
 								'controller' => 'crud',
-								'action' => 'index',
+								'action' => 'create',
 								'model' => $model['url']
 							), array(
 								'title' => __('Add'),
@@ -30,7 +30,7 @@
 							<?php echo $model['title']; ?>
 
 							<?php if (!$model['installed']) { ?>
-								<span class="label label-important tip" title="<?php echo __('ACL Not Installed'); ?>">&nbsp;!&nbsp;</span>
+								<span class="label label-important tip" title="<?php echo __('Not Installed'); ?>">&nbsp;!&nbsp;</span>
 							<?php } else { ?>
 								<span class="muted">(<?php echo $counts[$model['class']]; ?>)</span>
 							<?php } ?>

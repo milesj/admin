@@ -93,6 +93,6 @@ $(function() {
 	Admin.initialize();
 
 	$('.tip').tooltip({
-		placement: 'right'
+		placement: 'top'
 	});
 });

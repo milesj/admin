@@ -36,50 +36,37 @@ echo $this->Html->docType(); ?>
 
 				<div class="nav-collapse collapse navbar-inverse-collapse">
 					<ul class="nav">
-						<?php
-						$navigation = $this->Admin->getNavigation();
+						<li>
+							<?php echo $this->Html->link(__('ACL'), array(
+								'plugin' => 'admin',
+								'controller' => 'acl',
+								'action' => 'index'
+							)); ?>
+						</li>
 
-						// No plugins, so show all models
-						if (count($navigation) === 1) {
-							foreach ($navigation[0]['models'] as $model) { ?>
+						<?php foreach ($this->Admin->getNavigation() as $plugin) { ?>
 
-								<li>
-									<?php echo $this->Html->link($model['model'], array(
-										'plugin' => 'admin',
-										'controller' => 'crud',
-										'action' => 'index',
-										'model' => $model['url']
-									)); ?>
-								</li>
+						<li class="dropdown">
+							<a data-toggle="dropdown" class="dropdown-toggle" href="javascript:;">
+								<?php echo $plugin['title']; ?>
+								<span class="caret"></span>
+							</a>
 
-							<?php }
+							<ul class="dropdown-menu">
+								<?php foreach ($plugin['models'] as $model) { ?>
+									<li>
+										<?php echo $this->Html->link($model['title'], array(
+											'plugin' => 'admin',
+											'controller' => 'crud',
+											'action' => 'index',
+											'model' => $model['url']
+										)); ?>
+									</li>
+								<?php } ?>
+							</ul>
+						</li>
 
-						// Or group by plugin
-						} else {
-							foreach ($navigation as $plugin) { ?>
-
-								<li class="dropdown">
-									<a data-toggle="dropdown" class="dropdown-toggle" href="javascript:;">
-										<?php echo $plugin['title']; ?>
-										<span class="caret"></span>
-									</a>
-
-									<ul class="dropdown-menu">
-										<?php foreach ($plugin['models'] as $model) { ?>
-											<li>
-												<?php echo $this->Html->link($model['title'], array(
-													'plugin' => 'admin',
-													'controller' => 'crud',
-													'action' => 'index',
-													'model' => $model['url']
-												)); ?>
-											</li>
-										<?php } ?>
-									</ul>
-								</li>
-
-							<?php }
-						} ?>
+						<?php } ?>
 					</ul>
 				</div>
 			</div>

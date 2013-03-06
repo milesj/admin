@@ -55,9 +55,11 @@ class AdminAppController extends AppController {
 	 *
 	 * @param array $user
 	 * @return bool
+	 * @throws ForbiddenException
 	 */
 	public function isAuthorized($user) {
-		if (empty($this->params['model'])) {
+		return true;
+		if (empty($this->params['model']) || $this->name === 'Acl') {
 			return true;
 		}
 
@@ -68,7 +70,11 @@ class AdminAppController extends AppController {
 			$action = 'read';
 		}
 
-		return $this->Acl->check(array('User' => $user), $pluginModel, $action);
+		if ($this->Acl->check(array('User' => $user), $pluginModel, $action)) {
+			return true;
+		}
+
+		throw new ForbiddenException();
 	}
 
 	/**
