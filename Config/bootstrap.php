@@ -18,7 +18,7 @@ Configure::write('Admin.settings', array(
 	'titleSeparator' => ' - ',
 ));
 
-Configure::write('Admin.ignoreModels', array('User'));
+Configure::write('Admin.ignoreModels', array());
 
 /**
  * Default settings for each model.

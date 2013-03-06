@@ -14,19 +14,41 @@ echo $this->element('action_buttons'); ?>
 
 <h2><?php echo $pageTitle; ?></h2>
 
-<?php
-echo $this->Form->create($model->alias, array('class' => 'form-horizontal', 'file' => true));
+<?php echo $this->Form->create($model->alias, array('class' => 'form-horizontal', 'file' => true)); ?>
 
-foreach ($model->fields as $field => $data) {
-	if (($this->action === 'create' && $field === 'id') || in_array($field, $model->admin['hideFields'])) {
-		continue;
-	}
+<fieldset>
+	<?php // Loop over primary model fields
+	foreach ($model->fields as $field => $data) {
+		if (($this->action === 'create' && $field === 'id') || in_array($field, $model->admin['hideFields'])) {
+			continue;
+		}
 
-	echo $this->element('input', array(
-		'field' => $field,
-		'data' => $data
-	));
-} ?>
+		echo $this->element('input', array(
+			'field' => $field,
+			'data' => $data
+		));
+	} ?>
+</fieldset>
+
+<?php // Display HABTM fields
+if ($habtm = $model->hasAndBelongsToMany) { ?>
+
+	<fieldset>
+		<legend><?php echo __('Associate With'); ?></legend>
+
+		<?php foreach ($habtm as $alias => $assoc) {
+			$assoc['type'] = 'relation';
+			$assoc['title'] = $this->Admin->introspect($assoc['className'])->pluralName;
+			$assoc['hasAndBelongsToMany'] = true;
+
+			echo $this->element('input', array(
+				'field' => $alias,
+				'data' => $assoc
+			));
+		} ?>
+	</fieldset>
+
+<?php } ?>
 
 <div class="well align-center">
 	<?php echo $this->element('redirect_to'); ?>

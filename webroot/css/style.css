@@ -65,6 +65,8 @@ body {
 .controls-null label { margin-left: 5px; }
 .controls-null input { margin-top: -1px; }
 
+.control-group.relation select { height: 200px; }
+
 /* Define custom styles for tables */
 
 .sortable {

@@ -30,10 +30,11 @@ class CrudController extends AdminAppController {
 	 */
 	public function create() {
 		$this->Model->create();
-		$this->setAssociatedData();
+		$this->setBelongsToData();
+		$this->setHabtmData();
 
 		if ($this->request->is('post')) {
-			if ($this->Model->saveAssociated($this->getRequestData(), array('validate' => 'first', 'atomic' => true, 'deep' => true))) {
+			if ($this->Model->saveAll($this->getRequestData(), array('validate' => 'first', 'atomic' => true, 'deep' => true))) {
 				$this->setFlashMessage('Successfully created a new %s');
 				$this->redirectAfter();
 
@@ -84,10 +85,11 @@ class CrudController extends AdminAppController {
 			throw new NotFoundException();
 		}
 
-		$this->setAssociatedData();
+		$this->setBelongsToData();
+		$this->setHabtmData();
 
 		if ($this->request->is('put')) {
-			if ($this->Model->saveAssociated($this->getRequestData(), array('validate' => 'first', 'atomic' => true, 'deep' => true))) {
+			if ($this->Model->saveAll($this->getRequestData(), array('validate' => 'first', 'atomic' => true, 'deep' => true))) {
 				$this->setFlashMessage('Successfully updated %s with ID %s', $id);
 				$this->redirectAfter();
 
@@ -271,12 +273,12 @@ class CrudController extends AdminAppController {
 	/**
 	 * Set belongsTo data for select inputs. If there are too many records, switch to type ahead.
 	 */
-	protected function setAssociatedData() {
+	protected function setBelongsToData() {
 		$typeAhead = array();
 
 		foreach ($this->Model->belongsTo as $alias => $assoc) {
-			$belongsTo = $this->Model->{$alias};
-			$count = $belongsTo->find('count');
+			$model = $this->Model->{$alias};
+			$count = $model->find('count');
 
 			// Add to type ahead if too many records
 			if ($count > $this->Model->admin['associationLimit']) {
@@ -288,11 +290,14 @@ class CrudController extends AdminAppController {
 			} else {
 				$variable = Inflector::variable(Inflector::pluralize(preg_replace('/(?:_id)$/', '', $assoc['foreignKey'])));
 				$list = array();
+				$results = $model->find('all', array(
+					'order' => array($alias . '.' . $model->displayField => 'ASC')
+				));
 
-				if ($results = $belongsTo->find('all')) {
+				if ($results) {
 					foreach ($results as $result) {
-						$id = $result[$alias][$belongsTo->primaryKey];
-						$display = $result[$alias][$belongsTo->displayField];
+						$id = $result[$alias][$model->primaryKey];
+						$display = $result[$alias][$model->displayField];
 
 						if ($display != $id) {
 							$display = $id . ' - ' . $display;
@@ -307,6 +312,21 @@ class CrudController extends AdminAppController {
 		}
 
 		$this->set('typeAhead', $typeAhead);
+	}
+
+	/**
+	 * Set hasAndBelongsToMany data for forms. This allows for saving of associated data.
+	 */
+	protected function setHabtmData() {
+		foreach ($this->Model->hasAndBelongsToMany as $alias => $assoc) {
+			$model = $this->Model->{$alias};
+			$variable = Inflector::variable(Inflector::pluralize(preg_replace('/(?:_id)$/', '', $assoc['associationForeignKey'])));
+			$results = $model->find('list', array(
+				'order' => array($alias . '.' . $model->displayField => 'ASC')
+			));
+
+			$this->set($variable, $results);
+		}
 	}
 
 	/**

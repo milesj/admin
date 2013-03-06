@@ -37,6 +37,9 @@ if ($hasError) {
 		if (!empty($data['belongsTo'])) {
 			$element = 'belongs_to';
 
+		} else if (!empty($data['hasAndBelongsToMany'])) {
+			$element = 'has_and_belongs_to_many';
+
 		} else if ($field === 'id') {
 			$element = 'id';
 
@@ -53,7 +56,7 @@ if ($hasError) {
 		));
 
 		// Show a null checkbox for fields that support it
-		if ($data['null']) {
+		if (isset($data['null']) && $data['null']) {
 			if (isset($this->data[$model->alias][$field])) {
 				$null = $this->data[$model->alias][$field];
 				$checked = ($null === null || $null === '');

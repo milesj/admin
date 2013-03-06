@@ -25,11 +25,8 @@ class Introspect {
 
 		list($plugin, $model) = pluginSplit($model);
 
-		// Alter the current behaviors
-		$object->Behaviors->load('Containable');
-		$object->Behaviors->unload('Utility.Cacheable');
-
 		// Override model
+		$object->Behaviors->load('Containable');
 		$object->cacheQueries = true;
 		$object->recursive = -1;
 
