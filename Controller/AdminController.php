@@ -2,6 +2,9 @@
 
 class AdminController extends AdminAppController {
 
+	/**
+	 * List out all models and plugins.
+	 */
 	public function index() {
 		$plugins = Admin::getModels();
 		$counts = array();

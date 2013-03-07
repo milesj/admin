@@ -28,14 +28,14 @@ class AclController extends AdminAppController {
 		$aco_id = isset($this->request->params['named']['aco_id']) ? $this->request->params['named']['aco_id'] : null;
 
 		if (!$aro_id || !$aco_id) {
-			throw new BadRequestException('Invalid ARO/ACO IDs');
+			throw new BadRequestException(__('Invalid ARO/ACO IDs'));
 		}
 
 		$aro = $this->Aro->findById($aro_id);
 		$aco = $this->Aco->findById($aco_id);
 
 		if (!$aro || !$aco) {
-			throw new NotFoundException('Invalid ARO/ACO Records');
+			throw new NotFoundException(__('Invalid ARO/ACO Records'));
 		}
 
 		$aroAlias = $aro['RequestObject']['alias'];

@@ -1,8 +1,5 @@
 <?php
 
-/**
- * @property Model $Model
- */
 class CrudController extends AdminAppController {
 
 	/**
@@ -172,6 +169,46 @@ class CrudController extends AdminAppController {
 
 		$this->set('results', $results);
 		$this->set('_serialize', 'results');
+	}
+
+	/**
+	 * Validate the user has the correct CRUD access permission.
+	 *
+	 * @param array $user
+	 * @return bool
+	 * @throws ForbiddenException
+	 * @throws UnauthorizedException
+	 */
+	public function isAuthorized($user) {
+		parent::isAuthorized($user);
+
+		if (empty($this->params['model'])) {
+			throw new ForbiddenException(__('Invalid Model'));
+		}
+
+		list($plugin, $model, $class) = Admin::parseName($this->params['model']);
+
+		// Don't allow certain models
+		if (in_array($class, Configure::read('Admin.ignoreModels'))) {
+			throw new ForbiddenException(__('Restricted Model'));
+		}
+
+		$action = $this->action;
+
+		// Allow type ahead
+		if ($action === 'type_ahead') {
+			return true;
+
+		// Index counts as a read
+		} else if ($action === 'index') {
+			$action = 'read';
+		}
+
+		if ($this->Acl->check(array('User' => $user), $class, $action)) {
+			return true;
+		}
+
+		throw new UnauthorizedException(__('Insufficient Access Permissions'));
 	}
 
 	/**

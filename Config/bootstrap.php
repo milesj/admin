@@ -21,6 +21,8 @@ Configure::write('Admin.appName', __('Admin'));
 
 Configure::write('Admin.coreName', 'Core');
 
+Configure::write('Admin.adminAlias', 'administrator');
+
 Configure::write('Admin.ignoreModels', array());
 
 /**

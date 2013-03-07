@@ -56,26 +56,18 @@ class AdminAppController extends AppController {
 	 * @param array $user
 	 * @return bool
 	 * @throws ForbiddenException
+	 * @throws UnauthorizedException
 	 */
 	public function isAuthorized($user) {
-		return true;
+		if (!$user) {
+			throw new ForbiddenException(__('Invalid User'));
+		}
 
-		if (empty($this->params['model']) || $this->name === 'Acl') {
+		if (Admin::introspectModel('Admin.RequestObject')->isAdmin($user['id'])) {
 			return true;
 		}
 
-		list($plugin, $model, $class) = Admin::parseName($this->params['model']);
-		$action = $this->action;
-
-		if (!in_array($action, array('create', 'update', 'delete'))) {
-			$action = 'read';
-		}
-
-		if ($this->Acl->check(array('User' => $user), $class, $action)) {
-			return true;
-		}
-
-		throw new ForbiddenException();
+		throw new UnauthorizedException(__('Insufficient Access Permissions'));
 	}
 
 	/**

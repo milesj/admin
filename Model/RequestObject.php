@@ -112,6 +112,19 @@ class RequestObject extends Aro {
 	}
 
 	/**
+	 * Return a record by alias.
+	 *
+	 * @param string $alias
+	 * @return array
+	 */
+	public function getAlias($alias) {
+		return $this->find('first', array(
+			'conditions' => array('RequestObject.alias' => $alias),
+			'contain' => array('Parent')
+		));
+	}
+
+	/**
 	 * Check if an alias already exists.
 	 *
 	 * @param string $alias
@@ -122,6 +135,28 @@ class RequestObject extends Aro {
 			'conditions' => array('RequestObject.alias' => $alias),
 			'cache' => array(__METHOD__, $alias),
 			'cacheExpires' => '+24 hours'
+		));
+	}
+
+	/**
+	 * Check to see if a user is part of the admin ARO.
+	 *
+	 * @param int $user_id
+	 * @return bool
+	 */
+	public function isAdmin($user_id) {
+		$admin = $this->getAlias(Configure::read('Admin.adminAlias'));
+
+		if (!$admin) {
+			return false;
+		}
+
+		return (bool) $this->find('count', array(
+			'conditions' => array(
+				'RequestObject.model' => 'User',
+				'RequestObject.foreign_key' => $user_id,
+				'RequestObject.parent_id' => $admin['RequestObject']['id']
+			)
 		));
 	}
 
