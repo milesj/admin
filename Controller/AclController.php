@@ -1,11 +1,11 @@
 <?php
 
 /**
- * http://book.cakephp.org/2.0/en/core-libraries/components/access-control-lists.html
+ * Manage ACL: http://book.cakephp.org/2.0/en/core-libraries/components/access-control-lists.html
  *
- * @property Aco $Aco
- * @property Aro $Aro
- * @property Permission $Permission
+ * @property ControlObject $Aco
+ * @property RequestObject $Aro
+ * @property ObjectPermission $Permission
  */
 class AclController extends AdminAppController {
 
@@ -23,12 +23,12 @@ class AclController extends AdminAppController {
 	public function beforeFilter() {
 		parent::beforeFilter();
 
-		$this->Aco = Admin::introspectModel('Aco');
+		$this->Aco = Admin::introspectModel('Admin.ControlObject');
 
-		$this->Aro = Admin::introspectModel('Aro');
+		$this->Aro = Admin::introspectModel('Admin.RequestObject');
 		$this->Aro->recursive = 0; // Use recursive as containable pulls in too much data
 
-		$this->Permission = Admin::introspectModel('Permission');
+		$this->Permission = Admin::introspectModel('Admin.ObjectPermission');
 		$this->Permission->cacheQueries = false;
 	}
 
@@ -38,11 +38,7 @@ class AclController extends AdminAppController {
 	 * @return array
 	 */
 	protected function getControllers() {
-		return $this->Aco->find('all', array(
-			'order' => array('Aco.alias' => 'ASC'),
-			'cache' => array('Aco::getAll'),
-			'cacheExpires' => '+1 hour'
-		));
+		return $this->Aco->getAll();
 	}
 
 	/**
@@ -54,54 +50,37 @@ class AclController extends AdminAppController {
 		$mapByAroId = array();
 
 		// Map out the permissions
-		$permissions = $this->Permission->find('all', array(
-			'cache' => array('Permission::getAll'),
-			'cacheExpires' => '+1 hour'
-		));
-
-		if ($permissions) {
+		if ($permissions = $this->Permission->getAll()) {
 			foreach ($permissions as $permission) {
-				$permission = $permission['Permission'];
+				$permission = $permission['ObjectPermission'];
 				$mapByAroId[$permission['aro_id']][$permission['aco_id']] = $permission;
 			}
 		}
 
 		// Grab the permissions for each aro
-		$this->Aro->bindModel(array(
-			'belongsTo' => array(
-				'Parent' => array(
-					'className' => 'Aro',
-					'fields' => array('Parent.alias')
-				)
-			)
-		));
-
-		$aros = $this->Aro->find('all', array(
-			'cache' => array('Aro::getAll'),
-			'cacheExpires' => '+1 hour'
-		));
+		$aros = $this->Aro->getAll();
 
 		if ($aros) {
 			foreach ($aros as &$aro) {
-				$aro['Permission'] = array();
-				$id = $aro['Aro']['id'];
-				$parent_id = $aro['Aro']['parent_id'];
+				$aro['ObjectPermission'] = array();
+				$id = $aro['RequestObject']['id'];
+				$parent_id = $aro['RequestObject']['parent_id'];
 
 				// If inheriting from parent, force all values to 0 (inherit)
 				if ($parent_id && isset($mapByAroId[$parent_id])) {
-					$aro['Permission'] = array_map(function($value) {
+					$aro['ObjectPermission'] = array_map(function($value) {
 						return array_merge($value, array(
 							'_create' => 0,
 							'_read' => 0,
 							'_update' => 0,
 							'_delete' => 0
 						));
-					}, $mapByAroId[$parent_id]) + $aro['Permission'];
+					}, $mapByAroId[$parent_id]) + $aro['ObjectPermission'];
 				}
 
 				// Individual perms should take precedence
 				if (isset($mapByAroId[$id])) {
-					$aro['Permission'] = $mapByAroId[$id] + $aro['Permission'];
+					$aro['ObjectPermission'] = $mapByAroId[$id] + $aro['ObjectPermission'];
 				}
 			}
 		}

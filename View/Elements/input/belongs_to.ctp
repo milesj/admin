@@ -4,7 +4,8 @@
 if (empty($typeAhead[$field])) {
 	echo $this->Form->input($field, array(
 		'div' => false,
-		'label' => false
+		'label' => false,
+		'empty' => $data['null']
 	));
 
 // Use a text box with type ahead via AJAX

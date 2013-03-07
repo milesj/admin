@@ -15,10 +15,15 @@ class AdminHelper extends AppHelper {
 	 * Generate a nested list of dependencies by looping and drilling down through all the model associations.
 	 *
 	 * @param Model $model
+	 * @param int $depth
 	 * @return array
 	 */
-	public function getDependencies(Model $model) {
+	public function getDependencies(Model $model, $depth = 0) {
 		$dependencies = array();
+
+		if ($depth >= 5) {
+			return $dependencies;
+		}
 
 		foreach (array($model->hasOne, $model->hasMany, $model->hasAndBelongsToMany) as $assocGroup) {
 			foreach ($assocGroup as $assoc) {
@@ -36,7 +41,7 @@ class AdminHelper extends AppHelper {
 
 				$dependencies[] = array(
 					'model' => $class,
-					'dependencies' => $this->getDependencies($this->introspect($class))
+					'dependencies' => $this->getDependencies($this->introspect($class), ($depth + 1))
 				);
 			}
 		}

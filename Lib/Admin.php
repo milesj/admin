@@ -18,10 +18,6 @@ class Admin {
 		$pluginMap = array();
 
 		foreach ($plugins as $plugin) {
-			if ($plugin === 'Admin') {
-				continue;
-			}
-
 			$modelMap = array();
 			$path = null;
 
@@ -63,6 +59,7 @@ class Admin {
 			);
 		}
 
+		ksort($pluginMap);
 		self::$_cache[__METHOD__] = $pluginMap;
 
 		return $pluginMap;
@@ -130,7 +127,11 @@ class Admin {
 
 		// Override model
 		$object->Behaviors->load('Containable');
-		$object->Behaviors->load('Utility.Cacheable');
+
+		if (CakePlugin::loaded('Utility')) {
+			$object->Behaviors->load('Utility.Cacheable');
+		}
+
 		$object->cacheQueries = true;
 		$object->recursive = -1;
 

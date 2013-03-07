@@ -78,7 +78,7 @@ var Admin = {
 					self.prop('checked', !(this.value));
 				};
 
-				if (self.prop('tagName').toLowerCase() === 'input') {
+				if (related.prop('tagName').toLowerCase() === 'input') {
 					related.keyup(callback);
 				} else {
 					related.change(callback);
