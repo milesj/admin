@@ -93,4 +93,18 @@ class RequestObject extends Aro {
 		));
 	}
 
+	/**
+	 * Check if an alias already exists.
+	 *
+	 * @param string $alias
+	 * @return bool
+	 */
+	public function hasAlias($alias) {
+		return (bool) $this->find('count', array(
+			'conditions' => array('RequestObject.alias' => $alias),
+			'cache' => array(__METHOD__, $alias),
+			'cacheExpires' => '+24 hours'
+		));
+	}
+
 }

@@ -92,4 +92,18 @@ class ControlObject extends Aco {
 		));
 	}
 
+	/**
+	 * Check if an alias already exists.
+	 *
+	 * @param string $alias
+	 * @return bool
+	 */
+	public function hasAlias($alias) {
+		return (bool) $this->find('count', array(
+			'conditions' => array('ControlObject.alias' => $alias),
+			'cache' => array(__METHOD__, $alias),
+			'cacheExpires' => '+24 hours'
+		));
+	}
+
 }

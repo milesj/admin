@@ -5,6 +5,10 @@
  */
 define('ADMIN_PLUGIN', dirname(__DIR__) . '/');
 
+if (!defined('USER_MODEL')) {
+	define('USER_MODEL', 'User');
+}
+
 /**
  * Current version.
  */
@@ -13,10 +17,9 @@ Configure::write('Admin.version', file_get_contents(ADMIN_PLUGIN . 'version.md')
 /**
  * Plugin settings.
  */
-Configure::write('Admin.settings', array(
-	'name' => __('Admin'),
-	'titleSeparator' => ' - ',
-));
+Configure::write('Admin.appName', __('Admin'));
+
+Configure::write('Admin.coreName', 'Core');
 
 Configure::write('Admin.ignoreModels', array());
 

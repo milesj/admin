@@ -170,14 +170,14 @@ class CrudController extends AdminAppController {
 
 		// Introspect model
 		if (isset($this->params['model'])) {
-			list($plugin, $model, $pluginModel) = Admin::parseModelName($this->params['model']);
+			list($plugin, $model, $class) = Admin::parseName($this->params['model']);
 
 			// Don't allow certain models
-			if (in_array($pluginModel, Configure::read('Admin.ignoreModels'))) {
+			if (in_array($class, Configure::read('Admin.ignoreModels'))) {
 				throw new ForbiddenException(__('Restricted Model'));
 			}
 
-			$this->Model = Admin::introspectModel($pluginModel);
+			$this->Model = Admin::introspectModel($class);
 		}
 
 		// Parse request and set null fields to null

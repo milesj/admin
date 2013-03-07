@@ -65,7 +65,7 @@ class InstallShell extends AppShell {
 		$className = $modelName;
 
 		if (strpos($className, '.') === false) {
-			$className = 'Core.' . $className;
+			$className = Configure::read('Admin.coreName') . '.' . $className;
 		}
 
 		$exists = (bool) $this->Aco->find('count', array(
