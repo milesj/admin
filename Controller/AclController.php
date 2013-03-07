@@ -18,6 +18,43 @@ class AclController extends AdminAppController {
 	}
 
 	/**
+	 * Grant an ARO access to an ACO.
+	 *
+	 * @throws NotFoundException
+	 * @throws BadRequestException
+	 */
+	public function grant() {
+		$aro_id = isset($this->request->params['named']['aro_id']) ? $this->request->params['named']['aro_id'] : null;
+		$aco_id = isset($this->request->params['named']['aco_id']) ? $this->request->params['named']['aco_id'] : null;
+
+		if (!$aro_id || !$aco_id) {
+			throw new BadRequestException('Invalid ARO/ACO IDs');
+		}
+
+		$aro = $this->Aro->findById($aro_id);
+		$aco = $this->Aco->findById($aco_id);
+
+		if (!$aro || !$aco) {
+			throw new NotFoundException('Invalid ARO/ACO Records');
+		}
+
+		$aroAlias = $aro['RequestObject']['alias'];
+		$acoAlias = $aco['ControlObject']['alias'];
+
+		if (!empty($aro['Parent']['alias'])) {
+			$aroAlias = $aro['Parent']['alias'] . '/' . $aroAlias;
+		}
+
+		if ($this->Acl->allow($aroAlias, $acoAlias)) {
+			$this->Session->setFlash(__('Successfully granted %s permission to %s', array($aroAlias, $acoAlias)), 'flash', array('class' => 'success'));
+		} else {
+			$this->Session->setFlash(__('Failed to grant %s permission to %s', array($aroAlias, $acoAlias)), 'flash', array('class' => 'error'));
+		}
+
+		$this->redirect(array('action' => 'index'));
+	}
+
+	/**
 	 * Introspect ACL models and make them available.
 	 */
 	public function beforeFilter() {

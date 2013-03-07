@@ -87,10 +87,15 @@ $this->Breadcrumb->add(__('ACL'), array('controller' => 'acl', 'action' => 'inde
 						</td>
 
 					<?php }
-					} else { ?>
+					} else {
+						$url = $this->Html->url(array(
+							'action' => 'grant',
+							'aro_id' => $aro['RequestObject']['id'],
+							'aco_id' => $aco['ControlObject']['id']
+						)); ?>
 
 						<td colspan="4" class="permission">
-							<a href="<?php echo $this->Html->url(array('action' => 'grant')); ?>" class="action tip" title="<?php echo __('No access defined. Grant permission?'); ?>">
+							<a href="<?php echo $url; ?>" class="action tip" title="<?php echo __('No access defined. Grant permission?'); ?>">
 								&nbsp;
 							</a>
 						</td>

@@ -58,7 +58,7 @@ class AdminAppController extends AppController {
 	 * @throws ForbiddenException
 	 */
 	public function isAuthorized($user) {
-		return true;
+
 		if (empty($this->params['model']) || $this->name === 'Acl') {
 			return true;
 		}
