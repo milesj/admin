@@ -5,7 +5,14 @@ var Admin = {
 	 * Initialize global events.
 	 */
 	initialize: function() {
-		$('.clickable tbody tr').click(function() {
+		$('.clickable tbody tr').click(function(e) {
+			var target = $(e.target),
+				tag = target.prop('tagName').toLowerCase();
+
+			if (tag === 'a' || tag === 'input') {
+				return;
+			}
+
 			var id = $(this).find('.col-id');
 
 			if (id.length) {

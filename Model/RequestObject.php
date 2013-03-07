@@ -1,5 +1,7 @@
 <?php
 
+App::uses('Aro', 'Model');
+
 class RequestObject extends Aro {
 
 	/**
@@ -77,6 +79,22 @@ class RequestObject extends Aro {
 			'showInForm' => false
 		)
 	);
+
+	/**
+	 * Add an alias if it does not exist.
+	 *
+	 * @param string $alias
+	 * @return bool
+	 */
+	public function addAlias($alias) {
+		if ($this->hasAlias($alias)) {
+			return true;
+		}
+
+		$this->create();
+
+		return $this->save(array('alias' => $alias));
+	}
 
 	/**
 	 * Return all records.

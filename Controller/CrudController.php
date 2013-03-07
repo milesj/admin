@@ -17,8 +17,20 @@ class CrudController extends AdminAppController {
 
 		// Batch delete
 		if ($this->request->is('post')) {
-			if (!$this->Model->admin['deletable']) {
+			if (!$this->Model->admin['batchDelete']) {
 				throw new ForbiddenException();
+			}
+
+			$count = 0;
+
+			foreach ($this->request->data[$this->Model->alias] as $id) {
+				if ($id && $this->Model->delete($id, true)) {
+					$count++;
+				}
+			}
+
+			if ($count > 0) {
+				$this->Session->setFlash(__('%s %s have been deleted', array($count, strtolower($this->Model->pluralName))), 'flash', array('class' => 'success'));
 			}
 		}
 

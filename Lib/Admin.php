@@ -65,6 +65,10 @@ class Admin {
 			$path = null;
 
 			if ($plugin !== Configure::read('Admin.coreName')) {
+				if (!CakePlugin::loaded($plugin)) {
+					return null;
+				}
+
 				$path = CakePlugin::path($plugin);
 			}
 
@@ -103,6 +107,7 @@ class Admin {
 
 			foreach ($models as $model) {
 				$class = $model;
+				$id = $plugin . '.' . $model;
 
 				if ($plugin !== $core) {
 					$class = $plugin . '.' . $class;
@@ -117,8 +122,9 @@ class Admin {
 				$map[] = array(
 					'title' => $model,
 					'class' => $class,
+					'id' => $id,
 					'url' => Inflector::underscore($plugin) . '.' . Inflector::underscore($model),
-					'installed' => self::isModelInstalled($plugin . '.' . $model)
+					'installed' => self::isModelInstalled($id)
 				);
 			}
 
@@ -181,11 +187,7 @@ class Admin {
 
 			// Override model
 			$object->Behaviors->load('Containable');
-
-			if (CakePlugin::loaded('Utility')) {
-				$object->Behaviors->load('Utility.Cacheable');
-			}
-
+			$object->Behaviors->load('Utility.Cacheable');
 			$object->cacheQueries = true;
 			$object->recursive = -1;
 

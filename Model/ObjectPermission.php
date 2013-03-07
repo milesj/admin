@@ -1,5 +1,7 @@
 <?php
 
+App::uses('Permission', 'Model');
+
 class ObjectPermission extends Permission {
 
 	const ALLOW = 1;

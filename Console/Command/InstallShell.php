@@ -1,50 +1,83 @@
 <?php
 
 App::uses('Admin', 'Admin.Lib');
-App::uses('AppShell', 'Console/Command');
+App::uses('BaseInstallShell', 'Utility.Console/Command');
 
-class InstallShell extends AppShell {
+/**
+ * @property ControlObject $ControlObject
+ * @property RequestObject $RequestObject
+ */
+class InstallShell extends BaseInstallShell {
 
 	/**
 	 * Models.
 	 *
 	 * @var array
 	 */
-	public $uses = array('Aro', 'Aco');
+	public $uses = array('Admin.RequestObject', 'Admin.ControlObject');
 
 	/**
-	 * Output help text.
+	 * Trigger install.
 	 */
 	public function main() {
-		$this->out($this->OptionParser->help());
+		$this->setSteps(array(
+			'Check Database Configuration' => 'checkDbConfig',
+			'Set Table Prefix' => 'checkTablePrefix',
+			'Check Table Status' => 'checkRequiredTables',
+			'Setup ACL' => 'setupAcl',
+			'Finish Installation' => 'finish'
+		))
+		->setDbConfig('default')
+		->setRequiredTables(array('aros', 'acos', 'aros_acos'));
+
+		$this->out('Plugin: Admin v' . Configure::read('Admin.version'));
+		$this->out('Copyright: Miles Johnson, 2010-' . date('Y'));
+		$this->out('Help: http://milesj.me/code/cakephp/admin');
+
+		parent::main();
+	}
+
+	/**
+	 * Setup all the ACL records.
+	 */
+	public function setupAcl() {
+		$this->plugin('Admin');
+		$this->out('<info>Proceeding...</info>');
+
+		return true;
+	}
+
+	/**
+	 * Finalize the installation.
+	 *
+	 * @return bool
+	 */
+	public function finish() {
+		$this->hr(1);
+		$this->out('Admin installation complete!');
+		//$this->out('Please read the documentation for further instructions:');
+		//$this->out('http://milesj.me/code/cakephp/admin');
+		$this->hr(1);
+
+		return true;
 	}
 
 	/**
 	 * Install ACOs for all plugin models.
+	 *
+	 * @param string $name
 	 */
-	public function plugin() {
-		$plugins = Admin::getModels();
-		$pluginName = $this->args[0];
+	public function plugin($name = null) {
+		$pluginName = $name ?: $this->args[0];
+		$plugin = Admin::getPlugin($pluginName);
 
-		if (empty($plugins[$pluginName])) {
+		if (!$plugin) {
 			$this->err(sprintf('<error>%s plugin does not exist</error>', $pluginName));
 			return;
 		}
 
-		$plugin = $plugins[$pluginName];
-
 		foreach ($plugin['models'] as $model) {
-			$exists = (bool) $this->Aco->find('count', array(
-				'conditions' => array('Aco.alias' => $model['class']),
-				'recursive' => -1
-			));
-
-			if ($exists) {
-				continue;
-			}
-
-			$this->Aco->create();
-			$this->Aco->save(array('alias' => $model['class']));
+			$this->ControlObject->addAlias($model['id']);
 		}
 
 		$this->out(sprintf('<info>%s model ACOs installed</info>', $pluginName));
@@ -52,9 +85,11 @@ class InstallShell extends AppShell {
 
 	/**
 	 * Install ACOs for a single model.
+	 *
+	 * @param string $name
 	 */
-	public function model() {
-		$modelName = Inflector::classify($this->args[0]);
+	public function model($name = null) {
+		$modelName = Inflector::classify($name ?: $this->args[0]);
 		$model = ClassRegistry::init($modelName);
 
 		if (get_class($model) === 'AppModel') {
@@ -68,15 +103,7 @@ class InstallShell extends AppShell {
 			$className = Configure::read('Admin.coreName') . '.' . $className;
 		}
 
-		$exists = (bool) $this->Aco->find('count', array(
-			'conditions' => array('Aco.alias' => $className),
-			'recursive' => -1
-		));
-
-		if (!$exists) {
-			$this->Aco->create();
-			$this->Aco->save(array('alias' => $className));
-		}
+		$this->ControlObject->addAlias($className);
 
 		$this->out(sprintf('<info>%s ACOs installed</info>', $modelName));
 	}

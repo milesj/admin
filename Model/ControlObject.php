@@ -1,5 +1,7 @@
 <?php
 
+App::uses('Aco', 'Model');
+
 class ControlObject extends Aco {
 
 	/**
@@ -80,11 +82,29 @@ class ControlObject extends Aco {
 	);
 
 	/**
+	 * Add an alias if it does not exist.
+	 *
+	 * @param string $alias
+	 * @return bool
+	 */
+	public function addAlias($alias) {
+		if ($this->hasAlias($alias)) {
+			return true;
+		}
+
+		$this->create();
+
+		return $this->save(array('alias' => $alias));
+	}
+
+	/**
 	 * Return all records.
 	 *
 	 * @return array
 	 */
 	public function getAll() {
+		$this->recursive = 0;
+
 		return $this->find('all', array(
 			'order' => array('ControlObject.alias' => 'ASC'),
 			'cache' => __METHOD__,
