@@ -53,7 +53,8 @@ class RequestObject extends Aro {
 	 */
 	public $belongsTo = array(
 		'Parent' => array(
-			'className' => 'Admin.RequestObject'
+			'className' => 'Admin.RequestObject',
+			'foreignKey' => 'parent_id'
 		)
 	);
 

@@ -18,18 +18,19 @@ echo $this->Html->docType(); ?>
 
 	<div class="body container-fluid">
 		<div class="row-fluid">
-			<div class="well well-small breadcrumbs">
-				<ul class="breadcrumb">
-					<?php foreach ($this->Breadcrumb->get() as $crumb) { ?>
-						<li>
-							<?php echo $this->Html->link($crumb['title'], $crumb['url']); ?>
-							<span class="divider">&raquo;</span>
-						</li>
-					<?php } ?>
-				</ul>
-			</div>
+			<?php if ($crumbs = $this->Breadcrumb->get()) { ?>
+				<div class="well well-small breadcrumbs">
+					<ul class="breadcrumb">
+						<?php foreach ($crumbs as $crumb) { ?>
+							<li>
+								<?php echo $this->Html->link($crumb['title'], $crumb['url']); ?>
+								<span class="divider">&raquo;</span>
+							</li>
+						<?php } ?>
+					</ul>
+				</div>
+			<?php }
 
-			<?php
 			echo $this->Session->flash();
 			echo $this->fetch('content'); ?>
 		</div>

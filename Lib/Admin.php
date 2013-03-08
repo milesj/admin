@@ -165,7 +165,7 @@ class Admin {
 			$plugin = Inflector::camelize($plugin);
 			$model = Inflector::camelize($model);
 
-			return array($plugin, $model, $$plugin . '.' . $model);
+			return array($plugin, $model, $plugin . '.' . $model);
 		});
 	}
 

@@ -1,5 +1,3 @@
-<?php
-$this->Breadcrumb->add(__('Dashboard'), array('controller' => 'admin', 'action' => 'index')); ?>
 
 <div class="row-fluid">
 	<?php foreach ($plugins as $plugin) { ?>

@@ -22,7 +22,10 @@
 						)); ?>
 					</li>
 
-					<?php foreach ($this->Admin->getNavigation() as $plugin => $groups) { ?>
+					<?php foreach ($this->Admin->getNavigation() as $plugin => $groups) {
+						if (empty($groups)) {
+							continue;
+						} ?>
 
 						<li class="dropdown">
 							<a data-toggle="dropdown" class="dropdown-toggle" href="javascript:;">
