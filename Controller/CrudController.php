@@ -16,6 +16,9 @@ class CrudController extends AdminAppController {
 		if ($this->request->is('post')) {
 			if (!$this->Model->admin['batchDelete']) {
 				throw new ForbiddenException();
+
+			} else if (!$this->Acl->check(array('User' => $this->Auth->user('id')), $this->Model->qualifiedName, 'delete')) {
+				throw new UnauthorizedException(__('Insufficient Access Permissions'));
 			}
 
 			$count = 0;

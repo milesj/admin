@@ -34,7 +34,7 @@ $this->Breadcrumb->add(__('Dashboard'), array('controller' => 'admin', 'action' 
 							<?php if (!$model['installed']) { ?>
 								<span class="label label-important tip" title="<?php echo __('Not Installed'); ?>">&nbsp;!&nbsp;</span>
 							<?php } else { ?>
-								<span class="muted">(<?php echo $counts[$model['class']]; ?>)</span>
+								<span class="muted">(<?php echo number_format($counts[$model['class']]); ?>)</span>
 							<?php } ?>
 						</a>
 					</li>

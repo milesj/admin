@@ -29,15 +29,8 @@ cake Admin.install
 ```
 
 Install the plugins and models to enable CRUD functionality and enable access permissions.
-The Core plugin refers to the application models; this allows for quick installation of all models.
 
 ```
-cake Admin.install plugin Core
 cake Admin.install plugin Forum
-```
-
-Or install individual models.
-
-```
 cake Admin.install model User
 ```

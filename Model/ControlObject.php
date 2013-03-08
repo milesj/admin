@@ -81,19 +81,33 @@ class ControlObject extends Aco {
 	);
 
 	/**
-	 * Add an alias if it does not exist.
+	 * Add an object if it does not exist.
 	 *
 	 * @param string $alias
-	 * @return bool
+	 * @param int $parent_id
+	 * @return int
 	 */
-	public function addAlias($alias) {
-		if ($this->hasAlias($alias)) {
-			return true;
+	public function addObject($alias, $parent_id = null) {
+		$query = array(
+			'alias' => $alias,
+			'parent_id' => $parent_id
+		);
+
+		$result = $this->find('first', array(
+			'conditions' => $query
+		));
+
+		if ($result) {
+			return $result['ControlObject']['id'];
 		}
 
 		$this->create();
 
-		return $this->save(array('alias' => $alias));
+		if ($this->save($query)) {
+			return $this->id;
+		}
+
+		return null;
 	}
 
 	/**

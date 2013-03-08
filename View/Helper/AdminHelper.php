@@ -26,7 +26,7 @@ class AdminHelper extends AppHelper {
 		}
 
 		foreach (array($model->hasOne, $model->hasMany, $model->hasAndBelongsToMany) as $assocGroup) {
-			foreach ($assocGroup as $assoc) {
+			foreach ($assocGroup as $alias => $assoc) {
 				// hasOne, hasMany
 				if (isset($assoc['dependent']) && $assoc['dependent']) {
 					$class = $assoc['className'];
@@ -40,6 +40,7 @@ class AdminHelper extends AppHelper {
 				}
 
 				$dependencies[] = array(
+					'alias' => $alias,
 					'model' => $class,
 					'dependencies' => $this->getDependencies($this->introspect($class), ($depth + 1))
 				);
@@ -106,8 +107,9 @@ class AdminHelper extends AppHelper {
 
 			$exclude[] = $dependent['model'];
 
-			$output .= sprintf('<li>%s %s</li>',
+			$output .= sprintf('<li>%s (%s) %s</li>',
 				$dependent['model'],
+				$dependent['alias'],
 				$this->loopDependencies($dependent['dependencies'], $exclude));
 		}
 

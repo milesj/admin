@@ -78,13 +78,7 @@ class InstallShell extends BaseInstallShell {
 
 		$this->out('<info>Access granted, proceeding...</info>');
 		$this->plugin('Admin');
-
-		// Give admin role permission to all these ACOs
-		if ($acos = $this->ControlObject->getAll()) {
-			foreach ($acos as $aco) {
-				$this->Permission->allow($alias, $aco['ControlObject']['alias']);
-			}
-		}
+		$this->plugin(Configure::read('Admin.coreName'));
 
 		return true;
 	}
@@ -97,8 +91,8 @@ class InstallShell extends BaseInstallShell {
 	public function finish() {
 		$this->hr(1);
 		$this->out('Admin installation complete!');
-		//$this->out('Please read the documentation for further instructions:');
-		//$this->out('http://milesj.me/code/cakephp/admin');
+		$this->out('Please read the documentation for further instructions:');
+		$this->out('http://milesj.me/code/cakephp/admin');
 		$this->hr(1);
 
 		return true;
@@ -118,14 +112,16 @@ class InstallShell extends BaseInstallShell {
 			return;
 		}
 
-		$admin = Configure::read('Admin.adminAlias');
+		// Create parent object
+		$parent_id = $this->ControlObject->addObject($pluginName);
+		$adminAlias = Configure::read('Admin.adminAlias');
 
-		$this->ControlObject->addAlias($pluginName);
-		$this->Permission->allow($admin, $pluginName);
-
+		// Create children objects
 		foreach ($plugin['models'] as $model) {
-			$this->ControlObject->addAlias($model['id']);
-			$this->Permission->allow($admin, $model['id']);
+			$this->ControlObject->addObject($model['id'], $parent_id);
+
+			// Give admin access
+			$this->Permission->allow($adminAlias, $pluginName . '/' . $model['id']);
 		}
 
 		$this->out(sprintf('<info>%s model ACOs installed</info>', $pluginName));
@@ -145,15 +141,22 @@ class InstallShell extends BaseInstallShell {
 			return;
 		}
 
-		$admin = Configure::read('Admin.adminAlias');
-		$className = $modelName;
+		list($plugin, $model) = pluginSplit($modelName);
 
-		if (strpos($className, '.') === false) {
-			$className = Configure::read('Admin.coreName') . '.' . $className;
+		if (!$plugin) {
+			$plugin = Configure::read('Admin.coreName');
 		}
 
-		$this->ControlObject->addAlias($className);
-		$this->Permission->allow($admin, $className);
+		// Create parent object
+		$parent_id = $this->ControlObject->addObject($plugin);
+		$adminAlias = Configure::read('Admin.adminAlias');
+
+		// Create children object
+		$alias = $plugin . '.' . $model;
+		$this->ControlObject->addObject($alias, $parent_id);
+
+		// Give admin access
+		$this->Permission->allow($adminAlias, $plugin . '/' . $alias);
 
 		$this->out(sprintf('<info>%s ACOs installed</info>', $modelName));
 	}

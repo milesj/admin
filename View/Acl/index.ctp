@@ -47,6 +47,12 @@ $this->Breadcrumb->add(__('ACL'), array('controller' => 'acl', 'action' => 'inde
 				</td>
 
 				<?php foreach ($aros as $aro) {
+					$url = $this->Html->url(array(
+						'action' => 'grant',
+						'aro_id' => $aro['RequestObject']['id'],
+						'aco_id' => $aco['ControlObject']['id']
+					));
+
 					if (isset($aro['ObjectPermission'][$aco['ControlObject']['id']])) {
 						$permission = $aro['ObjectPermission'][$aco['ControlObject']['id']];
 						$actionMap = array(
@@ -56,12 +62,14 @@ $this->Breadcrumb->add(__('ACL'), array('controller' => 'acl', 'action' => 'inde
 							'delete' => 'icon-remove'
 						);
 
-						$url = $this->Html->url(array(
-							'controller' => 'crud',
-							'action' => 'read',
-							'model' => 'admin.object_permission',
-							$permission['id']
-						));
+						if ($permission['aro_id'] == $aro['RequestObject']['id']) {
+							$url = $this->Html->url(array(
+								'controller' => 'crud',
+								'action' => 'read',
+								'model' => 'admin.object_permission',
+								$permission['id']
+							));
+						}
 
 						foreach ($actionMap as $action => $icon) {
 							$value = $permission['_' . $action];
@@ -87,17 +95,14 @@ $this->Breadcrumb->add(__('ACL'), array('controller' => 'acl', 'action' => 'inde
 						</td>
 
 					<?php }
-					} else {
-						$url = $this->Html->url(array(
-							'action' => 'grant',
-							'aro_id' => $aro['RequestObject']['id'],
-							'aco_id' => $aco['ControlObject']['id']
-						)); ?>
+					} else { ?>
 
 						<td colspan="4" class="permission">
-							<a href="<?php echo $url; ?>" class="action tip" title="<?php echo __('No access defined. Grant permission?'); ?>">
-								&nbsp;
-							</a>
+							<?php if ($aco['ControlObject']['parent_id']) { ?>
+								<a href="<?php echo $url; ?>" class="action tip" title="<?php echo __('No access defined. Grant permission?'); ?>">
+									&nbsp;
+								</a>
+							<?php } ?>
 						</td>
 
 					<?php } ?>
