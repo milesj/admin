@@ -14,8 +14,8 @@ if ($params['count'] > 0) { ?>
 
 		<ul>
 			<?php echo $this->Paginator->numbers(array(
-				'first' => 1,
-				'last' => $params['pageCount'],
+				'first' => __('First'),
+				'last' => __('Last'),
 				'currentTag' => 'span',
 				'currentClass' => 'active',
 				'separator' => '',

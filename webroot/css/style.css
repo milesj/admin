@@ -144,7 +144,7 @@ td.col-id,
 
 .pagination .results span { font-weight: bold; }
 
-.dropdown-menu > li > a { padding: 3px 10px; }
+.dropdown-menu > li > a { padding-left: 10px; }
 
 /* Page specific */
 

@@ -12,6 +12,28 @@ class AdminHelper extends AppHelper {
 	public $helpers = array('Utility.Breadcrumb');
 
 	/**
+	 * Filter down fields if the association has a whitelist.
+	 *
+	 * @param Model $model
+	 * @param array $filter
+	 * @return array|mixed
+	 */
+	public function filterFields(Model $model, $filter = array()) {
+		if (empty($filter) || $filter === '*') {
+			return $model->fields;
+		}
+
+		$fields = array();
+
+		foreach ($filter as $field) {
+			list($table, $field) = pluginSplit($field);
+			$fields[$field] = $model->fields[$field];
+		}
+
+		return $fields;
+	}
+
+	/**
 	 * Generate a nested list of dependencies by looping and drilling down through all the model associations.
 	 *
 	 * @param Model $model
@@ -73,7 +95,22 @@ class AdminHelper extends AppHelper {
 	 * @return array
 	 */
 	public function getNavigation() {
-		return Admin::getModels();
+		$plugins = Admin::getModels();
+		$navigation = array();
+
+		foreach ($plugins as $plugin) {
+			$models = array();
+
+			foreach ($plugin['models'] as $model) {
+				if ($model['installed']) {
+					$models[Inflector::humanize($model['group'])][] = $model;
+				}
+			}
+
+			$navigation[$plugin['title']] = $models;
+		}
+
+		return $navigation;
 	}
 
 	/**
@@ -126,12 +163,10 @@ class AdminHelper extends AppHelper {
 	 * @param string $action
 	 */
 	public function setBreadcrumbs(Model $model, $result, $action) {
+		list($plugin, $alias) = pluginSplit($model->qualifiedName);
+
 		$this->Breadcrumb->add(__('Dashboard'), array('controller' => 'admin', 'action' => 'index'));
-
-		if ($plugin = $model->plugin) {
-			$this->Breadcrumb->add($plugin, array('controller' => 'admin', 'action' => 'index', '#' => Inflector::underscore($plugin)));
-		}
-
+		$this->Breadcrumb->add($plugin, array('controller' => 'admin', 'action' => 'index', '#' => Inflector::underscore($plugin)));
 		$this->Breadcrumb->add($model->pluralName, array('controller' => 'crud', 'action' => 'index', 'model' => $model->urlSlug));
 
 		switch ($action) {

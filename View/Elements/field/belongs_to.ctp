@@ -2,7 +2,7 @@
 $rendered = false;
 
 foreach ($data['belongsTo'] as $foreignModel => $className) {
-	$belongsTo = $model->{$foreignModel};
+	$belongsTo = $this->Admin->introspect($className);
 
 	if (!empty($result[$foreignModel][$belongsTo->primaryKey])) {
 
@@ -10,7 +10,7 @@ foreach ($data['belongsTo'] as $foreignModel => $className) {
 			'plugin' => 'admin',
 			'controller' => 'crud',
 			'action' => 'read',
-			'model' => Inflector::underscore($className),
+			'model' => $belongsTo->urlSlug,
 			$value
 		), array(
 			'class' => 'belongs-to'

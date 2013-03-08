@@ -1,6 +1,7 @@
 <?php
 $foreignModel = $this->Admin->introspect($assoc['className']);
-$withModel = $this->Admin->introspect($assoc['with']); ?>
+$withModel = $this->Admin->introspect($assoc['with']);
+$fields = $this->Admin->filterFields($withModel); ?>
 
 <section class="has-and-belongs-to-many">
 	<h5>
@@ -15,7 +16,7 @@ $withModel = $this->Admin->introspect($assoc['with']); ?>
 					<span><?php echo $alias; ?></span>
 				</th>
 
-				<?php foreach ($withModel->fields as $field => $data) {
+				<?php foreach ($fields as $field => $data) {
 					if (strpos($field, '_id') !== false) {
 						continue;
 					} ?>
@@ -38,7 +39,7 @@ $withModel = $this->Admin->introspect($assoc['with']); ?>
 						)); ?>
 					</td>
 
-					<?php foreach ($withModel->fields as $field => $data) {
+					<?php foreach ($fields as $field => $data) {
 						if (strpos($field, '_id') !== false) {
 							continue;
 						} ?>

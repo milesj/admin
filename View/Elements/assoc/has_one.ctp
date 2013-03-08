@@ -1,5 +1,6 @@
 <?php
 $foreignModel = $this->Admin->introspect($assoc['className']);
+$fields = $this->Admin->filterFields($foreignModel, $assoc['fields']);
 
 if (empty($results[$foreignModel->primaryKey])) {
 	return;
@@ -11,7 +12,7 @@ if (empty($results[$foreignModel->primaryKey])) {
 	<table class="table table-striped table-bordered table-hover clickable">
 		<thead>
 			<tr>
-				<?php foreach ($foreignModel->fields as $field => $data) { ?>
+				<?php foreach ($fields as $field => $data) { ?>
 					<th class="col-<?php echo $field; ?> type-<?php echo $data['type']; ?>">
 						<span><?php echo $data['title']; ?></span>
 					</th>
@@ -20,7 +21,7 @@ if (empty($results[$foreignModel->primaryKey])) {
 		</thead>
 		<tbody>
 			<tr>
-				<?php foreach ($foreignModel->fields as $field => $data) { ?>
+				<?php foreach ($fields as $field => $data) { ?>
 
 					<td class="col-<?php echo $field; ?> type-<?php echo $data['type']; ?>">
 						<?php echo $this->element('field', array(

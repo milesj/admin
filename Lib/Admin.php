@@ -124,7 +124,8 @@ class Admin {
 					'class' => $class,
 					'id' => $id,
 					'url' => Inflector::underscore($plugin) . '.' . Inflector::underscore($model),
-					'installed' => self::isModelInstalled($id)
+					'installed' => self::isModelInstalled($id),
+					'group' => $object->useDbConfig
 				);
 			}
 
@@ -152,16 +153,14 @@ class Admin {
 		return self::cache(array(__METHOD__, $model), function() use ($model) {
 			list($plugin, $model) = pluginSplit($model);
 
+			if (!$plugin) {
+				$plugin = Configure::read('Admin.coreName');
+			}
+
 			$plugin = Inflector::camelize($plugin);
 			$model = Inflector::camelize($model);
 
-			if ($plugin) {
-				$class = $plugin . '.' . $model;
-			} else {
-				$class = $model;
-			}
-
-			return array($plugin, $model, $class);
+			return array($plugin, $model, $$plugin . '.' . $model);
 		});
 	}
 
@@ -173,17 +172,15 @@ class Admin {
 	 */
 	public static function introspectModel($model) {
 		return self::cache(array(__METHOD__, $model), function() use ($model) {
-			$qualifiedName = $model;
-			$core = Configure::read('Admin.coreName') ?: 'Core';
+			list($plugin, $model, $class) = self::parseName($model);
 
-			// Trim off Core if it exists
-			if (substr($model, 0, strlen($core)) === $core) {
-				$model = substr($model, strlen($core) + 1, strlen($model));
+			$qualifiedName = $model;
+
+			if ($plugin !== Configure::read('Admin.coreName')) {
+				$qualifiedName = $plugin . '.' . $qualifiedName;
 			}
 
-			$object = ClassRegistry::init($model);
-
-			list($plugin, $model) = pluginSplit($model);
+			$object = ClassRegistry::init($qualifiedName);
 
 			// Override model
 			$object->Behaviors->load('Containable');
@@ -197,8 +194,8 @@ class Admin {
 			}
 
 			// Generate readable names
-			$object->urlSlug = Inflector::underscore($qualifiedName);
-			$object->qualifiedName = $qualifiedName;
+			$object->urlSlug = Inflector::underscore($class);
+			$object->qualifiedName = $class;
 			$object->singularName = Inflector::humanize(Inflector::underscore($model));
 			$object->pluralName = Inflector::pluralize($object->singularName);
 

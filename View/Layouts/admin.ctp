@@ -14,58 +14,7 @@ echo $this->Html->docType(); ?>
 	echo $this->Html->script('Admin.admin'); ?>
 </head>
 <body class="controller-<?php echo $this->params['controller']; ?> action-<?php echo $this->action; ?>">
-	<div class="head navbar navbar-inverse navbar-fixed-top">
-		<div class="navbar-inner">
-			<div class="container-fluid">
-				<a data-target=".navbar-inverse-collapse" data-toggle="collapse" class="btn btn-navbar">
-					<span class="icon-bar"></span>
-					<span class="icon-bar"></span>
-					<span class="icon-bar"></span>
-				</a>
-
-				<?php echo $this->Html->link($config['appName'], array(
-					'controller' => 'admin',
-					'action' => 'index'
-				), array('class' => 'brand')); ?>
-
-				<div class="nav-collapse collapse navbar-inverse-collapse">
-					<ul class="nav">
-						<li>
-							<?php echo $this->Html->link(__('ACL'), array(
-								'plugin' => 'admin',
-								'controller' => 'acl',
-								'action' => 'index'
-							)); ?>
-						</li>
-
-						<?php foreach ($this->Admin->getNavigation() as $plugin) { ?>
-
-						<li class="dropdown">
-							<a data-toggle="dropdown" class="dropdown-toggle" href="javascript:;">
-								<?php echo $plugin['title']; ?>
-								<span class="caret"></span>
-							</a>
-
-							<ul class="dropdown-menu">
-								<?php foreach ($plugin['models'] as $model) { ?>
-									<li>
-										<?php echo $this->Html->link($model['title'], array(
-											'plugin' => 'admin',
-											'controller' => 'crud',
-											'action' => 'index',
-											'model' => $model['url']
-										)); ?>
-									</li>
-								<?php } ?>
-							</ul>
-						</li>
-
-						<?php } ?>
-					</ul>
-				</div>
-			</div>
-		</div>
-	</div>
+	<?php echo $this->element('navbar'); ?>
 
 	<div class="body container-fluid">
 		<div class="row-fluid">
