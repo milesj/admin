@@ -6,6 +6,7 @@ App::uses('BaseInstallShell', 'Utility.Console/Command');
 /**
  * @property ControlObject $ControlObject
  * @property RequestObject $RequestObject
+ * @property Permission $Permission
  */
 class InstallShell extends BaseInstallShell {
 
@@ -14,7 +15,7 @@ class InstallShell extends BaseInstallShell {
 	 *
 	 * @var array
 	 */
-	public $uses = array('Admin.RequestObject', 'Admin.ControlObject');
+	public $uses = array('Admin.RequestObject', 'Admin.ControlObject', 'Permission');
 
 	/**
 	 * Trigger install.
@@ -22,12 +23,14 @@ class InstallShell extends BaseInstallShell {
 	public function main() {
 		$this->setSteps(array(
 			'Check Database Configuration' => 'checkDbConfig',
-			'Set Table Prefix' => 'checkTablePrefix',
+			'Set Users Table' => 'checkUsersTable',
 			'Check Table Status' => 'checkRequiredTables',
 			'Setup ACL' => 'setupAcl',
 			'Finish Installation' => 'finish'
 		))
 		->setDbConfig('default')
+		->setUsersTable('users')
+		->setUsersModel(USER_MODEL)
 		->setRequiredTables(array('aros', 'acos', 'aros_acos'));
 
 		$this->out('Plugin: Admin v' . Configure::read('Admin.version'));
@@ -39,10 +42,49 @@ class InstallShell extends BaseInstallShell {
 
 	/**
 	 * Setup all the ACL records.
+	 *
+	 * @return bool
 	 */
 	public function setupAcl() {
+		$alias = Configure::read('Admin.adminAlias');
+		$admin = $this->RequestObject->getAlias($alias);
+
+		if (!$admin) {
+			$this->RequestObject->addAlias($alias);
+			$admin_id = $this->RequestObject->id;
+		} else {
+			$admin_id = $admin['RequestObject']['id'];
+		}
+
+		// Fetch user
+		$this->out('<question>What user would you like to give admin access?</question>');
+
+		$userModel = ClassRegistry::init($this->usersModel);
+		$user_id = $this->findUser();
+
+		// Give access
+		$this->RequestObject->create();
+		$result = $this->RequestObject->save(array(
+			'model' => $this->usersModel,
+			'foreign_key' => $user_id,
+			'parent_id' => $admin_id,
+			'alias' => $this->user[$userModel->alias][$userModel->displayField]
+		), false);
+
+		if (!$result) {
+			$this->err('<error>Failed to give user admin access</error>');
+			return false;
+		}
+
+		$this->out('<info>Access granted, proceeding...</info>');
 		$this->plugin('Admin');
-		$this->out('<info>Proceeding...</info>');
+
+		// Give admin role permission to all these ACOs
+		if ($acos = $this->ControlObject->getAll()) {
+			foreach ($acos as $aco) {
+				$this->Permission->allow($alias, $aco['ControlObject']['alias']);
+			}
+		}
 
 		return true;
 	}
@@ -76,8 +118,14 @@ class InstallShell extends BaseInstallShell {
 			return;
 		}
 
+		$admin = Configure::read('Admin.adminAlias');
+
+		$this->ControlObject->addAlias($pluginName);
+		$this->Permission->allow($admin, $pluginName);
+
 		foreach ($plugin['models'] as $model) {
 			$this->ControlObject->addAlias($model['id']);
+			$this->Permission->allow($admin, $model['id']);
 		}
 
 		$this->out(sprintf('<info>%s model ACOs installed</info>', $pluginName));
@@ -97,6 +145,7 @@ class InstallShell extends BaseInstallShell {
 			return;
 		}
 
+		$admin = Configure::read('Admin.adminAlias');
 		$className = $modelName;
 
 		if (strpos($className, '.') === false) {
@@ -104,6 +153,7 @@ class InstallShell extends BaseInstallShell {
 		}
 
 		$this->ControlObject->addAlias($className);
+		$this->Permission->allow($admin, $className);
 
 		$this->out(sprintf('<info>%s ACOs installed</info>', $modelName));
 	}

@@ -48,8 +48,7 @@ class ControlObject extends Aco {
 	 */
 	public $belongsTo = array(
 		'Parent' => array(
-			'className' => 'Admin.ControlObject',
-			'fields' => array('Parent.alias')
+			'className' => 'Admin.ControlObject'
 		)
 	);
 
