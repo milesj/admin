@@ -27,7 +27,7 @@
 						} ?>
 
 						<a href="<?php echo $url; ?>">
-							<?php echo $model['title']; ?>
+							<?php echo $this->Admin->outputIconTitle($model); ?>
 
 							<?php if (!$model['installed']) { ?>
 								<span class="label label-important tip" title="<?php echo __('Not Installed'); ?>">&nbsp;!&nbsp;</span>

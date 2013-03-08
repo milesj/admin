@@ -43,6 +43,7 @@ class ControlObject extends Aco {
 	 * @var array
 	 */
 	public $admin = array(
+		'icon' => 'exclamation-sign',
 		'hideFields' => array('lft', 'rght')
 	);
 
@@ -55,6 +56,11 @@ class ControlObject extends Aco {
 		'Parent' => array(
 			'className' => 'Admin.ControlObject',
 			'foreignKey' => 'parent_id'
+		),
+		'User' => array(
+			'className' => USER_MODEL,
+			'foreignKey' => 'foreign_key',
+			'conditions' => array('ControlObject.model' => USER_MODEL)
 		)
 	);
 

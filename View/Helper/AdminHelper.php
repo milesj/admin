@@ -162,12 +162,13 @@ class AdminHelper extends AppHelper {
 	/**
 	 * Output an association alias and class name. If both are equal, only display the alias.
 	 *
+	 * @param Model|array $model
 	 * @param string $alias
 	 * @param string $className
 	 * @return string
 	 */
-	public function outputAssocName($alias, $className) {
-		$output = $alias;
+	public function outputAssocName($model, $alias, $className) {
+		$output = $this->outputIconTitle($model, $alias);
 
 		if ($className != $alias) {
 			$output .= ' (' . $this->Html->tag('span', $className, array(
@@ -176,6 +177,22 @@ class AdminHelper extends AppHelper {
 		}
 
 		return $output;
+	}
+
+	public function outputIconTitle($model, $title = null) {
+		if ($model instanceof Model) {
+			$model = $model->admin;
+		}
+
+		$title = $title ?: $model['title'];
+
+		if ($model['icon']) {
+			$title = $this->Html->tag('span', '&nbsp;', array(
+				'class' => 'model-icon icon-' . $model['icon']
+			)) . ' ' . $title;
+		}
+
+		return $title;
 	}
 
 	/**

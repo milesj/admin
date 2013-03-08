@@ -124,13 +124,16 @@ class Admin {
 					continue;
 				}
 
+				$icon = isset($object->admin['icon']) ? $object->admin['icon'] : null;
+
 				$map[] = array(
 					'title' => $model,
 					'class' => $class,
 					'id' => $id,
 					'url' => Inflector::underscore($plugin) . '.' . Inflector::underscore($model),
 					'installed' => self::isModelInstalled($id),
-					'group' => $object->useDbConfig
+					'group' => $object->useDbConfig,
+					'icon' => $icon
 				);
 			}
 

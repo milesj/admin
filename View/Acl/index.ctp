@@ -4,6 +4,10 @@ $this->Breadcrumb->add(__('ACL'), array('controller' => 'acl', 'action' => 'inde
 
 <div class="action-buttons">
 	<?php
+	echo $this->Html->link('<span class="icon-refresh icon-white"></span> ' . __('Sync'),
+		array('controller' => 'acl', 'action' => 'sync',),
+		array('class' => 'btn btn-info btn-large', 'escape' => false));
+
 	echo $this->Html->link('<span class="icon-plus icon-white"></span> ' . __('Add Requester'),
 		array('controller' => 'crud', 'action' => 'create', 'model' => 'admin.request_object'),
 		array('class' => 'btn btn-primary btn-large', 'escape' => false));

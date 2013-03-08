@@ -60,6 +60,17 @@ class AclController extends AdminAppController {
 	}
 
 	/**
+	 * Sync the ARO/ACO trees.
+	 */
+	public function sync() {
+		$this->Aco->reorder();
+		$this->Aro->reorder();
+
+		$this->Session->setFlash(__('ACL has been synced'), 'flash', array('class' => 'success'));
+		$this->redirect(array('action' => 'index'));
+	}
+
+	/**
 	 * Introspect ACL models and make them available.
 	 */
 	public function beforeFilter() {

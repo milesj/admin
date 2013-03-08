@@ -49,5 +49,6 @@ Configure::write('Admin.modelDefaults', array(
 	'paginateLimit' => 25,
 	'associationLimit' => 75,
 	'batchDelete' => true,
-	'deletable' => true
+	'deletable' => true,
+	'icon' => ''
 ));

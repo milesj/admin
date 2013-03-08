@@ -43,6 +43,7 @@ class RequestObject extends Aro {
 	 * @var array
 	 */
 	public $admin = array(
+		'icon' => 'question-sign',
 		'hideFields' => array('lft', 'rght')
 	);
 
@@ -55,6 +56,11 @@ class RequestObject extends Aro {
 		'Parent' => array(
 			'className' => 'Admin.RequestObject',
 			'foreignKey' => 'parent_id'
+		),
+		'User' => array(
+			'className' => USER_MODEL,
+			'foreignKey' => 'foreign_key',
+			'conditions' => array('RequestObject.model' => USER_MODEL)
 		)
 	);
 

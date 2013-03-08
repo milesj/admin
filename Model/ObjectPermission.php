@@ -83,6 +83,15 @@ class ObjectPermission extends Permission {
 	);
 
 	/**
+	 * Admin settings.
+	 *
+	 * @var array
+	 */
+	public $admin = array(
+		'icon' => 'tasks'
+	);
+
+	/**
 	 * Return all records.
 	 *
 	 * @return array

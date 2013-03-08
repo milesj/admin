@@ -41,12 +41,12 @@
 									foreach ($groups[0] as $model) { ?>
 
 										<li>
-											<?php echo $this->Html->link($model['title'], array(
+											<?php echo $this->Html->link($this->Admin->outputIconTitle($model), array(
 												'plugin' => 'admin',
 												'controller' => 'crud',
 												'action' => 'index',
 												'model' => $model['url']
-											)); ?>
+											), array('escape' => false)); ?>
 										</li>
 
 									<?php }
@@ -62,12 +62,12 @@
 												<?php foreach ($models as $model) { ?>
 
 													<li>
-														<?php echo $this->Html->link($model['title'], array(
+														<?php echo $this->Html->link($this->Admin->outputIconTitle($model), array(
 															'plugin' => 'admin',
 															'controller' => 'crud',
 															'action' => 'index',
 															'model' => $model['url']
-														)); ?>
+														), array('escape' => false)); ?>
 													</li>
 
 												<?php } ?>
