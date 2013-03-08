@@ -1,6 +1,16 @@
 # Admin #
 
-In development.
+A CakePHP administration plugin that provides moderate CRUD functionality for application and plugin models.
+Utilizes CakePHP's built-in authentication, authorization and ACL systems for security.
+
+## Requirements ##
+
+* PHP 5.3.0
+* CakePHP 2.3.0
+** ACL
+** Auth
+* Composer
+* Utility Plugin - https://github.com/milesj/Utility
 
 ## Quick Installation ##
 
