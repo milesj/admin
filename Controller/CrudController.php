@@ -341,9 +341,17 @@ class CrudController extends AdminAppController {
 			} else {
 				$variable = Inflector::variable(Inflector::pluralize(preg_replace('/(?:_id)$/', '', $assoc['foreignKey'])));
 
-				$this->set($variable, $model->find('list', array(
-					'order' => array($model->alias . '.' . $model->displayField => 'ASC')
-				)));
+				// Use Tree if available
+				if ($model->hasMethod('generateTreeList')) {
+					$list = $model->generateTreeList(null, null, null, ' -- ');
+
+				} else {
+					$list = $model->find('list', array(
+						'order' => array($model->alias . '.' . $model->displayField => 'ASC')
+					));
+				}
+
+				$this->set($variable, $list);
 			}
 		}
 

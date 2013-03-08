@@ -54,7 +54,7 @@ var Admin = {
 							display = (id != title) ? id + ' - ' + title : title;
 
 							sourceMap[display] = [id, title];
-							source.push(display);
+							source.push(title);
 						});
 
 						return process(source);
