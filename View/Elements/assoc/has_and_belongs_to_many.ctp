@@ -5,8 +5,8 @@ $fields = $this->Admin->filterFields($withModel); ?>
 
 <section class="has-and-belongs-to-many">
 	<h5>
-		<?php echo $alias; ?> <span class="muted">(<?php echo $assoc['className']; ?>)</span> &rarr;
-		<?php echo $withModel->alias; ?> <span class="muted">(<?php echo $assoc['with']; ?>)</span>
+		<?php echo $this->Admin->outputAssocName($alias, $assoc['className']); ?> &rarr;
+		<?php echo $this->Admin->outputAssocName($withModel->alias, $assoc['with']); ?>
 	</h5>
 
 	<table class="table table-striped table-bordered table-hover clickable">

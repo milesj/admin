@@ -14,7 +14,7 @@ class AdminHelper extends AppHelper {
 	 *
 	 * @var array
 	 */
-	public $helpers = array('Utility.Breadcrumb');
+	public $helpers = array('Html', 'Utility.Breadcrumb');
 
 	/**
 	 * Filter down fields if the association has a whitelist.
@@ -32,6 +32,7 @@ class AdminHelper extends AppHelper {
 
 		foreach ($filter as $field) {
 			list($table, $field) = pluginSplit($field);
+
 			$fields[$field] = $model->fields[$field];
 		}
 
@@ -140,7 +141,7 @@ class AdminHelper extends AppHelper {
 			return null;
 		}
 
-		$output = '<ul>';
+		$output = '';
 
 		foreach ($list as $dependent) {
 			if (in_array($dependent['model'], $exclude)) {
@@ -155,7 +156,24 @@ class AdminHelper extends AppHelper {
 				$this->loopDependencies($dependent['dependencies'], $exclude));
 		}
 
-		$output .= '</ul>';
+		return $this->Html->tag('ul', $output);
+	}
+
+	/**
+	 * Output an association alias and class name. If both are equal, only display the alias.
+	 *
+	 * @param string $alias
+	 * @param string $className
+	 * @return string
+	 */
+	public function outputAssocName($alias, $className) {
+		$output = $alias;
+
+		if ($className != $alias) {
+			$output .= ' (' . $this->Html->tag('span', $className, array(
+				'class' => 'muted'
+			)) . ')';
+		}
 
 		return $output;
 	}

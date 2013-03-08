@@ -7,7 +7,7 @@ if (empty($results[$foreignModel->primaryKey])) {
 } ?>
 
 <section class="has-one">
-	<h5><?php echo $alias; ?> <span class="muted">(<?php echo $assoc['className']; ?>)</span></h5>
+	<h5><?php echo $this->Admin->outputAssocName($alias, $assoc['className']); ?></h5>
 
 	<table class="table table-striped table-bordered table-hover clickable">
 		<thead>

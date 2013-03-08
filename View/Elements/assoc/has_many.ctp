@@ -3,7 +3,7 @@ $foreignModel = $this->Admin->introspect($assoc['className']);
 $fields = $this->Admin->filterFields($foreignModel, $assoc['fields']); ?>
 
 <section class="has-many">
-	<h5><?php echo $alias; ?> <span class="muted">(<?php echo $assoc['className']; ?>)</span></h5>
+	<h5><?php echo $this->Admin->outputAssocName($alias, $assoc['className']); ?></h5>
 
 	<table class="table table-striped table-bordered table-hover clickable">
 		<thead>
