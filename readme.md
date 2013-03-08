@@ -10,6 +10,13 @@ Install the plugin with Composer.
 composer update
 ```
 
+Enable ACL in core.
+
+```php
+Configure::write('Acl.classname', 'DbAcl');
+Configure::write('Acl.database', 'default');
+```
+
 Create the ACL tables if you have not already.
 
 ```

@@ -28,7 +28,7 @@ class InstallShell extends BaseInstallShell {
 			'Setup ACL' => 'setupAcl',
 			'Finish Installation' => 'finish'
 		))
-		->setDbConfig('default')
+		->setDbConfig(Configure::read('Acl.database'))
 		->setUsersTable('users')
 		->setUsersModel(USER_MODEL)
 		->setRequiredTables(array('aros', 'acos', 'aros_acos'));

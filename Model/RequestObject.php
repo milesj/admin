@@ -101,11 +101,11 @@ class RequestObject extends Aro {
 	 *
 	 * @return array
 	 */
-	public function getAll() {
+	public function getObjects() {
 		$this->recursive = 0;
 
 		return $this->find('all', array(
-			'order' => array('RequestObject.alias' => 'ASC'),
+			'order' => array('RequestObject.lft' => 'ASC'),
 			'cache' => __METHOD__,
 			'cacheExpires' => '+1 hour'
 		));

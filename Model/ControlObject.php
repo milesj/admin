@@ -115,7 +115,7 @@ class ControlObject extends Aco {
 	 *
 	 * @return array
 	 */
-	public function getAll() {
+	public function getObjects() {
 		$this->recursive = 0;
 
 		return $this->find('all', array(

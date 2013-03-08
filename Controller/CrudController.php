@@ -182,7 +182,7 @@ class CrudController extends AdminAppController {
 	 * @throws ForbiddenException
 	 * @throws UnauthorizedException
 	 */
-	public function isAuthorized($user) {
+	public function isAuthorized($user = null) {
 		parent::isAuthorized($user);
 
 		if (empty($this->params['model'])) {

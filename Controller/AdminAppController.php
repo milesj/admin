@@ -5,7 +5,7 @@ App::uses('Admin', 'Admin.Lib');
 /**
  * @property Model $Model
  */
-class AdminAppController extends AppController {
+class AdminAppController extends Controller {
 
 	/**
 	 * Remove parent models.
@@ -58,7 +58,7 @@ class AdminAppController extends AppController {
 	 * @throws ForbiddenException
 	 * @throws UnauthorizedException
 	 */
-	public function isAuthorized($user) {
+	public function isAuthorized($user = null) {
 		if (!$user) {
 			throw new ForbiddenException(__('Invalid User'));
 		}
