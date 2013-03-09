@@ -43,7 +43,7 @@ class ControlObject extends Aco {
 	 * @var array
 	 */
 	public $admin = array(
-		'icon' => 'exclamation-sign',
+		'iconClass' => 'icon-exclamation-sign',
 		'hideFields' => array('lft', 'rght')
 	);
 

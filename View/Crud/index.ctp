@@ -6,7 +6,7 @@ $this->Paginator->options(array(
 
 echo $this->element('action_buttons'); ?>
 
-<h2><?php echo $model->pluralName; ?></h2>
+<h2><?php echo $this->Admin->outputIconTitle($model, $model->pluralName); ?></h2>
 
 <?php
 echo $this->Form->create($model->alias);

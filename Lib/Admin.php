@@ -124,7 +124,7 @@ class Admin {
 					continue;
 				}
 
-				$icon = isset($object->admin['icon']) ? $object->admin['icon'] : null;
+				$icon = isset($object->admin['iconClass']) ? $object->admin['iconClass'] : null;
 
 				$map[] = array(
 					'title' => $model,

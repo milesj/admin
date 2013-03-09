@@ -3,7 +3,7 @@ $this->Admin->setBreadcrumbs($model, $result, $this->action);
 
 echo $this->element('action_buttons'); ?>
 
-<h2><?php echo $this->Admin->getDisplayField($model, $result); ?></h2>
+<h2><?php echo $this->Admin->outputIconTitle($model, $this->Admin->getDisplayField($model, $result)); ?></h2>
 
 <div class="row-fluid">
 	<table class="table table-striped table-bordered">

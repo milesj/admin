@@ -8,6 +8,7 @@ echo $this->Html->docType(); ?>
 	<?php
 	echo $this->Html->css('Admin.bootstrap.min');
 	echo $this->Html->css('Admin.bootstrap-responsive.min');
+	echo $this->Html->css('Admin.font-awesome.min');
 	echo $this->Html->css('Admin.style');
 	echo $this->Html->script('//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js');
 	echo $this->Html->script('Admin.bootstrap.min');

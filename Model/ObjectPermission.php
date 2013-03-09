@@ -88,7 +88,7 @@ class ObjectPermission extends Permission {
 	 * @var array
 	 */
 	public $admin = array(
-		'icon' => 'tasks'
+		'iconClass' => 'icon-tasks'
 	);
 
 	/**

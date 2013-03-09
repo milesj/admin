@@ -12,7 +12,7 @@ $this->Admin->setBreadcrumbs($model, $result, $this->action);
 
 echo $this->element('action_buttons'); ?>
 
-<h2><?php echo $pageTitle; ?></h2>
+<h2><?php echo $this->Admin->outputIconTitle($model, $pageTitle); ?></h2>
 
 <?php echo $this->Form->create($model->alias, array('class' => 'form-horizontal', 'file' => true)); ?>
 

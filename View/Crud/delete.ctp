@@ -5,7 +5,7 @@ $id = $result[$model->alias][$model->primaryKey];
 $displayField = $this->Admin->getDisplayField($model, $result);
 $dependencies = $this->Admin->getDependencies($model); ?>
 
-<h2><?php echo __('Delete %s', $model->singularName); ?></h2>
+<h2><?php echo $this->Admin->outputIconTitle($model, __('Delete %s', $model->singularName)); ?></h2>
 
 <p><?php echo __('Are you sure you want to delete %s?', $this->Html->link($displayField, array('action' => 'read', $id, 'model' => $model->urlSlug))); ?></p>
 

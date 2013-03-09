@@ -179,6 +179,13 @@ class AdminHelper extends AppHelper {
 		return $output;
 	}
 
+	/**
+	 * Output a model title and icon if applicable.
+	 *
+	 * @param Model|array $model
+	 * @param string $title
+	 * @return string
+	 */
 	public function outputIconTitle($model, $title = null) {
 		if ($model instanceof Model) {
 			$model = $model->admin;
@@ -186,9 +193,9 @@ class AdminHelper extends AppHelper {
 
 		$title = $title ?: $model['title'];
 
-		if ($model['icon']) {
+		if ($model['iconClass']) {
 			$title = $this->Html->tag('span', '&nbsp;', array(
-				'class' => 'model-icon icon-' . $model['icon']
+				'class' => 'model-icon ' . $model['iconClass']
 			)) . ' ' . $title;
 		}
 
