@@ -1,7 +1,7 @@
 <?php
 $this->Admin->setBreadcrumbs($model, $result, $this->action);
 
-echo $this->element('action_buttons'); ?>
+echo $this->element('crud_actions'); ?>
 
 <h2><?php echo $this->Admin->outputIconTitle($model, $this->Admin->getDisplayField($model, $result)); ?></h2>
 

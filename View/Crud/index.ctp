@@ -4,7 +4,7 @@ $this->Paginator->options(array(
 	'url' => array('model' => $model->urlSlug)
 ));
 
-echo $this->element('action_buttons'); ?>
+echo $this->element('crud_actions'); ?>
 
 <h2><?php echo $this->Admin->outputIconTitle($model, $model->pluralName); ?></h2>
 

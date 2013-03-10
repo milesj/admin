@@ -12,7 +12,6 @@ if ($data['type'] === 'integer') {
 
 if (isset($model->enum[$field])) {
 	$options = $model->enum[$field];
-	$type = 'select';
 }
 
 echo $this->Form->input($field, array(

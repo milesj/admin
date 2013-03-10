@@ -7,7 +7,7 @@ $this->Breadcrumb->add(__('Analyze Models'), array('controller' => 'admin', 'act
 	<thead>
 		<tr>
 			<th><span><?php echo __('Model'); ?></span></th>
-			<th><span class="tip" title="<?php echo __('Primary Key'); ?>">PK</span></th>
+			<th><span class="tip" title="<?php echo __('Primary Key'); ?>"><?php echo __('PK'); ?></span></th>
 			<th><span><?php echo __('Display Field'); ?></span></th>
 			<th><span><?php echo __('Database'); ?></span></th>
 			<th><span><?php echo __('Table'); ?></span></th>
