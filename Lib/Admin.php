@@ -111,30 +111,26 @@ class Admin {
 			$ignore = Configure::read('Admin.ignoreModels');
 
 			foreach ($models as $model) {
-				$class = $model;
-				$id = $plugin . '.' . $model;
+				list($plugin, $model, $id, $class) = self::parseName($plugin . '.' . $model);
 
-				if ($plugin !== $core) {
-					$class = $plugin . '.' . $class;
-				}
-
-				$object = ClassRegistry::init($class);
-
-				if (in_array($class, $ignore) || empty($object->useTable) || (isset($object->admin) && $object->admin === false)) {
+				if (in_array($id, $ignore)) {
 					continue;
 				}
 
-				$icon = isset($object->admin['iconClass']) ? $object->admin['iconClass'] : null;
+				$object = self::introspectModel($id);
 
-				$map[] = array(
+				if (!$object) {
+					continue;
+				}
+
+				$map[] = array_merge($object->admin, array(
+					'id' => $id,
 					'title' => $model,
 					'class' => $class,
-					'id' => $id,
-					'url' => Inflector::underscore($plugin) . '.' . Inflector::underscore($model),
+					'url' => Inflector::underscore($id),
 					'installed' => self::isModelInstalled($id),
-					'group' => $object->useDbConfig,
-					'icon' => $icon
-				);
+					'group' => $object->useDbConfig
+				));
 			}
 
 			return $map;
@@ -160,15 +156,26 @@ class Admin {
 	public static function parseName($model) {
 		return self::cache(array(__METHOD__, $model), function() use ($model) {
 			list($plugin, $model) = pluginSplit($model);
+			$core = Configure::read('Admin.coreName');
 
 			if (!$plugin) {
-				$plugin = Configure::read('Admin.coreName');
+				$plugin = $core;
 			}
 
 			$plugin = Inflector::camelize($plugin);
 			$model = Inflector::camelize($model);
+			$class = $model;
 
-			return array($plugin, $model, $plugin . '.' . $model);
+			if ($plugin !== $core) {
+				$class = $plugin . '.' . $class;
+			}
+
+			return array(
+				$plugin, // plugin name, includes Core
+				$model, // model class name
+				$plugin . '.' . $model, // plugin and model, includes Core
+				$class // plugin and model, excludes Core
+			);
 		});
 	}
 
@@ -180,15 +187,14 @@ class Admin {
 	 */
 	public static function introspectModel($model) {
 		return self::cache(array(__METHOD__, $model), function() use ($model) {
-			list($plugin, $model, $class) = self::parseName($model);
+			list($plugin, $model, $id, $class) = self::parseName($model);
 
-			$qualifiedName = $model;
+			$object = ClassRegistry::init($class);
 
-			if ($plugin !== Configure::read('Admin.coreName')) {
-				$qualifiedName = $plugin . '.' . $qualifiedName;
+			// Exit early if disabled
+			if (empty($object->useTable) || (isset($object->admin) && $object->admin === false)) {
+				return null;
 			}
-
-			$object = ClassRegistry::init($qualifiedName);
 
 			// Override model
 			$object->Behaviors->load('Containable');
@@ -202,8 +208,8 @@ class Admin {
 			}
 
 			// Generate readable names
-			$object->urlSlug = Inflector::underscore($class);
-			$object->qualifiedName = $class;
+			$object->urlSlug = Inflector::underscore($id);
+			$object->qualifiedName = $id;
 			$object->singularName = Inflector::humanize(Inflector::underscore($model));
 			$object->pluralName = Inflector::pluralize($object->singularName);
 

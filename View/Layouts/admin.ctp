@@ -25,7 +25,7 @@ echo $this->Html->docType(); ?>
 						<?php foreach ($crumbs as $crumb) { ?>
 							<li>
 								<?php echo $this->Html->link($crumb['title'], $crumb['url']); ?>
-								<span class="divider">&raquo;</span>
+								<span class="divider icon-chevron-right"></span>
 							</li>
 						<?php } ?>
 					</ul>

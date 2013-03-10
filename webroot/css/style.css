@@ -23,7 +23,7 @@ body {
 
 .action-buttons .btn { margin-left: 15px; }
 
-.model-icon { margin-right: 2px; margin-left: 1px; }
+.model-icon { min-width: 20px; }
 
 /* Custom form styles since we have to use Cakes HTML */
 
@@ -129,11 +129,17 @@ td.col-id,
 
 /* Bootstrap enhancements */
 
+.btn span[class*="icon-"] { margin-right: 3px; }
+
+.nav a span[class*="icon-"] { color: #000; }
+
 .breadcrumbs ul {
 	margin: 0;
 	padding: 5px 8px; }
 
 .breadcrumbs ul li:last-child span { display: none; }
+
+.breadcrumb > li > .divider { font-size: 10px; }
 
 .pagination {
 	height: 32px;
@@ -154,7 +160,6 @@ td.col-id,
 	line-height: 100%;
 	margin: 0 0 15px 0; }
 
-
 .controller-admin .nav { margin: 0; }
 
 .controller-admin .nav .pull-right {
@@ -169,7 +174,7 @@ td.col-id,
 
 .controller-acl .table { width: auto; }
 .controller-acl .table td { padding: 0; }
-.controller-acl .table a { display: block; padding: 8px; }
+.controller-acl .table a { display: block; padding: 8px; color: #000; }
 .controller-acl .table a:hover { text-decoration: none; }
 .controller-acl .table a span { opacity: .1; }
 .controller-acl .table a:hover span { opacity: 1; }
