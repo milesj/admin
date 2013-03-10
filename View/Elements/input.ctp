@@ -1,7 +1,7 @@
 <?php
+$classes = array($data['type']);
 $hasError = isset($model->validationErrors[$field]);
 $isRequired = false;
-$classes = array($data['type']);
 
 if ($hasError) {
 	$classes[] = 'error';
@@ -57,24 +57,10 @@ if ($hasError) {
 
 		// Show a null checkbox for fields that support it
 		if (isset($data['null']) && $data['null']) {
-			if (isset($this->data[$model->alias][$field])) {
-				$null = $this->data[$model->alias][$field];
-				$checked = ($null === null || $null === '');
-			} else {
-				$checked = ($data['default'] === null);
-			} ?>
-
-			<div class="controls-null">
-				<?php
-				echo $this->Form->input($field . '_null', array(
-					'type' => 'checkbox',
-					'checked' => $checked,
-					'div' => false,
-					'error' => false,
-					'label' => __('Null?')
-				)); ?>
-			</div>
-
-		<?php } ?>
+			echo $this->element('input_null', array(
+				'field' => $field,
+				'data' => $data
+			));
+		} ?>
 	</div>
 </div>

@@ -9,6 +9,8 @@ echo $this->element('crud_actions'); ?>
 <h2><?php echo $this->Admin->outputIconTitle($model, $model->pluralName); ?></h2>
 
 <?php
+echo $this->element('filters');
+
 echo $this->Form->create($model->alias);
 echo $this->element('pagination'); ?>
 
@@ -77,7 +79,8 @@ echo $this->element('pagination'); ?>
 <?php
 echo $this->element('pagination');
 
-if ($model->admin['batchDelete'] && $results) { ?>
+if ($model->admin['batchDelete'] && $results) {
+	echo $this->Form->input('form_action', array('type' => 'hidden', 'value' => 'delete')); ?>
 
 	<div class="well align-center">
 		<button type="submit" class="btn btn-large btn-danger" onclick="return confirm('<?php echo __('Are you sure? This can not be reversed.'); ?>');">

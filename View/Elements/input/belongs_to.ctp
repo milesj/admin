@@ -5,7 +5,7 @@ if (empty($typeAhead[$field])) {
 	echo $this->Form->input($field, array(
 		'div' => false,
 		'label' => false,
-		'empty' => $data['null']
+		'empty' => ($this->action === 'index' || $data['null'])
 	));
 
 // Use a text box with type ahead via AJAX
@@ -22,7 +22,7 @@ if (empty($typeAhead[$field])) {
 		'div' => false,
 		'label' => false,
 		'type' => 'text',
-		'class' => 'span2',
+		'class' => 'span2 belongs-to',
 		'data-provide' => 'typeahead',
 		'autocomplete' => 'off',
 		'value' => $value,

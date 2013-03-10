@@ -10,6 +10,10 @@ if ($data['type'] === 'integer') {
 	$class = 'span5';
 }
 
+if ($this->action === 'index') {
+	$class = null;
+}
+
 if (isset($model->enum[$field])) {
 	$options = $model->enum[$field];
 }
@@ -19,5 +23,6 @@ echo $this->Form->input($field, array(
 	'label' => false,
 	'options' => $options,
 	'class' => $class,
-	'default' => $data['default']
+	'default' => $data['default'],
+	'empty' => ($this->action === 'index')
 ));

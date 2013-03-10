@@ -27,48 +27,35 @@ body {
 
 /* Custom form styles since we have to use Cakes HTML */
 
+form select { width: auto; margin-right: 2px; }
+.relation select { height: 200px; }
+
 .form-horizontal { margin: 20px 0; }
-
-.form-horizontal select {
-	width: auto;
-	margin-right: 2px; }
-
-.form-horizontal .control-label {
-	font-weight: bold;
-	width: 20%; }
-
-.form-horizontal .controls { margin-left: 21.5%; }
-
+.form-horizontal .control-label { width: 20%; font-weight: bold; }
+.form-horizontal .control-group .controls { margin-left: 21.5%; }
 .form-horizontal .actions { text-align: center; }
-.form-horizontal .actions div { margin-bottom: 15px; }
 .form-horizontal .actions .btn { margin-left: 12px; }
-.form-horizontal .actions label {
-	display: inline-block;
-	font-weight: bold;
-	margin-right: 10px; }
+.form-horizontal .actions div { margin-bottom: 15px; }
+.form-horizontal .actions label { display: inline-block; margin-right: 10px; }
 
-.input { margin-bottom: 15px; }
+.form-inline .control-group,
+.form-inline .control-group .controls { display: inline-block; width: auto; }
+.form-inline .control-group { margin: 8px; }
+.form-inline .control-group.integer input { width: 33px; text-align: center; }
+.form-inline .control-group.integer input.belongs-to { width: 150px; text-align: left; }
+.form-inline .control-group.boolean input { margin-top: -1px; }
+.form-inline .control-group.string input { width: 150px; }
+.form-inline .control-group.datetime input { width: 100px; }
+.form-inline .control-label { margin-right: 2px; font-weight: bold; }
 
-.input:not(.checkbox) label {
-	display: inline-block;
-	margin-right: 15px;
-	width: 25%;
-	text-align: right;
-	font-weight: bold; }
-
-.input.checkbox {
-	padding-left: 25%; }
+.filters { padding-right: 0; }
+.filters form { margin: 0; }
 
 .error-message,
 .controls-null,
-.controls-null label {
-	display: inline-block;
-	margin-left: 10px; }
-
+.controls-null label { display: inline-block; margin-left: 10px; }
 .controls-null label { margin-left: 5px; }
 .controls-null input { margin-top: -1px; }
-
-.control-group.relation select { height: 200px; }
 
 /* Define custom styles for tables */
 

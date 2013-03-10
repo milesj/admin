@@ -8,6 +8,13 @@
 class CrudController extends AdminAppController {
 
 	/**
+	 * Paginate defaults.
+	 *
+	 * @var array
+	 */
+	public $paginate = array();
+
+	/**
 	 * List out and paginate all the records in the model.
 	 */
 	public function index() {
@@ -17,28 +24,41 @@ class CrudController extends AdminAppController {
 			'contain' => array_keys($this->Model->belongsTo)
 		), $this->Model->admin['paginate']);
 
-		// Batch delete
+		$this->setBelongsToData();
+
 		if ($this->request->is('post')) {
-			if (!$this->Model->admin['batchDelete']) {
-				throw new ForbiddenException();
+			$action = $this->request->data[$this->Model->alias]['form_action'];
 
-			} else if (!$this->Acl->check(array(USER_MODEL => $this->Auth->user()), $this->Model->qualifiedName, 'delete')) {
-				throw new UnauthorizedException(__('Insufficient Access Permissions'));
-			}
+			switch ($action) {
+				case 'filter':
+					$this->paginate['conditions'] = $this->parseFilterConditions($this->request->data[$this->Model->alias]);
+				break;
 
-			$count = 0;
-			$deleted = array();
+				case 'delete':
+					unset($this->request->data[$this->Model->alias]['form_action']);
 
-			foreach ($this->request->data[$this->Model->alias] as $id) {
-				if ($id && $this->Model->delete($id, true)) {
-					$count++;
-					$deleted[] = $id;
-				}
-			}
+					if (!$this->Model->admin['batchDelete']) {
+						throw new ForbiddenException();
 
-			if ($count > 0) {
-				$this->logAction(ActionLog::BATCH_DELETE, $this->Model, sprintf('Deleted IDs: %s', implode(', ', $deleted)));
-				$this->Session->setFlash(__('%s %s have been deleted', array($count, strtolower($this->Model->pluralName))), 'flash', array('class' => 'success'));
+					} else if (!$this->Acl->check(array(USER_MODEL => $this->Auth->user()), $this->Model->qualifiedName, 'delete')) {
+						throw new UnauthorizedException(__('Insufficient Access Permissions'));
+					}
+
+					$count = 0;
+					$deleted = array();
+
+					foreach ($this->request->data[$this->Model->alias] as $id) {
+						if ($id && $this->Model->delete($id, true)) {
+							$count++;
+							$deleted[] = $id;
+						}
+					}
+
+					if ($count > 0) {
+						$this->logEvent(ActionLog::BATCH_DELETE, $this->Model, sprintf('Deleted IDs: %s', implode(', ', $deleted)));
+						$this->Session->setFlash(__('%s %s have been deleted', array($count, strtolower($this->Model->pluralName))), 'flash', array('class' => 'success'));
+					}
+				break;
 			}
 		}
 
@@ -59,7 +79,7 @@ class CrudController extends AdminAppController {
 
 			if ($this->Model->saveAll(null, array('validate' => 'first', 'atomic' => true, 'deep' => true))) {
 				$this->Model->set($data);
-				$this->logAction(ActionLog::CREATE, $this->Model);
+				$this->logEvent(ActionLog::CREATE, $this->Model);
 
 				$this->setFlashMessage('Successfully created a new %s');
 				$this->redirectAfter();
@@ -91,7 +111,7 @@ class CrudController extends AdminAppController {
 		}
 
 		$this->Model->set($result);
-		$this->logAction(ActionLog::READ, $this->Model);
+		$this->logEvent(ActionLog::READ, $this->Model);
 
 		$this->set('result', $result);
 		$this->render('Crud/read');
@@ -102,8 +122,13 @@ class CrudController extends AdminAppController {
 	 *
 	 * @param int $id
 	 * @throws NotFoundException
+	 * @throws ForbiddenException
 	 */
 	public function update($id) {
+		if (!$this->Model->admin['editable']) {
+			throw new ForbiddenException();
+		}
+
 		$this->Model->id = $id;
 
 		$result = $this->Model->find('first', array(
@@ -123,7 +148,7 @@ class CrudController extends AdminAppController {
 
 			if ($this->Model->saveAll($data, array('validate' => 'first', 'atomic' => true, 'deep' => true))) {
 				$this->Model->set($result);
-				$this->logAction(ActionLog::UPDATE, $this->Model);
+				$this->logEvent(ActionLog::UPDATE, $this->Model);
 
 				$this->setFlashMessage('Successfully updated %s with ID %s', $id);
 				$this->redirectAfter();
@@ -161,7 +186,7 @@ class CrudController extends AdminAppController {
 
 		if ($this->request->is('post')) {
 			if ($this->Model->delete($id, true)) {
-				$this->logAction(ActionLog::DELETE, $this->Model);
+				$this->logEvent(ActionLog::DELETE, $this->Model);
 				$this->setFlashMessage('Successfully deleted %s with ID %s', $id);
 				$this->redirectAfter();
 
@@ -316,6 +341,58 @@ class CrudController extends AdminAppController {
 	}
 
 	/**
+	 * Parse the request into an array of filtering SQL conditions.
+	 *
+	 * @param array $data
+	 * @return array
+	 */
+	protected function parseFilterConditions($data) {
+		$conditions = array();
+		$fields = $this->Model->fields;
+		$alias = $this->Model->alias;
+		$enum = $this->Model->enum;
+
+		foreach ($data as $key => $value) {
+			if (substr($key, -7) === '_filter' ||
+				substr($key, -11) === '_type_ahead' ||
+				$key === 'form_action' ||
+				$value === '') {
+				continue;
+			}
+
+			$field = $fields[$key];
+
+			// Dates, times, numbers
+			if (isset($data[$key . '_filter'])) {
+				$operator = $data[$key . '_filter'];
+				$operator = ($operator === '=') ? '' : ' ' . $operator;
+
+				if ($field['type'] === 'datetime') {
+					$value = date('Y-m-d H:i:s', strtotime($value));
+
+				} else if ($field['type'] === 'date') {
+					$value = date('Y-m-d', strtotime($value));
+
+				} else if ($field['type'] === 'time') {
+					$value = date('H:i:s', strtotime($value));
+				}
+
+				$conditions[$alias . '.' . $key . $operator] = $value;
+
+			// Enums, booleans, relations
+			} else if (isset($enum[$key]) || $field['type'] === 'boolean' || !empty($field['belongsTo'])) {
+				$conditions[$alias . '.' . $key] = $value;
+
+			// Strings
+			} else {
+				$conditions[$alias . '.' . $key . ' LIKE'] = '%' . $value . '%';
+			}
+		}
+
+		return $conditions;
+	}
+
+	/**
 	 * Redirect after a create or update.
 	 *
 	 * @param string $action
@@ -350,9 +427,15 @@ class CrudController extends AdminAppController {
 
 			// Add to type ahead if too many records
 			if ($count > $this->Model->admin['associationLimit']) {
+				$class = $assoc['className'];
+
+				if (strpos($class, '.') === false) {
+					$class = Configure::read('Admin.coreName') . '.' . $class;
+				}
+
 				$typeAhead[$assoc['foreignKey']] = array(
 					'alias' => $alias,
-					'model' => $assoc['className']
+					'model' => $class
 				);
 
 			} else {

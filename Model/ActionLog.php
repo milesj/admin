@@ -58,9 +58,34 @@ class ActionLog extends AdminAppModel {
 	 */
 	public $admin = array(
 		'iconClass' => 'icon-exchange',
+		'editable' => false,
+		'deletable' => false,
 		'paginate' => array(
 			'order' => array('ActionLog.id' => 'DESC')
 		)
 	);
+
+	/**
+	 * Log an event only once every 6 hours.
+	 *
+	 * @param array $query
+	 * @return bool
+	 */
+	public function logEvent($query) {
+		$conditions = $query;
+		$conditions['created >='] = date('Y-m-d H:i:s', strtotime('-6 hours'));
+
+		$count = $this->find('count', array(
+			'conditions' => $conditions
+		));
+
+		if ($count) {
+			return true;
+		}
+
+		$this->create();
+
+		return $this->save($query, false);
+	}
 
 }

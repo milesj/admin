@@ -103,7 +103,7 @@ class AdminAppController extends Controller {
 	 * @param string $comment
 	 * @param string $item
 	 */
-	public function logAction($action, Model $model = null, $comment = null, $item = null) {
+	public function logEvent($action, Model $model = null, $comment = null, $item = null) {
 		if (!$this->config['logActions']) {
 			return;
 		}
@@ -142,8 +142,7 @@ class AdminAppController extends Controller {
 		$query['comment'] = $comment;
 		$query['item'] = $item;
 
-		$this->ActionLog->create();
-		$this->ActionLog->save($query, false);
+		$this->ActionLog->logEvent($query);
 	}
 
 }

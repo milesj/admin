@@ -17,7 +17,7 @@ echo $this->element('crud_actions'); ?>
 <fieldset>
 	<?php // Loop over primary model fields
 	foreach ($model->fields as $field => $data) {
-		if (($this->action === 'create' && $field === 'id') || in_array($field, $model->admin['hideFields'])) {
+		if (($this->action === 'create' && $field === $model->primaryKey) || in_array($field, $model->admin['hideFields'])) {
 			continue;
 		}
 

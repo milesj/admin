@@ -66,5 +66,6 @@ Configure::write('Admin.modelDefaults', array(
 	'associationLimit' => 75,
 	'batchDelete' => true,
 	'deletable' => true,
+	'editable' => true,
 	'iconClass' => ''
 ));

@@ -34,11 +34,13 @@ var Admin = {
 	 * @param {String} url
 	 */
 	typeAhead: function(id, url) {
-		var sourceMap = {};
+		var sourceMap = {},
+			inputTA = $('#' + id),
+			inputRaw = $('#' + id.replace('TypeAhead', ''));
 
-		$('#' + id).typeahead({
+		inputTA.typeahead({
 			items: 15,
-			minLength: 2,
+			minLength: 1,
 			source: function(query, process) {
 				return $.ajax({
 					url: url,
@@ -51,10 +53,11 @@ var Admin = {
 
 						$.each(json, function(id, title) {
 							// Display ID in front of title
-							display = (id != title) ? id + ' - ' + title : title;
+							//display = (id != title) ? id + ' - ' + title : title;
+							display = title;
 
 							sourceMap[display] = [id, title];
-							source.push(title);
+							source.push(display);
 						});
 
 						return process(source);
@@ -64,9 +67,16 @@ var Admin = {
 			updater: function(item) {
 				item = sourceMap[item];
 
-				$('#' + id.replace('TypeAhead', '')).val(item[0]);
+				inputRaw.val(item[0]);
 
 				return item[1];
+			}
+		});
+
+		// Reset raw input if type ahead is cleared
+		inputTA.keyup(function() {
+			if (!this.value) {
+				inputRaw.val('');
 			}
 		});
 	},
@@ -91,6 +101,24 @@ var Admin = {
 					related.change(callback);
 				}
 			}
+		});
+	},
+
+	/**
+	 * Allow filter comparison dropdowns to change input fields with the chosen option.
+	 */
+	filterComparisons: function() {
+		$('#filters').find('.input-prepend').each(function() {
+			var self = $(this),
+				filter = self.find('input:hidden'),
+				button = self.find('button');
+
+			self.find('ul a').click(function() {
+				var option = $(this).data('filter');
+
+				filter.val(option);
+				button.text(option);
+			});
 		});
 	}
 
