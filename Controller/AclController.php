@@ -91,7 +91,7 @@ class AclController extends AdminAppController {
 	 * @return array
 	 */
 	protected function getControllers() {
-		return $this->Aco->getObjects();
+		return $this->Aco->getAll();
 	}
 
 	/**
@@ -103,7 +103,7 @@ class AclController extends AdminAppController {
 		$mapByAroId = array();
 
 		// Map out the permissions
-		if ($permissions = $this->Permission->getPermissions()) {
+		if ($permissions = $this->Permission->getAll()) {
 			foreach ($permissions as $permission) {
 				$permission = $permission['ObjectPermission'];
 				$mapByAroId[$permission['aro_id']][$permission['aco_id']] = $permission;
@@ -111,7 +111,7 @@ class AclController extends AdminAppController {
 		}
 
 		// Grab the permissions for each aro
-		$aros = $this->Aro->getObjects();
+		$aros = $this->Aro->getAll();
 
 		if ($aros) {
 			foreach ($aros as &$aro) {

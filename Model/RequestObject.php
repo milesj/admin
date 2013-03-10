@@ -93,19 +93,44 @@ class RequestObject extends Aro {
 	);
 
 	/**
-	 * Add an alias if it does not exist.
+	 * Behaviors.
+	 *
+	 * @var array
+	 */
+	public $actsAs = array(
+		'Tree' => array('type' => 'nested'),
+		'Containable',
+		'Utility.Cacheable'
+	);
+
+	/**
+	 * Add an object if it does not exist.
 	 *
 	 * @param string $alias
-	 * @return bool
+	 * @param int $parent_id
+	 * @return int
 	 */
-	public function addAlias($alias) {
-		if ($this->hasAlias($alias)) {
-			return true;
+	public function addObject($alias, $parent_id = null) {
+		$query = array(
+			'alias' => $alias,
+			'parent_id' => $parent_id
+		);
+
+		$result = $this->find('first', array(
+			'conditions' => $query
+		));
+
+		if ($result) {
+			return $result['RequestObject']['id'];
 		}
 
 		$this->create();
 
-		return $this->save(array('alias' => $alias));
+		if ($this->save($query)) {
+			return $this->id;
+		}
+
+		return null;
 	}
 
 	/**
@@ -113,7 +138,7 @@ class RequestObject extends Aro {
 	 *
 	 * @return array
 	 */
-	public function getObjects() {
+	public function getAll() {
 		$this->recursive = 0;
 
 		return $this->find('all', array(
@@ -124,15 +149,151 @@ class RequestObject extends Aro {
 	}
 
 	/**
-	 * Return a record by alias.
+	 * Return all records.
+	 *
+	 * @return array
+	 */
+	public function getParents() {
+		return $this->find('all', array(
+			'conditions' => array('RequestObject.parent_id' => null),
+			'cache' => __METHOD__
+		));
+	}
+
+	/**
+	 * Return all records as a list.
+	 *
+	 * @return array
+	 */
+	public function getList() {
+		return $this->find('list', array(
+			'conditions' => array('RequestObject.parent_id' => null),
+			'fields' => array('RequestObject.id', 'RequestObject.alias'),
+			'cache' => __METHOD__
+		));
+	}
+
+	/**
+	 * Return a record based on ID.
+	 *
+	 * @param int $id
+	 * @return array
+	 */
+	public function getById($id) {
+		return $this->find('first', array(
+			'conditions' => array('RequestObject.id' => $id),
+			'contain' => array('Parent', 'User'),
+			'cache' => array(__METHOD__, $id)
+		));
+	}
+
+	/**
+	 * Return a record based on user ID.
+	 *
+	 * @param int $user_id
+	 * @return array
+	 */
+	public function getByUserId($user_id) {
+		return $this->find('first', array(
+			'conditions' => array(
+				'RequestObject.foreign_key' => $user_id,
+				'RequestObject.model' => USER_MODEL
+			),
+			'contain' => array('Parent', 'User'),
+			'cache' => array(__METHOD__, $user_id)
+		));
+	}
+
+	/**
+	 * Return a record based on alias.
 	 *
 	 * @param string $alias
 	 * @return array
 	 */
-	public function getAlias($alias) {
+	public function getByAlias($alias) {
 		return $this->find('first', array(
 			'conditions' => array('RequestObject.alias' => $alias),
-			'contain' => array('Parent')
+			'contain' => array('Parent'),
+			'cache' => array(__METHOD__, $alias)
+		));
+	}
+
+	/**
+	 * Return a list of users permissions. Include parent groups permissions also.
+	 *
+	 * @param int $user_id
+	 * @return array
+	 */
+	public function getPermissions($user_id) {
+		try {
+			$aros = $this->node(array(USER_MODEL => array('id' => $user_id)));
+		} catch (Exception $e) {
+			return null;
+		}
+
+		return ClassRegistry::init('Permission')->find('all', array(
+			'conditions' => array('Permission.aro_id' => Hash::extract($aros, '{n}.RequestObject.id')),
+			'order' => array('Aco.lft' => 'desc'),
+			'recursive' => 0
+		));
+	}
+
+	/**
+	 * Return a list of users roles defined in the ACL.
+	 *
+	 * @param int $user_id
+	 * @return array
+	 */
+	public function getRoles($user_id) {
+		$results = $this->find('all', array(
+			'conditions' => array(
+				'RequestObject.foreign_key' => $user_id,
+				'RequestObject.model' => USER_MODEL
+			)
+		));
+
+		if ($results) {
+			$results = $this->find('all', array(
+				'conditions' => array('RequestObject.id' => Hash::extract($results, '{n}.RequestObject.parent_id'))
+			));
+		}
+
+		return $results;
+	}
+
+	/**
+	 * Return all the staff.
+	 *
+	 * @return array
+	 */
+	public function getStaff() {
+		return $this->find('all', array(
+			'conditions' => array(
+				'RequestObject.parent_id' => array_keys($this->getList()),
+				'RequestObject.foreign_key !=' => null,
+				'RequestObject.model' => USER_MODEL
+			),
+			'contain' => array('User', 'Parent')
+		));
+	}
+
+	/**
+	 * Return all the staff by slug.
+	 *
+	 * @param string $alias
+	 * @return array
+	 */
+	public function getStaffByAlias($alias) {
+		$access = $this->getByAlias($alias);
+
+		return $this->find('all', array(
+			'conditions' => array(
+				'RequestObject.parent_id' => $access['RequestObject']['id'],
+				'RequestObject.foreign_key !=' => null,
+				'RequestObject.model' => USER_MODEL
+			),
+			'contain' => array('User', 'Parent'),
+			'cache' => array(__METHOD__, $alias)
 		));
 	}
 
@@ -157,7 +318,7 @@ class RequestObject extends Aro {
 	 * @return bool
 	 */
 	public function isAdmin($user_id) {
-		$admin = $this->getAlias(Configure::read('Admin.adminAlias'));
+		$admin = $this->getByAlias(Configure::read('Admin.adminAlias'));
 
 		if (!$admin) {
 			return false;
@@ -165,7 +326,7 @@ class RequestObject extends Aro {
 
 		return (bool) $this->find('count', array(
 			'conditions' => array(
-				'RequestObject.model' => 'User',
+				'RequestObject.model' => USER_MODEL,
 				'RequestObject.foreign_key' => $user_id,
 				'RequestObject.parent_id' => $admin['RequestObject']['id']
 			)

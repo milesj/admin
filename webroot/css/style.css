@@ -23,7 +23,7 @@ body {
 
 .action-buttons .btn { margin-left: 15px; }
 
-.model-icon { min-width: 20px; }
+.model-icon { min-width: 20px; margin-left: 2px; }
 
 /* Custom form styles since we have to use Cakes HTML */
 

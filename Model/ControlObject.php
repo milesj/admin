@@ -93,6 +93,17 @@ class ControlObject extends Aco {
 	);
 
 	/**
+	 * Behaviors.
+	 *
+	 * @var array
+	 */
+	public $actsAs = array(
+		'Tree' => array('type' => 'nested'),
+		'Containable',
+		'Utility.Cacheable'
+	);
+
+	/**
 	 * Add an object if it does not exist.
 	 *
 	 * @param string $alias
@@ -127,7 +138,7 @@ class ControlObject extends Aco {
 	 *
 	 * @return array
 	 */
-	public function getObjects() {
+	public function getAll() {
 		$this->recursive = 0;
 
 		return $this->find('all', array(
