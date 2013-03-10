@@ -52,7 +52,18 @@ class InstallShell extends BaseInstallShell {
 	 * @return bool
 	 */
 	public function setupAcl() {
-		$admin = $this->RequestObject->addObject(Configure::read('Admin.adminAlias'));
+		$adminAlias = Configure::read('Admin.adminAlias');
+
+		$this->out(sprintf('Administrator Role: <comment>%s</comment>', $adminAlias));
+
+		$answer = strtoupper($this->in('<question>Is this correct?</question>', array('Y', 'N')));
+
+		if ($answer === 'N') {
+			$this->out('<warning>Configure the role through Admin.adminAlias</warning>');
+			return false;
+		}
+
+		$admin = $this->RequestObject->addObject($adminAlias);
 		$userModel = ClassRegistry::init($this->usersModel);
 
 		// Fetch user
@@ -99,6 +110,8 @@ class InstallShell extends BaseInstallShell {
 	 * @param string $name
 	 */
 	public function plugin($name = null) {
+		$this->out();
+
 		$pluginName = $name ?: $this->args[0];
 		$plugin = Admin::getPlugin($pluginName);
 
@@ -107,7 +120,7 @@ class InstallShell extends BaseInstallShell {
 			return;
 		}
 
-		$this->out('<info>Installing...</info>');
+		$this->out(sprintf('<info>Installing %s...</info>', $pluginName));
 
 		// Create parent object
 		$parent_id = $this->ControlObject->addObject($pluginName);
@@ -132,6 +145,8 @@ class InstallShell extends BaseInstallShell {
 	 * @param string $name
 	 */
 	public function model($name = null) {
+		$this->out();
+
 		$modelName = Inflector::classify($name ?: $this->args[0]);
 		$model = ClassRegistry::init($modelName);
 
@@ -140,19 +155,19 @@ class InstallShell extends BaseInstallShell {
 			return;
 		}
 
-		list($plugin, $model) = pluginSplit($modelName);
+		list($plugin, $modelName) = pluginSplit($modelName);
 
 		if (!$plugin) {
 			$plugin = Configure::read('Admin.coreName');
 		}
 
-		$this->out('<info>Installing...</info>');
+		$this->out(sprintf('<info>Installing %s...</info>', $modelName));
 
 		// Create parent object
 		$parent_id = $this->ControlObject->addObject($plugin);
 
 		// Create children object
-		$alias = $plugin . '.' . $model;
+		$alias = $plugin . '.' . $modelName;
 		$this->ControlObject->addObject($alias, $parent_id);
 
 		// Give admin access

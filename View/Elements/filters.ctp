@@ -1,11 +1,10 @@
 
-<?php
-$action = isset($this->data[$model->alias]['form_action']) ? $this->data[$model->alias]['form_action'] : null; ?>
-
-<div id="filters" class="well well-small filters"<?php if ($action !== 'filter') { ?> style="display: none"<?php } ?>>
+<div id="filters" class="well well-small filters"<?php if (empty($this->request->params['named'])) { ?> style="display: none"<?php } ?>>
 	<?php
-	echo $this->Form->create($model->alias, array('class' => 'form-inline'));
-	echo $this->Form->input('form_action', array('type' => 'hidden', 'value' => 'filter'));
+	echo $this->Form->create($model->alias, array(
+		'url' => array('controller' => 'crud', 'action' => 'proxy', 'model' => $model->urlSlug),
+		'class' => 'form-inline')
+	);
 
 	foreach ($model->fields as $field => $data) {
 		if (in_array($field, $model->admin['fileFields'])) {

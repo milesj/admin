@@ -79,8 +79,7 @@ echo $this->element('pagination'); ?>
 <?php
 echo $this->element('pagination');
 
-if ($model->admin['batchDelete'] && $results) {
-	echo $this->Form->input('form_action', array('type' => 'hidden', 'value' => 'delete')); ?>
+if ($model->admin['batchDelete'] && $results) { ?>
 
 	<div class="well align-center">
 		<button type="submit" class="btn btn-large btn-danger" onclick="return confirm('<?php echo __('Are you sure? This can not be reversed.'); ?>');">

@@ -1,22 +1,24 @@
 <?php
 $options = null;
-$type = 'text';
+$params = array(
+	'div' => false,
+	'label' => false,
+	'type' => 'text',
+	'default' => '',
+	'required' => false
+);
 
 if (isset($model->enum[$field])) {
 	$options = $model->enum[$field];
-	$type = 'select';
 
 } else if ($data['type'] === 'boolean') {
 	$options = array(__('No'), __('Yes'));
-	$type = 'select';
 }
 
-echo $this->Form->input($field, array(
-	'div' => false,
-	'label' => false,
-	'type' => $type,
-	'options' => $options,
-	'default' => '',
-	'empty' => true,
-	'required' => false
-));
+if ($options) {
+	$params['empty'] = true;
+	$params['type'] = 'select';
+	$params['options'] = $options;
+}
+
+echo $this->Form->input($field, $params);

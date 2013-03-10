@@ -110,7 +110,7 @@ var Admin = {
 	filterComparisons: function() {
 		$('#filters').find('.input-prepend').each(function() {
 			var self = $(this),
-				filter = self.find('input:hidden'),
+				filter = self.find('input[type="hidden"]'),
 				button = self.find('button');
 
 			self.find('ul a').click(function() {

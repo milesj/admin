@@ -26,39 +26,33 @@ class CrudController extends AdminAppController {
 
 		$this->setBelongsToData();
 
+		// Filters
+		if (!empty($this->request->params['named'])) {
+			$this->paginate['conditions'] = $this->parseFilterConditions($this->request->params['named']);
+		}
+
+		// Batch delete
 		if ($this->request->is('post')) {
-			$action = $this->request->data[$this->Model->alias]['form_action'];
+			if (!$this->Model->admin['batchDelete']) {
+				throw new ForbiddenException();
 
-			switch ($action) {
-				case 'filter':
-					$this->paginate['conditions'] = $this->parseFilterConditions($this->request->data[$this->Model->alias]);
-				break;
+			} else if (!$this->Acl->check(array(USER_MODEL => $this->Auth->user()), $this->Model->qualifiedName, 'delete')) {
+				throw new UnauthorizedException(__('Insufficient Access Permissions'));
+			}
 
-				case 'delete':
-					unset($this->request->data[$this->Model->alias]['form_action']);
+			$count = 0;
+			$deleted = array();
 
-					if (!$this->Model->admin['batchDelete']) {
-						throw new ForbiddenException();
+			foreach ($this->request->data[$this->Model->alias] as $id) {
+				if ($id && $this->Model->delete($id, true)) {
+					$count++;
+					$deleted[] = $id;
+				}
+			}
 
-					} else if (!$this->Acl->check(array(USER_MODEL => $this->Auth->user()), $this->Model->qualifiedName, 'delete')) {
-						throw new UnauthorizedException(__('Insufficient Access Permissions'));
-					}
-
-					$count = 0;
-					$deleted = array();
-
-					foreach ($this->request->data[$this->Model->alias] as $id) {
-						if ($id && $this->Model->delete($id, true)) {
-							$count++;
-							$deleted[] = $id;
-						}
-					}
-
-					if ($count > 0) {
-						$this->logEvent(ActionLog::BATCH_DELETE, $this->Model, sprintf('Deleted IDs: %s', implode(', ', $deleted)));
-						$this->Session->setFlash(__('%s %s have been deleted', array($count, strtolower($this->Model->pluralName))), 'flash', array('class' => 'success'));
-					}
-				break;
+			if ($count > 0) {
+				$this->logEvent(ActionLog::BATCH_DELETE, $this->Model, sprintf('Deleted IDs: %s', implode(', ', $deleted)));
+				$this->Session->setFlash(__('%s %s have been deleted', array($count, strtolower($this->Model->pluralName))), 'flash', array('class' => 'success'));
 			}
 		}
 
@@ -222,6 +216,41 @@ class CrudController extends AdminAppController {
 	}
 
 	/**
+	 * Proxy action to handle POST requests and redirect back with named params.
+	 */
+	public function proxy() {
+		if (empty($this->request->data[$this->Model->alias])) {
+			$this->redirect($this->referer());
+		}
+
+		$data = $this->request->data[$this->Model->alias];
+		$named = array();
+
+		foreach ($data as $key => $value) {
+			if (
+				substr($key, -7) === '_filter' ||
+				substr($key, -11) === '_type_ahead' || 
+				$value === '') {
+				continue;
+			}
+
+			$named[$key] = urlencode($value);
+
+			if (isset($data[$key . '_filter'])) {
+				$named[$key . '_filter'] = urlencode($data[$key . '_filter']);
+			}
+		}
+
+		$url = array(
+			'controller' => 'crud',
+			'action' => 'index',
+			'model' => $this->Model->urlSlug
+		);
+
+		$this->redirect(array_merge($named, $url));
+	}
+
+	/**
 	 * Validate the user has the correct CRUD access permission.
 	 *
 	 * @param array $user
@@ -245,8 +274,8 @@ class CrudController extends AdminAppController {
 
 		$action = $this->action;
 
-		// Allow type ahead
-		if ($action === 'type_ahead') {
+		// Allow type ahead and proxy
+		if ($action === 'type_ahead' || $action === 'proxy') {
 			return true;
 
 		// Index counts as a read
@@ -353,18 +382,16 @@ class CrudController extends AdminAppController {
 		$enum = $this->Model->enum;
 
 		foreach ($data as $key => $value) {
-			if (substr($key, -7) === '_filter' ||
-				substr($key, -11) === '_type_ahead' ||
-				$key === 'form_action' ||
-				$value === '') {
+			if (substr($key, -7) === '_filter') {
 				continue;
 			}
 
 			$field = $fields[$key];
+			$value = urldecode($value);
 
 			// Dates, times, numbers
 			if (isset($data[$key . '_filter'])) {
-				$operator = $data[$key . '_filter'];
+				$operator = urldecode($data[$key . '_filter']);
 				$operator = ($operator === '=') ? '' : ' ' . $operator;
 
 				if ($field['type'] === 'datetime') {
@@ -388,6 +415,9 @@ class CrudController extends AdminAppController {
 				$conditions[$alias . '.' . $key . ' LIKE'] = '%' . $value . '%';
 			}
 		}
+
+		// Set data to use in form
+		$this->request->data[$this->Model->alias] = $data;
 
 		return $conditions;
 	}
