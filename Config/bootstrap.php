@@ -10,8 +10,19 @@
  */
 define('ADMIN_PLUGIN', dirname(__DIR__) . '/');
 
+// User model
 if (!defined('USER_MODEL')) {
 	define('USER_MODEL', 'User');
+}
+
+// Table prefix
+if (!defined('ADMIN_PREFIX')) {
+	define('ADMIN_PREFIX', 'admin_');
+}
+
+// Database config
+if (!defined('ADMIN_DATABASE')) {
+	define('ADMIN_DATABASE', Configure::read('Acl.database'));
 }
 
 /**
@@ -40,13 +51,18 @@ Configure::write('Admin.adminAlias', 'administrator');
 Configure::write('Admin.ignoreModels', array());
 
 /**
+ * Enable logging of administrator actions.
+ */
+Configure::write('Admin.logActions', true);
+
+/**
  * Default settings for each model.
  */
 Configure::write('Admin.modelDefaults', array(
 	'imageFields' => array('image'),
 	'fileFields' => array('image', 'file'),
 	'hideFields' => array(),
-	'paginateLimit' => 25,
+	'paginate' => array(),
 	'associationLimit' => 75,
 	'batchDelete' => true,
 	'deletable' => true,

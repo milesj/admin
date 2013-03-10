@@ -121,13 +121,47 @@ class RequestObject extends Aro {
 		));
 
 		if ($result) {
-			return $result['RequestObject']['id'];
+			return $result;
 		}
 
 		$this->create();
 
 		if ($this->save($query)) {
-			return $this->id;
+			return $this->getByAlias($alias);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Add a child object if it does not exist.
+	 *
+	 * @param string $alias
+	 * @param int $parent_id
+	 * @param string $model
+	 * @param int $foreignKey
+	 * @return int
+	 */
+	public function addChildObject($alias, $parent_id, $model, $foreignKey) {
+		$query = array(
+			'alias' => $alias,
+			'parent_id' => $parent_id,
+			'model' => $model,
+			'foreign_key' => $foreignKey
+		);
+
+		$result = $this->find('first', array(
+			'conditions' => $query
+		));
+
+		if ($result) {
+			return $result;
+		}
+
+		$this->create();
+
+		if ($this->save($query)) {
+			return $this->getByAlias($alias);
 		}
 
 		return null;

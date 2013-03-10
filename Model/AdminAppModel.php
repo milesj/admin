@@ -7,4 +7,49 @@
 
 class AdminAppModel extends Model {
 
+	/**
+	 * Table prefix.
+	 *
+	 * @var string
+	 */
+	public $tablePrefix = ADMIN_PREFIX;
+
+	/**
+	 * Database config.
+	 *
+	 * @var string
+	 */
+	public $useDbConfig = ADMIN_DATABASE;
+
+	/**
+	 * Cache queries.
+	 *
+	 * @var boolean
+	 */
+	public $cacheQueries = true;
+
+	/**
+	 * No recursion.
+	 *
+	 * @var int
+	 */
+	public $recursive = -1;
+
+	/**
+	 * Behaviors.
+	 *
+	 * @var array
+	 */
+	public $actsAs = array(
+		'Containable',
+		'Utility.Enumerable' => array(
+			'persist' => true,
+			'format' => 'append'
+		),
+		'Utility.Cacheable' => array(
+			'appendKey' => false,
+			'expires' => '+1 hour'
+		)
+	);
+
 }

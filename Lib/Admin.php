@@ -240,7 +240,7 @@ class Admin {
 			$settings = isset($object->admin) ? $object->admin : array();
 
 			if (is_array($settings)) {
-				$settings = array_merge(Configure::read('Admin.modelDefaults'), $settings);
+				$settings = Hash::merge(Configure::read('Admin.modelDefaults'), $settings);
 
 				if (!$settings['deletable']) {
 					$settings['batchDelete'] = false;

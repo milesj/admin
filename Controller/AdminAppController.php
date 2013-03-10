@@ -6,9 +6,11 @@
  */
 
 App::uses('Admin', 'Admin.Lib');
+App::uses('ActionLog', 'Admin.Model');
 
 /**
  * @property Model $Model
+ * @property ActionLog $ActionLog
  */
 class AdminAppController extends Controller {
 
@@ -17,7 +19,7 @@ class AdminAppController extends Controller {
 	 *
 	 * @var array
 	 */
-	public $uses = array();
+	public $uses = array('Admin.ActionLog');
 
 	/**
 	 * Components.
@@ -91,6 +93,57 @@ class AdminAppController extends Controller {
 		$this->set('user', $this->Auth->user());
 		$this->set('config', $this->config);
 		$this->set('model', $this->Model);
+	}
+
+	/**
+	 * Log a users action.
+	 *
+	 * @param int $action
+	 * @param Model $model
+	 * @param string $comment
+	 * @param string $item
+	 */
+	public function logAction($action, Model $model = null, $comment = null, $item = null) {
+		if (!$this->config['logActions']) {
+			return;
+		}
+
+		$query = array(
+			'user_id' => $this->Auth->user('id'),
+			'action' => $action
+		);
+
+		if ($model) {
+			$id = $model->id;
+
+			// Fetch ID from URL
+			if (!$id) {
+				if (isset($this->params['pass'][0])) {
+					$id = $this->params['pass'][0];
+				} else {
+					$id = null;
+				}
+			}
+
+			// Get display field from data
+			if (!$item && isset($model->data[$model->alias][$model->displayField]) && $model->primaryKey !== $model->displayField) {
+				$item = $model->data[$model->alias][$model->displayField];
+			}
+
+			// Get comment from request
+			if (!$comment && isset($this->request->data[$model->alias]['log_comment'])) {
+				$comment = $this->request->data[$model->alias]['log_comment'];
+			}
+
+			$query['model'] = $model->qualifiedName;
+			$query['foreign_key'] = $id;
+		}
+
+		$query['comment'] = $comment;
+		$query['item'] = $item;
+
+		$this->ActionLog->create();
+		$this->ActionLog->save($query, false);
 	}
 
 }

@@ -17,3 +17,11 @@ if ($this->action !== 'delete') {
 		'options' => $options
 	)); ?>
 </div>
+
+<div class="form-log-comment">
+	<?php echo $this->Form->input('log_comment', array(
+		'div' => false,
+		'maxlength' => 255,
+		'required' => in_array($this->action, array('update', 'delete'))
+	)); ?>
+</div>

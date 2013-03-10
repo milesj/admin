@@ -11,30 +11,33 @@ class CrudController extends AdminAppController {
 	 * List out and paginate all the records in the model.
 	 */
 	public function index() {
-		$this->paginate = array(
-			'limit' => $this->Model->admin['paginateLimit'],
+		$this->paginate = array_merge(array(
+			'limit' => 25,
 			'order' => array($this->Model->alias . '.' . $this->Model->primaryKey => 'ASC'),
 			'contain' => array_keys($this->Model->belongsTo)
-		);
+		), $this->Model->admin['paginate']);
 
 		// Batch delete
 		if ($this->request->is('post')) {
 			if (!$this->Model->admin['batchDelete']) {
 				throw new ForbiddenException();
 
-			} else if (!$this->Acl->check(array('User' => $this->Auth->user('id')), $this->Model->qualifiedName, 'delete')) {
+			} else if (!$this->Acl->check(array(USER_MODEL => $this->Auth->user()), $this->Model->qualifiedName, 'delete')) {
 				throw new UnauthorizedException(__('Insufficient Access Permissions'));
 			}
 
 			$count = 0;
+			$deleted = array();
 
 			foreach ($this->request->data[$this->Model->alias] as $id) {
 				if ($id && $this->Model->delete($id, true)) {
 					$count++;
+					$deleted[] = $id;
 				}
 			}
 
 			if ($count > 0) {
+				$this->logAction(ActionLog::BATCH_DELETE, $this->Model, sprintf('Deleted IDs: %s', implode(', ', $deleted)));
 				$this->Session->setFlash(__('%s %s have been deleted', array($count, strtolower($this->Model->pluralName))), 'flash', array('class' => 'success'));
 			}
 		}
@@ -47,12 +50,17 @@ class CrudController extends AdminAppController {
 	 * Create a new record.
 	 */
 	public function create() {
-		$this->Model->create();
 		$this->setBelongsToData();
 		$this->setHabtmData();
 
 		if ($this->request->is('post')) {
-			if ($this->Model->saveAll($this->getRequestData(), array('validate' => 'first', 'atomic' => true, 'deep' => true))) {
+			$data = $this->getRequestData();
+			$this->Model->create($data);
+
+			if ($this->Model->saveAll(null, array('validate' => 'first', 'atomic' => true, 'deep' => true))) {
+				$this->Model->set($data);
+				$this->logAction(ActionLog::CREATE, $this->Model);
+
 				$this->setFlashMessage('Successfully created a new %s');
 				$this->redirectAfter();
 
@@ -82,6 +90,9 @@ class CrudController extends AdminAppController {
 			throw new NotFoundException();
 		}
 
+		$this->Model->set($result);
+		$this->logAction(ActionLog::READ, $this->Model);
+
 		$this->set('result', $result);
 		$this->render('Crud/read');
 	}
@@ -108,7 +119,12 @@ class CrudController extends AdminAppController {
 		$this->setHabtmData();
 
 		if ($this->request->is('put')) {
-			if ($this->Model->saveAll($this->getRequestData(), array('validate' => 'first', 'atomic' => true, 'deep' => true))) {
+			$data = $this->getRequestData();
+
+			if ($this->Model->saveAll($data, array('validate' => 'first', 'atomic' => true, 'deep' => true))) {
+				$this->Model->set($result);
+				$this->logAction(ActionLog::UPDATE, $this->Model);
+
 				$this->setFlashMessage('Successfully updated %s with ID %s', $id);
 				$this->redirectAfter();
 
@@ -145,6 +161,7 @@ class CrudController extends AdminAppController {
 
 		if ($this->request->is('post')) {
 			if ($this->Model->delete($id, true)) {
+				$this->logAction(ActionLog::DELETE, $this->Model);
 				$this->setFlashMessage('Successfully deleted %s with ID %s', $id);
 				$this->redirectAfter();
 

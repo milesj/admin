@@ -24,8 +24,8 @@ if ($dependencies) {
 // Confirm delete form
 echo $this->Form->create($model->alias, array('class' => 'form-horizontal')); ?>
 
-	<div class="well align-center">
-		<?php echo $this->element('redirect_to'); ?>
+	<div class="well form-actions">
+		<?php echo $this->element('form_actions'); ?>
 
 		<button type="submit" class="btn btn-large btn-danger">
 			<span class="icon-remove icon-white"></span>
