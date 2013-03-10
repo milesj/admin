@@ -11,17 +11,19 @@ if ($this->action !== 'delete') {
 	), $options);
 } ?>
 
-<div class="form-redirect-to">
+<div class="redirect-to">
 	<?php echo $this->Form->input('redirect_to', array(
 		'div' => false,
 		'options' => $options
 	)); ?>
 </div>
 
-<div class="form-log-comment">
-	<?php echo $this->Form->input('log_comment', array(
-		'div' => false,
-		'maxlength' => 255,
-		'required' => in_array($this->action, array('update', 'delete'))
-	)); ?>
-</div>
+<?php if ($config['logActions']) { ?>
+	<div class="log-comment">
+		<?php echo $this->Form->input('log_comment', array(
+			'div' => false,
+			'maxlength' => 255,
+			'required' => in_array($this->action, array('update', 'delete'))
+		)); ?>
+	</div>
+<?php } ?>

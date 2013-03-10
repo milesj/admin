@@ -160,6 +160,33 @@ class AdminHelper extends AppHelper {
 	}
 
 	/**
+	 * Normalize an array by grabbing the keys from a multi-dimension array (belongsTo, actsAs, etc).
+	 *
+	 * @param array $array
+	 * @param bool $sort
+	 * @return array
+	 */
+	public function normalizeArray($array, $sort = true) {
+		$output = array();
+
+		if ($array) {
+			foreach ($array as $key => $value) {
+				if (is_numeric($key)) {
+					$output[] = $value;
+				} else {
+					$output[] = $key;
+				}
+			}
+
+			if ($sort) {
+				sort($output);
+			}
+		}
+
+		return $output;
+	}
+
+	/**
 	 * Output an association alias and class name. If both are equal, only display the alias.
 	 *
 	 * @param Model|array $model
@@ -212,7 +239,6 @@ class AdminHelper extends AppHelper {
 	public function setBreadcrumbs(Model $model, $result, $action) {
 		list($plugin, $alias) = pluginSplit($model->qualifiedName);
 
-		$this->Breadcrumb->add(__('Dashboard'), array('controller' => 'admin', 'action' => 'index'));
 		$this->Breadcrumb->add($plugin, array('controller' => 'admin', 'action' => 'index', '#' => Inflector::underscore($plugin)));
 		$this->Breadcrumb->add($model->pluralName, array('controller' => 'crud', 'action' => 'index', 'model' => $model->urlSlug));
 

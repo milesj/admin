@@ -30,4 +30,11 @@ class AdminController extends AdminAppController {
 		$this->set('counts', $counts);
 	}
 
+	/**
+	 * Analyze all models and output important information.
+	 */
+	public function analyze() {
+		$this->set('plugins', Admin::getModels());
+	}
+
 }

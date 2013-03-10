@@ -58,7 +58,7 @@ if ($habtm) { ?>
 
 <?php } ?>
 
-<div class="well form-actions">
+<div class="well actions">
 	<?php echo $this->element('form_actions'); ?>
 
 	<button type="submit" class="btn btn-large btn-success">
@@ -67,7 +67,7 @@ if ($habtm) { ?>
 	</button>
 
 	<button type="reset" class="btn btn-large btn-info">
-		<span class="icon-refresh icon-white"></span>
+		<span class="icon-undo icon-white"></span>
 		<?php echo __('Reset'); ?>
 	</button>
 

@@ -19,7 +19,11 @@ echo $this->Html->docType(); ?>
 
 	<div class="body container-fluid">
 		<div class="row-fluid">
-			<?php if ($crumbs = $this->Breadcrumb->get()) { ?>
+			<?php
+			$this->Breadcrumb->prepend(__('Dashboard'), array('controller' => 'admin', 'action' => 'index'));
+			$crumbs = $this->Breadcrumb->get();
+
+			if (count($crumbs) > 1) { ?>
 				<div class="well well-small breadcrumbs">
 					<ul class="breadcrumb">
 						<?php foreach ($crumbs as $crumb) { ?>

@@ -9,4 +9,6 @@ Router::connect('/admin/acl/:action/*', array('plugin' => 'admin', 'controller' 
 
 Router::connect('/admin/:model/:action/*',
 	array('plugin' => 'admin', 'controller' => 'crud'),
-	array('model' => '[-_a-zA-Z0-9\.]+'));
+	array('model' => '[_a-z0-9]+\.[_a-z0-9]+'));
+
+Router::connect('/admin/:action/*', array('plugin' => 'admin', 'controller' => 'admin'));

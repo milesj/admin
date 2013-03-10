@@ -13,7 +13,7 @@ class CrudController extends AdminAppController {
 	public function index() {
 		$this->paginate = array_merge(array(
 			'limit' => 25,
-			'order' => array($this->Model->alias . '.' . $this->Model->primaryKey => 'ASC'),
+			'order' => array($this->Model->alias . '.' . $this->Model->displayField => 'ASC'),
 			'contain' => array_keys($this->Model->belongsTo)
 		), $this->Model->admin['paginate']);
 

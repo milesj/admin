@@ -24,13 +24,13 @@ if ($dependencies) {
 // Confirm delete form
 echo $this->Form->create($model->alias, array('class' => 'form-horizontal')); ?>
 
-	<div class="well form-actions">
-		<?php echo $this->element('form_actions'); ?>
+<div class="well actions">
+	<?php echo $this->element('form_actions'); ?>
 
-		<button type="submit" class="btn btn-large btn-danger">
-			<span class="icon-remove icon-white"></span>
-			<?php echo __('Yes, Delete'); ?>
-		</button>
-	</div>
+	<button type="submit" class="btn btn-large btn-danger">
+		<span class="icon-remove icon-white"></span>
+		<?php echo __('Yes, Delete'); ?>
+	</button>
+</div>
 
 <?php echo $this->Form->end(); ?>

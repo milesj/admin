@@ -39,11 +39,10 @@ body {
 
 .form-horizontal .controls { margin-left: 21.5%; }
 
-.form-actions { text-align: center; }
-
-.form-actions div { margin-bottom: 15px; }
-
-.form-actions label {
+.form-horizontal .actions { text-align: center; }
+.form-horizontal .actions div { margin-bottom: 15px; }
+.form-horizontal .actions .btn { margin-left: 12px; }
+.form-horizontal .actions label {
 	display: inline-block;
 	font-weight: bold;
 	margin-right: 10px; }

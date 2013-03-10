@@ -1,4 +1,13 @@
 
+<div class="action-buttons">
+	<?php
+	echo $this->Html->link('<span class="icon-cogs icon-white"></span> ' . __('Analyze Models'),
+		array('controller' => 'admin', 'action' => 'analyze'),
+		array('class' => 'btn btn-info btn-large', 'escape' => false)); ?>
+</div>
+
+<h2 style="margin-top: 0"><?php echo __('Dashboard'); ?></h2>
+
 <div class="row-fluid">
 	<?php foreach ($plugins as $plugin) { ?>
 
