@@ -218,7 +218,15 @@ class AdminHelper extends AppHelper {
 			$model = $model->admin;
 		}
 
-		$title = $title ?: $model['title'];
+		if (!$title && isset($model['title'])) {
+			$title = $model['title'];
+		}
+
+		if (!$title) {
+			$title = $this->Html->tag('span', '(' . __('Missing Title') . ')', array(
+				'class' => 'text-warning'
+			));
+		}
 
 		if ($model['iconClass']) {
 			$title = $this->Html->tag('span', '&nbsp;', array(

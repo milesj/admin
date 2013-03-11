@@ -229,7 +229,7 @@ class CrudController extends AdminAppController {
 		foreach ($data as $key => $value) {
 			if (
 				substr($key, -7) === '_filter' ||
-				substr($key, -11) === '_type_ahead' || 
+				substr($key, -11) === '_type_ahead' ||
 				$value === '') {
 				continue;
 			}
@@ -382,7 +382,7 @@ class CrudController extends AdminAppController {
 		$enum = $this->Model->enum;
 
 		foreach ($data as $key => $value) {
-			if (substr($key, -7) === '_filter') {
+			if (substr($key, -7) === '_filter' || !isset($fields[$key])) {
 				continue;
 			}
 

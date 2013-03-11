@@ -1,6 +1,7 @@
 <?php
 $class = null;
 $options = null;
+$type = 'text';
 
 if ($data['type'] === 'integer') {
 	$class = 'span1';
@@ -16,11 +17,13 @@ if ($this->action === 'index') {
 
 if (isset($model->enum[$field])) {
 	$options = $model->enum[$field];
+	$type = 'select';
 }
 
 echo $this->Form->input($field, array(
 	'div' => false,
 	'label' => false,
+	'type' => $type,
 	'options' => $options,
 	'class' => $class,
 	'default' => $data['default'],
