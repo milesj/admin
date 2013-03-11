@@ -5,7 +5,7 @@ if ($this->action === 'read') {
 		echo $this->element('field/array', array('value' => $value));
 
 	} else {
-		echo h($value);
+		echo nl2br(h($value));
 	}
 
 // Else show trimmed version

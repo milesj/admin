@@ -92,6 +92,12 @@ class AdminHelper extends AppHelper {
 			$displayField = '#' . $displayField;
 		}
 
+		if (!$displayField) {
+			$displayField = $this->Html->tag('span', '(' . __('Missing Title') . ')', array(
+				'class' => 'text-warning'
+			));
+		}
+
 		return $displayField;
 	}
 
@@ -240,12 +246,6 @@ class AdminHelper extends AppHelper {
 
 		if (!$title && isset($model['title'])) {
 			$title = $model['title'];
-		}
-
-		if (!$title) {
-			$title = $this->Html->tag('span', '(' . __('Missing Title') . ')', array(
-				'class' => 'text-warning'
-			));
 		}
 
 		if ($model['iconClass']) {

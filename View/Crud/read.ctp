@@ -29,15 +29,23 @@ echo $this->element('crud_actions'); ?>
 </div>
 
 <?php // Loop over the types of associations
-foreach (array(
+$properties = array(
 	'hasOne' => 'Has One',
 	'hasMany' => 'Has Many',
 	'hasAndBelongsToMany' => 'Has and Belongs to Many'
-) as $property => $title) {
+);
+
+foreach ($properties as $property => $title) {
 	$associations = array();
 
 	foreach ($model->{$property} as $alias => $assoc) {
-		if (!empty($result[$alias])) {
+		if ($property === 'hasOne') {
+			$foreignModel = $this->Admin->introspect($assoc['className']);
+
+			if (!empty($result[$alias][$foreignModel->primaryKey])) {
+				$associations[$alias] = $assoc;
+			}
+		} else if (!empty($result[$alias])) {
 			$associations[$alias] = $assoc;
 		}
 	}

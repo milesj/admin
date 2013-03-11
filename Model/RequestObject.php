@@ -43,8 +43,9 @@ class RequestObject extends Aro {
 	 * @var array
 	 */
 	public $admin = array(
-		'iconClass' => 'icon-question-sign',
-		'hideFields' => array('lft', 'rght')
+		'iconClass' => 'icon-key',
+		'hideFields' => array('lft', 'rght'),
+		'editable' => false
 	);
 
 	/**

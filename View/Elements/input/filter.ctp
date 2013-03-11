@@ -1,5 +1,4 @@
 <?php
-$options = null;
 $params = array(
 	'div' => false,
 	'label' => false,
@@ -8,17 +7,18 @@ $params = array(
 	'required' => false
 );
 
-if (isset($model->enum[$field])) {
-	$options = $model->enum[$field];
+switch ($data['type']) {
+	case 'enum':
+	case 'boolean':
+		$params['empty'] = true;
+		$params['type'] = 'select';
 
-} else if ($data['type'] === 'boolean') {
-	$options = array(__('No'), __('Yes'));
-}
-
-if ($options) {
-	$params['empty'] = true;
-	$params['type'] = 'select';
-	$params['options'] = $options;
+		if ($data['type'] === 'enum') {
+			$params['options'] = $model->enum[$field];
+		} else {
+			$params['options'] = array(__('No'), __('Yes'));
+		}
+	break;
 }
 
 echo $this->Form->input($field, $params);

@@ -158,6 +158,8 @@ td.col-id,
 .controller-admin .nav .label { margin-left: 2px; }
 .controller-admin .nav li:hover .pull-right { display: block; }
 
+.action-index .table .image { max-width: 150px; }
+
 /* ACL table */
 
 .controller-acl .table { width: auto; }

@@ -216,6 +216,22 @@ class CrudController extends AdminAppController {
 	}
 
 	/**
+	 * Recover and reorder the models tree.
+	 */
+	public function sync_tree() {
+		if ($this->Model->Behaviors->loaded('Tree')) {
+			$this->Model->recover();
+			$this->Model->reorder();
+			$this->setFlashMessage('Synced %s tree', null, 'success');
+
+		} else {
+			$this->setFlashMessage('%s does not implement the TreeBehavior', null, 'error');
+		}
+
+		$this->redirect($this->referer());
+	}
+
+	/**
 	 * Proxy action to handle POST requests and redirect back with named params.
 	 */
 	public function proxy() {
@@ -275,7 +291,7 @@ class CrudController extends AdminAppController {
 		$action = $this->action;
 
 		// Allow type ahead and proxy
-		if ($action === 'type_ahead' || $action === 'proxy') {
+		if (in_array($action, array('type_ahead', 'proxy', 'sync_tree'))) {
 			return true;
 
 		// Index counts as a read

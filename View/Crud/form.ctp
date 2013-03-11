@@ -44,8 +44,8 @@ if ($habtm) { ?>
 
 		<?php foreach ($habtm as $alias => $assoc) {
 			$assoc['type'] = 'relation';
-			$assoc['title'] = $this->Admin->introspect($assoc['className'])->pluralName;
-			$assoc['hasAndBelongsToMany'] = true;
+			$assoc['title'] = $alias;
+			$assoc['habtm'] = true;
 
 			echo $this->element('input', array(
 				'field' => $alias,

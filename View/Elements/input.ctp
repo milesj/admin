@@ -37,7 +37,7 @@ if ($hasError) {
 		if (!empty($data['belongsTo'])) {
 			$element = 'belongs_to';
 
-		} else if (!empty($data['hasAndBelongsToMany'])) {
+		} else if (!empty($data['habtm'])) {
 			$element = 'has_and_belongs_to_many';
 
 		} else if ($field === 'id') {

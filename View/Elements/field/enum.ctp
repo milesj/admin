@@ -2,7 +2,7 @@
 if (is_numeric($value)) {
 	if (!isset($model->enum[$field][$value])) { ?>
 
-		<span class="enum text-error">INVALID ENUM</span>
+		<span class="enum text-error">INVALID ENUM: <?php echo $value; ?></span>
 
 	<?php } else {
 		$enum = $model->enum[$field][$value]; ?>

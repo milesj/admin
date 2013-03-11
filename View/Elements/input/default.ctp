@@ -1,31 +1,35 @@
 <?php
-$class = null;
-$options = null;
-$type = 'text';
+$params = array(
+	'div' => false,
+	'label' => false,
+	'type' => 'text',
+	'default' => $data['default'],
+	'empty' => ($this->action === 'index')
+);
 
-if ($data['type'] === 'integer') {
-	$class = 'span1';
-} else if ($data['type'] === 'string') {
-	$class = 'span3';
-} else if ($data['type'] === 'text') {
-	$class = 'span5';
+switch ($data['type']) {
+	case 'string':
+		$params['class'] = 'span3';
+	break;
+	case 'text':
+		$params['class'] = 'span5';
+		$params['type'] = 'textarea';
+	break;
+	case 'integer':
+		$params['class'] = 'span1';
+		$params['type'] = 'number';
+	break;
+	case 'boolean':
+		$params['type'] = 'checkbox';
+	break;
+	case 'enum':
+		$params['type'] = 'select';
+		$params['options'] = $model->enum[$field];
+	break;
 }
 
 if ($this->action === 'index') {
-	$class = null;
+	unset($params['class']);
 }
 
-if (isset($model->enum[$field])) {
-	$options = $model->enum[$field];
-	$type = 'select';
-}
-
-echo $this->Form->input($field, array(
-	'div' => false,
-	'label' => false,
-	'type' => $type,
-	'options' => $options,
-	'class' => $class,
-	'default' => $data['default'],
-	'empty' => ($this->action === 'index')
-));
+echo $this->Form->input($field, $params);

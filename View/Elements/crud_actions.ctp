@@ -4,6 +4,12 @@
 	if ($this->action === 'index') {
 		echo $this->Html->link('<span class="icon-filter icon-white"></span> ' . __('Filter'),
 			'javascript:;', array('class' => 'btn btn-info btn-large', 'escape' => false, 'onclick' => "$('#filters').toggle()"));
+
+		if ($model->Behaviors->loaded('Tree')) {
+			echo $this->Html->link('<span class="icon-refresh icon-white"></span> ' . __('Sync Tree'),
+				array('action' => 'sync_tree', 'model' => $model->urlSlug),
+				array('class' => 'btn btn-info btn-large', 'escape' => false));
+		}
 	}
 
 	if ($this->action !== 'create') {
