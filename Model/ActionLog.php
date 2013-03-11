@@ -17,6 +17,7 @@ class ActionLog extends AdminAppModel {
 	const UPDATE = 12;
 	const DELETE = 13;
 	const BATCH_DELETE = 14;
+	const PROCESS = 15;
 
 	// ACL
 	const ACL_SYNC = 20;
@@ -46,6 +47,7 @@ class ActionLog extends AdminAppModel {
 			self::UPDATE => 'UPDATE',
 			self::DELETE => 'DELETE',
 			self::BATCH_DELETE => 'BATCH_DELETE',
+			self::PROCESS => 'PROCESS',
 			self::ACL_SYNC => 'ACL_SYNC',
 			self::ACL_GRANT => 'ACL_GRANT'
 		)

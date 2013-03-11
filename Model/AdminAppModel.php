@@ -42,12 +42,8 @@ class AdminAppModel extends Model {
 	 */
 	public $actsAs = array(
 		'Containable',
-		'Utility.Enumerable' => array(
-			'persist' => true,
-			'format' => 'append'
-		),
+		'Utility.Enumerable',
 		'Utility.Cacheable' => array(
-			'appendKey' => false,
 			'expires' => '+1 hour'
 		)
 	);

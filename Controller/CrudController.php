@@ -51,7 +51,7 @@ class CrudController extends AdminAppController {
 			}
 
 			if ($count > 0) {
-				$this->logEvent(ActionLog::BATCH_DELETE, $this->Model, sprintf('Deleted IDs: %s', implode(', ', $deleted)));
+				$this->AdminToolbar->logAction(ActionLog::BATCH_DELETE, $this->Model, null, sprintf('Deleted IDs: %s', implode(', ', $deleted)));
 				$this->setFlashMessage(__('%s %s have been deleted', array($count, strtolower($this->Model->pluralName))));
 			}
 		}
@@ -73,7 +73,7 @@ class CrudController extends AdminAppController {
 
 			if ($this->Model->saveAll(null, array('validate' => 'first', 'atomic' => true, 'deep' => true))) {
 				$this->Model->set($data);
-				$this->logEvent(ActionLog::CREATE, $this->Model);
+				$this->AdminToolbar->logAction(ActionLog::CREATE, $this->Model, $this->Model->id);
 
 				$this->setFlashMessage(__('Successfully created a new %s', strtolower($this->Model->singularName)));
 				$this->redirectAfter();
@@ -105,7 +105,7 @@ class CrudController extends AdminAppController {
 		}
 
 		$this->Model->set($result);
-		$this->logEvent(ActionLog::READ, $this->Model);
+		$this->AdminToolbar->logAction(ActionLog::READ, $this->Model, $id);
 
 		$this->set('result', $result);
 		$this->render('Crud/read');
@@ -142,7 +142,7 @@ class CrudController extends AdminAppController {
 
 			if ($this->Model->saveAll($data, array('validate' => 'first', 'atomic' => true, 'deep' => true))) {
 				$this->Model->set($result);
-				$this->logEvent(ActionLog::UPDATE, $this->Model);
+				$this->AdminToolbar->logAction(ActionLog::UPDATE, $this->Model, $id);
 
 				$this->setFlashMessage(__('Successfully updated %s with ID %s', array(strtolower($this->Model->singularName), $id)));
 				$this->redirectAfter();
@@ -180,7 +180,8 @@ class CrudController extends AdminAppController {
 
 		if ($this->request->is('post')) {
 			if ($this->Model->delete($id, true)) {
-				$this->logEvent(ActionLog::DELETE, $this->Model);
+				$this->AdminToolbar->logAction(ActionLog::DELETE, $this->Model, $id);
+
 				$this->setFlashMessage(__('Successfully deleted %s with ID %s', array(strtolower($this->Model->singularName), $id)));
 				$this->redirectAfter();
 
@@ -216,7 +217,7 @@ class CrudController extends AdminAppController {
 	}
 
 	/**
-	 * Trigger methods on behaviors as a special process.
+	 * Recover and reorder the models tree.
 	 *
 	 * @param string $behavior
 	 * @param string $method
@@ -227,6 +228,8 @@ class CrudController extends AdminAppController {
 
 		if ($model->Behaviors->loaded($behavior) && $model->hasMethod($method)) {
 			$model->Behaviors->{$behavior}->{$method}($model);
+
+			$this->AdminToolbar->logAction(ActionLog::PROCESS, $model, null, sprintf('%s.%s()', $behavior, $method));
 			$this->setFlashMessage(__('Processed %s.%s() for %s', array($behavior, $method, strtolower($model->pluralName))));
 
 		} else {
