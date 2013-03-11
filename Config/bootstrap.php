@@ -69,3 +69,16 @@ Configure::write('Admin.modelDefaults', array(
 	'editable' => true,
 	'iconClass' => ''
 ));
+
+/**
+ * Behavior methods to execute as process callbacks.
+ */
+Configure::write('Admin.behaviorProcesses', array(
+	'Tree' => array(
+		'recover' => __('Tree: Recover'),
+		'reorder' => __('Tree: Reorder')
+	),
+	'Cacheable' => array(
+		'clearCache' => __('Cacheable: Clear Cache')
+	)
+));

@@ -21,7 +21,8 @@ body {
 	position: relative;
 	top: -7px; }
 
-.action-buttons .btn { margin-left: 15px; }
+.action-buttons .btn,
+.action-buttons .btn-group { margin-left: 15px; }
 
 .model-icon { min-width: 20px; margin-left: 2px; }
 

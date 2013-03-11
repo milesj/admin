@@ -96,6 +96,16 @@ class AdminAppController extends Controller {
 	}
 
 	/**
+	 * Convenience method to set a flash message.
+	 *
+	 * @param string $message
+	 * @param string $type
+	 */
+	protected function setFlashMessage($message, $type = 'success') {
+		$this->Session->setFlash($message, 'flash', array('class' => $type));
+	}
+
+	/**
 	 * Log a users action.
 	 *
 	 * @param int $action

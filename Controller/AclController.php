@@ -52,9 +52,9 @@ class AclController extends AdminAppController {
 
 		if ($this->Acl->allow($aroAlias, $acoAlias)) {
 			$this->logEvent(ActionLog::ACL_GRANT, null, sprintf('Granted %s access to %s', $aroAlias, $acoAlias));
-			$this->Session->setFlash(__('Successfully granted %s permission to %s', array($aroAlias, $acoAlias)), 'flash', array('class' => 'success'));
+			$this->setFlashMessage(__('Successfully granted %s permission to %s', array($aroAlias, $acoAlias)));
 		} else {
-			$this->Session->setFlash(__('Failed to grant %s permission to %s', array($aroAlias, $acoAlias)), 'flash', array('class' => 'error'));
+			$this->setFlashMessage(__('Failed to grant %s permission to %s', array($aroAlias, $acoAlias)), 'error');
 		}
 
 		$this->redirect(array('action' => 'index'));
@@ -64,12 +64,14 @@ class AclController extends AdminAppController {
 	 * Sync the ARO/ACO trees.
 	 */
 	public function sync() {
+		set_time_limit(0);
+
 		$this->Aco->reorder();
 		$this->Aro->reorder();
 
 		$this->logEvent(ActionLog::ACL_SYNC);
 
-		$this->Session->setFlash(__('ACL has been synced'), 'flash', array('class' => 'success'));
+		$this->setFlashMessage(__('ACL has been synced'));
 		$this->redirect(array('action' => 'index'));
 	}
 

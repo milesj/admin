@@ -52,7 +52,7 @@ class CrudController extends AdminAppController {
 
 			if ($count > 0) {
 				$this->logEvent(ActionLog::BATCH_DELETE, $this->Model, sprintf('Deleted IDs: %s', implode(', ', $deleted)));
-				$this->Session->setFlash(__('%s %s have been deleted', array($count, strtolower($this->Model->pluralName))), 'flash', array('class' => 'success'));
+				$this->setFlashMessage(__('%s %s have been deleted', array($count, strtolower($this->Model->pluralName))));
 			}
 		}
 
@@ -75,11 +75,11 @@ class CrudController extends AdminAppController {
 				$this->Model->set($data);
 				$this->logEvent(ActionLog::CREATE, $this->Model);
 
-				$this->setFlashMessage('Successfully created a new %s');
+				$this->setFlashMessage(__('Successfully created a new %s', strtolower($this->Model->singularName)));
 				$this->redirectAfter();
 
 			} else {
-				$this->setFlashMessage('Failed to create a new %s', null, 'error');
+				$this->setFlashMessage(__('Failed to create a new %s', strtolower($this->Model->singularName)), 'error');
 			}
 		}
 
@@ -144,11 +144,11 @@ class CrudController extends AdminAppController {
 				$this->Model->set($result);
 				$this->logEvent(ActionLog::UPDATE, $this->Model);
 
-				$this->setFlashMessage('Successfully updated %s with ID %s', $id);
+				$this->setFlashMessage(__('Successfully updated %s with ID %s', array(strtolower($this->Model->singularName), $id)));
 				$this->redirectAfter();
 
 			} else {
-				$this->setFlashMessage('Failed to update %s with ID %s', $id, 'error');
+				$this->setFlashMessage(__('Failed to update %s with ID %s', array(strtolower($this->Model->singularName), $id)), 'error');
 			}
 		} else {
 			$this->request->data = $result;
@@ -181,11 +181,11 @@ class CrudController extends AdminAppController {
 		if ($this->request->is('post')) {
 			if ($this->Model->delete($id, true)) {
 				$this->logEvent(ActionLog::DELETE, $this->Model);
-				$this->setFlashMessage('Successfully deleted %s with ID %s', $id);
+				$this->setFlashMessage(__('Successfully deleted %s with ID %s', array(strtolower($this->Model->singularName), $id)));
 				$this->redirectAfter();
 
 			} else {
-				$this->setFlashMessage('Failed to delete %s with ID %s', $id, 'error');
+				$this->setFlashMessage(__('Failed to delete %s with ID %s', array(strtolower($this->Model->singularName), $id)), 'error');
 			}
 		}
 
@@ -216,16 +216,21 @@ class CrudController extends AdminAppController {
 	}
 
 	/**
-	 * Recover and reorder the models tree.
+	 * Trigger methods on behaviors as a special process.
+	 *
+	 * @param string $behavior
+	 * @param string $method
 	 */
-	public function sync_tree() {
-		if ($this->Model->Behaviors->loaded('Tree')) {
-			$this->Model->recover();
-			$this->Model->reorder();
-			$this->setFlashMessage('Synced %s tree', null, 'success');
+	public function process($behavior, $method) {
+		$behavior = Inflector::camelize($behavior);
+		$model = $this->Model;
+
+		if ($model->Behaviors->loaded($behavior) && $model->hasMethod($method)) {
+			$model->Behaviors->{$behavior}->{$method}($model);
+			$this->setFlashMessage(__('Processed %s.%s() for %s', array($behavior, $method, strtolower($model->pluralName))));
 
 		} else {
-			$this->setFlashMessage('%s does not implement the TreeBehavior', null, 'error');
+			$this->setFlashMessage(__('%s do not allow for this process', $model->pluralName), 'error');
 		}
 
 		$this->redirect($this->referer());
@@ -290,8 +295,8 @@ class CrudController extends AdminAppController {
 
 		$action = $this->action;
 
-		// Allow type ahead and proxy
-		if (in_array($action, array('type_ahead', 'proxy', 'sync_tree'))) {
+		// Allow non-crud actions
+		if (in_array($action, array('type_ahead', 'proxy', 'process'))) {
 			return true;
 
 		// Index counts as a read
@@ -358,6 +363,25 @@ class CrudController extends AdminAppController {
 		}
 
 		return $contain;
+	}
+
+	/**
+	 * Return a list of records. If a certain method exists, use it.
+	 *
+	 * @param Model $model
+	 * @return array
+	 */
+	protected function getRecordList(Model $model) {
+		if ($model->hasMethod('generateTreeList')) {
+			return $model->generateTreeList(null, null, null, ' -- ');
+
+		} else if ($model->hasMethod('getList')) {
+			return $model->getList();
+		}
+
+		return $model->find('list', array(
+			'order' => array($model->alias . '.' . $model->displayField => 'ASC')
+		));
 	}
 
 	/**
@@ -487,17 +511,7 @@ class CrudController extends AdminAppController {
 			} else {
 				$variable = Inflector::variable(Inflector::pluralize(preg_replace('/(?:_id)$/', '', $assoc['foreignKey'])));
 
-				// Use Tree if available
-				if ($model->hasMethod('generateTreeList')) {
-					$list = $model->generateTreeList(null, null, null, ' -- ');
-
-				} else {
-					$list = $model->find('list', array(
-						'order' => array($model->alias . '.' . $model->displayField => 'ASC')
-					));
-				}
-
-				$this->set($variable, $list);
+				$this->set($variable, $this->getRecordList($model));
 			}
 		}
 
@@ -516,25 +530,8 @@ class CrudController extends AdminAppController {
 			$model = Admin::introspectModel($assoc['className']);
 			$variable = Inflector::variable(Inflector::pluralize(preg_replace('/(?:_id)$/', '', $assoc['associationForeignKey'])));
 
-			$this->set($variable, $model->find('list', array(
-				'order' => array($model->alias . '.' . $model->displayField => 'ASC')
-			)));
+			$this->set($variable, $this->getRecordList($model));
 		}
-	}
-
-	/**
-	 * Convenience method to set a flash message.
-	 *
-	 * @param string $message
-	 * @param int $id
-	 * @param string $type
-	 */
-	protected function setFlashMessage($message, $id = null, $type = 'success') {
-		if (!$id) {
-			$id = $this->Model->id;
-		}
-
-		$this->Session->setFlash(__($message, array(strtolower($this->Model->singularName), $id)), 'flash', array('class' => $type));
 	}
 
 }

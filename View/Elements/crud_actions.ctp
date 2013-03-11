@@ -1,3 +1,22 @@
+<?php
+// Generate a process list based off behaviors
+$options = array();
+
+if ($behaviors = Configure::read('Admin.behaviorProcesses')) {
+	foreach ($behaviors as $behavior => $processes) {
+		if (!$model->Behaviors->loaded($behavior)) {
+			continue;
+		}
+
+		foreach ($processes as $method => $process) {
+			$options[] = array(
+				'behavior' => $behavior,
+				'method' => $method,
+				'process' => $process
+			);
+		}
+	}
+} ?>
 
 <div class="action-buttons">
 	<?php
@@ -5,11 +24,31 @@
 		echo $this->Html->link('<span class="icon-filter icon-white"></span> ' . __('Filter'),
 			'javascript:;', array('class' => 'btn btn-info btn-large', 'escape' => false, 'onclick' => "$('#filters').toggle()"));
 
-		if ($model->Behaviors->loaded('Tree')) {
-			echo $this->Html->link('<span class="icon-refresh icon-white"></span> ' . __('Sync Tree'),
-				array('action' => 'sync_tree', 'model' => $model->urlSlug),
-				array('class' => 'btn btn-info btn-large', 'escape' => false));
-		}
+		if ($options) {
+			ksort($options); ?>
+
+		<div class="btn-group">
+			<button data-toggle="dropdown" class="btn btn-large dropdown-toggle">
+				<span class="icon-cog"></span>
+				<?php echo __('Process'); ?>
+				<span class="caret"></span>
+			</button>
+
+			<ul class="dropdown-menu">
+				<?php foreach ($options as $option) { ?>
+					<li>
+						<?php echo $this->Html->link($option['process'], array(
+							'action' => 'process',
+							Inflector::underscore($option['behavior']),
+							$option['method'],
+							'model' => $model->urlSlug
+						)); ?>
+					</li>
+				<?php } ?>
+			</ul>
+		</div>
+
+		<?php }
 	}
 
 	if ($this->action !== 'create') {
