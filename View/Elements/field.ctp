@@ -5,7 +5,7 @@ if (!empty($data['belongsTo']) && !empty($value)) {
 } else if ($field === $model->primaryKey) {
 	$element = 'id';
 
-} else if (in_array($field, $model->admin['imageFields'])) {
+} else if ($this->Admin->isImage($model, $field)) {
 	$element = 'image';
 
 } else {

@@ -1,7 +1,7 @@
 <?php
 $this->Admin->setBreadcrumbs($model, null, $this->action);
 $this->Paginator->options(array(
-	'url' => array('model' => $model->urlSlug)
+	'url' => array_merge($this->params['named'], array('model' => $model->urlSlug))
 ));
 
 echo $this->element('crud_actions'); ?>
