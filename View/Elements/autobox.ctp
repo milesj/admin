@@ -49,14 +49,15 @@ $flatten = function($array) {
 
 							<span class="text-info"><?php echo $flatten($value); ?></span>
 
-						<?php } else { ?>
+						<?php } else {
+							$id = rand(); ?>
 
-							<a href="#modal-<?php echo $key; ?>" data-toggle="modal">
+							<a href="#modal-<?php echo $id; ?>" data-toggle="modal">
 								<?php echo __('View'); ?>
 								<span class="icon-external-link" style="font-size: 10px"></span>
 							</a>
 
-							<div id="modal-<?php echo $key; ?>" class="modal hide">
+							<div id="modal-<?php echo $id; ?>" class="modal hide">
 								<div class="modal-header">
 									<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
 									<h3><?php echo $parent . $key; ?></h3>
