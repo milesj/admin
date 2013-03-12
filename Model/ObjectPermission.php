@@ -49,6 +49,7 @@ class ObjectPermission extends Permission {
 	 * @var array
 	 */
 	public $actsAs = array(
+		'Containable',
 		'Utility.Enumerable' => array(
 			'format' => 'append'
 		)
@@ -100,6 +101,20 @@ class ObjectPermission extends Permission {
 		return $this->find('all', array(
 			'cache' => __METHOD__,
 			'cacheExpires' => '+1 hour'
+		));
+	}
+
+	/**
+	 * Return all permissions by ARO ID (accepts multiple IDs).
+	 *
+	 * @param int|array $aro_id
+	 * @return array
+	 */
+	public function getByAroId($aro_id) {
+		return $this->find('all', array(
+			'conditions' => array('ObjectPermission.aro_id' => $aro_id),
+			'order' => array('ControlObject.lft' => 'desc'),
+			'contain' => array('ControlObject')
 		));
 	}
 

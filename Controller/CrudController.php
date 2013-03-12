@@ -8,16 +8,13 @@
 class CrudController extends AdminAppController {
 
 	/**
-	 * Paginate defaults.
-	 *
-	 * @var array
-	 */
-	public $paginate = array();
-
-	/**
 	 * List out and paginate all the records in the model.
 	 */
 	public function index() {
+		if ($this->params['model'] === 'admin.item_report') {
+			$this->redirect(array('controller' => 'admin', 'action' => 'reports'));
+		}
+
 		$this->paginate = array_merge(array(
 			'limit' => 25,
 			'order' => array($this->Model->alias . '.' . $this->Model->displayField => 'ASC'),
@@ -229,7 +226,7 @@ class CrudController extends AdminAppController {
 		if ($model->Behaviors->loaded($behavior) && $model->hasMethod($method)) {
 			$model->Behaviors->{$behavior}->{$method}($model);
 
-			$this->AdminToolbar->logAction(ActionLog::PROCESS, $model, null, sprintf('%s.%s()', $behavior, $method));
+			$this->AdminToolbar->logAction(ActionLog::PROCESS, $model, null, __('Triggered %s.%s() process', array($behavior, $method)));
 			$this->setFlashMessage(__('Processed %s.%s() for %s', array($behavior, $method, strtolower($model->pluralName))));
 
 		} else {

@@ -3,11 +3,11 @@ $this->Breadcrumb->add(__('ACL'), array('controller' => 'acl', 'action' => 'inde
 
 <div class="action-buttons">
 	<?php
-	echo $this->Html->link('<span class="icon-plus icon-white"></span> ' . __('Add Requester'),
+	echo $this->Html->link('<span class="icon-pencil icon-white"></span> ' . __('Add Requester'),
 		array('controller' => 'crud', 'action' => 'create', 'model' => 'admin.request_object'),
 		array('class' => 'btn btn-primary btn-large', 'escape' => false));
 
-	echo $this->Html->link('<span class="icon-plus icon-white"></span> ' . __('Add Controller'),
+	echo $this->Html->link('<span class="icon-pencil icon-white"></span> ' . __('Add Controller'),
 		array('controller' => 'crud', 'action' => 'create', 'model' => 'admin.control_object'),
 		array('class' => 'btn btn-primary btn-large', 'escape' => false)); ?>
 </div>
@@ -55,7 +55,7 @@ $this->Breadcrumb->add(__('ACL'), array('controller' => 'acl', 'action' => 'inde
 					if (isset($aro['ObjectPermission'][$aco['ControlObject']['id']])) {
 						$permission = $aro['ObjectPermission'][$aco['ControlObject']['id']];
 						$actionMap = array(
-							'create' => 'icon-plus',
+							'create' => 'icon-pencil',
 							'read' => 'icon-search',
 							'update' => 'icon-edit',
 							'delete' => 'icon-remove'

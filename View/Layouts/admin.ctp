@@ -15,10 +15,10 @@ echo $this->Html->docType(); ?>
 	echo $this->Html->script('Admin.jquery.gridalicious.min');
 	echo $this->Html->script('Admin.admin'); ?>
 </head>
-<body class="controller-<?php echo $this->params['controller']; ?> action-<?php echo $this->action; ?>">
+<body class="controller-<?php echo $this->params['controller']; ?>">
 	<?php echo $this->element('navbar'); ?>
 
-	<div class="body container-fluid">
+	<div class="body container-fluid action-<?php echo $this->action; ?>">
 		<div class="row-fluid">
 			<?php
 			$this->Breadcrumb->prepend(__('Dashboard'), array('controller' => 'admin', 'action' => 'index'));

@@ -21,7 +21,7 @@ var Admin = {
 		});
 
 		$('#check-all').click(function() {
-			$('#table').find('input:checkbox').prop('checked', $(this).prop('checked'));
+			$('#table').find('input[type="checkbox"]:not(:disabled)').prop('checked', $(this).prop('checked'));
 		});
 
 		Admin.nullChecks();

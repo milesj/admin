@@ -11,7 +11,7 @@ echo $this->element('crud_actions'); ?>
 <?php
 echo $this->element('filters');
 
-echo $this->Form->create($model->alias);
+echo $this->Form->create($model->alias, array('class' => 'form-horizontal'));
 echo $this->element('pagination'); ?>
 
 	<table id="table" class="table table-striped table-bordered table-hover sortable clickable">
@@ -19,7 +19,9 @@ echo $this->element('pagination'); ?>
 			<tr>
 				<?php if ($model->admin['batchDelete']) { ?>
 					<th class="col-batch-delete">
-						<input type="checkbox" id="check-all">
+						<?php if ($this->Admin->hasAccess($model->qualifiedName, 'delete')) { ?>
+							<input type="checkbox" id="check-all">
+						<?php } ?>
 					</th>
 				<?php }
 
@@ -43,7 +45,8 @@ echo $this->element('pagination'); ?>
 									'type' => 'checkbox',
 									'value' => $id,
 									'label' => false,
-									'div' => false
+									'div' => false,
+									'disabled' => !$this->Admin->hasAccess($model->qualifiedName, 'delete')
 								)); ?>
 							</td>
 
@@ -79,11 +82,11 @@ echo $this->element('pagination'); ?>
 <?php
 echo $this->element('pagination');
 
-if ($model->admin['batchDelete'] && $results) { ?>
+if ($model->admin['batchDelete'] && $results && $this->Admin->hasAccess($model->qualifiedName, 'delete')) { ?>
 
-	<div class="well align-center">
-		<button type="submit" class="btn btn-large btn-danger" onclick="return confirm('<?php echo __('Are you sure? This can not be reversed.'); ?>');">
-			<span class="icon-remove-sign icon-white"></span>
+	<div class="well actions">
+		<button type="submit" class="btn btn-large btn-danger" onclick="return confirm('<?php echo __('Deleting will cascade through associations, are you sure?'); ?>');">
+			<span class="icon-trash icon-white"></span>
 			<?php echo __('Batch Delete'); ?>
 		</button>
 	</div>

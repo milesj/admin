@@ -14,7 +14,7 @@ class AdminHelper extends AppHelper {
 	 *
 	 * @var array
 	 */
-	public $helpers = array('Html', 'Utility.Breadcrumb');
+	public $helpers = array('Html', 'Session', 'Utility.Breadcrumb');
 
 	/**
 	 * Filter down fields if the association has a whitelist.
@@ -123,6 +123,23 @@ class AdminHelper extends AppHelper {
 		}
 
 		return $navigation;
+	}
+
+	/**
+	 * Check to see if a user has specific CRUD access for a model.
+	 *
+	 * @param string $model
+	 * @param string $action
+	 * @return bool
+	 */
+	public function hasAccess($model, $action) {
+		if (strpos($model, '.') === false) {
+			$model = Configure::read('Admin.coreName') . '.' . $model;
+		}
+
+		$crud = $this->Session->read('Admin.crud');
+
+		return (isset($crud[$model][$action]) && $crud[$model][$action]);
 	}
 
 	/**

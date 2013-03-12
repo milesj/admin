@@ -12,7 +12,24 @@ class AdminToolbarComponent extends Component {
 	 *
 	 * @var array
 	 */
-	public $components = array('Auth');
+	public $components = array('Auth', 'Session');
+
+	/**
+	 * Check to see if a user has specific CRUD access for a model.
+	 *
+	 * @param string $model
+	 * @param string $action
+	 * @return bool
+	 */
+	public function hasAccess($model, $action) {
+		if (strpos($model, '.') === false) {
+			$model = Configure::read('Admin.coreName') . '.' . $model;
+		}
+
+		$crud = $this->Session->read('Admin.crud');
+
+		return (isset($crud[$model][$action]) && $crud[$model][$action]);
+	}
 
 	/**
 	 * Log a users action.
@@ -46,9 +63,7 @@ class AdminToolbarComponent extends Component {
 			if (isset($model->qualifiedName)) {
 				$query['model'] = $model->qualifiedName;
 			} else {
-				$plugin = $model->plugin ?: Configure::read('Admin.coreName');
-
-				$query['model'] = $plugin . '.' . $model->name;
+				$query['model'] = ($model->plugin ? $model->plugin . '.' : '') . $model->name;
 			}
 
 			// Get comment from request

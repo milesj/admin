@@ -36,6 +36,13 @@ class AdminAppModel extends Model {
 	public $recursive = -1;
 
 	/**
+	 * Enum mapping.
+	 *
+	 * @var array
+	 */
+	public $enum = array();
+
+	/**
 	 * Behaviors.
 	 *
 	 * @var array

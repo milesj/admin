@@ -266,11 +266,32 @@ class RequestObject extends Aro {
 			return null;
 		}
 
-		return ClassRegistry::init('Permission')->find('all', array(
-			'conditions' => array('Permission.aro_id' => Hash::extract($aros, '{n}.RequestObject.id')),
-			'order' => array('Aco.lft' => 'desc'),
-			'recursive' => 0
-		));
+		return $this->ObjectPermission->getByAroId(Hash::extract($aros, '{n}.RequestObject.id'));
+	}
+
+	/**
+	 * Map all permissions to a boolean flagged list grouped by ACO and CRUD.
+	 *
+	 * @param int $user_id
+	 * @return array
+	 */
+	public function getCrudPermissions($user_id) {
+		return $this->cache(array(__METHOD__, $user_id), function($self) use ($user_id) {
+			$crud = array();
+
+			if ($permissions = $self->getPermissions($user_id)) {
+				foreach ($permissions as $permission) {
+					$crud[$permission['ControlObject']['alias']] = array(
+						'create' => ($permission['ObjectPermission']['_create'] > 0),
+						'read' => ($permission['ObjectPermission']['_read'] > 0),
+						'update' => ($permission['ObjectPermission']['_update'] > 0),
+						'delete' => ($permission['ObjectPermission']['_delete'] > 0)
+					);
+				}
+			}
+
+			return $crud;
+		});
 	}
 
 	/**

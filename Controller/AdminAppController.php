@@ -52,6 +52,13 @@ class AdminAppController extends Controller {
 	public $config = array();
 
 	/**
+	 * Paginate defaults.
+	 *
+	 * @var array
+	 */
+	public $paginate = array();
+
+	/**
 	 * Use plugin layout.
 	 *
 	 * @var string
@@ -71,7 +78,13 @@ class AdminAppController extends Controller {
 			throw new ForbiddenException(__('Invalid User'));
 		}
 
-		if (Admin::introspectModel('Admin.RequestObject')->isAdmin($user['id'])) {
+		$aro = Admin::introspectModel('Admin.RequestObject');
+
+		if ($aro->isAdmin($user['id'])) {
+			if (!$this->Session->read('Admin.crud')) {
+				$this->Session->write('Admin.crud', $aro->getCrudPermissions($user['id']));
+			}
+
 			return true;
 		}
 

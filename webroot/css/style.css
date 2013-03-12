@@ -3,6 +3,8 @@ body {
 	padding-top: 40px;
 	background-color: #F5F5F5; }
 
+h2 { margin-bottom: 20px; }
+
 .align-left { text-align: left; }
 .align-center { text-align: center; }
 .align-right { text-align: right; }
@@ -16,19 +18,11 @@ body {
 	padding: 30px;
 	text-align: center; }
 
-.action-buttons {
-	float: right;
-	position: relative;
-	top: -7px; }
-
-.action-buttons .btn,
-.action-buttons .btn-group { margin-left: 15px; }
-
 .model-icon { min-width: 20px; margin-left: 2px; }
 
-/* Custom form styles since we have to use Cakes HTML */
+/*----------------- Forms -----------------*/
 
-form select { width: auto; margin-right: 2px; }
+select { width: auto; margin-right: 2px; }
 .relation select { height: 200px; }
 
 .form-horizontal { margin: 20px 0; }
@@ -58,12 +52,9 @@ form select { width: auto; margin-right: 2px; }
 .controls-null label { margin-left: 5px; }
 .controls-null input { margin-top: -1px; }
 
-/* Define custom styles for tables */
+/*----------------- Tables -----------------*/
 
-.sortable {
-	margin-bottom: 15px;
-	background: #fff; }
-
+.sortable { margin-bottom: 15px; background: #fff; }
 .clickable tbody tr { cursor: pointer; }
 
 .table tr a { display: block; }
@@ -91,7 +82,9 @@ td.no-results {
 	padding: 50px;
 	text-align: center; }
 
-/* Format table cells according to the content type */
+.action-index .table .image { max-width: 150px; }
+
+/*----------------- Table Cells -----------------*/
 
 .type-integer,
 .type-boolean,
@@ -102,66 +95,42 @@ td.no-results {
 .col-name,
 .col-title,
 .belongs-to { white-space: nowrap; }
-
-.belongs-to {
-	display: block;
-	text-align: left; }
+.belongs-to { display: block; text-align: left; }
 
 td.col-id,
-.col-batch-delete {
-	width: 15px;
-	font-weight: bold;
-	text-align: center !important;
-	padding: 8px !important; }
-
+.col-batch-delete { width: 15px; font-weight: bold; text-align: center !important; padding: 8px !important; }
 .col-batch-delete input { margin: 0; }
 
-/* Bootstrap enhancements */
+/*----------------- UI -----------------*/
+
+.action-buttons { float: right; position: relative; top: -2px; }
+.action-buttons .btn,
+.action-buttons .btn-group { margin-left: 15px; }
 
 .btn span[class*="icon-"] { margin-right: 3px; }
 
 .nav a span[class*="icon-"] { color: #000; }
 
-.breadcrumbs ul {
-	margin: 0;
-	padding: 5px 8px; }
+.breadcrumbs ul { margin: 0; padding: 5px 8px; }
+.breadcrumbs ul > li > .divider { font-size: 10px; }
+.breadcrumbs ul > li:last-child > .divider { display: none; }
 
-.breadcrumbs ul li:last-child span { display: none; }
-
-.breadcrumb > li > .divider { font-size: 10px; }
-
-.pagination {
-	height: 32px;
-	overflow: hidden;
-	margin: 15px 0; }
-
-.pagination .results {
-	padding-top: 8px;
-	float: left; }
-
+.pagination { height: 32px; overflow: hidden; margin: 15px 0; }
+.pagination .results { padding-top: 8px; float: left; }
 .pagination .results span { font-weight: bold; }
 
 .dropdown-menu > li > a { padding-left: 10px; }
 
-/* Page specific */
+/*----------------- Admin -----------------*/
 
-.controller-admin .well > h3 {
-	line-height: 100%;
-	margin: 0 0 15px 0; }
+.controller-admin .well > h3 { line-height: 100%; margin: 0 0 15px 0; }
 
 .controller-admin .nav { margin: 0; }
-
-.controller-admin .nav .pull-right {
-	margin: 0;
-	padding: 7px 10px;
-	display: none; }
-
+.controller-admin .nav .pull-right { margin: 0; padding: 7px 10px; display: none; }
 .controller-admin .nav .label { margin-left: 2px; }
 .controller-admin .nav li:hover .pull-right { display: block; }
 
-.action-index .table .image { max-width: 150px; }
-
-/* ACL table */
+/*----------------- ACL -----------------*/
 
 .controller-acl .table { width: auto; }
 .controller-acl .table td { padding: 0; }
@@ -180,11 +149,11 @@ td.col-id,
 .controller-acl .matrix-head a { color: #c4c4c4; }
 .controller-acl .matrix-head a:hover { color: #fff; }
 
-/* Config grid */
+/*----------------- Grid -----------------*/
 
 .gridalicious .well { margin: 0 20px 20px 0 !important; }
 .gridalicious .galcolumn:last-child .well { margin-right: 0 !important; }
 
-.action-config .gridalicious .well { padding: 0; }
-.action-config .gridalicious .well > h3 { margin: 19px; }
-.action-config .gridalicious .well .table { margin: -1px; width: 100.5%; max-width: 100.5%; }
+.controller-admin .action-config .gridalicious .well { padding: 0; }
+.controller-admin .action-config .gridalicious .well > h3 { margin: 19px; }
+.controller-admin .action-config .gridalicious .well .table { margin: -1px; width: 100.5%; max-width: 100.5%; }
