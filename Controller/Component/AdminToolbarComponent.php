@@ -66,7 +66,7 @@ class AdminToolbarComponent extends Component {
 		$query['comment'] = $comment;
 		$query['item'] = $item;
 
-		return $log->logEvent($query);
+		return $log->logAction($query);
 	}
 
 }

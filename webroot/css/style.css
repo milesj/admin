@@ -37,7 +37,7 @@ form select { width: auto; margin-right: 2px; }
 .form-horizontal .actions { text-align: center; }
 .form-horizontal .actions .btn { margin-left: 12px; }
 .form-horizontal .actions div { margin-bottom: 15px; }
-.form-horizontal .actions label { display: inline-block; margin-right: 10px; }
+.form-horizontal .actions label { display: inline-block; margin-right: 10px; font-weight: bold; }
 
 .form-inline .control-group,
 .form-inline .control-group .controls { display: inline-block; width: auto; }
@@ -145,7 +145,7 @@ td.col-id,
 
 /* Page specific */
 
-.controller-admin .well h3 {
+.controller-admin .well > h3 {
 	line-height: 100%;
 	margin: 0 0 15px 0; }
 
@@ -179,3 +179,12 @@ td.col-id,
 .controller-acl .matrix-head.matrix-y { width: 150px; }
 .controller-acl .matrix-head a { color: #c4c4c4; }
 .controller-acl .matrix-head a:hover { color: #fff; }
+
+/* Config grid */
+
+.gridalicious .well { margin: 0 20px 20px 0 !important; }
+.gridalicious .galcolumn:last-child .well { margin-right: 0 !important; }
+
+.action-config .gridalicious .well { padding: 0; }
+.action-config .gridalicious .well > h3 { margin: 19px; }
+.action-config .gridalicious .well .table { margin: -1px; width: 100.5%; max-width: 100.5%; }

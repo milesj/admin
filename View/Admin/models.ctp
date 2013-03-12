@@ -1,5 +1,7 @@
 <?php
-$this->Breadcrumb->add(__('Analyze Models'), array('controller' => 'admin', 'action' => 'analyze')); ?>
+$this->Breadcrumb->add(__('Models'), array('controller' => 'admin', 'action' => 'models'));
+
+echo $this->element('admin_actions'); ?>
 
 <h2><?php echo __('Models'); ?></h2>
 
@@ -31,7 +33,7 @@ $this->Breadcrumb->add(__('Analyze Models'), array('controller' => 'admin', 'act
 
 			<tr>
 				<td>
-					<?php echo $this->Html->link($model['title'], array(
+					<?php echo $this->Html->link($model['alias'], array(
 						'controller' => 'crud',
 						'action' => 'index',
 						'model' => $model['url']

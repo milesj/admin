@@ -41,8 +41,19 @@ class AdminController extends AdminAppController {
 	/**
 	 * Analyze all models and output important information.
 	 */
-	public function analyze() {
+	public function models() {
 		$this->set('plugins', Admin::getModels());
+	}
+
+	/**
+	 * Display all configuration grouped by system.
+	 */
+	public function config() {
+		$config = Configure::read();
+		ksort($config);
+		unset($config['debug']);
+
+		$this->set('configuration', $config);
 	}
 
 }

@@ -68,12 +68,12 @@ class ActionLog extends AdminAppModel {
 	);
 
 	/**
-	 * Log an event only once every 6 hours.
+	 * Log an action only once every 6 hours.
 	 *
 	 * @param array $query
 	 * @return bool
 	 */
-	public function logEvent($query) {
+	public function logAction($query) {
 		$conditions = $query;
 		$conditions['created >='] = date('Y-m-d H:i:s', strtotime('-6 hours'));
 

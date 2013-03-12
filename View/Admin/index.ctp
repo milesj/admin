@@ -1,17 +1,11 @@
+<?php echo $this->element('admin_actions'); ?>
 
-<div class="action-buttons">
-	<?php
-	echo $this->Html->link('<span class="icon-cogs icon-white"></span> ' . __('Analyze Models'),
-		array('controller' => 'admin', 'action' => 'analyze'),
-		array('class' => 'btn btn-info btn-large', 'escape' => false)); ?>
-</div>
+<h2><?php echo __('Plugins'); ?></h2>
 
-<h2 style="margin-top: 0"><?php echo __('Dashboard'); ?></h2>
-
-<div class="row-fluid">
+<div class="row-fluid" id="grid">
 	<?php foreach ($plugins as $plugin) { ?>
 
-		<div id="<?php echo $plugin['slug']; ?>" class="well span3">
+		<div id="<?php echo $plugin['slug']; ?>" class="well">
 			<h3><?php echo $plugin['title']; ?></h3>
 
 			<ul class="nav nav-pills nav-stacked">

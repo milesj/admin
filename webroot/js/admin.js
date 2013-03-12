@@ -127,7 +127,20 @@ var Admin = {
 $(function() {
 	Admin.initialize();
 
+	// Tooltips
 	$('.tip').tooltip({
 		placement: 'top'
+	});
+
+	// Grids
+	$('#grid').gridalicious({
+		width: 400,
+		gutter: 0,
+		selector: '.well',
+		animationOptions: {
+			complete: function() {
+				$('#grid').find('> div:hidden').remove();
+			}
+		}
 	});
 });

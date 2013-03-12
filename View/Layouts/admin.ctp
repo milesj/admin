@@ -12,6 +12,7 @@ echo $this->Html->docType(); ?>
 	echo $this->Html->css('Admin.style');
 	echo $this->Html->script('//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js');
 	echo $this->Html->script('Admin.bootstrap.min');
+	echo $this->Html->script('Admin.jquery.gridalicious.min');
 	echo $this->Html->script('Admin.admin'); ?>
 </head>
 <body class="controller-<?php echo $this->params['controller']; ?> action-<?php echo $this->action; ?>">
@@ -21,9 +22,8 @@ echo $this->Html->docType(); ?>
 		<div class="row-fluid">
 			<?php
 			$this->Breadcrumb->prepend(__('Dashboard'), array('controller' => 'admin', 'action' => 'index'));
-			$crumbs = $this->Breadcrumb->get();
 
-			if (count($crumbs) > 1) { ?>
+			if ($crumbs = $this->Breadcrumb->get()) { ?>
 				<div class="well well-small breadcrumbs">
 					<ul class="breadcrumb">
 						<?php foreach ($crumbs as $crumb) { ?>

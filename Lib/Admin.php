@@ -125,7 +125,8 @@ class Admin {
 
 				$map[] = array_merge($object->admin, array(
 					'id' => $id,
-					'title' => $model,
+					'title' => $object->pluralName,
+					'alias' => $model,
 					'class' => $class,
 					'url' => Inflector::underscore($id),
 					'installed' => self::isModelInstalled($id),
