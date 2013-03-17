@@ -1,8 +1,16 @@
 
 <div id="filters" class="well well-small filters"<?php if (empty($this->request->params['named'])) { ?> style="display: none"<?php } ?>>
 	<?php
+	if ($this->params['controller'] === 'reports') {
+		$url = array('controller' => 'reports', 'action' => 'proxy');
+		$reset = array('controller' => 'reports', 'action' => 'index');
+	} else {
+		$url = array('controller' => 'crud', 'action' => 'proxy', 'model' => $model->urlSlug);
+		$reset = array('controller' => 'crud', 'action' => 'index', 'model' => $model->urlSlug);
+	}
+
 	echo $this->Form->create($model->alias, array(
-		'url' => array('controller' => 'crud', 'action' => 'proxy', 'model' => $model->urlSlug),
+		'url' => $url,
 		'class' => 'form-inline')
 	);
 
@@ -60,7 +68,7 @@
 		<?php echo __('Filter'); ?>
 	</button>
 
-	<a href="<?php echo $this->Html->url(array('action' => 'index', 'model' => $model->urlSlug)); ?>" class="btn">
+	<a href="<?php echo $this->Html->url($reset); ?>" class="btn">
 		<?php echo __('Reset'); ?>
 	</a>
 

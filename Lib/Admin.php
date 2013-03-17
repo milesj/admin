@@ -219,7 +219,11 @@ class Admin {
 			$hideFields = array();
 
 			foreach ($fields as $field => &$data) {
-				$data['title'] = str_replace('Id', 'ID', Inflector::humanize(Inflector::underscore($field)));
+				if ($field === 'id') {
+					$data['title'] = 'ID';
+				} else {
+					$data['title'] = Inflector::humanize(Inflector::underscore(str_replace('_id', '', $field)));
+				}
 
 				if (isset($object->enum[$field])) {
 					$data['type'] = 'enum';
@@ -232,6 +236,7 @@ class Admin {
 			}
 
 			foreach ($object->belongsTo as $alias => $assoc) {
+				$fields[$assoc['foreignKey']]['type'] = 'relation';
 				$fields[$assoc['foreignKey']]['belongsTo'][$alias] = $assoc['className'];
 			}
 

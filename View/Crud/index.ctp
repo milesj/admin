@@ -25,6 +25,10 @@ echo $this->element('pagination'); ?>
 					</th>
 				<?php }
 
+				if ($model->admin['actionButtons']) { ?>
+					<th class="col-actions">-</th>
+				<?php }
+
 				foreach ($model->fields as $field => $data) { ?>
 					<th class="col-<?php echo $field; ?> type-<?php echo $data['type']; ?>">
 						<?php echo $this->Paginator->sort($field, $data['title']); ?>
@@ -34,11 +38,11 @@ echo $this->element('pagination'); ?>
 		</thead>
 		<tbody>
 			<?php if ($results) {
-				foreach ($results as $result) { ?>
+				foreach ($results as $result) {
+					$id = $result[$model->alias][$model->primaryKey]; ?>
 
 					<tr>
-						<?php if ($model->admin['batchDelete']) {
-							$id = $result[$model->alias][$model->primaryKey]; ?>
+						<?php if ($model->admin['batchDelete']) { ?>
 
 							<td class="col-batch-delete">
 								<?php echo $this->Form->input($id, array(
@@ -48,6 +52,33 @@ echo $this->element('pagination'); ?>
 									'div' => false,
 									'disabled' => !$this->Admin->hasAccess($model->qualifiedName, 'delete')
 								)); ?>
+							</td>
+
+						<?php }
+
+						if ($model->admin['actionButtons']) { ?>
+
+							<td class="col-actions">
+								<div class="btn-group">
+									<?php
+									if ($this->Admin->hasAccess($model->qualifiedName, 'read')) {
+										echo $this->Html->link('<span class="icon-search"></span>',
+											array('action' => 'read', $id, 'model' => $model->urlSlug),
+											array('class' => 'btn btn-mini btn-inverse', 'escape' => false, 'title' => __('View')));
+									}
+
+									if ($this->Admin->hasAccess($model->qualifiedName, 'update') && $model->admin['editable']) {
+										echo $this->Html->link('<span class="icon-edit"></span>',
+											array('action' => 'update', $id, 'model' => $model->urlSlug),
+											array('class' => 'btn btn-mini btn-inverse', 'escape' => false, 'title' => __('Edit')));
+									}
+
+									if ($this->Admin->hasAccess($model->qualifiedName, 'delete') && $model->admin['deletable']) {
+										echo $this->Html->link('<span class="icon-remove"></span>',
+											array('action' => 'delete', $id, 'model' => $model->urlSlug),
+											array('class' => 'btn btn-mini btn-inverse', 'escape' => false, 'title' => __('Delete')));
+									} ?>
+								</div>
 							</td>
 
 						<?php }
@@ -70,7 +101,7 @@ echo $this->element('pagination'); ?>
 			} else { ?>
 
 			<tr>
-				<td colspan="<?php echo count($model->fields) + $model->admin['batchDelete']; ?>" class="no-results">
+				<td colspan="<?php echo count($model->fields) + $model->admin['batchDelete'] + $model->admin['actionButtons']; ?>" class="no-results">
 					<?php echo __('No results to display'); ?>
 				</td>
 			</tr>

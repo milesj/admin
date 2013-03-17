@@ -58,7 +58,7 @@ class AdminController extends AdminAppController {
 
 	/**
 	 * Handle reported items.
-	 */
+	 *
 	public function reports() {
 		$this->Model = Admin::introspectModel('Admin.ItemReport');
 
@@ -123,6 +123,6 @@ class AdminController extends AdminAppController {
 
 		$this->set('model', $this->Model);
 		$this->set('results', $this->paginate($this->Model));
-	}
+	}*/
 
 }

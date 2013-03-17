@@ -9,14 +9,23 @@ App::uses('AdminAppModel', 'Admin.Model');
 
 class ItemReport extends AdminAppModel {
 
+	const PENDING = 0;
+	const RESOLVED = 1;
+	const INVALID = 2;
+
 	/**
 	 * Belongs to.
 	 *
 	 * @var array
 	 */
 	public $belongsTo = array(
-		'User' => array(
-			'className' => USER_MODEL
+		'Reporter' => array(
+			'className' => USER_MODEL,
+			'foreignKey' => 'reporter_id'
+		),
+		'Resolver' => array(
+			'className' => USER_MODEL,
+			'foreignKey' => 'resolver_id'
 		)
 	);
 
@@ -30,5 +39,31 @@ class ItemReport extends AdminAppModel {
 		'editable' => false,
 		'deletable' => false
 	);
+
+	/**
+	 * Enum mapping.
+	 *
+	 * @var array
+	 */
+	public $enum = array(
+		'status' => array(
+			self::PENDING => 'PENDING',
+			self::RESOLVED => 'RESOLVED',
+			self::INVALID => 'INVALID'
+		)
+	);
+
+	/**
+	 * Count record by status.
+	 *
+	 * @param int $status
+	 * @return array
+	 */
+	public function getCountByStatus($status = self::PENDING) {
+		return $this->find('count', array(
+			'conditions' => array('ItemReport.status' => $status),
+			'cache' => array(__METHOD__, $status)
+		));
+	}
 
 }

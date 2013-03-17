@@ -50,9 +50,7 @@ class ObjectPermission extends Permission {
 	 */
 	public $actsAs = array(
 		'Containable',
-		'Utility.Enumerable' => array(
-			'format' => 'append'
-		)
+		'Utility.Enumerable'
 	);
 
 	/**

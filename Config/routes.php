@@ -6,6 +6,10 @@
  */
 
 Router::connect('/admin/acl/:action/*', array('plugin' => 'admin', 'controller' => 'acl'));
+Router::connect('/admin/acl', array('plugin' => 'admin', 'controller' => 'acl', 'action' => 'index'));
+
+Router::connect('/admin/reports/:action/*', array('plugin' => 'admin', 'controller' => 'reports'));
+Router::connect('/admin/reports', array('plugin' => 'admin', 'controller' => 'reports', 'action' => 'index'));
 
 Router::connect('/admin/:model/:action/*',
 	array('plugin' => 'admin', 'controller' => 'crud'),

@@ -1,3 +1,12 @@
+<?php
+$controller = $this->request->controller;
+$pluginParam = null;
+$modelParam = $this->request->model;
+
+if ($modelParam) {
+	list($pluginParam, $modelParam) = pluginSplit($modelParam);
+} ?>
+
 <div class="head navbar navbar-inverse navbar-fixed-top">
 	<div class="navbar-inner">
 		<div class="container-fluid">
@@ -14,7 +23,7 @@
 
 			<div class="nav-collapse collapse navbar-inverse-collapse">
 				<ul class="nav">
-					<li>
+					<li<?php echo ($controller === 'acl') ? ' class="active"' : ''; ?>>
 						<?php echo $this->Html->link(__('ACL'), array(
 							'plugin' => 'admin',
 							'controller' => 'acl',
@@ -22,12 +31,28 @@
 						)); ?>
 					</li>
 
+					<li<?php echo ($controller === 'reports') ? ' class="active"' : ''; ?>>
+						<?php
+						$title = __('Reports');
+
+						if ($pendingReports) {
+							$title .= ' <span class="label label-important">' . $pendingReports . '</span>';
+						}
+
+						echo $this->Html->link($title, array(
+							'plugin' => 'admin',
+							'controller' => 'reports',
+							'action' => 'index'
+						), array('escape' => false)); ?>
+					</li>
+					<li class="divider-vertical"></li>
+
 					<?php foreach ($this->Admin->getNavigation() as $plugin => $groups) {
 						if (empty($groups)) {
 							continue;
 						} ?>
 
-						<li class="dropdown">
+						<li class="dropdown<?php echo (strtolower($plugin) === $pluginParam) ? ' active' : ''; ?>">
 							<a data-toggle="dropdown" class="dropdown-toggle" href="javascript:;">
 								<?php echo $plugin; ?>
 								<span class="caret"></span>

@@ -11,10 +11,6 @@ class CrudController extends AdminAppController {
 	 * List out and paginate all the records in the model.
 	 */
 	public function index() {
-		if ($this->params['model'] === 'admin.item_report') {
-			$this->redirect(array('controller' => 'admin', 'action' => 'reports'));
-		}
-
 		$this->paginate = array_merge(array(
 			'limit' => 25,
 			'order' => array($this->Model->alias . '.' . $this->Model->displayField => 'ASC'),
@@ -234,41 +230,6 @@ class CrudController extends AdminAppController {
 		}
 
 		$this->redirect($this->referer());
-	}
-
-	/**
-	 * Proxy action to handle POST requests and redirect back with named params.
-	 */
-	public function proxy() {
-		if (empty($this->request->data[$this->Model->alias])) {
-			$this->redirect($this->referer());
-		}
-
-		$data = $this->request->data[$this->Model->alias];
-		$named = array();
-
-		foreach ($data as $key => $value) {
-			if (
-				substr($key, -7) === '_filter' ||
-				substr($key, -11) === '_type_ahead' ||
-				$value === '') {
-				continue;
-			}
-
-			$named[$key] = urlencode($value);
-
-			if (isset($data[$key . '_filter'])) {
-				$named[$key . '_filter'] = urlencode($data[$key . '_filter']);
-			}
-		}
-
-		$url = array(
-			'controller' => 'crud',
-			'action' => 'index',
-			'model' => $this->Model->urlSlug
-		);
-
-		$this->redirect(array_merge($named, $url));
 	}
 
 	/**

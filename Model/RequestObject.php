@@ -282,10 +282,10 @@ class RequestObject extends Aro {
 			if ($permissions = $self->getPermissions($user_id)) {
 				foreach ($permissions as $permission) {
 					$crud[$permission['ControlObject']['alias']] = array(
-						'create' => ($permission['ObjectPermission']['_create'] > 0),
-						'read' => ($permission['ObjectPermission']['_read'] > 0),
-						'update' => ($permission['ObjectPermission']['_update'] > 0),
-						'delete' => ($permission['ObjectPermission']['_delete'] > 0)
+						'create' => ($permission['ObjectPermission']['_create'] >= 0),
+						'read' => ($permission['ObjectPermission']['_read'] >= 0),
+						'update' => ($permission['ObjectPermission']['_update'] >= 0),
+						'delete' => ($permission['ObjectPermission']['_delete'] >= 0)
 					);
 				}
 			}

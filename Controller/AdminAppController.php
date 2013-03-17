@@ -107,6 +107,42 @@ class AdminAppController extends Controller {
 		$this->set('user', $this->Auth->user());
 		$this->set('config', $this->config);
 		$this->set('model', $this->Model);
+		$this->set('pendingReports', Admin::introspectModel('Admin.ItemReport')->getCountByStatus());
+	}
+
+	/**
+	 * Proxy action to handle POST requests and redirect back with named params.
+	 */
+	public function proxy() {
+		if (empty($this->Model) || empty($this->request->data[$this->Model->alias])) {
+			$this->redirect($this->referer());
+		}
+
+		$data = $this->request->data[$this->Model->alias];
+		$named = array();
+
+		foreach ($data as $key => $value) {
+			if (
+				substr($key, -7) === '_filter' ||
+				substr($key, -11) === '_type_ahead' ||
+				$value === '') {
+				continue;
+			}
+
+			$named[$key] = urlencode($value);
+
+			if (isset($data[$key . '_filter'])) {
+				$named[$key . '_filter'] = urlencode($data[$key . '_filter']);
+			}
+		}
+
+		$url = array('action' => 'index',);
+
+		if ($this->name === 'Crud') {
+			$url['model'] = $this->Model->urlSlug;
+		}
+
+		$this->redirect(array_merge($named, $url));
 	}
 
 }
