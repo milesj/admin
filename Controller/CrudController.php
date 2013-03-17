@@ -21,11 +21,11 @@ class CrudController extends AdminAppController {
 			'contain' => array_keys($this->Model->belongsTo)
 		), $this->Model->admin['paginate']);
 
-		$this->setBelongsToData();
+		$this->AdminToolbar->setBelongsToData($this->Model);
 
 		// Filters
 		if (!empty($this->request->params['named'])) {
-			$this->paginate['conditions'] = $this->parseFilterConditions($this->request->params['named']);
+			$this->paginate['conditions'] = $this->AdminToolbar->parseFilterConditions($this->Model, $this->request->params['named']);
 		}
 
 		// Batch delete
@@ -49,7 +49,7 @@ class CrudController extends AdminAppController {
 
 			if ($count > 0) {
 				$this->AdminToolbar->logAction(ActionLog::BATCH_DELETE, $this->Model, null, sprintf('Deleted IDs: %s', implode(', ', $deleted)));
-				$this->setFlashMessage(__('%s %s have been deleted', array($count, strtolower($this->Model->pluralName))));
+				$this->AdminToolbar->setFlashMessage(__('%s %s have been deleted', array($count, strtolower($this->Model->pluralName))));
 			}
 		}
 
@@ -61,22 +61,22 @@ class CrudController extends AdminAppController {
 	 * Create a new record.
 	 */
 	public function create() {
-		$this->setBelongsToData();
-		$this->setHabtmData();
+		$this->AdminToolbar->setBelongsToData($this->Model);
+		$this->AdminToolbar->setHabtmData($this->Model);
 
 		if ($this->request->is('post')) {
-			$data = $this->getRequestData();
+			$data = $this->AdminToolbar->getRequestData();
 			$this->Model->create($data);
 
 			if ($this->Model->saveAll(null, array('validate' => 'first', 'atomic' => true, 'deep' => true))) {
 				$this->Model->set($data);
 				$this->AdminToolbar->logAction(ActionLog::CREATE, $this->Model, $this->Model->id);
 
-				$this->setFlashMessage(__('Successfully created a new %s', strtolower($this->Model->singularName)));
-				$this->redirectAfter();
+				$this->AdminToolbar->setFlashMessage(__('Successfully created a new %s', strtolower($this->Model->singularName)));
+				$this->AdminToolbar->redirectAfter($this->Model);
 
 			} else {
-				$this->setFlashMessage(__('Failed to create a new %s', strtolower($this->Model->singularName)), 'error');
+				$this->AdminToolbar->setFlashMessage(__('Failed to create a new %s', strtolower($this->Model->singularName)), 'error');
 			}
 		}
 
@@ -94,7 +94,7 @@ class CrudController extends AdminAppController {
 
 		$result = $this->Model->find('first', array(
 			'conditions' => array($this->Model->alias . '.' . $this->Model->primaryKey => $id),
-			'contain' => $this->getDeepRelations()
+			'contain' => $this->AdminToolbar->getDeepRelations($this->Model)
 		));
 
 		if (!$result) {
@@ -124,28 +124,28 @@ class CrudController extends AdminAppController {
 
 		$result = $this->Model->find('first', array(
 			'conditions' => array($this->Model->alias . '.' . $this->Model->primaryKey => $id),
-			'contain' => $this->getDeepRelations(false)
+			'contain' => $this->AdminToolbar->getDeepRelations($this->Model, false)
 		));
 
 		if (!$result) {
 			throw new NotFoundException();
 		}
 
-		$this->setBelongsToData();
-		$this->setHabtmData();
+		$this->AdminToolbar->setBelongsToData($this->Model);
+		$this->AdminToolbar->setHabtmData($this->Model);
 
 		if ($this->request->is('put')) {
-			$data = $this->getRequestData();
+			$data = $this->AdminToolbar->getRequestData();
 
 			if ($this->Model->saveAll($data, array('validate' => 'first', 'atomic' => true, 'deep' => true))) {
 				$this->Model->set($result);
 				$this->AdminToolbar->logAction(ActionLog::UPDATE, $this->Model, $id);
 
-				$this->setFlashMessage(__('Successfully updated %s with ID %s', array(strtolower($this->Model->singularName), $id)));
-				$this->redirectAfter();
+				$this->AdminToolbar->setFlashMessage(__('Successfully updated %s with ID %s', array(strtolower($this->Model->singularName), $id)));
+				$this->AdminToolbar->redirectAfter($this->Model);
 
 			} else {
-				$this->setFlashMessage(__('Failed to update %s with ID %s', array(strtolower($this->Model->singularName), $id)), 'error');
+				$this->AdminToolbar->setFlashMessage(__('Failed to update %s with ID %s', array(strtolower($this->Model->singularName), $id)), 'error');
 			}
 		} else {
 			$this->request->data = $result;
@@ -179,11 +179,11 @@ class CrudController extends AdminAppController {
 			if ($this->Model->delete($id, true)) {
 				$this->AdminToolbar->logAction(ActionLog::DELETE, $this->Model, $id);
 
-				$this->setFlashMessage(__('Successfully deleted %s with ID %s', array(strtolower($this->Model->singularName), $id)));
-				$this->redirectAfter();
+				$this->AdminToolbar->setFlashMessage(__('Successfully deleted %s with ID %s', array(strtolower($this->Model->singularName), $id)));
+				$this->AdminToolbar->redirectAfter($this->Model);
 
 			} else {
-				$this->setFlashMessage(__('Failed to delete %s with ID %s', array(strtolower($this->Model->singularName), $id)), 'error');
+				$this->AdminToolbar->setFlashMessage(__('Failed to delete %s with ID %s', array(strtolower($this->Model->singularName), $id)), 'error');
 			}
 		}
 
@@ -227,10 +227,10 @@ class CrudController extends AdminAppController {
 			$model->Behaviors->{$behavior}->{$method}($model);
 
 			$this->AdminToolbar->logAction(ActionLog::PROCESS, $model, null, __('Triggered %s.%s() process', array($behavior, $method)));
-			$this->setFlashMessage(__('Processed %s.%s() for %s', array($behavior, $method, strtolower($model->pluralName))));
+			$this->AdminToolbar->setFlashMessage(__('Processed %s.%s() for %s', array($behavior, $method, strtolower($model->pluralName))));
 
 		} else {
-			$this->setFlashMessage(__('%s do not allow for this process', $model->pluralName), 'error');
+			$this->AdminToolbar->setFlashMessage(__('%s do not allow for this process', $model->pluralName), 'error');
 		}
 
 		$this->redirect($this->referer());
@@ -340,197 +340,6 @@ class CrudController extends AdminAppController {
 			}
 
 			$this->request->data = $data;
-		}
-	}
-
-	/**
-	 * Get a list of valid containable model relations.
-	 * Should also get belongsTo data for hasOne and hasMany.
-	 *
-	 * @param bool $extended
-	 * @return array
-	 */
-	protected function getDeepRelations($extended = true) {
-		$contain = array_keys($this->Model->belongsTo);
-		$contain = array_merge($contain, array_keys($this->Model->hasAndBelongsToMany));
-
-		if ($extended) {
-			foreach (array($this->Model->hasOne, $this->Model->hasMany) as $assocs) {
-				foreach ($assocs as $alias => $assoc) {
-					$contain[$alias] = array_keys($this->Model->{$alias}->belongsTo);
-				}
-			}
-		}
-
-		return $contain;
-	}
-
-	/**
-	 * Return a list of records. If a certain method exists, use it.
-	 *
-	 * @param Model $model
-	 * @return array
-	 */
-	protected function getRecordList(Model $model) {
-		if ($model->hasMethod('generateTreeList')) {
-			return $model->generateTreeList(null, null, null, ' -- ');
-
-		} else if ($model->hasMethod('getList')) {
-			return $model->getList();
-		}
-
-		return $model->find('list', array(
-			'order' => array($model->alias . '.' . $model->displayField => 'ASC')
-		));
-	}
-
-	/**
-	 * Return the request data after processing the fields.
-	 *
-	 * @return array
-	 */
-	protected function getRequestData() {
-		$data = $this->request->data;
-
-		if ($data) {
-			foreach ($data as $model => $fields) {
-				foreach ($fields as $key => $value) {
-					if (
-						(substr($key, -5) === '_null') ||
-						(substr($key, -11) === '_type_ahead') ||
-						in_array($key, array('redirect_to'))
-					) {
-						unset($data[$model][$key]);
-					}
-				}
-			}
-		}
-
-		return $data;
-	}
-
-	/**
-	 * Parse the request into an array of filtering SQL conditions.
-	 *
-	 * @param array $data
-	 * @return array
-	 */
-	protected function parseFilterConditions($data) {
-		$conditions = array();
-		$fields = $this->Model->fields;
-		$alias = $this->Model->alias;
-		$enum = $this->Model->enum;
-
-		foreach ($data as $key => $value) {
-			if (substr($key, -7) === '_filter' || !isset($fields[$key])) {
-				continue;
-			}
-
-			$field = $fields[$key];
-			$value = urldecode($value);
-
-			// Dates, times, numbers
-			if (isset($data[$key . '_filter'])) {
-				$operator = urldecode($data[$key . '_filter']);
-				$operator = ($operator === '=') ? '' : ' ' . $operator;
-
-				if ($field['type'] === 'datetime') {
-					$value = date('Y-m-d H:i:s', strtotime($value));
-
-				} else if ($field['type'] === 'date') {
-					$value = date('Y-m-d', strtotime($value));
-
-				} else if ($field['type'] === 'time') {
-					$value = date('H:i:s', strtotime($value));
-				}
-
-				$conditions[$alias . '.' . $key . $operator] = $value;
-
-			// Enums, booleans, relations
-			} else if (isset($enum[$key]) || $field['type'] === 'boolean' || !empty($field['belongsTo'])) {
-				$conditions[$alias . '.' . $key] = $value;
-
-			// Strings
-			} else {
-				$conditions[$alias . '.' . $key . ' LIKE'] = '%' . $value . '%';
-			}
-		}
-
-		// Set data to use in form
-		$this->request->data[$this->Model->alias] = $data;
-
-		return $conditions;
-	}
-
-	/**
-	 * Redirect after a create or update.
-	 *
-	 * @param string $action
-	 */
-	protected function redirectAfter($action = null) {
-		if (!$action) {
-			$action = $this->request->data[$this->Model->alias]['redirect_to'];
-		}
-
-		$url = array('controller' => strtolower($this->name), 'action' => $action, 'model' => $this->Model->urlSlug);
-
-		switch ($action) {
-			case 'read':
-			case 'update':
-			case 'delete':
-				$url[] = $this->Model->id;
-			break;
-		}
-
-		$this->redirect($url);
-	}
-
-	/**
-	 * Set belongsTo data for select inputs. If there are too many records, switch to type ahead.
-	 */
-	protected function setBelongsToData() {
-		$typeAhead = array();
-
-		foreach ($this->Model->belongsTo as $alias => $assoc) {
-			$model = Admin::introspectModel($assoc['className']);
-			$count = $model->find('count');
-
-			// Add to type ahead if too many records
-			if ($count > $this->Model->admin['associationLimit']) {
-				$class = $assoc['className'];
-
-				if (strpos($class, '.') === false) {
-					$class = Configure::read('Admin.coreName') . '.' . $class;
-				}
-
-				$typeAhead[$assoc['foreignKey']] = array(
-					'alias' => $alias,
-					'model' => $class
-				);
-
-			} else {
-				$variable = Inflector::variable(Inflector::pluralize(preg_replace('/(?:_id)$/', '', $assoc['foreignKey'])));
-
-				$this->set($variable, $this->getRecordList($model));
-			}
-		}
-
-		$this->set('typeAhead', $typeAhead);
-	}
-
-	/**
-	 * Set hasAndBelongsToMany data for forms. This allows for saving of associated data.
-	 */
-	protected function setHabtmData() {
-		foreach ($this->Model->hasAndBelongsToMany as $assoc) {
-			if (!$assoc['showInForm']) {
-				continue;
-			}
-
-			$model = Admin::introspectModel($assoc['className']);
-			$variable = Inflector::variable(Inflector::pluralize(preg_replace('/(?:_id)$/', '', $assoc['associationForeignKey'])));
-
-			$this->set($variable, $this->getRecordList($model));
 		}
 	}
 

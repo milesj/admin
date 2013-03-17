@@ -9,7 +9,7 @@ $flatten = function($array) {
 		if (is_array($value)) {
 			$return .= '[' . $flatten($value) . ']';
 		} else {
-			$return .= $value;
+			$return .= '"' . $value . '"';
 		}
 
 		$output[] = $return;

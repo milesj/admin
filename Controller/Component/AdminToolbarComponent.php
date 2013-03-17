@@ -5,6 +5,9 @@
  * @link		http://milesj.me/code/cakephp/admin
  */
 
+/**
+ * @property Controller $Controller
+ */
 class AdminToolbarComponent extends Component {
 
 	/**
@@ -13,6 +16,82 @@ class AdminToolbarComponent extends Component {
 	 * @var array
 	 */
 	public $components = array('Auth', 'Session');
+
+	/**
+	 * Store the controller.
+	 *
+	 * @param Controller $controller
+	 */
+	public function startup(Controller $controller) {
+		$this->Controller = $controller;
+	}
+
+	/**
+	 * Get a list of valid containable model relations.
+	 * Should also get belongsTo data for hasOne and hasMany.
+	 *
+	 * @param Model $model
+	 * @param bool $extended
+	 * @return array
+	 */
+	public function getDeepRelations(Model $model, $extended = true) {
+		$contain = array_keys($model->belongsTo);
+		$contain = array_merge($contain, array_keys($model->hasAndBelongsToMany));
+
+		if ($extended) {
+			foreach (array($model->hasOne, $model->hasMany) as $assocs) {
+				foreach ($assocs as $alias => $assoc) {
+					$contain[$alias] = array_keys($model->{$alias}->belongsTo);
+				}
+			}
+		}
+
+		return $contain;
+	}
+
+	/**
+	 * Return a list of records. If a certain method exists, use it.
+	 *
+	 * @param Model $model
+	 * @return array
+	 */
+	public function getRecordList(Model $model) {
+		if ($model->hasMethod('generateTreeList')) {
+			return $model->generateTreeList(null, null, null, ' -- ');
+
+		} else if ($model->hasMethod('getList')) {
+			return $model->getList();
+		}
+
+		return $model->find('list', array(
+			'order' => array($model->alias . '.' . $model->displayField => 'ASC')
+		));
+	}
+
+	/**
+	 * Return the request data after processing the fields.
+	 *
+	 * @return array
+	 */
+	public function getRequestData() {
+		$data = $this->Controller->request->data;
+
+		if ($data) {
+			foreach ($data as $model => $fields) {
+				foreach ($fields as $key => $value) {
+					if (
+						(substr($key, -5) === '_null') ||
+						(substr($key, -11) === '_type_ahead') ||
+						in_array($key, array('redirect_to', 'log_comment', 'report_action'))
+					) {
+						unset($data[$model][$key]);
+					}
+				}
+			}
+		}
+
+		return $data;
+	}
 
 	/**
 	 * Check to see if a user has specific CRUD access for a model.
@@ -29,6 +108,147 @@ class AdminToolbarComponent extends Component {
 		$crud = $this->Session->read('Admin.crud');
 
 		return (isset($crud[$model][$action]) && $crud[$model][$action]);
+	}
+
+	/**
+	 * Parse the request into an array of filtering SQL conditions.
+	 *
+	 * @param Model $model
+	 * @param array $data
+	 * @return array
+	 */
+	public function parseFilterConditions(Model $model, $data) {
+		$conditions = array();
+		$fields = $model->fields;
+		$alias = $model->alias;
+		$enum = $model->enum;
+
+		foreach ($data as $key => $value) {
+			if (substr($key, -7) === '_filter' || !isset($fields[$key])) {
+				continue;
+			}
+
+			$field = $fields[$key];
+			$value = urldecode($value);
+
+			// Dates, times, numbers
+			if (isset($data[$key . '_filter'])) {
+				$operator = urldecode($data[$key . '_filter']);
+				$operator = ($operator === '=') ? '' : ' ' . $operator;
+
+				if ($field['type'] === 'datetime') {
+					$value = date('Y-m-d H:i:s', strtotime($value));
+
+				} else if ($field['type'] === 'date') {
+					$value = date('Y-m-d', strtotime($value));
+
+				} else if ($field['type'] === 'time') {
+					$value = date('H:i:s', strtotime($value));
+				}
+
+				$conditions[$alias . '.' . $key . $operator] = $value;
+
+			// Enums, booleans, relations
+			} else if (isset($enum[$key]) || $field['type'] === 'boolean' || !empty($field['belongsTo'])) {
+				$conditions[$alias . '.' . $key] = $value;
+
+			// Strings
+			} else {
+				$conditions[$alias . '.' . $key . ' LIKE'] = '%' . $value . '%';
+			}
+		}
+
+		// Set data to use in form
+		$this->Controller->request->data[$model->alias] = $data;
+
+		return $conditions;
+	}
+
+	/**
+	 * Redirect after a create or update.
+	 *
+	 * @param Model $model
+	 * @param string $action
+	 */
+	public function redirectAfter(Model $model, $action = null) {
+		if (!$action) {
+			$action = $this->Controller->request->data[$model->alias]['redirect_to'];
+		}
+
+		$url = array('controller' => strtolower($this->Controller->name), 'action' => $action, 'model' => $model->urlSlug);
+
+		switch ($action) {
+			case 'read':
+			case 'update':
+			case 'delete':
+				$url[] = $model->id;
+			break;
+		}
+
+		$this->Controller->redirect($url);
+	}
+
+	/**
+	 * Set belongsTo data for select inputs. If there are too many records, switch to type ahead.
+	 *
+	 * @param Model $model
+	 */
+	public function setBelongsToData(Model $model) {
+		$typeAhead = array();
+
+		foreach ($model->belongsTo as $alias => $assoc) {
+			$object = Admin::introspectModel($assoc['className']);
+			$count = $object->find('count');
+
+			// Add to type ahead if too many records
+			if ($count > $object->admin['associationLimit']) {
+				$class = $assoc['className'];
+
+				if (strpos($class, '.') === false) {
+					$class = Configure::read('Admin.coreName') . '.' . $class;
+				}
+
+				$typeAhead[$assoc['foreignKey']] = array(
+					'alias' => $alias,
+					'model' => $class
+				);
+
+			} else {
+				$variable = Inflector::variable(Inflector::pluralize(preg_replace('/(?:_id)$/', '', $assoc['foreignKey'])));
+
+				$this->Controller->set($variable, $this->getRecordList($object));
+			}
+		}
+
+		$this->Controller->set('typeAhead', $typeAhead);
+	}
+
+	/**
+	 * Set hasAndBelongsToMany data for forms. This allows for saving of associated data.
+	 *
+	 * @param Model $model
+	 */
+	public function setHabtmData(Model $model) {
+		foreach ($model->hasAndBelongsToMany as $assoc) {
+			if (!$assoc['showInForm']) {
+				continue;
+			}
+
+			$object = Admin::introspectModel($assoc['className']);
+			$variable = Inflector::variable(Inflector::pluralize(preg_replace('/(?:_id)$/', '', $assoc['associationForeignKey'])));
+
+			$this->Controller->set($variable, $this->getRecordList($object));
+		}
+	}
+
+	/**
+	 * Convenience method to set a flash message.
+	 *
+	 * @param string $message
+	 * @param string $type
+	 */
+	public function setFlashMessage($message, $type = 'success') {
+		$this->Session->setFlash($message, 'flash', array('class' => $type));
 	}
 
 	/**

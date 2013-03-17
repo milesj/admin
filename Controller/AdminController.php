@@ -117,7 +117,7 @@ class AdminController extends AdminAppController {
 				}
 
 				$this->AdminToolbar->logAction(ActionLog::BATCH_PROCESS, $this->Model, null, implode(', ', $message));
-				$this->setFlashMessage(__('%s %s have been processed', array($count, strtolower($this->Model->pluralName))));
+				$this->AdminToolbar->setFlashMessage(__('%s %s have been processed', array($count, strtolower($this->Model->pluralName))));
 			}
 		}
 
