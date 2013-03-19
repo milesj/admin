@@ -33,7 +33,7 @@ echo $this->element('logs/actions'); ?>
 
 				<td colspan="3">
 					<?php
-					$message = 'action_log.' . strtolower($result[$model->alias]['action_enum']);
+					$message = 'action_log.' . mb_strtolower($result[$model->alias]['action_enum']);
 					$params = array();
 
 					// Grab the user
@@ -46,7 +46,7 @@ echo $this->element('logs/actions'); ?>
 
 					// Action specific
 					if (in_array($result[$model->alias]['action'], array(ActionLog::CREATE, ActionLog::READ, ActionLog::UPDATE, ActionLog::DELETE))) {
-						$params[] = strtolower($foreignModel->singularName);
+						$params[] = mb_strtolower($foreignModel->singularName);
 					}
 
 					// Grab the item
@@ -65,7 +65,7 @@ echo $this->element('logs/actions'); ?>
 						), array('class' => 'click-target'));
 
 					} else if ($foreignModel) {
-						$params[] = strtolower($foreignModel->pluralName);
+						$params[] = mb_strtolower($foreignModel->pluralName);
 					}
 
 					echo __d('admin', $message, $params); ?>

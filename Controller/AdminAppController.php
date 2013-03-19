@@ -97,9 +97,11 @@ class AdminAppController extends Controller {
 	public function beforeFilter() {
 		parent::beforeFilter();
 
-		// @todo
-		Configure::write('Config.language', 'eng');
+		// Set locale
+		$locale = $this->Auth->user(Configure::read('User.fieldMap.locale') ?: 'locale') ?: 'eng';
+		Configure::write('Config.language', $locale);
 
+		// Set config
 		$this->config = Configure::read('Admin');
 	}
 
@@ -126,8 +128,8 @@ class AdminAppController extends Controller {
 
 		foreach ($data as $key => $value) {
 			if (
-				substr($key, -7) === '_filter' ||
-				substr($key, -11) === '_type_ahead' ||
+				mb_substr($key, -7) === '_filter' ||
+				mb_substr($key, -11) === '_type_ahead' ||
 				$value === '') {
 				continue;
 			}

@@ -28,7 +28,7 @@ echo $this->element('logs/actions'); ?>
 					$text = null;
 
 					// Via fatal
-					if (stripos($log['message'], 'fatal') !== false) {
+					if (mb_stripos($log['message'], 'fatal') !== false) {
 						$class = 'label-important';
 						$text = 'FATAL';
 

@@ -61,7 +61,7 @@ if ($modelParam) {
 							continue;
 						} ?>
 
-						<li class="dropdown<?php echo (strtolower($plugin) === $pluginParam) ? ' active' : ''; ?>">
+						<li class="dropdown<?php echo (mb_strtolower($plugin) === $pluginParam) ? ' active' : ''; ?>">
 							<a data-toggle="dropdown" class="dropdown-toggle" href="javascript:;">
 								<?php echo $plugin; ?>
 								<span class="caret"></span>

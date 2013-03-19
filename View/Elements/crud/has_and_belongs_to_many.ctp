@@ -17,7 +17,7 @@ $fields = $this->Admin->filterFields($withModel); ?>
 				</th>
 
 				<?php foreach ($fields as $field => $data) {
-					if (strpos($field, '_id') !== false) {
+					if (mb_strpos($field, '_id') !== false) {
 						continue;
 					} ?>
 
@@ -40,7 +40,7 @@ $fields = $this->Admin->filterFields($withModel); ?>
 					</td>
 
 					<?php foreach ($fields as $field => $data) {
-						if (strpos($field, '_id') !== false) {
+						if (mb_strpos($field, '_id') !== false) {
 							continue;
 						} ?>
 

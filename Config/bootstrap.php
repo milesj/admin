@@ -89,3 +89,19 @@ Configure::write('Admin.behaviorCallbacks', array(
  * The callback method accepts a record ID as the 1st argument.
  */
 Configure::write('Admin.modelCallbacks', array());
+
+/**
+ * A map of user fields that are used within this plugin. If your users table has a different naming scheme
+ * for the username, email, status, etc fields, you can define their replacement here.
+ */
+if (!Configure::check('User.fieldMap')) {
+	Configure::write('User.fieldMap', array(
+		'username'	=> 'username',
+		'password'	=> 'password',
+		'email'		=> 'email',
+		'status'	=> 'status',
+		'avatar'	=> 'avatar',
+		'locale'	=> 'locale',
+		'timezone'	=> 'timezone'
+	));
+}

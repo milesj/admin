@@ -45,7 +45,7 @@ class CrudController extends AdminAppController {
 
 			if ($count > 0) {
 				$this->AdminToolbar->logAction(ActionLog::BATCH_DELETE, $this->Model, null, sprintf('Deleted IDs: %s', implode(', ', $deleted)));
-				$this->AdminToolbar->setFlashMessage(__('%s %s have been deleted', array($count, strtolower($this->Model->pluralName))));
+				$this->AdminToolbar->setFlashMessage(__('%s %s have been deleted', array($count, mb_strtolower($this->Model->pluralName))));
 			}
 		}
 
@@ -67,11 +67,11 @@ class CrudController extends AdminAppController {
 				$this->Model->set($data);
 				$this->AdminToolbar->logAction(ActionLog::CREATE, $this->Model, $this->Model->id);
 
-				$this->AdminToolbar->setFlashMessage(__('Successfully created a new %s', strtolower($this->Model->singularName)));
+				$this->AdminToolbar->setFlashMessage(__('Successfully created a new %s', mb_strtolower($this->Model->singularName)));
 				$this->AdminToolbar->redirectAfter($this->Model);
 
 			} else {
-				$this->AdminToolbar->setFlashMessage(__('Failed to create a new %s', strtolower($this->Model->singularName)), 'error');
+				$this->AdminToolbar->setFlashMessage(__('Failed to create a new %s', mb_strtolower($this->Model->singularName)), 'error');
 			}
 		}
 
@@ -129,11 +129,11 @@ class CrudController extends AdminAppController {
 				$this->Model->set($result);
 				$this->AdminToolbar->logAction(ActionLog::UPDATE, $this->Model, $id);
 
-				$this->AdminToolbar->setFlashMessage(__('Successfully updated %s with ID %s', array(strtolower($this->Model->singularName), $id)));
+				$this->AdminToolbar->setFlashMessage(__('Successfully updated %s with ID %s', array(mb_strtolower($this->Model->singularName), $id)));
 				$this->AdminToolbar->redirectAfter($this->Model);
 
 			} else {
-				$this->AdminToolbar->setFlashMessage(__('Failed to update %s with ID %s', array(strtolower($this->Model->singularName), $id)), 'error');
+				$this->AdminToolbar->setFlashMessage(__('Failed to update %s with ID %s', array(mb_strtolower($this->Model->singularName), $id)), 'error');
 			}
 		} else {
 			$this->request->data = $result;
@@ -167,11 +167,11 @@ class CrudController extends AdminAppController {
 			if ($this->Model->delete($id, true)) {
 				$this->AdminToolbar->logAction(ActionLog::DELETE, $this->Model, $id);
 
-				$this->AdminToolbar->setFlashMessage(__('Successfully deleted %s with ID %s', array(strtolower($this->Model->singularName), $id)));
+				$this->AdminToolbar->setFlashMessage(__('Successfully deleted %s with ID %s', array(mb_strtolower($this->Model->singularName), $id)));
 				$this->AdminToolbar->redirectAfter($this->Model);
 
 			} else {
-				$this->AdminToolbar->setFlashMessage(__('Failed to delete %s with ID %s', array(strtolower($this->Model->singularName), $id)), 'error');
+				$this->AdminToolbar->setFlashMessage(__('Failed to delete %s with ID %s', array(mb_strtolower($this->Model->singularName), $id)), 'error');
 			}
 		}
 
@@ -242,7 +242,7 @@ class CrudController extends AdminAppController {
 			$model->Behaviors->{$behavior}->{$method}($model);
 
 			$this->AdminToolbar->logAction(ActionLog::PROCESS, $model, null, __('Triggered %s.%s() process', array($behavior, $method)));
-			$this->AdminToolbar->setFlashMessage(__('Processed %s.%s() for %s', array($behavior, $method, strtolower($model->pluralName))));
+			$this->AdminToolbar->setFlashMessage(__('Processed %s.%s() for %s', array($behavior, $method, mb_strtolower($model->pluralName))));
 
 		} else {
 			$this->AdminToolbar->setFlashMessage(__('%s does not allow this process', $model->singularName), 'error');
@@ -306,7 +306,7 @@ class CrudController extends AdminAppController {
 		if ($data = $this->request->data) {
 			foreach ($data as $model => $fields) {
 				foreach ($fields as $key => $value) {
-					if (substr($key, -5) === '_null' && $value) {
+					if (mb_substr($key, -5) === '_null' && $value) {
 						$data[$model][str_replace('_null', '', $key)] = null;
 					}
 				}

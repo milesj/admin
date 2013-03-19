@@ -56,7 +56,7 @@ class InstallShell extends BaseInstallShell {
 
 		$this->out(sprintf('Administrator Role: <comment>%s</comment>', $adminAlias));
 
-		$answer = strtoupper($this->in('<question>Is this correct?</question>', array('Y', 'N')));
+		$answer = mb_strtoupper($this->in('<question>Is this correct?</question>', array('Y', 'N')));
 
 		if ($answer === 'N') {
 			$this->out('<warning>Configure the role through Admin.adminAlias</warning>');

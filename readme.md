@@ -6,10 +6,11 @@ Utilizes CakePHP's built-in authentication, authorization and ACL systems for se
 ## Requirements ##
 
 * PHP 5.3.0
+	* Multibyte
 * CakePHP 2.3.0
 	* ACL
 	* Auth
-	* Utility Plugin - https://github.com/milesj/Utility
+	* Utility Plugin v1.4 - https://github.com/milesj/Utility
 * Composer
 
 ## Quick Installation ##

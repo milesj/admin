@@ -103,7 +103,7 @@ class Admin {
 
 			// Fetch models and filter out AppModel's
 			$models = array_filter(App::objects($search), function($value) {
-				return (strpos($value, 'AppModel') === false);
+				return (mb_strpos($value, 'AppModel') === false);
 			});
 
 			// Filter out models that don't connect to the database or are admin disabled
@@ -230,7 +230,7 @@ class Admin {
 				}
 
 				// Hide counter cache and auto-date fields
-				if (in_array($field, array('created', 'modified')) || substr($field, -6) === '_count') {
+				if (in_array($field, array('created', 'modified')) || mb_substr($field, -6) === '_count') {
 					$hideFields[] = $field;
 				}
 			}

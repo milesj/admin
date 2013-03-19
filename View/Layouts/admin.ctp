@@ -43,7 +43,7 @@ echo $this->Html->docType(); ?>
 
 	<footer class="foot">
 		<div class="copyright">
-			<?php printf(__d('forum', 'Powered by the %s v%s'), $this->Html->link('Admin Plugin', 'http://milesj.me/code/cakephp/admin'), strtoupper($config['version'])); ?><br>
+			<?php printf(__d('forum', 'Powered by the %s v%s'), $this->Html->link('Admin Plugin', 'http://milesj.me/code/cakephp/admin'), mb_strtoupper($config['version'])); ?><br>
 			<?php printf(__d('forum', 'Created by %s'), $this->Html->link('Miles Johnson', 'http://milesj.me')); ?>
 		</div>
 

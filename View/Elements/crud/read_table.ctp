@@ -8,6 +8,7 @@
 				</td>
 				<td>
 					<?php echo $this->element('field', array(
+						'result' => $result,
 						'field' => $field,
 						'data' => $data,
 						'value' => $result[$model->alias][$field],

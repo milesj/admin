@@ -7,11 +7,11 @@ if (is_numeric($value)) {
 	<?php } else {
 		$enum = $model->enum[$field][$value]; ?>
 
-		<span class="enum enum-<?php echo strtolower($enum); ?>"><?php echo $enum; ?></span>
+		<span class="enum enum-<?php echo mb_strtolower($enum); ?>"><?php echo $enum; ?></span>
 
 	<?php }
 } else { ?>
 
-	<span class="enum enum-<?php echo strtolower($value); ?>"><?php echo $value; ?></span>
+	<span class="enum enum-<?php echo mb_strtolower($value); ?>"><?php echo $value; ?></span>
 
 <?php } ?>

@@ -103,8 +103,8 @@ class AdminToolbarComponent extends Component {
 			foreach ($data as $model => $fields) {
 				foreach ($fields as $key => $value) {
 					if (
-						(substr($key, -5) === '_null') ||
-						(substr($key, -11) === '_type_ahead') ||
+						(mb_substr($key, -5) === '_null') ||
+						(mb_substr($key, -11) === '_type_ahead') ||
 						in_array($key, array('redirect_to', 'log_comment', 'report_action'))
 					) {
 						unset($data[$model][$key]);
@@ -208,7 +208,7 @@ class AdminToolbarComponent extends Component {
 		$enum = $model->enum;
 
 		foreach ($data as $key => $value) {
-			if (substr($key, -7) === '_filter' || !isset($fields[$key])) {
+			if (mb_substr($key, -7) === '_filter' || !isset($fields[$key])) {
 				continue;
 			}
 
@@ -259,7 +259,7 @@ class AdminToolbarComponent extends Component {
 			$action = $this->Controller->request->data[$model->alias]['redirect_to'];
 		}
 
-		$url = array('controller' => strtolower($this->Controller->name), 'action' => $action, 'model' => $model->urlSlug);
+		$url = array('controller' => mb_strtolower($this->Controller->name), 'action' => $action, 'model' => $model->urlSlug);
 
 		switch ($action) {
 			case 'read':
@@ -335,7 +335,7 @@ class AdminToolbarComponent extends Component {
 			if ($count > $object->admin['associationLimit']) {
 				$class = $assoc['className'];
 
-				if (strpos($class, '.') === false) {
+				if (mb_strpos($class, '.') === false) {
 					$class = Configure::read('Admin.coreName') . '.' . $class;
 				}
 
