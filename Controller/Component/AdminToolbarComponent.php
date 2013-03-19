@@ -175,8 +175,8 @@ class AdminToolbarComponent extends Component {
 			$query['model'] = ($model->plugin ? $model->plugin . '.' : '') . $model->name;
 
 			// Get comment from request
-			if (!$comment && isset($this->request->data[$model->alias]['log_comment'])) {
-				$comment = $this->request->data[$model->alias]['log_comment'];
+			if (!$comment && isset($this->Controller->request->data[$model->alias]['log_comment'])) {
+				$comment = $this->Controller->request->data[$model->alias]['log_comment'];
 			}
 
 			// Get display field from data

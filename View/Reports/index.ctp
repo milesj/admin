@@ -12,10 +12,7 @@ if ($this->request->data[$model->alias]['status'] == ItemReport::PENDING) {
 }  ?>
 
 <div class="action-buttons">
-	<?php
-	echo $this->Html->link('<span class="icon-filter icon-white"></span> ' . __('Filter'),
-		'javascript:;', array('class' => 'btn btn-large', 'escape' => false, 'onclick' => "$('#filters').toggle()"));
-	?>
+	<?php echo $this->element('button/filter'); ?>
 </div>
 
 <h2><?php echo $this->Admin->outputIconTitle($model, $pageTitle); ?></h2>

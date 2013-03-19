@@ -28,6 +28,13 @@ class ObjectPermission extends Permission {
 	public $recursive = -1;
 
 	/**
+	 * Force to admin plugin.
+	 *
+	 * @var string
+	 */
+	public $plugin = 'Admin';
+
+	/**
 	 * Belongs to.
 	 *
 	 * @var array
@@ -111,7 +118,7 @@ class ObjectPermission extends Permission {
 	public function getByAroId($aro_id) {
 		return $this->find('all', array(
 			'conditions' => array('ObjectPermission.aro_id' => $aro_id),
-			'order' => array('ControlObject.lft' => 'desc'),
+			'order' => array('ControlObject.lft' => 'DESC', 'ObjectPermission.id' => 'ASC'),
 			'contain' => array('ControlObject')
 		));
 	}

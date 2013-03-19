@@ -38,6 +38,13 @@ class ControlObject extends Aco {
 	public $recursive = -1;
 
 	/**
+	 * Force to admin plugin.
+	 *
+	 * @var string
+	 */
+	public $plugin = 'Admin';
+
+	/**
 	 * Admin settings.
 	 *
 	 * @var array

@@ -105,6 +105,14 @@ var Admin = {
 	},
 
 	/**
+	 * Toggle the filters box and button.
+	 */
+	filterToggle: function() {
+		$('#filters').toggle();
+		$('#filter-toggle').toggleClass('active');
+	},
+
+	/**
 	 * Allow filter comparison dropdowns to change input fields with the chosen option.
 	 */
 	filterComparisons: function() {

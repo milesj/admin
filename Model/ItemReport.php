@@ -26,13 +26,6 @@ class ItemReport extends AdminAppModel {
 	const HARASSMENT = 8; // user to user, threats, trolling
 
 	/**
-	 * Display field.
-	 *
-	 * @var string
-	 */
-	public $displayField = 'item';
-
-	/**
 	 * Belongs to.
 	 *
 	 * @var array

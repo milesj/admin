@@ -3,9 +3,7 @@
 	$canUpdate = ($this->Admin->hasAccess($model->qualifiedName, 'update') && $model->admin['editable']);
 
 	if ($this->action === 'index') {
-		echo $this->Html->link('<span class="icon-filter icon-white"></span> ' . __('Filter'),
-			'javascript:;', array('class' => 'btn btn-large', 'escape' => false, 'onclick' => "$('#filters').toggle()"));
-
+		echo $this->element('button/filter');
 		echo $this->element('button/process_behavior');
 	}
 

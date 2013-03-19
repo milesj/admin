@@ -44,7 +44,7 @@ echo $this->element('logs/actions'); ?>
 						'model' => $userModel->urlSlug
 					));
 
-					// Action specific
+					// CRUD specific
 					if (in_array($result[$model->alias]['action'], array(ActionLog::CREATE, ActionLog::READ, ActionLog::UPDATE, ActionLog::DELETE))) {
 						$params[] = mb_strtolower($foreignModel->singularName);
 					}

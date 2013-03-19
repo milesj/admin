@@ -1,5 +1,5 @@
 
-<div id="filters" class="well well-small filters"<?php if (empty($this->request->params['named'])) { ?> style="display: none"<?php } ?>>
+<div id="filters" class="well well-small filters" style="display: none">
 	<?php
 	$controller = $this->request->controller;
 	$url = array('controller' => $controller, 'action' => 'proxy');
@@ -97,6 +97,10 @@
 	<script type="text/javascript">
 		$(function() {
 			Admin.filterComparisons();
+
+			<?php if (!empty($this->request->params['named'])) { ?>
+				Admin.filterToggle();
+			<?php } ?>
 		});
 	</script>
 
