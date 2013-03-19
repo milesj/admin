@@ -6,26 +6,7 @@ echo $this->element('crud/actions'); ?>
 <h2><?php echo $this->Admin->outputIconTitle($model, $this->Admin->getDisplayField($model, $result)); ?></h2>
 
 <div class="row-fluid">
-	<table class="table table-striped table-bordered">
-		<tbody>
-			<?php foreach ($model->fields as $field => $data) { ?>
-
-				<tr>
-					<td class="span5">
-						<b><?php echo $data['title']; ?></b>
-					</td>
-					<td>
-						<?php echo $this->element('field', array(
-							'field' => $field,
-							'data' => $data,
-							'value' => $result[$model->alias][$field]
-						)); ?>
-					</td>
-				</tr>
-
-			<?php } ?>
-		</tbody>
-	</table>
+	<?php echo $this->element('crud/read_table'); ?>
 </div>
 
 <?php // Loop over the types of associations

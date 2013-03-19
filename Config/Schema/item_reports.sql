@@ -3,12 +3,18 @@ DROP TABLE IF EXISTS `{prefix}item_reports`;
 
 CREATE TABLE `{prefix}item_reports` (
 	`id` int(11) NOT NULL AUTO_INCREMENT,
-	`user_id` int(11) DEFAULT NULL,
+	`reporter_id` int(11) DEFAULT NULL,
+	`resolver_id` int(11) DEFAULT NULL,
+	`status` smallint(6) NOT NULL DEFAULT '0',
+	`type` smallint(6) NOT NULL DEFAULT '0',
 	`model` varchar(35) NOT NULL,
 	`foreign_key` int(11) DEFAULT NULL,
 	`item` varchar(255) DEFAULT NULL,
-	`comment` varchar(255) DEFAULT NULL,
+	`reason` text,
+	`comment` text,
 	`created` datetime DEFAULT NULL,
+	`modified` datetime DEFAULT NULL,
 	PRIMARY KEY (`id`),
-	KEY `user_id` (`user_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1;
+	KEY `reporter_id` (`reporter_id`),
+	KEY `resolver_id` (`resolver_id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1;

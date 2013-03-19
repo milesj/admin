@@ -74,12 +74,18 @@ Configure::write('Admin.modelDefaults', array(
 /**
  * Behavior methods to execute as process callbacks.
  */
-Configure::write('Admin.behaviorProcesses', array(
+Configure::write('Admin.behaviorCallbacks', array(
 	'Tree' => array(
-		'recover' => __('Tree: Recover'),
-		'reorder' => __('Tree: Reorder')
+		'recover' => 'Recover Tree',
+		'reorder' => 'Reorder Tree'
 	),
 	'Cacheable' => array(
-		'clearCache' => __('Cacheable: Clear Cache')
+		'clearCache' => 'Clear Cache'
 	)
 ));
+
+/**
+ * Model methods to execute as process callbacks.
+ * The callback method accepts a record ID as the 1st argument.
+ */
+Configure::write('Admin.modelCallbacks', array());

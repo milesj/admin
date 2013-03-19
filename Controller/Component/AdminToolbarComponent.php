@@ -50,6 +50,23 @@ class AdminToolbarComponent extends Component {
 	}
 
 	/**
+	 * Return a record based on ID.
+	 *
+	 * @param Model $model
+	 * @param int $id
+	 * @param bool $deepRelation
+	 * @return array
+	 */
+	public function getRecordById(Model $model, $id, $deepRelation = true) {
+		$model->id = $id;
+
+		return $model->find('first', array(
+			'conditions' => array($model->alias . '.' . $model->primaryKey => $id),
+			'contain' => $this->getDeepRelations($model, $deepRelation)
+		));
+	}
+
+	/**
 	 * Return a list of records. If a certain method exists, use it.
 	 *
 	 * @param Model $model
@@ -101,13 +118,24 @@ class AdminToolbarComponent extends Component {
 	 * @return bool
 	 */
 	public function hasAccess($model, $action) {
-		if (strpos($model, '.') === false) {
-			$model = Configure::read('Admin.coreName') . '.' . $model;
+		if (!($model instanceof Model)) {
+			$model = Admin::introspectModel($model);
 		}
 
 		$crud = $this->Session->read('Admin.crud');
+		$pass = (isset($crud[$model->qualifiedName][$action]) && $crud[$model->qualifiedName][$action]);
 
-		return (isset($crud[$model][$action]) && $crud[$model][$action]);
+		// Check editable
+		if ($action === 'update') {
+			return ($pass && $model->admin['editable']);
+		}
+
+		// Check deletable
+		if ($action === 'delete') {
+			return ($pass && $model->admin['deletable']);
+		}
+
+		return $pass;
 	}
 
 	/**
@@ -292,8 +320,17 @@ class AdminToolbarComponent extends Component {
 			}
 
 			// Get display field from data
-			if (!$item && isset($model->data[$model->alias][$model->displayField]) && $model->primaryKey !== $model->displayField) {
-				$item = $model->data[$model->alias][$model->displayField];
+			if (!$item) {
+				if (isset($model->data[$model->alias][$model->displayField])) {
+					$item = $model->data[$model->alias][$model->displayField];
+
+					if ($model->primaryKey === $model->displayField) {
+						$item = '#' . $item;
+					}
+
+				} else if (isset($model->data[$model->alias][$model->primaryKey])) {
+					$item = '#' . $model->data[$model->alias][$model->primaryKey];
+				}
 			}
 		}
 

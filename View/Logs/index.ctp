@@ -25,14 +25,11 @@ echo $this->element('logs/actions'); ?>
 				$userModel = $this->Admin->introspect(USER_MODEL); ?>
 
 			<tr>
-				<td class="col-id type-integer">
-					<?php echo $this->element('field', array(
-						'result' => $result,
-						'field' => 'id',
-						'data' => $model->fields['id'],
-						'value' => $id
-					)); ?>
-				</td>
+				<?php echo $this->element('field_cell', array(
+					'result' => $result,
+					'field' => 'id',
+					'data' => $model->fields['id']
+				)); ?>
 
 				<td colspan="3">
 					<?php
@@ -57,7 +54,7 @@ echo $this->element('logs/actions'); ?>
 						$title = $result[$model->alias]['item'];
 
 						if (!$title) {
-							$title = __('(No Title)');
+							$title = '#' . $foreignKey;
 						}
 
 						$params[] = $this->Html->link($title, array(
@@ -75,18 +72,12 @@ echo $this->element('logs/actions'); ?>
 				</td>
 
 				<?php foreach (array('comment', 'created') as $field) {
-					$data = $model->fields[$field]; ?>
-
-					<td class="col-<?php echo $field; ?> type-<?php echo $data['type']; ?>">
-						<?php echo $this->element('field', array(
-							'result' => $result,
-							'field' => $field,
-							'data' => $data,
-							'value' => $result[$model->alias][$field]
-						)); ?>
-					</td>
-
-				<?php } ?>
+					echo $this->element('field_cell', array(
+						'result' => $result,
+						'field' => $field,
+						'data' => $model->fields[$field]
+					));
+				} ?>
 			</tr>
 
 			<?php }

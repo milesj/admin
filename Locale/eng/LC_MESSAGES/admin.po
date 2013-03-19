@@ -1,5 +1,5 @@
 
-msgid "action_log.na"
+msgid "action_log.other"
 msgstr "%s did something"
 
 msgid "action_log.create"

@@ -13,7 +13,7 @@ class LogsController extends AdminAppController {
 	public function index() {
 		$this->paginate = array_merge(array(
 			'limit' => 25,
-			'order' => array($this->Model->alias . '.created' => 'DESC'),
+			'order' => array('ActionLog.created' => 'DESC'),
 			'contain' => array_keys($this->Model->belongsTo)
 		), $this->Model->admin['paginate']);
 

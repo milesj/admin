@@ -40,6 +40,41 @@ class AdminHelper extends AppHelper {
 	}
 
 	/**
+	 * Return a list of valid callbacks for the model + behaviors and logged in user.
+	 *
+	 * @param Model $model
+	 * @return array
+	 */
+	public function getBehaviorCallbacks(Model $model) {
+		$callbacks = array();
+		$behaviors = Configure::read('Admin.behaviorCallbacks');
+
+		foreach ($behaviors as $behavior => $methods) {
+			if (!$model->Behaviors->loaded($behavior)) {
+				continue;
+			}
+
+			foreach ($methods as $method => $options) {
+				if (is_string($options)) {
+					$options = array('title' => $options, 'access' => 'update');
+				} else {
+					$options = $options += array('access' => 'update');
+				}
+
+				if ($this->hasAccess($model->qualifiedName, $options['access'])) {
+					$callbacks[$method] = array(
+						'title' => __($options['title'], $model->singularName),
+						'behavior' => Inflector::underscore($behavior),
+						'method' => $method
+					);
+				}
+			}
+		}
+
+		return $callbacks;
+	}
+
+	/**
 	 * Generate a nested list of dependencies by looping and drilling down through all the model associations.
 	 *
 	 * @param Model $model
@@ -93,12 +128,39 @@ class AdminHelper extends AppHelper {
 		}
 
 		if (!$displayField) {
-			$displayField = $this->Html->tag('span', '(' . __('Missing Title') . ')', array(
+			$displayField = $this->Html->tag('span', '(' . __('No Title') . ')', array(
 				'class' => 'text-warning'
 			));
 		}
 
 		return $displayField;
+	}
+
+	/**
+	 * Return a list of valid callbacks for the model and logged in user.
+	 *
+	 * @param Model $model
+	 * @return array
+	 */
+	public function getModelCallbacks(Model $model) {
+		$callbacks = array();
+		$models = Configure::read('Admin.modelCallbacks');
+
+		if (isset($models[$model->qualifiedName])) {
+			foreach ($models[$model->qualifiedName] as $method => $options) {
+				if (is_string($options)) {
+					$options = array('title' => $options, 'access' => 'update');
+				} else {
+					$options = $options += array('access' => 'update');
+				}
+
+				if ($this->hasAccess($model->qualifiedName, $options['access'])) {
+					$callbacks[$method] = __($options['title'], $model->singularName);
+				}
+			}
+		}
+
+		return $callbacks;
 	}
 
 	/**
@@ -133,13 +195,24 @@ class AdminHelper extends AppHelper {
 	 * @return bool
 	 */
 	public function hasAccess($model, $action) {
-		if (strpos($model, '.') === false) {
-			$model = Configure::read('Admin.coreName') . '.' . $model;
+		if (!($model instanceof Model)) {
+			$model = $this->introspect($model);
 		}
 
 		$crud = $this->Session->read('Admin.crud');
+		$pass = (isset($crud[$model->qualifiedName][$action]) && $crud[$model->qualifiedName][$action]);
 
-		return (isset($crud[$model][$action]) && $crud[$model][$action]);
+		// Check editable
+		if ($action === 'update') {
+			return ($pass && $model->admin['editable']);
+		}
+
+		// Check deletable
+		if ($action === 'delete') {
+			return ($pass && $model->admin['deletable']);
+		}
+
+		return $pass;
 	}
 
 	/**

@@ -61,7 +61,7 @@ class RequestObject extends Aro {
 		'User' => array(
 			'className' => USER_MODEL,
 			'foreignKey' => 'foreign_key',
-			'conditions' => array('RequestObject.model' => USER_MODEL)
+			//'conditions' => array('RequestObject.model' => USER_MODEL)
 		)
 	);
 

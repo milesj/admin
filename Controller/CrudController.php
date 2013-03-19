@@ -210,12 +210,40 @@ class CrudController extends AdminAppController {
 	}
 
 	/**
-	 * Recover and reorder the models tree.
+	 * Trigger a callback method on the model.
+	 *
+	 * @param int $id
+	 * @param string $method
+	 * @throws NotFoundException
+	 */
+	public function process_model($id, $method) {
+		$model = $this->Model;
+		$record = $this->AdminToolbar->getRecordById($model, $id);
+
+		if (!$record) {
+			throw new NotFoundException();
+		}
+
+		if ($model->hasMethod($method)) {
+			$model->{$method}($id);
+
+			$this->AdminToolbar->logAction(ActionLog::PROCESS, $model, $id, __('Triggered %s.%s() process', array($model->alias, $method)));
+			$this->AdminToolbar->setFlashMessage(__('Processed %s.%s() for %s', array($model->alias, $method, '#' . $id)));
+
+		} else {
+			$this->AdminToolbar->setFlashMessage(__('%s does not allow this process', $model->singularName), 'error');
+		}
+
+		$this->redirect($this->referer());
+	}
+
+	/**
+	 * Trigger a callback method on the behavior.
 	 *
 	 * @param string $behavior
 	 * @param string $method
 	 */
-	public function process($behavior, $method) {
+	public function process_behavior($behavior, $method) {
 		$behavior = Inflector::camelize($behavior);
 		$model = $this->Model;
 
@@ -226,7 +254,7 @@ class CrudController extends AdminAppController {
 			$this->AdminToolbar->setFlashMessage(__('Processed %s.%s() for %s', array($behavior, $method, strtolower($model->pluralName))));
 
 		} else {
-			$this->AdminToolbar->setFlashMessage(__('%s do not allow for this process', $model->pluralName), 'error');
+			$this->AdminToolbar->setFlashMessage(__('%s does not allow this process', $model->singularName), 'error');
 		}
 
 		$this->redirect($this->referer());
@@ -257,12 +285,16 @@ class CrudController extends AdminAppController {
 		$action = $this->action;
 
 		// Allow non-crud actions
-		if (in_array($action, array('type_ahead', 'proxy', 'process'))) {
+		if (in_array($action, array('type_ahead', 'proxy'))) {
 			return true;
 
 		// Index counts as a read
 		} else if ($action === 'index') {
 			$action = 'read';
+
+		// Processing counts as update
+		} else if (in_array($action, array('process_behavior', 'process_model'))) {
+			$action = 'update';
 		}
 
 		if ($this->Acl->check(array('User' => $user), $class, $action)) {

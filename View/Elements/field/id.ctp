@@ -1,8 +1,4 @@
 <?php
-$url = array('action' => 'read', $value);
-
-if ($this->params['controller'] === 'crud') {
-	$url['model'] = $model->urlSlug;
-}
-
-echo $this->Html->link($value, $url, array('class' => 'click-target'));
+echo $this->Html->link($value,
+	array('controller' => 'crud', 'action' => 'read', $value, 'model' => $model->urlSlug),
+	array('class' => 'click-target'));

@@ -1,12 +1,13 @@
 
 <div id="filters" class="well well-small filters"<?php if (empty($this->request->params['named'])) { ?> style="display: none"<?php } ?>>
 	<?php
-	if ($this->params['controller'] === 'reports') {
-		$url = array('controller' => 'reports', 'action' => 'proxy');
-		$reset = array('controller' => 'reports', 'action' => 'index');
-	} else {
-		$url = array('controller' => 'crud', 'action' => 'proxy', 'model' => $model->urlSlug);
-		$reset = array('controller' => 'crud', 'action' => 'index', 'model' => $model->urlSlug);
+	$controller = $this->request->controller;
+	$url = array('controller' => $controller, 'action' => 'proxy');
+	$reset = array('controller' => $controller, 'action' => 'index');
+
+	if ($controller === 'crud') {
+		$url['model'] = $model->urlSlug;
+		$reset['model'] = $model->urlSlug;
 	}
 
 	echo $this->Form->create($model->alias, array(

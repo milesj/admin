@@ -9,7 +9,7 @@ App::uses('AdminAppModel', 'Admin.Model');
 
 class ActionLog extends AdminAppModel {
 
-	const NA = 0;
+	const OTHER = 0;
 
 	// CRUD
 	const CREATE = 10;
@@ -23,6 +23,13 @@ class ActionLog extends AdminAppModel {
 	// ACL
 	const ACL_SYNC = 20;
 	const ACL_GRANT = 21;
+
+	/**
+	 * Display field.
+	 *
+	 * @var string
+	 */
+	public $displayField = 'item';
 
 	/**
 	 * Belongs to.
@@ -42,7 +49,7 @@ class ActionLog extends AdminAppModel {
 	 */
 	public $enum = array(
 		'action' => array(
-			self::NA => 'NA',
+			self::OTHER => 'OTHER',
 			self::CREATE => 'CREATE',
 			self::READ => 'READ',
 			self::UPDATE => 'UPDATE',
@@ -90,6 +97,24 @@ class ActionLog extends AdminAppModel {
 		$this->create();
 
 		return $this->save($query, false);
+	}
+
+	/**
+	 * Remove core plugin from models.
+	 *
+	 * @param array $options
+	 * @return bool
+	 */
+	public function beforeSave($options = array()) {
+		if (isset($this->data[$this->alias]['model'])) {
+			list($plugin, $model) = Admin::parseName($this->data[$this->alias]['model']);
+
+			if ($plugin === Configure::read('Admin.coreName')) {
+				$this->data[$this->alias]['model'] = $model;
+			}
+		}
+
+		return true;
 	}
 
 }
