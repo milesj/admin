@@ -50,8 +50,8 @@ class AdminController extends AdminAppController {
 	 */
 	public function config() {
 		$config = Configure::read();
-		ksort($config);
 		unset($config['debug']);
+		ksort($config);
 
 		$this->set('configuration', $config);
 	}

@@ -27,7 +27,7 @@ class CrudController extends AdminAppController {
 		// Batch delete
 		if ($this->request->is('post')) {
 			if (!$this->Model->admin['batchDelete']) {
-				throw new ForbiddenException();
+				throw new ForbiddenException(__('Delete Access Protected'));
 
 			} else if (!$this->Acl->check(array(USER_MODEL => $this->Auth->user()), $this->Model->qualifiedName, 'delete')) {
 				throw new UnauthorizedException(__('Insufficient Access Permissions'));
@@ -50,7 +50,6 @@ class CrudController extends AdminAppController {
 		}
 
 		$this->set('results', $this->paginate($this->Model));
-		$this->render('Crud/index');
 	}
 
 	/**
@@ -76,7 +75,7 @@ class CrudController extends AdminAppController {
 			}
 		}
 
-		$this->render('Crud/form');
+		$this->render('form');
 	}
 
 	/**
@@ -88,20 +87,16 @@ class CrudController extends AdminAppController {
 	public function read($id) {
 		$this->Model->id = $id;
 
-		$result = $this->Model->find('first', array(
-			'conditions' => array($this->Model->alias . '.' . $this->Model->primaryKey => $id),
-			'contain' => $this->AdminToolbar->getDeepRelations($this->Model)
-		));
+		$result = $this->AdminToolbar->getRecordById($this->Model, $id);
 
 		if (!$result) {
-			throw new NotFoundException();
+			throw new NotFoundException(__('%s Not Found', $this->Model->singularName));
 		}
 
 		$this->Model->set($result);
 		$this->AdminToolbar->logAction(ActionLog::READ, $this->Model, $id);
 
 		$this->set('result', $result);
-		$this->render('Crud/read');
 	}
 
 	/**
@@ -113,18 +108,15 @@ class CrudController extends AdminAppController {
 	 */
 	public function update($id) {
 		if (!$this->Model->admin['editable']) {
-			throw new ForbiddenException();
+			throw new ForbiddenException(__('Update Access Protected'));
 		}
 
 		$this->Model->id = $id;
 
-		$result = $this->Model->find('first', array(
-			'conditions' => array($this->Model->alias . '.' . $this->Model->primaryKey => $id),
-			'contain' => $this->AdminToolbar->getDeepRelations($this->Model, false)
-		));
+		$result = $this->AdminToolbar->getRecordById($this->Model, $id, false);
 
 		if (!$result) {
-			throw new NotFoundException();
+			throw new NotFoundException(__('%s Not Found', $this->Model->singularName));
 		}
 
 		$this->AdminToolbar->setBelongsToData($this->Model);
@@ -148,7 +140,7 @@ class CrudController extends AdminAppController {
 		}
 
 		$this->set('result', $result);
-		$this->render('Crud/form');
+		$this->render('form');
 	}
 
 	/**
@@ -160,15 +152,15 @@ class CrudController extends AdminAppController {
 	 */
 	public function delete($id) {
 		if (!$this->Model->admin['deletable']) {
-			throw new ForbiddenException();
+			throw new ForbiddenException(__('Delete Access Protected'));
 		}
 
 		$this->Model->id = $id;
 
-		$result = $this->Model->read();
+		$result = $this->AdminToolbar->getRecordById($this->Model, $id);
 
 		if (!$result) {
-			throw new NotFoundException();
+			throw new NotFoundException(__('%s Not Found', $this->Model->singularName));
 		}
 
 		if ($this->request->is('post')) {
@@ -184,7 +176,6 @@ class CrudController extends AdminAppController {
 		}
 
 		$this->set('result', $result);
-		$this->render('Crud/delete');
 	}
 
 	/**
@@ -197,7 +188,7 @@ class CrudController extends AdminAppController {
 		$this->layout = 'ajax';
 
 		if (empty($this->request->query['query'])) {
-			throw new BadRequestException();
+			throw new BadRequestException(__('Missing Query'));
 		}
 
 		$results = $this->Model->find('list', array(
@@ -221,14 +212,14 @@ class CrudController extends AdminAppController {
 		$record = $this->AdminToolbar->getRecordById($model, $id);
 
 		if (!$record) {
-			throw new NotFoundException();
+			throw new NotFoundException(__('%s Not Found', $this->Model->singularName));
 		}
 
 		if ($model->hasMethod($method)) {
 			$model->{$method}($id);
 
 			$this->AdminToolbar->logAction(ActionLog::PROCESS, $model, $id, __('Triggered %s.%s() process', array($model->alias, $method)));
-			$this->AdminToolbar->setFlashMessage(__('Processed %s.%s() for %s', array($model->alias, $method, '#' . $id)));
+			$this->AdminToolbar->setFlashMessage(__('Processed %s.%s() for ID %s', array($model->alias, $method, $id)));
 
 		} else {
 			$this->AdminToolbar->setFlashMessage(__('%s does not allow this process', $model->singularName), 'error');
@@ -285,19 +276,15 @@ class CrudController extends AdminAppController {
 		$action = $this->action;
 
 		// Allow non-crud actions
-		if (in_array($action, array('type_ahead', 'proxy'))) {
+		if (in_array($action, array('type_ahead', 'proxy', 'process_behavior', 'process_model'))) {
 			return true;
 
 		// Index counts as a read
 		} else if ($action === 'index') {
 			$action = 'read';
-
-		// Processing counts as update
-		} else if (in_array($action, array('process_behavior', 'process_model'))) {
-			$action = 'update';
 		}
 
-		if ($this->Acl->check(array('User' => $user), $class, $action)) {
+		if ($this->Acl->check(array(USER_MODEL => $user), $class, $action)) {
 			return true;
 		}
 
@@ -312,14 +299,7 @@ class CrudController extends AdminAppController {
 
 		// Introspect model
 		if (isset($this->params['model'])) {
-			list($plugin, $model, $class) = Admin::parseName($this->params['model']);
-
-			// Don't allow certain models
-			if (in_array($class, Configure::read('Admin.ignoreModels'))) {
-				throw new ForbiddenException(__('Restricted Model'));
-			}
-
-			$this->Model = Admin::introspectModel($class);
+			$this->Model = Admin::introspectModel($this->params['model']);
 		}
 
 		// Parse request and set null fields to null

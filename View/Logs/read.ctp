@@ -68,7 +68,7 @@ echo $this->element('logs/actions'); ?>
 						<a href="javascript:;" onclick="$('#stack-<?php echo $i; ?>').toggle();"><?php echo $log['message']; ?></a>
 
 						<div id="stack-<?php echo $i; ?>" class="muted" style="display: none;">
-							<?php echo nl2br($log['stack']); ?>
+							<?php echo implode('<br>', $log['stack']); ?>
 						</div>
 					<?php } ?>
 				</td>

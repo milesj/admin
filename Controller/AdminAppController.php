@@ -28,10 +28,10 @@ class AdminAppController extends Controller {
 	 */
 	public $components = array(
 		'Session', 'Cookie', 'Acl', 'RequestHandler',
+		'Utility.AutoLogin', 'Admin.AdminToolbar',
 		'Auth' => array(
 			'authorize' => array('Controller')
-		),
-		'Utility.AutoLogin', 'Admin.AdminToolbar'
+		)
 	);
 
 	/**

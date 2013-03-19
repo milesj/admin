@@ -13,7 +13,6 @@ class LogsController extends AdminAppController {
 	public function index() {
 		$this->paginate = array_merge(array(
 			'limit' => 25,
-			'order' => array('ActionLog.created' => 'DESC'),
 			'contain' => array_keys($this->Model->belongsTo)
 		), $this->Model->admin['paginate']);
 
@@ -32,10 +31,10 @@ class LogsController extends AdminAppController {
 		$logs = array();
 		$exceptions = array();
 		$message = null;
-		$stack = null;
+		$stack = array();
 
 		if (!in_array($type, CakeLog::configured())) {
-			throw new NotFoundException();
+			throw new NotFoundException(__('%s Log Not Found', Inflector::humanize($type)));
 		}
 
 		if (file_exists($path)) {
@@ -47,12 +46,12 @@ class LogsController extends AdminAppController {
 				foreach ($file as $line) {
 					// Stack trace
 					if ($line[0] === '#') {
-						$stack .= $line . PHP_EOL;
+						$stack[] = $line . PHP_EOL;
 
 					// Error message
 					} else {
 						if ($stack) {
-							$logs[$message]['stack'] = trim($stack);
+							$logs[$message]['stack'] = $stack;
 							$stack = null;
 						}
 

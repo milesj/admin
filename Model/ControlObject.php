@@ -61,7 +61,7 @@ class ControlObject extends Aco {
 		'User' => array(
 			'className' => USER_MODEL,
 			'foreignKey' => 'foreign_key',
-			'conditions' => array('ControlObject.model' => USER_MODEL)
+			//'conditions' => array('ControlObject.model' => USER_MODEL)
 		)
 	);
 
@@ -146,6 +146,20 @@ class ControlObject extends Aco {
 			'order' => array('ControlObject.alias' => 'ASC'),
 			'cache' => __METHOD__,
 			'cacheExpires' => '+1 hour'
+		));
+	}
+
+	/**
+	 * Return a record based on ID.
+	 *
+	 * @param int $id
+	 * @return array
+	 */
+	public function getById($id) {
+		return $this->find('first', array(
+			'conditions' => array('ControlObject.id' => $id),
+			'contain' => array('Parent', 'User'),
+			'cache' => array(__METHOD__, $id)
 		));
 	}
 

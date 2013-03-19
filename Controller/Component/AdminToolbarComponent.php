@@ -60,10 +60,16 @@ class AdminToolbarComponent extends Component {
 	public function getRecordById(Model $model, $id, $deepRelation = true) {
 		$model->id = $id;
 
-		return $model->find('first', array(
+		$data = $model->find('first', array(
 			'conditions' => array($model->alias . '.' . $model->primaryKey => $id),
 			'contain' => $this->getDeepRelations($model, $deepRelation)
 		));
+
+		if ($data) {
+			$model->set($data);
+		}
+
+		return $data;
 	}
 
 	/**
@@ -136,6 +142,56 @@ class AdminToolbarComponent extends Component {
 		}
 
 		return $pass;
+	}
+
+	/**
+	 * Log a users action.
+	 *
+	 * @param int $action
+	 * @param Model $model
+	 * @param int $id
+	 * @param string $comment
+	 * @param string $item
+	 * @return bool
+	 * @throws InvalidArgumentException
+	 */
+	public function logAction($action, Model $model = null, $id = null, $comment = null, $item = null) {
+		if (!Configure::read('Admin.logActions')) {
+			return false;
+		}
+
+		$log = ClassRegistry::init('Admin.ActionLog');
+		$query = array(
+			'user_id' => $this->Auth->user('id'),
+			'action' => $action
+		);
+
+		// Validate action
+		if (!$log->enum('action', $action)) {
+			throw new InvalidArgumentException(__('Invalid log action type'));
+		}
+
+		if ($model) {
+			$query['model'] = ($model->plugin ? $model->plugin . '.' : '') . $model->name;
+
+			// Get comment from request
+			if (!$comment && isset($this->request->data[$model->alias]['log_comment'])) {
+				$comment = $this->request->data[$model->alias]['log_comment'];
+			}
+
+			// Get display field from data
+			if (!$item) {
+				if (isset($model->data[$model->alias][$model->displayField])) {
+					$item = $model->data[$model->alias][$model->displayField];
+				}
+			}
+		}
+
+		$query['foreign_key'] = $id;
+		$query['comment'] = $comment;
+		$query['item'] = $item;
+
+		return $log->logAction($query);
 	}
 
 	/**
@@ -217,6 +273,53 @@ class AdminToolbarComponent extends Component {
 	}
 
 	/**
+	 * Report and flag an item (model and ID).
+	 *
+	 * @param int $type
+	 * @param Model $model
+	 * @param int $id
+	 * @param string $reason
+	 * @param int $user_id
+	 * @return bool
+	 * @throws NotFoundException
+	 * @throws InvalidArgumentException
+	 */
+	public function reportItem($type, Model $model, $id, $reason = null, $user_id = null) {
+		$report = ClassRegistry::init('Admin.ItemReport');
+
+		// Validate type
+		if (!$report->enum('type', $type)) {
+			throw new InvalidArgumentException(__('Invalid item report type'));
+		}
+
+		// Get model ID if null
+		if (!$id) {
+			$id = $model->id;
+		}
+
+		// Get logged in user ID
+		if (!$user_id) {
+			$user_id = $this->Auth->user('id');
+		}
+
+		// Validate record
+		$result = $this->getRecordById($model, $id);
+
+		if (!$result) {
+			throw new NotFoundException();
+		}
+
+		return $report->reportItem(array(
+			'reporter_id' => $user_id,
+			'type' => $type,
+			'model' => ($model->plugin ? $model->plugin . '.' : '') . $model->name,
+			'foreign_key' => $id,
+			'item' => $result[$model->alias][$model->displayField],
+			'reason' => $reason
+		));
+	}
+
+	/**
 	 * Set belongsTo data for select inputs. If there are too many records, switch to type ahead.
 	 *
 	 * @param Model $model
@@ -277,68 +380,6 @@ class AdminToolbarComponent extends Component {
 	 */
 	public function setFlashMessage($message, $type = 'success') {
 		$this->Session->setFlash($message, 'flash', array('class' => $type));
-	}
-
-	/**
-	 * Log a users action.
-	 *
-	 * @param int $action
-	 * @param Model $model
-	 * @param int $id
-	 * @param string $comment
-	 * @param string $item
-	 * @return bool
-	 * @throws InvalidArgumentException
-	 */
-	public function logAction($action, Model $model = null, $id = null, $comment = null, $item = null) {
-		if (!Configure::read('Admin.logActions')) {
-			return false;
-		}
-
-		$log = ClassRegistry::init('Admin.ActionLog');
-		$query = array(
-			'user_id' => $this->Auth->user('id'),
-			'action' => $action
-		);
-
-		// Validate action
-		if (!$log->enum('action', $action)) {
-			throw new InvalidArgumentException(__('Invalid log action type'));
-		}
-
-		if ($model) {
-			// Get model name
-			if (isset($model->qualifiedName)) {
-				$query['model'] = $model->qualifiedName;
-			} else {
-				$query['model'] = ($model->plugin ? $model->plugin . '.' : '') . $model->name;
-			}
-
-			// Get comment from request
-			if (!$comment && isset($this->request->data[$model->alias]['log_comment'])) {
-				$comment = $this->request->data[$model->alias]['log_comment'];
-			}
-
-			// Get display field from data
-			if (!$item) {
-				if (isset($model->data[$model->alias][$model->displayField])) {
-					$item = $model->data[$model->alias][$model->displayField];
-
-					if ($model->primaryKey === $model->displayField) {
-						$item = '#' . $item;
-					}
-
-				} else if (isset($model->data[$model->alias][$model->primaryKey])) {
-					$item = '#' . $model->data[$model->alias][$model->primaryKey];
-				}
-			}
-		}
-
-		$query['foreign_key'] = $id;
-		$query['comment'] = $comment;
-		$query['item'] = $item;
-
-		return $log->logAction($query);
 	}
 
 }

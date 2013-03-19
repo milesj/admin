@@ -97,6 +97,50 @@ class ItemReport extends AdminAppModel {
 	}
 
 	/**
+	 * Mark a report as resolved or invalid.
+	 *
+	 * @param int $id
+	 * @param int $status
+	 * @param int $user_id
+	 * @param string $comment
+	 * @return bool
+	 */
+	public function markAs($id, $status, $user_id, $comment = null) {
+		$this->id = $id;
+
+		return $this->save(array(
+			'status' => $status,
+			'resolver_id' => $user_id,
+			'comment' => $comment
+		));
+	}
+
+	/**
+	 * Log a unique report only once every 7 days.
+	 *
+	 * @param array $query
+	 * @return bool
+	 */
+	public function reportItem($query) {
+		$conditions = $query;
+		$conditions['created >='] = date('Y-m-d H:i:s', strtotime('-7 days'));
+
+		unset($conditions['item'], $conditions['reason'], $conditions['comment']);
+
+		$count = $this->find('count', array(
+			'conditions' => $conditions
+		));
+
+		if ($count) {
+			return true;
+		}
+
+		$this->create();
+
+		return $this->save($query, false);
+	}
+
+	/**
 	 * Remove core plugin from models.
 	 *
 	 * @param array $options
