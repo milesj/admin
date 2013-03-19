@@ -1,7 +1,7 @@
 <?php
 $this->Breadcrumb->add(__('Models'), array('controller' => 'admin', 'action' => 'models'));
 
-echo $this->element('admin_actions'); ?>
+echo $this->element('admin/actions'); ?>
 
 <h2><?php echo __('Models'); ?></h2>
 

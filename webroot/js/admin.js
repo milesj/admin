@@ -13,10 +13,10 @@ var Admin = {
 				return;
 			}
 
-			var id = $(this).find('.col-id');
+			var id = $(this).find('.click-target');
 
 			if (id.length) {
-				location.href = id.find('a:first').attr('href');
+				location.href = id.attr('href');
 			}
 		});
 

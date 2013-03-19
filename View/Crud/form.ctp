@@ -8,7 +8,7 @@ if ($this->action === 'create') {
 
 $this->Admin->setBreadcrumbs($model, $result, $this->action);
 
-echo $this->element('crud_actions'); ?>
+echo $this->element('crud/actions'); ?>
 
 <h2><?php echo $this->Admin->outputIconTitle($model, $pageTitle); ?></h2>
 

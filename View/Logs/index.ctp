@@ -1,0 +1,105 @@
+<?php
+$this->Breadcrumb->add(__('Logs'), array('controller' => 'logs', 'action' => 'index'));
+
+echo $this->element('logs/actions'); ?>
+
+<h2><?php echo __('Action Logs'); ?></h2>
+
+<?php echo $this->element('pagination'); ?>
+
+<table id="table" class="table table-striped table-bordered table-hover sortable clickable">
+	<thead>
+		<tr>
+			<?php foreach (array('id', 'user_id', 'action', 'item', 'comment', 'created') as $field) { ?>
+				<th class="col-<?php echo $field; ?>">
+					<?php echo $this->Paginator->sort($field, $model->fields[$field]['title']); ?>
+				</th>
+			<?php } ?>
+		</tr>
+	</thead>
+	<tbody>
+		<?php if ($results) {
+			foreach ($results as $result) {
+				$id = $result[$model->alias][$model->primaryKey];
+				$foreignModel = $this->Admin->introspect($result[$model->alias]['model']);
+				$userModel = $this->Admin->introspect(USER_MODEL); ?>
+
+			<tr>
+				<td class="col-id type-integer">
+					<?php echo $this->element('field', array(
+						'result' => $result,
+						'field' => 'id',
+						'data' => $model->fields['id'],
+						'value' => $id
+					)); ?>
+				</td>
+
+				<td colspan="3">
+					<?php
+					$message = 'action_log.' . strtolower($result[$model->alias]['action_enum']);
+					$params = array();
+
+					// Grab the user
+					$params[] = $this->Html->link($result['User'][$userModel->displayField], array(
+						'controller' => 'crud',
+						'action' => 'read',
+						$result[$model->alias]['user_id'],
+						'model' => $userModel->urlSlug
+					));
+
+					// Action specific
+					if (in_array($result[$model->alias]['action'], array(ActionLog::CREATE, ActionLog::READ, ActionLog::UPDATE, ActionLog::DELETE))) {
+						$params[] = strtolower($foreignModel->singularName);
+					}
+
+					// Grab the item
+					if ($foreignKey = $result[$model->alias]['foreign_key']) {
+						$title = $result[$model->alias]['item'];
+
+						if (!$title) {
+							$title = __('(No Title)');
+						}
+
+						$params[] = $this->Html->link($title, array(
+							'controller' => 'crud',
+							'action' => 'read',
+							$foreignKey,
+							'model' => $foreignModel->urlSlug
+						), array('class' => 'click-target'));
+
+					} else if ($foreignModel) {
+						$params[] = strtolower($foreignModel->pluralName);
+					}
+
+					echo __d('admin', $message, $params); ?>
+				</td>
+
+				<?php foreach (array('comment', 'created') as $field) {
+					$data = $model->fields[$field]; ?>
+
+					<td class="col-<?php echo $field; ?> type-<?php echo $data['type']; ?>">
+						<?php echo $this->element('field', array(
+							'result' => $result,
+							'field' => $field,
+							'data' => $data,
+							'value' => $result[$model->alias][$field]
+						)); ?>
+					</td>
+
+				<?php } ?>
+			</tr>
+
+			<?php }
+		} else { ?>
+
+			<tr>
+				<td colspan="5" class="no-results">
+					<?php echo __('No results to display'); ?>
+				</td>
+			</tr>
+
+		<?php } ?>
+	</tbody>
+</table>
+
+<?php echo $this->element('pagination'); ?>

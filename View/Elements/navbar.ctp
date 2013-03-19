@@ -31,6 +31,14 @@ if ($modelParam) {
 						)); ?>
 					</li>
 
+					<li<?php echo ($controller === 'logs') ? ' class="active"' : ''; ?>>
+						<?php echo $this->Html->link(__('Logs'), array(
+							'plugin' => 'admin',
+							'controller' => 'logs',
+							'action' => 'index'
+						)); ?>
+					</li>
+
 					<li<?php echo ($controller === 'reports') ? ' class="active"' : ''; ?>>
 						<?php
 						$title = __('Reports');
@@ -45,6 +53,7 @@ if ($modelParam) {
 							'action' => 'index'
 						), array('escape' => false)); ?>
 					</li>
+
 					<li class="divider-vertical"></li>
 
 					<?php foreach ($this->Admin->getNavigation() as $plugin => $groups) {

@@ -22,7 +22,7 @@ if ($behaviors = Configure::read('Admin.behaviorProcesses')) {
 	<?php
 	if ($this->action === 'index') {
 		echo $this->Html->link('<span class="icon-filter icon-white"></span> ' . __('Filter'),
-			'javascript:;', array('class' => 'btn btn-info btn-large', 'escape' => false, 'onclick' => "$('#filters').toggle()"));
+			'javascript:;', array('class' => 'btn btn-large', 'escape' => false, 'onclick' => "$('#filters').toggle()"));
 
 		if ($options) {
 			ksort($options); ?>

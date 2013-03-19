@@ -19,7 +19,7 @@
 		$class = 'btn btn-large';
 
 		if ($this->action === $action) {
-			$class .= ' btn-inverse';
+			$class .= ' active';
 		}
 
 		echo $this->Html->link('<span class="' . $link['icon'] . '"></span> ' . $link['title'],

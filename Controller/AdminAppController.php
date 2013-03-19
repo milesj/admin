@@ -97,6 +97,9 @@ class AdminAppController extends Controller {
 	public function beforeFilter() {
 		parent::beforeFilter();
 
+		// @todo
+		Configure::write('Config.language', 'eng');
+
 		$this->config = Configure::read('Admin');
 	}
 

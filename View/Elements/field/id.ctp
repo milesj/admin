@@ -5,4 +5,4 @@ if ($this->params['controller'] === 'crud') {
 	$url['model'] = $model->urlSlug;
 }
 
-echo $this->Html->link($value, $url);
+echo $this->Html->link($value, $url, array('class' => 'click-target'));

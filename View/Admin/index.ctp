@@ -1,4 +1,4 @@
-<?php echo $this->element('admin_actions'); ?>
+<?php echo $this->element('admin/actions'); ?>
 
 <h2><?php echo __('Plugins'); ?></h2>
 

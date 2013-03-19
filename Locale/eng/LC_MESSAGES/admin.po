@@ -1,0 +1,30 @@
+
+msgid "action_log.na"
+msgstr "%s did something"
+
+msgid "action_log.create"
+msgstr "%s created %s %s"
+
+msgid "action_log.read"
+msgstr "%s viewed %s %s"
+
+msgid "action_log.update"
+msgstr "%s updated %s %s"
+
+msgid "action_log.delete"
+msgstr "%s deleted %s %s"
+
+msgid "action_log.batch_delete"
+msgstr "%s deleted multiple %s"
+
+msgid "action_log.process"
+msgstr "%s processed %s"
+
+msgid "action_log.batch_process"
+msgstr "%s processed multiple %s"
+
+msgid "action_log.acl_sync"
+msgstr "%s synced ACL trees"
+
+msgid "action_log.acl_grant"
+msgstr "%s granted ACL access"

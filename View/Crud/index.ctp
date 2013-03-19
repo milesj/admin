@@ -4,7 +4,7 @@ $this->Paginator->options(array(
 	'url' => array_merge($this->params['named'], array('model' => $model->urlSlug))
 ));
 
-echo $this->element('crud_actions'); ?>
+echo $this->element('crud/actions'); ?>
 
 <h2><?php echo $this->Admin->outputIconTitle($model, $model->pluralName); ?></h2>
 
@@ -64,19 +64,19 @@ echo $this->element('pagination'); ?>
 									if ($this->Admin->hasAccess($model->qualifiedName, 'read')) {
 										echo $this->Html->link('<span class="icon-search"></span>',
 											array('action' => 'read', $id, 'model' => $model->urlSlug),
-											array('class' => 'btn btn-mini btn-inverse', 'escape' => false, 'title' => __('View')));
+											array('class' => 'btn btn-mini', 'escape' => false, 'title' => __('View')));
 									}
 
 									if ($this->Admin->hasAccess($model->qualifiedName, 'update') && $model->admin['editable']) {
 										echo $this->Html->link('<span class="icon-edit"></span>',
 											array('action' => 'update', $id, 'model' => $model->urlSlug),
-											array('class' => 'btn btn-mini btn-inverse', 'escape' => false, 'title' => __('Edit')));
+											array('class' => 'btn btn-mini', 'escape' => false, 'title' => __('Edit')));
 									}
 
 									if ($this->Admin->hasAccess($model->qualifiedName, 'delete') && $model->admin['deletable']) {
 										echo $this->Html->link('<span class="icon-remove"></span>',
 											array('action' => 'delete', $id, 'model' => $model->urlSlug),
-											array('class' => 'btn btn-mini btn-inverse', 'escape' => false, 'title' => __('Delete')));
+											array('class' => 'btn btn-mini', 'escape' => false, 'title' => __('Delete')));
 									} ?>
 								</div>
 							</td>

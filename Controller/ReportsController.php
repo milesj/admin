@@ -1,7 +1,15 @@
 <?php
+/**
+ * @copyright	Copyright 2006-2013, Miles Johnson - http://milesj.me
+ * @license		http://opensource.org/licenses/mit-license.php - Licensed under the MIT License
+ * @link		http://milesj.me/code/cakephp/admin
+ */
 
 class ReportsController extends AdminAppController {
 
+	/**
+	 * Paginate the reports.
+	 */
 	public function index() {
 		$this->paginate = array_merge(array(
 			'limit' => 25,

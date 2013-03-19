@@ -1,7 +1,7 @@
 <?php
 $this->Admin->setBreadcrumbs($model, $result, $this->action);
 
-echo $this->element('crud_actions'); ?>
+echo $this->element('crud/actions'); ?>
 
 <h2><?php echo $this->Admin->outputIconTitle($model, $this->Admin->getDisplayField($model, $result)); ?></h2>
 
@@ -57,7 +57,7 @@ foreach ($properties as $property => $title) {
 
 		<?php // Loop over the model relations
 		foreach ($associations as $alias => $assoc) {
-			echo $this->element('assoc/' . Inflector::underscore($property), array(
+			echo $this->element('crud/' . Inflector::underscore($property), array(
 				'alias' => $alias,
 				'assoc' => $assoc,
 				'results' => $result[$alias]

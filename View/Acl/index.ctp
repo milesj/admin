@@ -1,16 +1,7 @@
 <?php
-$this->Breadcrumb->add(__('ACL'), array('controller' => 'acl', 'action' => 'index')); ?>
+$this->Breadcrumb->add(__('ACL'), array('controller' => 'acl', 'action' => 'index'));
 
-<div class="action-buttons">
-	<?php
-	echo $this->Html->link('<span class="icon-pencil icon-white"></span> ' . __('Add Requester'),
-		array('controller' => 'crud', 'action' => 'create', 'model' => 'admin.request_object'),
-		array('class' => 'btn btn-primary btn-large', 'escape' => false));
-
-	echo $this->Html->link('<span class="icon-pencil icon-white"></span> ' . __('Add Controller'),
-		array('controller' => 'crud', 'action' => 'create', 'model' => 'admin.control_object'),
-		array('class' => 'btn btn-primary btn-large', 'escape' => false)); ?>
-</div>
+echo $this->element('acl/actions'); ?>
 
 <h2><?php echo __('Access Control Lists'); ?></h2>
 

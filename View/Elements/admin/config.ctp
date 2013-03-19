@@ -41,15 +41,21 @@ $flatten = function($array) {
 						<span class="text-success"><?php echo h($value); ?></span>
 
 					<?php } else if (is_array($value)) {
+						// List of values
 						if (Hash::numeric(array_keys($value))) { ?>
 
 							<span class="text-info"><?php echo implode(', ', $value); ?></span>
 
-						<?php } else if ($depth > 1) { ?>
+						<?php // Hash map
+						} else if ($depth > 0) {
+							echo $this->element('admin/config', array(
+								'data' => $value,
+								'parent' => $parent . $key . '.',
+								'depth' => ($depth + 1)
+							));
 
-							<span class="text-info"><?php echo $flatten($value); ?></span>
-
-						<?php } else {
+						// Display table in modal
+						} else {
 							$id = rand(); ?>
 
 							<a href="#modal-<?php echo $id; ?>" data-toggle="modal">
@@ -64,11 +70,11 @@ $flatten = function($array) {
 								</div>
 
 								<div class="modal-body">
-									<?php echo $this->element('autobox', array(
+									<?php echo $this->element('admin/config', array(
 										'data' => $value,
-										'parent' => $parent . '.',
-										'depth' => 2
-									)) ?>
+										'parent' => $parent . $key . '.',
+										'depth' => ($depth + 1)
+									)); ?>
 								</div>
 							</div>
 
