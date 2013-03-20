@@ -1,13 +1,11 @@
 <div class="action-buttons">
 	<?php
-	$canUpdate = ($this->Admin->hasAccess($model->qualifiedName, 'update') && $model->admin['editable']);
-
 	if ($this->action === 'index') {
 		echo $this->element('button/filter');
 		echo $this->element('button/process_behavior');
 	}
 
-	if ($this->action === 'read' && $canUpdate) {
+	if ($this->action === 'read') {
 		echo $this->element('button/process_model');
 	}
 
@@ -17,7 +15,7 @@
 			array('class' => 'btn btn-primary btn-large', 'escape' => false));
 	}
 
-	if ($this->action === 'read' && $canUpdate) {
+	if ($this->action === 'read' && $this->Admin->hasAccess($model->qualifiedName, 'update') && $model->admin['editable']) {
 		echo $this->Html->link('<span class="icon-edit icon-white"></span> ' . __('Edit %s', $model->singularName),
 			array('action' => 'update', $result[$model->alias][$model->primaryKey], 'model' => $model->urlSlug),
 			array('class' => 'btn btn-success btn-large', 'escape' => false));

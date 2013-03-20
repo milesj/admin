@@ -8,7 +8,7 @@ CREATE TABLE `{prefix}item_reports` (
 	`status` smallint(6) NOT NULL DEFAULT '0',
 	`type` smallint(6) NOT NULL DEFAULT '0',
 	`model` varchar(35) NOT NULL,
-	`foreign_key` varchar(35) NOT NULL,
+	`foreign_key` varchar(36) NOT NULL,
 	`item` varchar(255) DEFAULT NULL,
 	`reason` text,
 	`comment` text,

@@ -6,7 +6,7 @@ CREATE TABLE `{prefix}action_logs` (
 	`user_id` int(11) DEFAULT NULL,
 	`action` smallint(6) NOT NULL DEFAULT '0',
 	`model` varchar(35) NOT NULL,
-	`foreign_key` varchar(35) NOT NULL,
+	`foreign_key` varchar(36) NOT NULL,
 	`item` varchar(255) DEFAULT NULL,
 	`comment` varchar(255) DEFAULT NULL,
 	`created` datetime DEFAULT NULL,

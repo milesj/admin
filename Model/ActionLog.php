@@ -83,8 +83,10 @@ class ActionLog extends AdminAppModel {
 	 * @return bool
 	 */
 	public function logAction($query) {
+		$interval = Configure::read('Admin.logActions.interval') ?: '-6 hours';
+
 		$conditions = $query;
-		$conditions['created >='] = date('Y-m-d H:i:s', strtotime('-6 hours'));
+		$conditions['created >='] = date('Y-m-d H:i:s', strtotime($interval));
 
 		$count = $this->find('count', array(
 			'conditions' => $conditions

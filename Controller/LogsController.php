@@ -56,7 +56,10 @@ class LogsController extends AdminAppController {
 						}
 
 						// Parse out substrings
-						preg_match('/^([0-9\-:\s]+)\s([a-z]+:)\s(?:\[([a-z]+)\])?\s?(.*?)$/i', $line, $matches);
+						if (!preg_match('/^([0-9\-:\s]+)\s([a-z]+:)\s(?:\[([a-z]+)\])?\s?(.*?)$/i', $line, $matches)) {
+							$stack = array();
+							continue;
+						}
 
 						$date = $matches[1];
 						$exception = $matches[3];
