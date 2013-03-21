@@ -2,15 +2,15 @@
 	<?php
 	$links = array(
 		'index' => array(
-			'title' => __('Plugins'),
+			'title' => __d('admin', 'Plugins'),
 			'icon' => 'icon-paste'
 		),
 		'models' => array(
-			'title' => __('Models'),
+			'title' => __d('admin', 'Models'),
 			'icon' => 'icon-file'
 		),
 		'config' => array(
-			'title' => __('Configuration'),
+			'title' => __d('admin', 'Configuration'),
 			'icon' => 'icon-cog'
 		)
 	);

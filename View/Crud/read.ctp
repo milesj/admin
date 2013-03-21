@@ -34,7 +34,7 @@ foreach ($properties as $property => $title) {
 	if ($associations) { ?>
 
 	<div class="row-fluid">
-		<h3 class="text-info"><?php echo __($title); ?></h3>
+		<h3 class="text-info"><?php echo __d('admin', $title); ?></h3>
 
 		<?php // Loop over the model relations
 		foreach ($associations as $alias => $assoc) {

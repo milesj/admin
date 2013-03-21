@@ -33,14 +33,14 @@ class AclController extends AdminAppController {
 		$aco_id = isset($this->request->params['named']['aco_id']) ? $this->request->params['named']['aco_id'] : null;
 
 		if (!$aro_id || !$aco_id) {
-			throw new BadRequestException(__('Invalid ARO/ACO IDs'));
+			throw new BadRequestException(__d('admin', 'Invalid ARO/ACO IDs'));
 		}
 
 		$aro = $this->Aro->getById($aro_id);
 		$aco = $this->Aco->getById($aco_id);
 
 		if (!$aro || !$aco) {
-			throw new NotFoundException(__('Invalid ARO/ACO Records'));
+			throw new NotFoundException(__d('admin', 'Invalid ARO/ACO Records'));
 		}
 
 		$aroAlias = $aro['RequestObject']['alias'];
@@ -52,9 +52,9 @@ class AclController extends AdminAppController {
 
 		if ($this->Acl->allow($aroAlias, $acoAlias)) {
 			$this->AdminToolbar->logAction(ActionLog::ACL_GRANT, null, null, sprintf('Granted %s access to %s', $aroAlias, $acoAlias));
-			$this->AdminToolbar->setFlashMessage(__('Successfully granted %s permission to %s', array($aroAlias, $acoAlias)));
+			$this->AdminToolbar->setFlashMessage(__d('admin', 'Successfully granted %s permission to %s', array($aroAlias, $acoAlias)));
 		} else {
-			$this->AdminToolbar->setFlashMessage(__('Failed to grant %s permission to %s', array($aroAlias, $acoAlias)), 'error');
+			$this->AdminToolbar->setFlashMessage(__d('admin', 'Failed to grant %s permission to %s', array($aroAlias, $acoAlias)), 'error');
 		}
 
 		$this->redirect(array('action' => 'index'));

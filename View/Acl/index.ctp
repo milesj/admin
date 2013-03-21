@@ -1,9 +1,9 @@
 <?php
-$this->Breadcrumb->add(__('ACL'), array('controller' => 'acl', 'action' => 'index'));
+$this->Breadcrumb->add(__d('admin', 'ACL'), array('controller' => 'acl', 'action' => 'index'));
 
 echo $this->element('acl/actions'); ?>
 
-<h2><?php echo __('Access Control Lists'); ?></h2>
+<h2><?php echo __d('admin', 'Access Control Lists'); ?></h2>
 
 <table class="table table-striped table-bordered">
 	<tbody>
@@ -63,18 +63,18 @@ echo $this->element('acl/actions'); ?>
 
 						foreach ($actionMap as $action => $icon) {
 							$value = $permission['_' . $action];
-							$tooltip = __(ucfirst($action)) . ': ';
+							$tooltip = __d('admin', ucfirst($action)) . ': ';
 
 							if ($value == 1) {
-								$tooltip .= __('Has Access');
+								$tooltip .= __d('admin', 'Has Access');
 								$class = 'allow';
 
 							} else if ($value == 0) {
-								$tooltip .= __('Inherited from %s', $aro['Parent']['alias']);
+								$tooltip .= __d('admin', 'Inherited from %s', $aro['Parent']['alias']);
 								$class = 'inherit';
 
 							} else if ($value == -1) {
-								$tooltip .= __('Restricted Access');
+								$tooltip .= __d('admin', 'Restricted Access');
 								$class = 'deny';
 							} ?>
 
@@ -89,7 +89,7 @@ echo $this->element('acl/actions'); ?>
 
 						<td colspan="4" class="permission">
 							<?php if ($aco['ControlObject']['parent_id']) { ?>
-								<a href="<?php echo $url; ?>" class="action tip" title="<?php echo __('No access defined. Grant permission?'); ?>">
+								<a href="<?php echo $url; ?>" class="action tip" title="<?php echo __d('admin', 'No access defined. Grant permission?'); ?>">
 									&nbsp;
 								</a>
 							<?php } ?>

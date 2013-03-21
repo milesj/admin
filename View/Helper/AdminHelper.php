@@ -63,7 +63,7 @@ class AdminHelper extends AppHelper {
 
 				if ($this->hasAccess($model->qualifiedName, $options['access'])) {
 					$callbacks[$method] = array(
-						'title' => __($options['title'], $model->singularName),
+						'title' => __d('admin', $options['title'], $model->singularName),
 						'behavior' => Inflector::underscore($behavior),
 						'method' => $method
 					);
@@ -128,7 +128,7 @@ class AdminHelper extends AppHelper {
 		}
 
 		if (!$displayField) {
-			$displayField = $this->Html->tag('span', '(' . __('No Title') . ')', array(
+			$displayField = $this->Html->tag('span', '(' . __d('admin', 'No Title') . ')', array(
 				'class' => 'text-warning'
 			));
 		}
@@ -155,7 +155,7 @@ class AdminHelper extends AppHelper {
 				}
 
 				if ($this->hasAccess($model->qualifiedName, $options['access'])) {
-					$callbacks[$method] = __($options['title'], $model->singularName);
+					$callbacks[$method] = __d('admin', $options['title'], $model->singularName);
 				}
 			}
 		}
@@ -362,7 +362,7 @@ class AdminHelper extends AppHelper {
 
 		switch ($action) {
 			case 'create':
-				$this->Breadcrumb->add(__('Add'), array('action' => 'create', 'model' => $model->urlSlug));
+				$this->Breadcrumb->add(__d('admin', 'Add'), array('action' => 'create', 'model' => $model->urlSlug));
 			break;
 			case 'read':
 			case 'update':
@@ -373,7 +373,7 @@ class AdminHelper extends AppHelper {
 				$this->Breadcrumb->add($displayField, array('action' => 'read', $id, 'model' => $model->urlSlug));
 
 				if ($action === 'update' || $action === 'delete') {
-					$this->Breadcrumb->add(__(($action === 'update') ? 'Update' : 'Delete'), array('action' => $action, $id, 'model' => $model->urlSlug));
+					$this->Breadcrumb->add(__d('admin', ($action === 'update') ? 'Update' : 'Delete'), array('action' => $action, $id, 'model' => $model->urlSlug));
 				}
 			break;
 		}

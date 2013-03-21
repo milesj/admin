@@ -1,9 +1,9 @@
 <?php
-$this->Breadcrumb->add(__('Configuration'), array('controller' => 'admin', 'action' => 'config'));
+$this->Breadcrumb->add(__d('admin', 'Configuration'), array('controller' => 'admin', 'action' => 'config'));
 
 echo $this->element('admin/actions'); ?>
 
-<h2><?php echo __('Configuration'); ?></h2>
+<h2><?php echo __d('admin', 'Configuration'); ?></h2>
 
 <div class="row-fluid config-grid" id="grid">
 	<?php foreach ($configuration as $group => $keys) { ?>

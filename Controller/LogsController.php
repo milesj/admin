@@ -34,12 +34,12 @@ class LogsController extends AdminAppController {
 		$stack = array();
 
 		if (!in_array($type, CakeLog::configured())) {
-			throw new NotFoundException(__('%s Log Not Found', Inflector::humanize($type)));
+			throw new NotFoundException(__d('admin', '%s Log Not Found', Inflector::humanize($type)));
 		}
 
 		if (file_exists($path)) {
 			if (filesize($path) > 2097152) {
-				throw new BadRequestException(__('Can not read %s as it exceeds 2MB', basename($path)));
+				throw new BadRequestException(__d('admin', 'Can not read %s as it exceeds 2MB', basename($path)));
 			}
 
 			if ($file = file($path, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES)) {

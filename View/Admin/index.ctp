@@ -1,6 +1,6 @@
 <?php echo $this->element('admin/actions'); ?>
 
-<h2><?php echo __('Plugins'); ?></h2>
+<h2><?php echo __d('admin', 'Plugins'); ?></h2>
 
 <div class="row-fluid" id="grid">
 	<?php foreach ($plugins as $plugin) { ?>
@@ -23,7 +23,7 @@
 								'action' => 'create',
 								'model' => $model['url']
 							), array(
-								'title' => __('Add'),
+								'title' => __d('admin', 'Add'),
 								'class' => 'pull-right tip',
 								'escape' => false
 							));
@@ -33,7 +33,7 @@
 							<?php echo $this->Admin->outputIconTitle($model); ?>
 
 							<?php if (!$model['installed']) { ?>
-								<span class="label label-important tip" title="<?php echo __('Not Installed'); ?>">&nbsp;!&nbsp;</span>
+								<span class="label label-important tip" title="<?php echo __d('admin', 'Not Installed'); ?>">&nbsp;!&nbsp;</span>
 							<?php } else { ?>
 								<span class="muted">(<?php echo number_format($counts[$model['class']]); ?>)</span>
 							<?php } ?>

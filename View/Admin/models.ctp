@@ -1,24 +1,24 @@
 <?php
-$this->Breadcrumb->add(__('Models'), array('controller' => 'admin', 'action' => 'models'));
+$this->Breadcrumb->add(__d('admin', 'Models'), array('controller' => 'admin', 'action' => 'models'));
 
 echo $this->element('admin/actions'); ?>
 
-<h2><?php echo __('Models'); ?></h2>
+<h2><?php echo __d('admin', 'Models'); ?></h2>
 
 <table class="table table-striped table-bordered sortable">
 	<thead>
 		<tr>
-			<th><span><?php echo __('Model'); ?></span></th>
-			<th><span class="tip" title="<?php echo __('Primary Key'); ?>"><?php echo __('PK'); ?></span></th>
-			<th><span><?php echo __('Display Field'); ?></span></th>
-			<th><span><?php echo __('Database'); ?></span></th>
-			<th><span><?php echo __('Table'); ?></span></th>
-			<th><span><?php echo __('Schema'); ?></span></th>
-			<th><span><?php echo __('Behaviors'); ?></span></th>
-			<th><span><?php echo __('Belongs To'); ?></span></th>
-			<th><span><?php echo __('Has One'); ?></span></th>
-			<th><span><?php echo __('Has Many'); ?></span></th>
-			<th><span class="tip" title="<?php echo __('Has and Belongs to Many'); ?>"><?php echo __('HABTM'); ?></span></th>
+			<th><span><?php echo __d('admin', 'Model'); ?></span></th>
+			<th><span class="tip" title="<?php echo __d('admin', 'Primary Key'); ?>"><?php echo __d('admin', 'PK'); ?></span></th>
+			<th><span><?php echo __d('admin', 'Display Field'); ?></span></th>
+			<th><span><?php echo __d('admin', 'Database'); ?></span></th>
+			<th><span><?php echo __d('admin', 'Table'); ?></span></th>
+			<th><span><?php echo __d('admin', 'Schema'); ?></span></th>
+			<th><span><?php echo __d('admin', 'Behaviors'); ?></span></th>
+			<th><span><?php echo __d('admin', 'Belongs To'); ?></span></th>
+			<th><span><?php echo __d('admin', 'Has One'); ?></span></th>
+			<th><span><?php echo __d('admin', 'Has Many'); ?></span></th>
+			<th><span class="tip" title="<?php echo __d('admin', 'Has and Belongs to Many'); ?>"><?php echo __d('admin', 'HABTM'); ?></span></th>
 		</tr>
 	</thead>
 	<tbody>

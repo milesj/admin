@@ -1,14 +1,14 @@
 <?php
-$this->Breadcrumb->add(__('Reports'), array('controller' => 'reports', 'action' => 'index'));
+$this->Breadcrumb->add(__d('admin', 'Reports'), array('controller' => 'reports', 'action' => 'index'));
 
 $this->Paginator->options(array('url' => $this->params['named']));
 
 if ($this->request->data[$model->alias]['status'] == ItemReport::PENDING) {
 	$fieldsToShow = array('id', 'status', 'type', 'model', 'item', 'reporter_id', 'reason', 'created');
-	$pageTitle = __('Pending Reports');
+	$pageTitle = __d('admin', 'Pending Reports');
 } else {
 	$fieldsToShow = array('id', 'status', 'type', 'model', 'item', 'resolver_id', 'comment', 'created', 'modified');
-	$pageTitle = __('Resolved Reports');
+	$pageTitle = __d('admin', 'Resolved Reports');
 }  ?>
 
 <div class="action-buttons">
@@ -78,7 +78,7 @@ echo $this->element('pagination'); ?>
 
 			<tr>
 				<td colspan="<?php echo count($fieldsToShow); ?>" class="no-results">
-					<?php echo __('No results to display'); ?>
+					<?php echo __d('admin', 'No results to display'); ?>
 				</td>
 			</tr>
 

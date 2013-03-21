@@ -168,7 +168,7 @@ class AdminToolbarComponent extends Component {
 
 		// Validate action
 		if (!$log->enum('action', $action)) {
-			throw new InvalidArgumentException(__('Invalid log action type'));
+			throw new InvalidArgumentException(__d('admin', 'Invalid log action type'));
 		}
 
 		if ($model) {
@@ -289,7 +289,7 @@ class AdminToolbarComponent extends Component {
 
 		// Validate type
 		if (!$report->enum('type', $type)) {
-			throw new InvalidArgumentException(__('Invalid item report type'));
+			throw new InvalidArgumentException(__d('admin', 'Invalid item report type'));
 		}
 
 		// Get model ID if null

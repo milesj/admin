@@ -27,10 +27,10 @@ class CrudController extends AdminAppController {
 		// Batch delete
 		if ($this->request->is('post')) {
 			if (!$this->Model->admin['batchDelete']) {
-				throw new ForbiddenException(__('Delete Access Protected'));
+				throw new ForbiddenException(__d('admin', 'Delete Access Protected'));
 
 			} else if (!$this->Acl->check(array(USER_MODEL => $this->Auth->user()), $this->Model->qualifiedName, 'delete')) {
-				throw new UnauthorizedException(__('Insufficient Access Permissions'));
+				throw new UnauthorizedException(__d('admin', 'Insufficient Access Permissions'));
 			}
 
 			$count = 0;
@@ -45,7 +45,7 @@ class CrudController extends AdminAppController {
 
 			if ($count > 0) {
 				$this->AdminToolbar->logAction(ActionLog::BATCH_DELETE, $this->Model, null, sprintf('Deleted IDs: %s', implode(', ', $deleted)));
-				$this->AdminToolbar->setFlashMessage(__('%s %s have been deleted', array($count, mb_strtolower($this->Model->pluralName))));
+				$this->AdminToolbar->setFlashMessage(__d('admin', '%s %s have been deleted', array($count, mb_strtolower($this->Model->pluralName))));
 			}
 		}
 
@@ -67,11 +67,11 @@ class CrudController extends AdminAppController {
 				$this->Model->set($data);
 				$this->AdminToolbar->logAction(ActionLog::CREATE, $this->Model, $this->Model->id);
 
-				$this->AdminToolbar->setFlashMessage(__('Successfully created a new %s', mb_strtolower($this->Model->singularName)));
+				$this->AdminToolbar->setFlashMessage(__d('admin', 'Successfully created a new %s', mb_strtolower($this->Model->singularName)));
 				$this->AdminToolbar->redirectAfter($this->Model);
 
 			} else {
-				$this->AdminToolbar->setFlashMessage(__('Failed to create a new %s', mb_strtolower($this->Model->singularName)), 'error');
+				$this->AdminToolbar->setFlashMessage(__d('admin', 'Failed to create a new %s', mb_strtolower($this->Model->singularName)), 'error');
 			}
 		}
 
@@ -90,7 +90,7 @@ class CrudController extends AdminAppController {
 		$result = $this->AdminToolbar->getRecordById($this->Model, $id);
 
 		if (!$result) {
-			throw new NotFoundException(__('%s Not Found', $this->Model->singularName));
+			throw new NotFoundException(__d('admin', '%s Not Found', $this->Model->singularName));
 		}
 
 		$this->Model->set($result);
@@ -108,7 +108,7 @@ class CrudController extends AdminAppController {
 	 */
 	public function update($id) {
 		if (!$this->Model->admin['editable']) {
-			throw new ForbiddenException(__('Update Access Protected'));
+			throw new ForbiddenException(__d('admin', 'Update Access Protected'));
 		}
 
 		$this->Model->id = $id;
@@ -116,7 +116,7 @@ class CrudController extends AdminAppController {
 		$result = $this->AdminToolbar->getRecordById($this->Model, $id, false);
 
 		if (!$result) {
-			throw new NotFoundException(__('%s Not Found', $this->Model->singularName));
+			throw new NotFoundException(__d('admin', '%s Not Found', $this->Model->singularName));
 		}
 
 		$this->AdminToolbar->setBelongsToData($this->Model);
@@ -129,11 +129,11 @@ class CrudController extends AdminAppController {
 				$this->Model->set($result);
 				$this->AdminToolbar->logAction(ActionLog::UPDATE, $this->Model, $id);
 
-				$this->AdminToolbar->setFlashMessage(__('Successfully updated %s with ID %s', array(mb_strtolower($this->Model->singularName), $id)));
+				$this->AdminToolbar->setFlashMessage(__d('admin', 'Successfully updated %s with ID %s', array(mb_strtolower($this->Model->singularName), $id)));
 				$this->AdminToolbar->redirectAfter($this->Model);
 
 			} else {
-				$this->AdminToolbar->setFlashMessage(__('Failed to update %s with ID %s', array(mb_strtolower($this->Model->singularName), $id)), 'error');
+				$this->AdminToolbar->setFlashMessage(__d('admin', 'Failed to update %s with ID %s', array(mb_strtolower($this->Model->singularName), $id)), 'error');
 			}
 		} else {
 			$this->request->data = $result;
@@ -152,7 +152,7 @@ class CrudController extends AdminAppController {
 	 */
 	public function delete($id) {
 		if (!$this->Model->admin['deletable']) {
-			throw new ForbiddenException(__('Delete Access Protected'));
+			throw new ForbiddenException(__d('admin', 'Delete Access Protected'));
 		}
 
 		$this->Model->id = $id;
@@ -160,18 +160,18 @@ class CrudController extends AdminAppController {
 		$result = $this->AdminToolbar->getRecordById($this->Model, $id);
 
 		if (!$result) {
-			throw new NotFoundException(__('%s Not Found', $this->Model->singularName));
+			throw new NotFoundException(__d('admin', '%s Not Found', $this->Model->singularName));
 		}
 
 		if ($this->request->is('post')) {
 			if ($this->Model->delete($id, true)) {
 				$this->AdminToolbar->logAction(ActionLog::DELETE, $this->Model, $id);
 
-				$this->AdminToolbar->setFlashMessage(__('Successfully deleted %s with ID %s', array(mb_strtolower($this->Model->singularName), $id)));
+				$this->AdminToolbar->setFlashMessage(__d('admin', 'Successfully deleted %s with ID %s', array(mb_strtolower($this->Model->singularName), $id)));
 				$this->AdminToolbar->redirectAfter($this->Model);
 
 			} else {
-				$this->AdminToolbar->setFlashMessage(__('Failed to delete %s with ID %s', array(mb_strtolower($this->Model->singularName), $id)), 'error');
+				$this->AdminToolbar->setFlashMessage(__d('admin', 'Failed to delete %s with ID %s', array(mb_strtolower($this->Model->singularName), $id)), 'error');
 			}
 		}
 
@@ -188,7 +188,7 @@ class CrudController extends AdminAppController {
 		$this->layout = 'ajax';
 
 		if (empty($this->request->query['query'])) {
-			throw new BadRequestException(__('Missing Query'));
+			throw new BadRequestException(__d('admin', 'Missing Query'));
 		}
 
 		$results = $this->Model->find('list', array(
@@ -212,17 +212,17 @@ class CrudController extends AdminAppController {
 		$record = $this->AdminToolbar->getRecordById($model, $id);
 
 		if (!$record) {
-			throw new NotFoundException(__('%s Not Found', $this->Model->singularName));
+			throw new NotFoundException(__d('admin', '%s Not Found', $this->Model->singularName));
 		}
 
 		if ($model->hasMethod($method)) {
 			$model->{$method}($id);
 
-			$this->AdminToolbar->logAction(ActionLog::PROCESS, $model, $id, __('Triggered %s.%s() process', array($model->alias, $method)));
-			$this->AdminToolbar->setFlashMessage(__('Processed %s.%s() for ID %s', array($model->alias, $method, $id)));
+			$this->AdminToolbar->logAction(ActionLog::PROCESS, $model, $id, __d('admin', 'Triggered %s.%s() process', array($model->alias, $method)));
+			$this->AdminToolbar->setFlashMessage(__d('admin', 'Processed %s.%s() for ID %s', array($model->alias, $method, $id)));
 
 		} else {
-			$this->AdminToolbar->setFlashMessage(__('%s does not allow this process', $model->singularName), 'error');
+			$this->AdminToolbar->setFlashMessage(__d('admin', '%s does not allow this process', $model->singularName), 'error');
 		}
 
 		$this->redirect($this->referer());
@@ -241,11 +241,11 @@ class CrudController extends AdminAppController {
 		if ($model->Behaviors->loaded($behavior) && $model->hasMethod($method)) {
 			$model->Behaviors->{$behavior}->{$method}($model);
 
-			$this->AdminToolbar->logAction(ActionLog::PROCESS, $model, null, __('Triggered %s.%s() process', array($behavior, $method)));
-			$this->AdminToolbar->setFlashMessage(__('Processed %s.%s() for %s', array($behavior, $method, mb_strtolower($model->pluralName))));
+			$this->AdminToolbar->logAction(ActionLog::PROCESS, $model, null, __d('admin', 'Triggered %s.%s() process', array($behavior, $method)));
+			$this->AdminToolbar->setFlashMessage(__d('admin', 'Processed %s.%s() for %s', array($behavior, $method, mb_strtolower($model->pluralName))));
 
 		} else {
-			$this->AdminToolbar->setFlashMessage(__('%s does not allow this process', $model->singularName), 'error');
+			$this->AdminToolbar->setFlashMessage(__d('admin', '%s does not allow this process', $model->singularName), 'error');
 		}
 
 		$this->redirect($this->referer());
@@ -263,14 +263,14 @@ class CrudController extends AdminAppController {
 		parent::isAuthorized($user);
 
 		if (empty($this->params['model'])) {
-			throw new ForbiddenException(__('Invalid Model'));
+			throw new ForbiddenException(__d('admin', 'Invalid Model'));
 		}
 
 		list($plugin, $model, $class) = Admin::parseName($this->params['model']);
 
 		// Don't allow certain models
 		if (in_array($class, Configure::read('Admin.ignoreModels'))) {
-			throw new ForbiddenException(__('Restricted Model'));
+			throw new ForbiddenException(__d('admin', 'Restricted Model'));
 		}
 
 		$action = $this->action;
@@ -288,7 +288,7 @@ class CrudController extends AdminAppController {
 			return true;
 		}
 
-		throw new UnauthorizedException(__('Insufficient Access Permissions'));
+		throw new UnauthorizedException(__d('admin', 'Insufficient Access Permissions'));
 	}
 
 	/**

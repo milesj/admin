@@ -43,7 +43,7 @@ class ReportsController extends AdminAppController {
 		$result = $this->AdminToolbar->getRecordById($this->Model, $id);
 
 		if (!$result) {
-			throw new NotFoundException(__('%s Not Found', $this->Model->singularName));
+			throw new NotFoundException(__d('admin', '%s Not Found', $this->Model->singularName));
 		}
 
 		$item_id = $result['ItemReport']['foreign_key'];
@@ -63,22 +63,22 @@ class ReportsController extends AdminAppController {
 			// Delete the item
 			} else if ($action === 'delete_item') {
 				if ($this->AdminToolbar->hasAccess($itemModel, 'delete') && $itemModel->delete($item_id, true)) {
-					$messages[] = __('Successfully deleted %s with ID %s', array($itemModel->singularName, $item_id));
-					$this->AdminToolbar->logAction(ActionLog::DELETE, $itemModel, $item_id, __('Via item report #%s', $id), $title);
+					$messages[] = __d('admin', 'Successfully deleted %s with ID %s', array($itemModel->singularName, $item_id));
+					$this->AdminToolbar->logAction(ActionLog::DELETE, $itemModel, $item_id, __d('admin', 'Via item report #%s', $id), $title);
 				}
 
 			// Custom item callback
 			} else if (method_exists($itemModel, $action)) {
 				if ($itemModel->{$action}($item_id)) {
-					$messages[] = __('Triggered %s.%s() process', array($itemModel->alias, $action));
-					$this->AdminToolbar->logAction(ActionLog::UPDATE, $itemModel, $item_id, __('%s.%s() via item report #%s', array($itemModel->alias, $action, $id)), $title);
+					$messages[] = __d('admin', 'Triggered %s.%s() process', array($itemModel->alias, $action));
+					$this->AdminToolbar->logAction(ActionLog::UPDATE, $itemModel, $item_id, __d('admin', '%s.%s() via item report #%s', array($itemModel->alias, $action, $id)), $title);
 				}
 
 			} else {
-				throw new BadRequestException(__('Invalid Report Action'));
+				throw new BadRequestException(__d('admin', 'Invalid Report Action'));
 			}
 
-			$comment = __('Changed report status to %s', $this->Model->enum('status', $status));
+			$comment = __d('admin', 'Changed report status to %s', $this->Model->enum('status', $status));
 			$messages[] = $comment;
 
 			$this->Model->markAs($id, $status, $this->Auth->user('id'), $this->request->data['ItemReport']['log_comment']);
@@ -108,7 +108,7 @@ class ReportsController extends AdminAppController {
 		parent::isAuthorized($user);
 
 		if (!$this->Acl->check(array(USER_MODEL => $user), $this->Model->qualifiedName, 'read')) {
-			throw new UnauthorizedException(__('Insufficient Access Permissions'));
+			throw new UnauthorizedException(__d('admin', 'Insufficient Access Permissions'));
 		}
 
 		return true;

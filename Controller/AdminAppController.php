@@ -75,7 +75,7 @@ class AdminAppController extends Controller {
 	 */
 	public function isAuthorized($user = null) {
 		if (!$user) {
-			throw new ForbiddenException(__('Invalid User'));
+			throw new ForbiddenException(__d('admin', 'Invalid User'));
 		}
 
 		$aro = Admin::introspectModel('Admin.RequestObject');
@@ -88,7 +88,7 @@ class AdminAppController extends Controller {
 			return true;
 		}
 
-		throw new UnauthorizedException(__('Insufficient Access Permissions'));
+		throw new UnauthorizedException(__d('admin', 'Insufficient Access Permissions'));
 	}
 
 	/**

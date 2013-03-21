@@ -1,9 +1,9 @@
 <?php
-$this->Breadcrumb->add(__('Logs'), array('controller' => 'logs', 'action' => 'index'));
+$this->Breadcrumb->add(__d('admin', 'Logs'), array('controller' => 'logs', 'action' => 'index'));
 
 echo $this->element('logs/actions'); ?>
 
-<h2><?php echo __('Action Logs'); ?></h2>
+<h2><?php echo __d('admin', 'Action Logs'); ?></h2>
 
 <?php echo $this->element('pagination'); ?>
 
@@ -85,7 +85,7 @@ echo $this->element('logs/actions'); ?>
 
 			<tr>
 				<td colspan="6" class="no-results">
-					<?php echo __('No results to display'); ?>
+					<?php echo __d('admin', 'No results to display'); ?>
 				</td>
 			</tr>
 

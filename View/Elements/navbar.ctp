@@ -24,7 +24,7 @@ if ($modelParam) {
 			<div class="nav-collapse collapse navbar-inverse-collapse">
 				<ul class="nav">
 					<li<?php echo ($controller === 'acl') ? ' class="active"' : ''; ?>>
-						<?php echo $this->Html->link(__('ACL'), array(
+						<?php echo $this->Html->link(__d('admin', 'ACL'), array(
 							'plugin' => 'admin',
 							'controller' => 'acl',
 							'action' => 'index'
@@ -32,7 +32,7 @@ if ($modelParam) {
 					</li>
 
 					<li<?php echo ($controller === 'logs') ? ' class="active"' : ''; ?>>
-						<?php echo $this->Html->link(__('Logs'), array(
+						<?php echo $this->Html->link(__d('admin', 'Logs'), array(
 							'plugin' => 'admin',
 							'controller' => 'logs',
 							'action' => 'index'
@@ -41,7 +41,7 @@ if ($modelParam) {
 
 					<li<?php echo ($controller === 'reports') ? ' class="active"' : ''; ?>>
 						<?php
-						$title = __('Reports');
+						$title = __d('admin', 'Reports');
 
 						if ($pendingReports) {
 							$title .= ' <span class="label label-important">' . $pendingReports . '</span>';

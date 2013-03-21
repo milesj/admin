@@ -16,7 +16,7 @@ switch ($data['type']) {
 		if ($data['type'] === 'enum') {
 			$params['options'] = $model->enum[$field];
 		} else {
-			$params['options'] = array(__('No'), __('Yes'));
+			$params['options'] = array(__d('admin', 'No'), __d('admin', 'Yes'));
 		}
 	break;
 }

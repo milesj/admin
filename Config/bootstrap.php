@@ -33,7 +33,7 @@ Configure::write('Admin.version', file_get_contents(ADMIN_PLUGIN . 'version.md')
 /**
  * Name of the application.
  */
-Configure::write('Admin.appName', __('Admin'));
+Configure::write('Admin.appName', __d('admin', 'Admin'));
 
 /**
  * Pseudo plugin name to wrap application models in.

@@ -65,7 +65,7 @@ $flatten = function($array) {
 							$id = rand(); ?>
 
 							<a href="#modal-<?php echo $id; ?>" data-toggle="modal">
-								<?php echo __('View'); ?>
+								<?php echo __d('admin', 'View'); ?>
 								<span class="icon-external-link" style="font-size: 10px"></span>
 							</a>
 

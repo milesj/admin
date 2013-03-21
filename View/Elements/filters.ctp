@@ -59,12 +59,12 @@
 							</button>
 
 							<ul class="dropdown-menu">
-								<li><a href="javascript:;" data-filter="="><?php echo __('Equals'); ?></a></li>
-								<li><a href="javascript:;" data-filter="!="><?php echo __('Not Equals'); ?></a></li>
-								<li><a href="javascript:;" data-filter=">"><?php echo __('Greater Than'); ?></a></li>
-								<li><a href="javascript:;" data-filter=">="><?php echo __('Greater Than or Equal'); ?></a></li>
-								<li><a href="javascript:;" data-filter="<"><?php echo __('Less Than'); ?></a></li>
-								<li><a href="javascript:;" data-filter="<="><?php echo __('Less Than or Equal'); ?></a></li>
+								<li><a href="javascript:;" data-filter="="><?php echo __d('admin', 'Equals'); ?></a></li>
+								<li><a href="javascript:;" data-filter="!="><?php echo __d('admin', 'Not Equals'); ?></a></li>
+								<li><a href="javascript:;" data-filter=">"><?php echo __d('admin', 'Greater Than'); ?></a></li>
+								<li><a href="javascript:;" data-filter=">="><?php echo __d('admin', 'Greater Than or Equal'); ?></a></li>
+								<li><a href="javascript:;" data-filter="<"><?php echo __d('admin', 'Less Than'); ?></a></li>
+								<li><a href="javascript:;" data-filter="<="><?php echo __d('admin', 'Less Than or Equal'); ?></a></li>
 							</ul>
 						</div>
 
@@ -87,11 +87,11 @@
 	<?php } ?>
 
 	<button type="submit" class="btn btn-info">
-		<?php echo __('Filter'); ?>
+		<?php echo __d('admin', 'Filter'); ?>
 	</button>
 
 	<a href="<?php echo $this->Html->url($reset); ?>" class="btn">
-		<?php echo __('Reset'); ?>
+		<?php echo __d('admin', 'Reset'); ?>
 	</a>
 
 	<script type="text/javascript">

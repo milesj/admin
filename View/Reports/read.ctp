@@ -1,5 +1,5 @@
 <?php
-$this->Breadcrumb->add(__('Reports'), array('controller' => 'reports', 'action' => 'index'));
+$this->Breadcrumb->add(__d('admin', 'Reports'), array('controller' => 'reports', 'action' => 'index'));
 $this->Breadcrumb->add($this->Admin->getDisplayField($model, $result), array('controller' => 'reports', 'action' => 'read', $result[$model->alias][$model->primaryKey]));
 
 $itemModel = $this->Admin->introspect($result[$model->alias]['model']); ?>
@@ -14,7 +14,7 @@ $itemModel = $this->Admin->introspect($result[$model->alias]['model']); ?>
 if ($item) { ?>
 
 	<div class="row-fluid">
-		<h3 class="text-info"><?php echo __('Reported %s', $itemModel->singularName); ?></h3>
+		<h3 class="text-info"><?php echo __d('admin', 'Reported %s', $itemModel->singularName); ?></h3>
 
 		<?php echo $this->element('crud/read_table', array(
 			'result' => $item,
@@ -29,10 +29,10 @@ if ($result[$model->alias]['status'] == ItemReport::PENDING && $item) {
 	$options = $this->Admin->getModelCallbacks($itemModel);
 
 	if ($this->Admin->hasAccess($itemModel, 'delete')) {
-		$options['delete_item'] = __('Delete %s', $itemModel->singularName);
+		$options['delete_item'] = __d('admin', 'Delete %s', $itemModel->singularName);
 	}
 
-	$options['invalid_report'] = __('Mark As Invalid');
+	$options['invalid_report'] = __d('admin', 'Mark As Invalid');
 
 	echo $this->Form->create($model->alias, array('class' => 'form-horizontal')); ?>
 
@@ -54,7 +54,7 @@ if ($result[$model->alias]['status'] == ItemReport::PENDING && $item) {
 
 		<button type="submit" class="btn btn-large btn-danger">
 			<span class="icon-cog icon-white"></span>
-			<?php echo __('Process Report'); ?>
+			<?php echo __d('admin', 'Process Report'); ?>
 		</button>
 	</div>
 

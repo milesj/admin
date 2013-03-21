@@ -1,20 +1,20 @@
 <?php
-$this->Breadcrumb->add(__('Logs'), array('controller' => 'logs', 'action' => 'index'));
-$this->Breadcrumb->add(__('System'), array('controller' => 'logs', 'action' => 'read', $type));
+$this->Breadcrumb->add(__d('admin', 'Logs'), array('controller' => 'logs', 'action' => 'index'));
+$this->Breadcrumb->add(__d('admin', 'System'), array('controller' => 'logs', 'action' => 'read', $type));
 $this->Breadcrumb->add(Inflector::humanize($type), array('controller' => 'logs', 'action' => 'read', $type));
 
 echo $this->element('logs/actions'); ?>
 
-<h2><?php echo __('System Logs'); ?></h2>
+<h2><?php echo __d('admin', 'System Logs'); ?></h2>
 
 <table id="table" class="table table-striped table-bordered sortable">
 	<thead>
 		<tr>
-			<th><span><?php echo __('Code'); ?></span></th>
-			<th><span><?php echo __('Exception'); ?></span></th>
-			<th><span><?php echo __('Message'); ?></span></th>
-			<th><span><?php echo __('Count'); ?></span></th>
-			<th><span><?php echo __('Date'); ?></span></th>
+			<th><span><?php echo __d('admin', 'Code'); ?></span></th>
+			<th><span><?php echo __d('admin', 'Exception'); ?></span></th>
+			<th><span><?php echo __d('admin', 'Message'); ?></span></th>
+			<th><span><?php echo __d('admin', 'Count'); ?></span></th>
+			<th><span><?php echo __d('admin', 'Date'); ?></span></th>
 		</tr>
 	</thead>
 	<tbody>
@@ -81,7 +81,7 @@ echo $this->element('logs/actions'); ?>
 
 			<tr>
 				<td colspan="5" class="no-results">
-					<?php echo __('No results to display'); ?>
+					<?php echo __d('admin', 'No results to display'); ?>
 				</td>
 			</tr>
 

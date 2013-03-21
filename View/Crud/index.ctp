@@ -64,19 +64,19 @@ echo $this->element('pagination'); ?>
 									if ($this->Admin->hasAccess($model->qualifiedName, 'read')) {
 										echo $this->Html->link('<span class="icon-search"></span>',
 											array('action' => 'read', $id, 'model' => $model->urlSlug),
-											array('class' => 'btn btn-mini', 'escape' => false, 'title' => __('View')));
+											array('class' => 'btn btn-mini', 'escape' => false, 'title' => __d('admin', 'View')));
 									}
 
 									if ($this->Admin->hasAccess($model->qualifiedName, 'update') && $model->admin['editable']) {
 										echo $this->Html->link('<span class="icon-edit"></span>',
 											array('action' => 'update', $id, 'model' => $model->urlSlug),
-											array('class' => 'btn btn-mini', 'escape' => false, 'title' => __('Edit')));
+											array('class' => 'btn btn-mini', 'escape' => false, 'title' => __d('admin', 'Edit')));
 									}
 
 									if ($this->Admin->hasAccess($model->qualifiedName, 'delete') && $model->admin['deletable']) {
 										echo $this->Html->link('<span class="icon-remove"></span>',
 											array('action' => 'delete', $id, 'model' => $model->urlSlug),
-											array('class' => 'btn btn-mini', 'escape' => false, 'title' => __('Delete')));
+											array('class' => 'btn btn-mini', 'escape' => false, 'title' => __d('admin', 'Delete')));
 									} ?>
 								</div>
 							</td>
@@ -97,7 +97,7 @@ echo $this->element('pagination'); ?>
 
 			<tr>
 				<td colspan="<?php echo count($model->fields) + $model->admin['batchDelete'] + $model->admin['actionButtons']; ?>" class="no-results">
-					<?php echo __('No results to display'); ?>
+					<?php echo __d('admin', 'No results to display'); ?>
 				</td>
 			</tr>
 
@@ -111,9 +111,9 @@ echo $this->element('pagination');
 if ($model->admin['batchDelete'] && $results && $this->Admin->hasAccess($model->qualifiedName, 'delete')) { ?>
 
 	<div class="well actions">
-		<button type="submit" class="btn btn-large btn-danger" onclick="return confirm('<?php echo __('Deleting will cascade through associations, are you sure?'); ?>');">
+		<button type="submit" class="btn btn-large btn-danger" onclick="return confirm('<?php echo __d('admin', 'Deleting will cascade through associations, are you sure?'); ?>');">
 			<span class="icon-trash icon-white"></span>
-			<?php echo __('Batch Delete'); ?>
+			<?php echo __d('admin', 'Batch Delete'); ?>
 		</button>
 	</div>
 

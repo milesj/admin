@@ -21,7 +21,7 @@ echo $this->Html->docType(); ?>
 	<div class="body container-fluid action-<?php echo $this->action; ?>">
 		<div class="row-fluid">
 			<?php
-			$this->Breadcrumb->prepend(__('Dashboard'), array('controller' => 'admin', 'action' => 'index'));
+			$this->Breadcrumb->prepend(__d('admin', 'Dashboard'), array('controller' => 'admin', 'action' => 'index'));
 
 			if ($crumbs = $this->Breadcrumb->get()) { ?>
 				<div class="well well-small breadcrumbs">

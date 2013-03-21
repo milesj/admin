@@ -5,7 +5,7 @@ if ($params['count'] > 0) { ?>
 
 	<nav class="pagination pagination-right">
 		<div class="results">
-			<?php echo $this->Paginator->counter(__('Showing %s-%s of %s', array(
+			<?php echo $this->Paginator->counter(__d('admin', 'Showing %s-%s of %s', array(
 				'<span>{:start}</span>',
 				'<span>{:end}</span>',
 				'<span>{:count}</span>'
@@ -14,8 +14,8 @@ if ($params['count'] > 0) { ?>
 
 		<ul>
 			<?php echo $this->Paginator->numbers(array(
-				'first' => __('First'),
-				'last' => __('Last'),
+				'first' => __d('admin', 'First'),
+				'last' => __d('admin', 'Last'),
 				'currentTag' => 'span',
 				'currentClass' => 'active',
 				'separator' => '',

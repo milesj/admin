@@ -1,9 +1,9 @@
 <?php
 if ($this->action === 'create') {
-	$pageTitle = __('Add %s', $model->singularName);
+	$pageTitle = __d('admin', 'Add %s', $model->singularName);
 	$result = null;
 } else {
-	$pageTitle = __('Edit %s', $model->singularName);
+	$pageTitle = __d('admin', 'Edit %s', $model->singularName);
 }
 
 $this->Admin->setBreadcrumbs($model, $result, $this->action);
@@ -40,7 +40,7 @@ foreach ($model->hasAndBelongsToMany as $alias => $assoc) {
 if ($habtm) { ?>
 
 	<fieldset>
-		<legend><?php echo __('Associate With'); ?></legend>
+		<legend><?php echo __d('admin', 'Associate With'); ?></legend>
 
 		<?php foreach ($habtm as $alias => $assoc) {
 			$assoc['type'] = 'relation';
