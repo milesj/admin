@@ -36,11 +36,17 @@ $flatten = function($array) {
 
 						<span class="muted">(empty)</span>
 
-					<?php } else if (is_string($value)) { ?>
+					<?php } else if (is_string($value)) {
+						if (mb_strlen($value) >= 30 && strpos($value, ' ') === false) { ?>
 
-						<span class="text-success"><?php echo h($value); ?></span>
+							<span class="text-success tip" title="<?php echo h($value); ?>"><?php echo $this->Text->truncate($value, 30); ?></span>
 
-					<?php } else if (is_array($value)) {
+						<?php } else { ?>
+
+							<span class="text-success"><?php echo h($value); ?></span>
+
+						<?php }
+					} else if (is_array($value)) {
 						// List of values
 						if (Hash::numeric(array_keys($value))) { ?>
 

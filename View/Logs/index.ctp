@@ -84,7 +84,7 @@ echo $this->element('logs/actions'); ?>
 		} else { ?>
 
 			<tr>
-				<td colspan="5" class="no-results">
+				<td colspan="6" class="no-results">
 					<?php echo __('No results to display'); ?>
 				</td>
 			</tr>
