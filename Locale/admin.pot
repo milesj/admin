@@ -1,8 +1,9 @@
+#, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: Admin v0.10.0\n"
 "POT-Creation-Date: 2013-03-21 03:35+0000\n"
-"PO-Revision-Date: 2013-03-20 20:41-0800\n"
+"PO-Revision-Date: 2013-03-21 03:35+0000\n"
 "Last-Translator: Miles Johnson <mileswjohnson@gmail.com>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -36,7 +37,8 @@ msgstr ""
 msgid "Invalid User"
 msgstr ""
 
-#: /Controller/AdminAppController.php:91 /Controller/CrudController.php:33;291
+#: /Controller/AdminAppController.php:91
+#: /Controller/CrudController.php:33;291
 #: /Controller/ReportsController.php:111
 msgid "Insufficient Access Permissions"
 msgstr ""
@@ -74,7 +76,8 @@ msgstr ""
 msgid "Failed to update %s with ID %s"
 msgstr ""
 
-#: /Controller/CrudController.php:170 /Controller/ReportsController.php:66
+#: /Controller/CrudController.php:170
+#: /Controller/ReportsController.php:66
 msgid "Successfully deleted %s with ID %s"
 msgstr ""
 
@@ -86,7 +89,8 @@ msgstr ""
 msgid "Missing Query"
 msgstr ""
 
-#: /Controller/CrudController.php:221;244 /Controller/ReportsController.php:73
+#: /Controller/CrudController.php:221;244
+#: /Controller/ReportsController.php:73
 msgid "Triggered %s.%s() process"
 msgstr ""
 
@@ -142,7 +146,8 @@ msgstr ""
 msgid "Invalid item report type"
 msgstr ""
 
-#: /View/Acl/index.ctp:2 /View/Elements/navbar.ctp:27
+#: /View/Acl/index.ctp:2
+#: /View/Elements/navbar.ctp:27
 msgid "ACL"
 msgstr ""
 
@@ -166,15 +171,18 @@ msgstr ""
 msgid "No access defined. Grant permission?"
 msgstr ""
 
-#: /View/Admin/config.ctp:2;6 /View/Elements/admin/actions.ctp:13
+#: /View/Admin/config.ctp:2;6
+#: /View/Elements/admin/actions.ctp:13
 msgid "Configuration"
 msgstr ""
 
-#: /View/Admin/index.ctp:3 /View/Elements/admin/actions.ctp:5
+#: /View/Admin/index.ctp:3
+#: /View/Elements/admin/actions.ctp:5
 msgid "Plugins"
 msgstr ""
 
-#: /View/Admin/index.ctp:26 /View/Helper/AdminHelper.php:365
+#: /View/Admin/index.ctp:26
+#: /View/Helper/AdminHelper.php:365
 msgid "Add"
 msgstr ""
 
@@ -182,7 +190,8 @@ msgstr ""
 msgid "Not Installed"
 msgstr ""
 
-#: /View/Admin/models.ctp:2;6 /View/Elements/admin/actions.ctp:9
+#: /View/Admin/models.ctp:2;6
+#: /View/Elements/admin/actions.ctp:9
 msgid "Models"
 msgstr ""
 
@@ -238,7 +247,8 @@ msgstr ""
 msgid "HABTM"
 msgstr ""
 
-#: /View/Crud/delete.ctp:8 /View/Elements/crud/actions.ctp:25
+#: /View/Crud/delete.ctp:8
+#: /View/Elements/crud/actions.ctp:25
 #: /View/Reports/read.ctp:32
 msgid "Delete %s"
 msgstr ""
@@ -251,11 +261,13 @@ msgstr ""
 msgid "The associated records in the following models will also be deleted."
 msgstr ""
 
-#: /View/Crud/form.ctp:3 /View/Elements/crud/actions.ctp:13
+#: /View/Crud/form.ctp:3
+#: /View/Elements/crud/actions.ctp:13
 msgid "Add %s"
 msgstr ""
 
-#: /View/Crud/form.ctp:6 /View/Elements/crud/actions.ctp:19
+#: /View/Crud/form.ctp:6
+#: /View/Elements/crud/actions.ctp:19
 msgid "Edit %s"
 msgstr ""
 
@@ -263,7 +275,8 @@ msgstr ""
 msgid "Associate With"
 msgstr ""
 
-#: /View/Crud/index.ctp:67 /View/Elements/admin/config.ctp:68
+#: /View/Crud/index.ctp:67
+#: /View/Elements/admin/config.ctp:68
 msgid "View"
 msgstr ""
 
@@ -275,7 +288,9 @@ msgstr ""
 msgid "Delete"
 msgstr ""
 
-#: /View/Crud/index.ctp:100 /View/Logs/index.ctp:88 /View/Logs/read.ctp:84
+#: /View/Crud/index.ctp:100
+#: /View/Logs/index.ctp:88
+#: /View/Logs/read.ctp:84
 #: /View/Reports/index.ctp:81
 msgid "No results to display"
 msgstr ""
@@ -312,11 +327,13 @@ msgstr ""
 msgid "Less Than or Equal"
 msgstr ""
 
-#: /View/Elements/filters.ctp:90 /View/Elements/button/filter.ctp:2
+#: /View/Elements/filters.ctp:90
+#: /View/Elements/button/filter.ctp:2
 msgid "Filter"
 msgstr ""
 
-#: /View/Elements/filters.ctp:94 /View/Elements/form_actions.ctp:50
+#: /View/Elements/filters.ctp:94
+#: /View/Elements/form_actions.ctp:50
 msgid "Reset"
 msgstr ""
 
@@ -348,11 +365,14 @@ msgstr ""
 msgid "Null?"
 msgstr ""
 
-#: /View/Elements/navbar.ctp:35 /View/Logs/index.ctp:2 /View/Logs/read.ctp:2
+#: /View/Elements/navbar.ctp:35
+#: /View/Logs/index.ctp:2
+#: /View/Logs/read.ctp:2
 msgid "Logs"
 msgstr ""
 
-#: /View/Elements/navbar.ctp:44 /View/Reports/index.ctp:2
+#: /View/Elements/navbar.ctp:44
+#: /View/Reports/index.ctp:2
 #: /View/Reports/read.ctp:2
 msgid "Reports"
 msgstr ""
@@ -382,11 +402,13 @@ msgstr ""
 msgid "Process"
 msgstr ""
 
-#: /View/Elements/field/boolean.ctp:3 /View/Elements/input/filter.ctp:19
+#: /View/Elements/field/boolean.ctp:3
+#: /View/Elements/input/filter.ctp:19
 msgid "Yes"
 msgstr ""
 
-#: /View/Elements/field/boolean.ctp:7 /View/Elements/input/filter.ctp:19
+#: /View/Elements/field/boolean.ctp:7
+#: /View/Elements/input/filter.ctp:19
 msgid "No"
 msgstr ""
 

@@ -2,7 +2,6 @@ Custom strings that won't be generated through the shell.
 Will have to manually be added later on.
 
 # CRUD
-
 msgid "Create"
 msgstr ""
 
@@ -12,11 +11,17 @@ msgstr ""
 msgid "Update"
 msgstr ""
 
-msgid "Delete"
+# Process Callbacks
+msgid "Recover Tree"
+msgstr ""
+
+msgid "Reorder Tree"
+msgstr ""
+
+msgid "Clear Cache"
 msgstr ""
 
 # Action Logs
-
 msgid "action_log.other"
 msgstr "%s did something with %s"
 
@@ -48,7 +53,6 @@ msgid "action_log.acl_grant"
 msgstr "%s granted ACL access"
 
 # AROs
-
 msgid "aro.administrator"
 msgstr "Administrator"
 
