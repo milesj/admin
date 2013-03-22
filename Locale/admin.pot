@@ -412,6 +412,22 @@ msgstr ""
 msgid "No"
 msgstr ""
 
+#: /View/Elements/navbar.ctp:43
+msgid "View Site"
+msgstr ""
+
+#: /View/Elements/navbar.ctp:44
+msgid "View Profile"
+msgstr ""
+
+#: /View/Elements/navbar.ctp:45
+msgid "Settings"
+msgstr ""
+
+#: /View/Elements/navbar.ctp:46
+msgid "Logout"
+msgstr ""
+
 #: /View/Helper/AdminHelper.php:131
 msgid "No Title"
 msgstr ""

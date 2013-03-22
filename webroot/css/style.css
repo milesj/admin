@@ -116,6 +116,9 @@ td.col-actions a.btn { display: inline-block; padding: 0 4px; }
 .nav a span[class*="icon-"] { color: #000; }
 .nav li { position: relative; }
 .nav li > .badge { position: absolute; bottom: -5px; right: -5px; font-size: 10.5px; padding: 2px 6px; }
+.nav li > a.user { padding: 0 15px; }
+.nav li > a.user .avatar { width: auto; height: 40px; display: block; float: right; }
+.nav li > a.user .name { display: inline-block; padding: 10px; padding-left: 0; }
 
 .breadcrumbs ul { margin: 0; padding: 5px 8px; }
 .breadcrumbs ul > li > .divider { font-size: 10px; }

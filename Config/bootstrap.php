@@ -41,9 +41,12 @@ Configure::write('Admin.appName', __d('admin', 'Admin'));
 Configure::write('Admin.coreName', 'Core');
 
 /**
- * Alias of the administrator ARO.
+ * Aliases for special AROs.
  */
-Configure::write('Admin.adminAlias', 'administrator');
+Configure::write('Admin.aliases', array(
+	'administrator' => 'administrator',
+	'superModerator' => 'superModerator'
+));
 
 /**
  * Ignore/restrict these models.
@@ -73,6 +76,7 @@ Configure::write('Admin.modelDefaults', array(
 
 /**
  * Behavior methods to execute as process callbacks.
+ * The titles are passed through localization and will also replace %s with the model name.
  */
 Configure::write('Admin.behaviorCallbacks', array(
 	'Tree' => array(
@@ -87,8 +91,14 @@ Configure::write('Admin.behaviorCallbacks', array(
 /**
  * Model methods to execute as process callbacks.
  * The callback method accepts a record ID as the 1st argument.
+ * The titles are passed through localization and will also replace %s with the model name.
  */
 Configure::write('Admin.modelCallbacks', array());
+
+/**
+ * The user model for the application.
+ */
+Configure::write('User.model', USER_MODEL);
 
 /**
  * A map of user fields that are used within this plugin. If your users table has a different naming scheme
@@ -103,5 +113,31 @@ if (!Configure::check('User.fieldMap')) {
 		'avatar'	=> 'avatar',
 		'locale'	=> 'locale',
 		'timezone'	=> 'timezone'
+	));
+}
+
+/**
+ * A map of status values for the users "status" column.
+ * This column determines if the user is pending, currently active, or banned.
+ */
+if (!Configure::check('User.statusMap')) {
+	Configure::write('User.statusMap', array(
+		'pending'	=> 0,
+		'active'	=> 1,
+		'banned'	=> 2
+	));
+}
+
+/**
+ * A map of external user management URLs.
+ */
+if (!Configure::check('User.routes')) {
+	Configure::write('User.routes', array(
+		'login' => array('plugin' => false, 'admin' => false, 'controller' => 'users', 'action' => 'login'),
+		'logout' => array('plugin' => false, 'admin' => false, 'controller' => 'users', 'action' => 'logout'),
+		'signup' => array('plugin' => false, 'admin' => false, 'controller' => 'users', 'action' => 'signup'),
+		'forgotPass' => array('plugin' => false, 'admin' => false, 'controller' => 'users', 'action' => 'forgot_password'),
+		'settings' => array('plugin' => false, 'admin' => false, 'controller' => 'users', 'action' => 'settings'),
+		'profile' => array('plugin' => false, 'admin' => false, 'controller' => 'users', 'action' => 'profile', 'id' => '{id}')
 	));
 }

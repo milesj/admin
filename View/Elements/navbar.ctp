@@ -16,12 +16,41 @@ if ($modelParam) {
 				<span class="icon-bar"></span>
 			</a>
 
-			<?php echo $this->Html->link($config['appName'], array(
+			<?php echo $this->Html->link($config['Admin']['appName'], array(
 				'controller' => 'admin',
 				'action' => 'index'
 			), array('class' => 'brand')); ?>
 
-			<div class="nav-collapse collapse navbar-inverse-collapse">
+			<div class="nav-collapse navbar-inverse-collapse navbar-responsive-collapse collapse">
+				<ul class="nav pull-right">
+					<li class="dropdown">
+						<a data-toggle="dropdown" class="dropdown-toggle user" href="javascript:;">
+							<?php
+							if ($avatar = $user[$config['User']['fieldMap']['avatar']]) {
+								echo $this->Html->image($avatar, array('class' => 'avatar'));
+							}
+
+							$profileUrl = $config['User']['routes']['profile'];
+							$profileUrl['id'] = $user['id']; ?>
+
+							<span class="name">
+								<?php echo $user[$config['User']['fieldMap']['username']]; ?>
+								<span class="caret"></span>
+							</span>
+						</a>
+
+						<ul class="dropdown-menu">
+							<li><?php echo $this->Html->link(__d('admin', 'View Site'), '/'); ?></li>
+							<li><?php echo $this->Html->link(__d('admin', 'View Profile'), $profileUrl); ?></li>
+							<li><?php echo $this->Html->link(__d('admin', 'Settings'), $config['User']['routes']['settings']); ?></li>
+							<li><?php echo $this->Html->link(__d('admin', 'Logout'), $config['User']['routes']['logout']); ?></li>
+						</ul>
+					</li>
+
+					<!-- Spacing for DebugKit -->
+					<li class="divider-vertical"></li>
+				</ul>
+
 				<ul class="nav">
 					<li<?php echo ($controller === 'acl') ? ' class="active"' : ''; ?>>
 						<?php echo $this->Html->link(__d('admin', 'ACL'), array(

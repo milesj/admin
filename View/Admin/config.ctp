@@ -6,7 +6,8 @@ echo $this->element('admin/actions'); ?>
 <h2><?php echo __d('admin', 'Configuration'); ?></h2>
 
 <div class="row-fluid config-grid" id="grid">
-	<?php foreach ($configuration as $group => $keys) { ?>
+	<?php foreach ($configuration as $group => $keys) {
+		ksort($keys); ?>
 
 		<div class="well">
 			<h3><?php echo $group; ?></h3>

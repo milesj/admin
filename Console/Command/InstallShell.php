@@ -52,14 +52,14 @@ class InstallShell extends BaseInstallShell {
 	 * @return bool
 	 */
 	public function setupAcl() {
-		$adminAlias = Configure::read('Admin.adminAlias');
+		$adminAlias = Configure::read('Admin.aliases.administrator');
 
 		$this->out(sprintf('Administrator Role: <comment>%s</comment>', $adminAlias));
 
 		$answer = mb_strtoupper($this->in('<question>Is this correct?</question>', array('Y', 'N')));
 
 		if ($answer === 'N') {
-			$this->out('<warning>Configure the role through Admin.adminAlias</warning>');
+			$this->out('<warning>Configure the role through Admin.aliases.administrator</warning>');
 			return false;
 		}
 
@@ -124,7 +124,7 @@ class InstallShell extends BaseInstallShell {
 
 		// Create parent object
 		$parent_id = $this->ControlObject->addObject($pluginName);
-		$adminAlias = Configure::read('Admin.adminAlias');
+		$adminAlias = Configure::read('Admin.aliases.administrator');
 
 		// Create children objects
 		foreach ($plugin['models'] as $model) {
@@ -171,7 +171,7 @@ class InstallShell extends BaseInstallShell {
 		$this->ControlObject->addObject($alias, $parent_id);
 
 		// Give admin access
-		$this->Permission->allow(Configure::read('Admin.adminAlias'), $plugin . '/' . $alias);
+		$this->Permission->allow(Configure::read('Admin.aliases.administrator'), $plugin . '/' . $alias);
 
 		$this->out(sprintf('<info>%s ACOs installed</info>', $modelName));
 	}

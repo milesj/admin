@@ -3,7 +3,7 @@ echo $this->Html->docType(); ?>
 <html lang="en">
 <head>
 	<?php echo $this->Html->charset(); ?>
-	<title><?php echo $this->Breadcrumb->pageTitle($config['appName'], array('reverse' => true)); ?></title>
+	<title><?php echo $this->Breadcrumb->pageTitle($config['Admin']['appName'], array('reverse' => true)); ?></title>
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<?php
 	echo $this->Html->css('Admin.bootstrap.min');
@@ -43,7 +43,7 @@ echo $this->Html->docType(); ?>
 
 	<footer class="foot">
 		<div class="copyright">
-			<?php printf(__d('admin', 'Powered by the %s v%s'), $this->Html->link('Admin Plugin', 'http://milesj.me/code/cakephp/admin'), mb_strtoupper($config['version'])); ?><br>
+			<?php printf(__d('admin', 'Powered by the %s v%s'), $this->Html->link('Admin Plugin', 'http://milesj.me/code/cakephp/admin'), mb_strtoupper($config['Admin']['version'])); ?><br>
 			<?php printf(__d('admin', 'Created by %s'), $this->Html->link('Miles Johnson', 'http://milesj.me')); ?>
 		</div>
 

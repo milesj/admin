@@ -39,7 +39,7 @@ cake schema create DbAcl
 Set the ARO administrator alias in your bootstrap (defaults to administrator).
 
 ```php
-Configure::write('Admin.adminAlias', 'administrator');
+Configure::write('Admin.aliases.administrator', 'administrator');
 ```
 
 Install the plugin and follow the on screen instructions (this will generate appropriate ACL records).
@@ -53,4 +53,10 @@ Install the plugins and models to enable CRUD functionality and enable access pe
 ```
 cake Admin.install plugin Forum
 cake Admin.install model User
+```
+
+Bootstrap the plugin and its routes.
+
+```php
+CakePlugin::load('Admin', array('bootstrap' => true, 'routes' => true));
 ```

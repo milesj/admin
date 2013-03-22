@@ -19,7 +19,7 @@ if ($this->action !== 'delete') {
 		)); ?>
 	</div>
 
-	<?php if ($config['logActions']) { ?>
+	<?php if ($config['Admin']['logActions']) { ?>
 
 		<div class="log-comment">
 			<?php echo $this->Form->input('log_comment', array(

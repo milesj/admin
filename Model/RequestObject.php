@@ -381,7 +381,7 @@ class RequestObject extends Aro {
 	 * @return bool
 	 */
 	public function isAdmin($user_id) {
-		$admin = $this->getByAlias(Configure::read('Admin.adminAlias'));
+		$admin = $this->getByAlias(Configure::read('Admin.aliases.administrator'));
 
 		if (!$admin) {
 			return false;
