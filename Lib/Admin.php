@@ -46,7 +46,7 @@ class Admin {
 			$map = array();
 
 			foreach ($plugins as $plugin) {
-				$data = self::getPlugin($plugin);
+				$data = Admin::getPlugin($plugin);
 
 				if ($data['models']) {
 					$map[$plugin] = $data;
@@ -81,7 +81,7 @@ class Admin {
 				'title' => $plugin,
 				'path' => $path,
 				'slug' => Inflector::underscore($plugin),
-				'models' => self::getPluginModels($plugin)
+				'models' => Admin::getPluginModels($plugin)
 			);
 		});
 	}
@@ -111,13 +111,13 @@ class Admin {
 			$ignore = Configure::read('Admin.ignoreModels');
 
 			foreach ($models as $model) {
-				list($plugin, $model, $id, $class) = self::parseName($plugin . '.' . $model);
+				list($plugin, $model, $id, $class) = Admin::parseName($plugin . '.' . $model);
 
 				if (in_array($id, $ignore)) {
 					continue;
 				}
 
-				$object = self::introspectModel($id);
+				$object = Admin::introspectModel($id);
 
 				if (!$object) {
 					continue;
@@ -129,7 +129,7 @@ class Admin {
 					'alias' => $model,
 					'class' => $class,
 					'url' => Inflector::underscore($id),
-					'installed' => self::isModelInstalled($id),
+					'installed' => Admin::isModelInstalled($id),
 					'group' => $object->useDbConfig
 				));
 			}
@@ -188,7 +188,7 @@ class Admin {
 	 */
 	public static function introspectModel($model) {
 		return self::cache(array(__METHOD__, $model), function() use ($model) {
-			list($plugin, $model, $id, $class) = self::parseName($model);
+			list($plugin, $model, $id, $class) = Admin::parseName($model);
 
 			$object = ClassRegistry::init($class);
 
