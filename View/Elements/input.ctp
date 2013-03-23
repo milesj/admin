@@ -2,18 +2,25 @@
 $classes = array($data['type']);
 $hasError = isset($model->validationErrors[$field]);
 $isRequired = false;
+$validate = false;
 
 if ($hasError) {
 	$classes[] = 'error';
 }
 
 if (isset($model->validate[$field])) {
+	$validate = $model->validate[$field];
+} else if (isset($model->validations['default'][$field])) {
+	$validate = $model->validations['default'][$field];
+}
+
+if ($validate) {
 	$isRequired = true;
 
-	if (isset($model->validate[$field]['allowEmpty']) && $model->validate[$field]['allowEmpty']) {
+	if (isset($validate['allowEmpty']) && $validate['allowEmpty']) {
 		$isRequired = false;
-	} else if (isset($model->validate[$field]['required'])) {
-		$isRequired = $model->validate[$field]['required'];
+	} else if (isset($validate['required'])) {
+		$isRequired = $validate['required'];
 	}
 
 	if ($isRequired) {
@@ -56,7 +63,7 @@ if ($hasError) {
 		));
 
 		// Show a null checkbox for fields that support it
-		if (isset($data['null']) && $data['null']) {
+		if (isset($data['null']) && $data['null'] && !$isRequired) {
 			if (isset($this->data[$model->alias][$field])) {
 				$null = $this->data[$model->alias][$field];
 				$checked = ($null === null || $null === '');

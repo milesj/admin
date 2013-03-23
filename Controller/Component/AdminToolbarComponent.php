@@ -5,6 +5,8 @@
  * @link		http://milesj.me/code/cakephp/admin
  */
 
+App::uses('Admin', 'Admin.Lib');
+
 /**
  * @property Controller $Controller
  */
@@ -332,7 +334,7 @@ class AdminToolbarComponent extends Component {
 			$count = $object->find('count');
 
 			// Add to type ahead if too many records
-			if ($count > $object->admin['associationLimit']) {
+			if (!$count || $count > $object->admin['associationLimit']) {
 				$class = $assoc['className'];
 
 				if (mb_strpos($class, '.') === false) {

@@ -35,8 +35,9 @@ var Admin = {
 	 */
 	typeAhead: function(id, url) {
 		var sourceMap = {},
-			inputTA = $('#' + id),
-			inputRaw = $('#' + id.replace('TypeAhead', ''));
+			inputTA = $('#' + id + 'TypeAhead'),
+			inputNull = $('#' + id + 'Null'),
+			inputRaw = $('#' + id);
 
 		inputTA.typeahead({
 			items: 15,
@@ -68,6 +69,7 @@ var Admin = {
 				item = sourceMap[item];
 
 				inputRaw.val(item[0]);
+				inputNull.prop('checked', false);
 
 				return item[1];
 			}
@@ -77,6 +79,7 @@ var Admin = {
 		inputTA.keyup(function() {
 			if (!this.value) {
 				inputRaw.val('');
+				inputNull.prop('checked', true);
 			}
 		});
 	},

@@ -118,7 +118,7 @@ class ItemReport extends AdminAppModel {
 		$conditions = $query;
 		$conditions['created >='] = date('Y-m-d H:i:s', strtotime('-7 days'));
 
-		unset($conditions['item'], $conditions['reason'], $conditions['comment']);
+		unset($conditions['type'], $conditions['item'], $conditions['reason'], $conditions['comment']);
 
 		$count = $this->find('count', array(
 			'conditions' => $conditions

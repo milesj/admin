@@ -64,7 +64,7 @@ Configure::write('Admin.logActions', true);
 Configure::write('Admin.modelDefaults', array(
 	'imageFields' => array('image'),
 	'fileFields' => array('image', 'file'),
-	'hideFields' => array(),
+	'hideFields' => array('lft', 'rght'),
 	'paginate' => array(),
 	'associationLimit' => 75,
 	'batchDelete' => true,
@@ -112,7 +112,9 @@ if (!Configure::check('User.fieldMap')) {
 		'status'	=> 'status',
 		'avatar'	=> 'avatar',
 		'locale'	=> 'locale',
-		'timezone'	=> 'timezone'
+		'timezone'	=> 'timezone',
+		'lastLogin'	=> 'lastLogin',
+		'signature'	=> 'signature'
 	));
 }
 
@@ -138,6 +140,6 @@ if (!Configure::check('User.routes')) {
 		'signup' => array('plugin' => false, 'admin' => false, 'controller' => 'users', 'action' => 'signup'),
 		'forgotPass' => array('plugin' => false, 'admin' => false, 'controller' => 'users', 'action' => 'forgot_password'),
 		'settings' => array('plugin' => false, 'admin' => false, 'controller' => 'users', 'action' => 'settings'),
-		'profile' => array('plugin' => false, 'admin' => false, 'controller' => 'users', 'action' => 'profile', 'id' => '{id}')
+		'profile' => array('plugin' => false, 'admin' => false, 'controller' => 'users', 'action' => 'profile', '{id}') // {slug}, {username}
 	));
 }

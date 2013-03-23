@@ -192,15 +192,24 @@ class AdminHelper extends AppHelper {
 	 *
 	 * @param string $model
 	 * @param string $action
+	 * @param string $session
+	 * @param bool $exit - Exit early if the CRUD key doesn't exist in the session
 	 * @return bool
 	 */
-	public function hasAccess($model, $action) {
+	public function hasAccess($model, $action, $session = 'Admin.crud', $exit = false) {
 		if (!($model instanceof Model)) {
 			$model = $this->introspect($model);
 		}
 
-		$crud = $this->Session->read('Admin.crud');
-		$pass = (isset($crud[$model->qualifiedName][$action]) && $crud[$model->qualifiedName][$action]);
+		$crud = $this->Session->read($session);
+		$exists = isset($crud[$model->qualifiedName][$action]);
+
+		// Exit early
+		if ($exit && !$exists) {
+			return null;
+		}
+
+		$pass = ($exists && $crud[$model->qualifiedName][$action]);
 
 		// Check editable
 		if ($action === 'update') {

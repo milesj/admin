@@ -531,3 +531,31 @@ msgstr "Administrator"
 
 msgid "aro.superModerator"
 msgstr "Super Moderator"
+
+# Item Reports
+msgid "item_report.type.0"
+msgstr "Other"
+
+msgid "item_report.type.1"
+msgstr "Violence / Fighting"
+
+msgid "item_report.type.2"
+msgstr "Offensive / Animal or Child Abuse"
+
+msgid "item_report.type.3"
+msgstr "Hate Crimes / Bullying"
+
+msgid "item_report.type.4"
+msgstr "Dangerous Acts / Self Injury"
+
+msgid "item_report.type.5"
+msgstr "Spam / Fraud / Misleading Advertising"
+
+msgid "item_report.type.6"
+msgstr "Copyright / Infringement"
+
+msgid "item_report.type.7"
+msgstr "Sexual / Nudity"
+
+msgid "item_report.type.8"
+msgstr "Harassment / Threats / Trolling"

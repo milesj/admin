@@ -280,14 +280,19 @@ class RequestObject extends Aro {
 	 * Map all permissions to a boolean flagged list grouped by ACO and CRUD.
 	 *
 	 * @param int $user_id
+	 * @param string $filter
 	 * @return array
 	 */
-	public function getCrudPermissions($user_id) {
-		return $this->cache(array(__METHOD__, $user_id), function($self) use ($user_id) {
+	public function getCrudPermissions($user_id, $filter = null) {
+		return $this->cache(array(__METHOD__, $user_id), function($self) use ($user_id, $filter) {
 			$crud = array();
 
 			if ($permissions = $self->getPermissions($user_id)) {
 				foreach ($permissions as $permission) {
+					if ($filter && stripos($permission['ControlObject']['alias'], $filter) === false) {
+						continue;
+					}
+
 					$crud[$permission['ControlObject']['alias']] = array(
 						'create' => ($permission['ObjectPermission']['_create'] >= 0),
 						'read' => ($permission['ObjectPermission']['_read'] >= 0),
@@ -375,15 +380,16 @@ class RequestObject extends Aro {
 	}
 
 	/**
-	 * Check to see if a user is part of the admin ARO.
+	 * Check to see if a user is a child of a specific alias.
 	 *
 	 * @param int $user_id
+	 * @param string $alias
 	 * @return bool
 	 */
-	public function isAdmin($user_id) {
-		$admin = $this->getByAlias(Configure::read('Admin.aliases.administrator'));
+	public function isChildOf($user_id, $alias) {
+		$aro = $this->getByAlias($alias);
 
-		if (!$admin) {
+		if (!$aro) {
 			return false;
 		}
 
@@ -391,9 +397,29 @@ class RequestObject extends Aro {
 			'conditions' => array(
 				'RequestObject.model' => USER_MODEL,
 				'RequestObject.foreign_key' => $user_id,
-				'RequestObject.parent_id' => $admin['RequestObject']['id']
+				'RequestObject.parent_id' => $aro['RequestObject']['id']
 			)
 		));
+	}
+
+	/**
+	 * Check to see if a user is an admin.
+	 *
+	 * @param int $user_id
+	 * @return bool
+	 */
+	public function isAdmin($user_id) {
+		return $this->isChildOf($user_id, Configure::read('Admin.aliases.administrator'));
+	}
+
+	/**
+	 * Check to see if a user is a super moderator.
+	 *
+	 * @param int $user_id
+	 * @return bool
+	 */
+	public function isSuperMod($user_id) {
+		return $this->isChildOf($user_id, Configure::read('Admin.aliases.superModerator'));
 	}
 
 }

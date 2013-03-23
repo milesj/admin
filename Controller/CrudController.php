@@ -61,9 +61,9 @@ class CrudController extends AdminAppController {
 
 		if ($this->request->is('post')) {
 			$data = $this->AdminToolbar->getRequestData();
-			$this->Model->create($data);
+			$this->Model->create();
 
-			if ($this->Model->saveAll(null, array('validate' => 'first', 'atomic' => true, 'deep' => true))) {
+			if ($this->Model->saveAll($data, array('validate' => 'first', 'atomic' => true, 'deep' => true))) {
 				$this->Model->set($data);
 				$this->AdminToolbar->logAction(ActionLog::CREATE, $this->Model, $this->Model->id);
 

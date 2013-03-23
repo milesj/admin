@@ -17,7 +17,6 @@ if (empty($typeAhead[$field])) {
 		$value = $this->data[$alias][$model->{$alias}->displayField];
 	}
 
-	echo $this->Form->input($field, array('type' => 'hidden'));
 	echo $this->Form->input($field . '_type_ahead', array(
 		'div' => false,
 		'label' => false,
@@ -27,6 +26,13 @@ if (empty($typeAhead[$field])) {
 		'autocomplete' => 'off',
 		'value' => $value,
 		'default' => $data['default']
+	));
+
+	echo $this->Form->input($field, array(
+		'type' => 'text',
+		'div' => false,
+		'label' => false,
+		'style' => 'display: none'
 	)); ?>
 
 	<script type="text/javascript">
