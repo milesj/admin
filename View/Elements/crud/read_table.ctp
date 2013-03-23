@@ -7,7 +7,7 @@
 					<b><?php echo $data['title']; ?></b>
 				</td>
 				<td>
-					<?php echo $this->element('field', array(
+					<?php echo $this->element('Admin.field', array(
 						'result' => $result,
 						'field' => $field,
 						'data' => $data,

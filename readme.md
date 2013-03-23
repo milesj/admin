@@ -4,6 +4,7 @@ A CakePHP administration plugin that provides moderate CRUD functionality for ap
 Utilizes CakePHP's built-in authentication, authorization and ACL systems for security.
 
 This plugin *does not work* with the CakeDC Users plugin or with any users table that uses UUIDs.
+It also requires admin Routing prefixes to be *disabled*.
 
 ## Requirements ##
 

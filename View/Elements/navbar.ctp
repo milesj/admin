@@ -72,7 +72,7 @@ if ($modelParam) {
 						<?php
 						$title = __d('admin', 'Reports');
 
-						if ($pendingReports) {
+						if (!empty($pendingReports)) {
 							$title .= ' <span class="label label-important">' . $pendingReports . '</span>';
 						}
 

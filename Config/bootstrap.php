@@ -44,8 +44,8 @@ Configure::write('Admin.coreName', 'Core');
  * Aliases for special AROs.
  */
 Configure::write('Admin.aliases', array(
-	'administrator' => 'administrator',
-	'superModerator' => 'superModerator'
+	'administrator' => 'Administrator',
+	'superModerator' => 'SuperModerator'
 ));
 
 /**
@@ -96,6 +96,12 @@ Configure::write('Admin.behaviorCallbacks', array(
 Configure::write('Admin.modelCallbacks', array());
 
 /**
+ * Provide overrides for CRUD actions.
+ * This allows one to hook into the system and provide their own controller action logic.
+ */
+Configure::write('Admin.actionOverrides', array());
+
+/**
  * The user model for the application.
  */
 Configure::write('User.model', USER_MODEL);
@@ -113,8 +119,7 @@ if (!Configure::check('User.fieldMap')) {
 		'avatar'	=> 'avatar',
 		'locale'	=> 'locale',
 		'timezone'	=> 'timezone',
-		'lastLogin'	=> 'lastLogin',
-		'signature'	=> 'signature'
+		'lastLogin'	=> 'lastLogin'
 	));
 }
 

@@ -11,6 +11,10 @@ class CrudController extends AdminAppController {
 	 * List out and paginate all the records in the model.
 	 */
 	public function index() {
+		if ($this->overrideAction('index')) {
+			return;
+		}
+
 		$this->paginate = array_merge(array(
 			'limit' => 25,
 			'order' => array($this->Model->alias . '.' . $this->Model->displayField => 'ASC'),
@@ -56,6 +60,10 @@ class CrudController extends AdminAppController {
 	 * Create a new record.
 	 */
 	public function create() {
+		if ($this->overrideAction('create')) {
+			return;
+		}
+
 		$this->AdminToolbar->setBelongsToData($this->Model);
 		$this->AdminToolbar->setHabtmData($this->Model);
 
@@ -85,6 +93,10 @@ class CrudController extends AdminAppController {
 	 * @throws NotFoundException
 	 */
 	public function read($id) {
+		if ($this->overrideAction('read', $id)) {
+			return;
+		}
+
 		$this->Model->id = $id;
 
 		$result = $this->AdminToolbar->getRecordById($this->Model, $id);
@@ -109,6 +121,10 @@ class CrudController extends AdminAppController {
 	public function update($id) {
 		if (!$this->Model->admin['editable']) {
 			throw new ForbiddenException(__d('admin', 'Update Access Protected'));
+		}
+
+		if ($this->overrideAction('update', $id)) {
+			return;
 		}
 
 		$this->Model->id = $id;
@@ -155,6 +171,10 @@ class CrudController extends AdminAppController {
 			throw new ForbiddenException(__d('admin', 'Delete Access Protected'));
 		}
 
+		if ($this->overrideAction('delete', $id)) {
+			return;
+		}
+
 		$this->Model->id = $id;
 
 		$result = $this->AdminToolbar->getRecordById($this->Model, $id);
@@ -184,6 +204,10 @@ class CrudController extends AdminAppController {
 	 * @throws BadRequestException
 	 */
 	public function type_ahead() {
+		if ($response = $this->overrideAction('type_ahead')) {
+			return;
+		}
+
 		$this->viewClass = 'Json';
 		$this->layout = 'ajax';
 
@@ -314,6 +338,39 @@ class CrudController extends AdminAppController {
 
 			$this->request->data = $data;
 		}
+	}
+
+	/**
+	 * Override a CRUD action with an external Controller's action.
+	 * Request the custom action and set its response.
+	 *
+	 * @param string $action
+	 * @param int $id
+	 * @return bool
+	 */
+	protected function overrideAction($action, $id = null) {
+		$overrides = Configure::read('Admin.actionOverrides');
+		$model = $this->Model->qualifiedName;
+
+		if (empty($overrides[$model][$action])) {
+			return false;
+		}
+
+		$url = (array) $overrides[$model][$action];
+		$url[] = $id;
+
+		$response = $this->requestAction($url, array(
+			'autoRender' => true,
+			'bare' => false,
+			'return' => true,
+			'override' => true,
+			'data' => $this->request->data
+		));
+
+		$this->autoRender = false;
+		$this->response->body($response);
+
+		return true;
 	}
 
 }

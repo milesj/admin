@@ -2,7 +2,7 @@
 // Display full data on read
 if ($this->action === 'read') {
 	if (is_array($value)) {
-		echo $this->element('field/array', array('value' => $value));
+		echo $this->element('Admin.field/array', array('value' => $value));
 
 	} else {
 		echo nl2br(h($value));

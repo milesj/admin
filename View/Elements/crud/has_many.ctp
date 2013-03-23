@@ -22,7 +22,7 @@ $fields = $this->Admin->filterFields($foreignModel, $assoc['fields']); ?>
 					<?php foreach ($fields as $field => $data) { ?>
 
 						<td class="col-<?php echo $field; ?> type-<?php echo $data['type']; ?>">
-							<?php echo $this->element('field', array(
+							<?php echo $this->element('Admin.field', array(
 								'result' => $result,
 								'field' => $field,
 								'data' => $data,

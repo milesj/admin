@@ -16,7 +16,7 @@ echo $this->Html->docType(); ?>
 	echo $this->Html->script('Admin.admin'); ?>
 </head>
 <body class="controller-<?php echo $this->request->controller; ?>">
-	<?php echo $this->element('navbar'); ?>
+	<?php echo $this->element('Admin.navbar'); ?>
 
 	<div class="body container-fluid action-<?php echo $this->action; ?>">
 		<div class="row-fluid">

@@ -33,7 +33,7 @@
 				<?php
 				// Belongs to is the only special case
 				if (!empty($data['belongsTo'])) {
-					echo $this->element('input/belongs_to', array(
+					echo $this->element('Admin.input/belongs_to', array(
 						'field' => $field,
 						'data' => $data
 					));
@@ -69,14 +69,14 @@
 						</div>
 
 						<?php
-						echo $this->element('input/filter', array(
+						echo $this->element('Admin.input/filter', array(
 							'field' => $field,
 							'data' => $data
 						)); ?>
 					</div>
 
 				<?php } else {
-					echo $this->element('input/filter', array(
+					echo $this->element('Admin.input/filter', array(
 						'field' => $field,
 						'data' => $data
 					));

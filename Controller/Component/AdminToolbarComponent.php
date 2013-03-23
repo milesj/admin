@@ -23,9 +23,34 @@ class AdminToolbarComponent extends Component {
 	 * Store the controller.
 	 *
 	 * @param Controller $controller
+	 * @throws ForbiddenException
 	 */
 	public function startup(Controller $controller) {
 		$this->Controller = $controller;
+
+		// Thrown an exception if accessing an override action without requestAction()
+		if (substr($controller->action, 0, 6) === 'admin_' && empty($controller->request->params['override'])) {
+			throw new ForbiddenException();
+		}
+	}
+
+	/**
+	 * An action or view is being overridden, so prepare the layout and environment.
+	 * Bind any other data that should be present.
+	 *
+	 * @param Controller $controller
+	 */
+	public function beforeRender(Controller $controller) {
+		$controller->set('pendingReports', Admin::introspectModel('Admin.ItemReport')->getCountByStatus());
+
+		if (isset($controller->Model)) {
+			$controller->set('model', $controller->Model);
+		}
+
+		if (isset($controller->request->params['override'])) {
+			$controller->layout = 'Admin.admin';
+			$controller->request->params['action'] = 'delete';
+		}
 	}
 
 	/**
@@ -261,7 +286,7 @@ class AdminToolbarComponent extends Component {
 			$action = $this->Controller->request->data[$model->alias]['redirect_to'];
 		}
 
-		$url = array('controller' => mb_strtolower($this->Controller->name), 'action' => $action, 'model' => $model->urlSlug);
+		$url = array('plugin' => 'admin', 'controller' => 'crud', 'action' => $action, 'model' => $model->urlSlug);
 
 		switch ($action) {
 			case 'read':

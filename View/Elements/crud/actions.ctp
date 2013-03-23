@@ -1,12 +1,12 @@
 <div class="action-buttons">
 	<?php
 	if ($this->action === 'index') {
-		echo $this->element('button/filter');
-		echo $this->element('button/process_behavior');
+		echo $this->element('Admin.button/filter');
+		echo $this->element('Admin.button/process_behavior');
 	}
 
 	if ($this->action === 'read') {
-		echo $this->element('button/process_model');
+		echo $this->element('Admin.button/process_model');
 	}
 
 	if ($this->action !== 'create' && $this->Admin->hasAccess($model->qualifiedName, 'create')) {

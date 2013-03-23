@@ -140,18 +140,23 @@ class AdminHelper extends AppHelper {
 	 * Return a list of valid callbacks for the model and logged in user.
 	 *
 	 * @param Model $model
+	 * @param string $scope
 	 * @return array
 	 */
-	public function getModelCallbacks(Model $model) {
+	public function getModelCallbacks(Model $model, $scope = '*') {
 		$callbacks = array();
 		$models = Configure::read('Admin.modelCallbacks');
 
 		if (isset($models[$model->qualifiedName])) {
 			foreach ($models[$model->qualifiedName] as $method => $options) {
 				if (is_string($options)) {
-					$options = array('title' => $options, 'access' => 'update');
+					$options = array('title' => $options, 'access' => 'update', 'scope' => '*');
 				} else {
-					$options = $options += array('access' => 'update');
+					$options = $options += array('access' => 'update', 'scope' => '*');
+				}
+
+				if ($options['scope'] !== $scope) {
+					continue;
 				}
 
 				if ($this->hasAccess($model->qualifiedName, $options['access'])) {

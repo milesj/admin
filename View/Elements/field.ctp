@@ -17,7 +17,7 @@ if ($value === null || $value === '') { ?>
 	<div class="muted align-center">-</div>
 
 <?php } else {
-	echo $this->element('field/' . $element, array(
+	echo $this->element('Admin.field/' . $element, array(
 		'result' => $result,
 		'field' => $field,
 		'data' => $data,

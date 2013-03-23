@@ -112,7 +112,6 @@ class AdminAppController extends Controller {
 		$this->set('user', $this->Auth->user());
 		$this->set('config', Configure::read());
 		$this->set('model', $this->Model);
-		$this->set('pendingReports', Admin::introspectModel('Admin.ItemReport')->getCountByStatus());
 	}
 
 	/**

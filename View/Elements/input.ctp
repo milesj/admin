@@ -57,7 +57,7 @@ if ($hasError) {
 			$element = 'datetime';
 		}
 
-		echo $this->element('input/' . $element, array(
+		echo $this->element('Admin.input/' . $element, array(
 			'field' => $field,
 			'data' => $data
 		));

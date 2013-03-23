@@ -3,7 +3,7 @@ $params = array(
 	'div' => false,
 	'label' => false,
 	'type' => 'text',
-	'default' => $data['default'],
+	'default' => isset($data['default']) ? $data['default'] : '',
 	'empty' => ($this->action === 'index')
 );
 
@@ -20,11 +20,16 @@ switch ($data['type']) {
 		$params['type'] = 'number';
 	break;
 	case 'boolean':
+	case 'bool':
 		$params['type'] = 'checkbox';
 	break;
 	case 'enum':
 		$params['type'] = 'select';
 		$params['options'] = $model->enum[$field];
+	break;
+	case 'array':
+	case 'list':
+		$params['type'] = 'select';
 	break;
 }
 
