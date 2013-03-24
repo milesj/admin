@@ -37,7 +37,7 @@ class InstallShell extends BaseInstallShell {
 		))
 		->setDbConfig(ADMIN_DATABASE)
 		->setTablePrefix(ADMIN_PREFIX)
-		->setRequiredTables(array('users', 'aros', 'acos', 'aros_acos'));
+		->setRequiredTables(array('aros', 'acos', 'aros_acos'));
 
 		$this->out('Plugin: Admin v' . Configure::read('Admin.version'));
 		$this->out('Copyright: Miles Johnson, 2010-' . date('Y'));
@@ -83,8 +83,8 @@ class InstallShell extends BaseInstallShell {
 		}
 
 		$this->out('<info>Access granted, proceeding...</info>');
-		$this->plugin(Configure::read('Admin.coreName'));
 		$this->plugin('Admin');
+		$this->plugin(Configure::read('Admin.coreName'));
 
 		return true;
 	}

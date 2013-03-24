@@ -102,6 +102,12 @@ Configure::write('Admin.modelCallbacks', array());
 Configure::write('Admin.actionOverrides', array());
 
 /**
+ * Provide overrides for CRUD views.
+ * This allows one to hook into the system and provide their own view template logic.
+ */
+Configure::write('Admin.viewOverrides', array());
+
+/**
  * The user model for the application.
  */
 Configure::write('User.model', USER_MODEL);

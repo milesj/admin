@@ -202,31 +202,7 @@ class AdminHelper extends AppHelper {
 	 * @return bool
 	 */
 	public function hasAccess($model, $action, $session = 'Admin.crud', $exit = false) {
-		if (!($model instanceof Model)) {
-			$model = $this->introspect($model);
-		}
-
-		$crud = $this->Session->read($session);
-		$exists = isset($crud[$model->qualifiedName][$action]);
-
-		// Exit early
-		if ($exit && !$exists) {
-			return null;
-		}
-
-		$pass = ($exists && $crud[$model->qualifiedName][$action]);
-
-		// Check editable
-		if ($action === 'update') {
-			return ($pass && $model->admin['editable']);
-		}
-
-		// Check deletable
-		if ($action === 'delete') {
-			return ($pass && $model->admin['deletable']);
-		}
-
-		return $pass;
+		return Admin::hasAccess($model, $action, $session, $exit);
 	}
 
 	/**

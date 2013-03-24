@@ -139,6 +139,43 @@ class Admin {
 	}
 
 	/**
+	 * Check to see if a user has specific CRUD access for a model.
+	 *
+	 * @param string $model
+	 * @param string $action
+	 * @param string $session
+	 * @param bool $exit - Exit early if the CRUD key doesn't exist in the session
+	 * @return bool
+	 */
+	public static function hasAccess($model, $action, $session = 'Admin.crud', $exit = false) {
+		if (!($model instanceof Model)) {
+			$model = self::introspectModel($model);
+		}
+
+		$crud = Hash::get($_SESSION, $session);
+		$exists = isset($crud[$model->qualifiedName][$action]);
+
+		// Exit early
+		if ($exit && !$exists) {
+			return null;
+		}
+
+		$pass = ($exists && $crud[$model->qualifiedName][$action]);
+
+		// Check editable
+		if ($action === 'update') {
+			return ($pass && $model->admin['editable']);
+		}
+
+		// Check deletable
+		if ($action === 'delete') {
+			return ($pass && $model->admin['deletable']);
+		}
+
+		return $pass;
+	}
+
+	/**
 	 * Check if a model has been installed into the ACO table.
 	 *
 	 * @param string $model
@@ -200,7 +237,7 @@ class Admin {
 			// Override model
 			$object->Behaviors->load('Containable');
 			$object->Behaviors->load('Utility.Cacheable');
-			$object->cacheQueries = true;
+			$object->cacheQueries = false;
 			$object->recursive = -1;
 
 			// Inherit enums from parent classes

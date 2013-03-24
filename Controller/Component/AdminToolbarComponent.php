@@ -49,7 +49,7 @@ class AdminToolbarComponent extends Component {
 
 		if (isset($controller->request->params['override'])) {
 			$controller->layout = 'Admin.admin';
-			$controller->request->params['action'] = 'delete';
+			$controller->request->params['action'] = str_replace('admin_', '', $controller->action);
 		}
 	}
 
@@ -162,27 +162,12 @@ class AdminToolbarComponent extends Component {
 	 *
 	 * @param string $model
 	 * @param string $action
+	 * @param string $session
+	 * @param bool $exit - Exit early if the CRUD key doesn't exist in the session
 	 * @return bool
 	 */
-	public function hasAccess($model, $action) {
-		if (!($model instanceof Model)) {
-			$model = Admin::introspectModel($model);
-		}
-
-		$crud = $this->Session->read('Admin.crud');
-		$pass = (isset($crud[$model->qualifiedName][$action]) && $crud[$model->qualifiedName][$action]);
-
-		// Check editable
-		if ($action === 'update') {
-			return ($pass && $model->admin['editable']);
-		}
-
-		// Check deletable
-		if ($action === 'delete') {
-			return ($pass && $model->admin['deletable']);
-		}
-
-		return $pass;
+	public function hasAccess($model, $action, $session = 'Admin.crud', $exit = false) {
+		return Admin::hasAccess($model, $action, $session, $exit);
 	}
 
 	/**

@@ -54,6 +54,7 @@ class CrudController extends AdminAppController {
 		}
 
 		$this->set('results', $this->paginate($this->Model));
+		$this->overrideView('index');
 	}
 
 	/**
@@ -83,7 +84,7 @@ class CrudController extends AdminAppController {
 			}
 		}
 
-		$this->render('form');
+		$this->overrideView('create');
 	}
 
 	/**
@@ -111,6 +112,7 @@ class CrudController extends AdminAppController {
 		$this->AdminToolbar->setAssociationCounts($this->Model);
 
 		$this->set('result', $result);
+		$this->overrideView('read');
 	}
 
 	/**
@@ -158,7 +160,7 @@ class CrudController extends AdminAppController {
 		}
 
 		$this->set('result', $result);
-		$this->render('form');
+		$this->overrideView('update');
 	}
 
 	/**
@@ -198,6 +200,7 @@ class CrudController extends AdminAppController {
 		}
 
 		$this->set('result', $result);
+		$this->overrideView('delete');
 	}
 
 	/**
@@ -373,6 +376,39 @@ class CrudController extends AdminAppController {
 		$this->response->body($response);
 
 		return true;
+	}
+
+	/**
+	 * Override a CRUD view with an external view template.
+	 *
+	 * @param string $action
+	 * @return bool
+	 */
+	protected function overrideView($action) {
+		$overrides = Configure::read('Admin.viewOverrides');
+		$model = $this->Model->qualifiedName;
+		$view = in_array($action, array('create', 'update')) ? 'form' : $action;
+
+		if (empty($overrides[$model][$action])) {
+			$this->render($view);
+			return;
+		}
+
+		$override = $overrides[$model][$action] + array(
+			'action' => $view,
+			'controller' => $this->name,
+			'plugin' => null
+		);
+
+		// View settings
+		$this->view = $override['action'];
+		$this->viewPath = Inflector::camelize($override['controller']);
+		$this->plugin = Inflector::camelize($override['plugin']);
+
+		// Override
+		$this->request->params['override'] = true;
+
+		$this->render();
 	}
 
 }
