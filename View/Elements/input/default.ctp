@@ -25,7 +25,7 @@ switch ($data['type']) {
 	break;
 	case 'enum':
 		$params['type'] = 'select';
-		$params['options'] = $model->enum[$field];
+		$params['options'] = $this->Utility->enum($model->qualifiedName, $field);
 	break;
 	case 'array':
 	case 'list':

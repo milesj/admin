@@ -108,6 +108,8 @@ class CrudController extends AdminAppController {
 		$this->Model->set($result);
 		$this->AdminToolbar->logAction(ActionLog::READ, $this->Model, $id);
 
+		$this->AdminToolbar->setAssociationCounts($this->Model);
+
 		$this->set('result', $result);
 	}
 

@@ -119,6 +119,20 @@ class AdminToolbarComponent extends Component {
 	}
 
 	/**
+	 * Return a count of records. If a certain method exists, use it.
+	 *
+	 * @param Model $model
+	 * @return array
+	 */
+	public function getRecordCount(Model $model) {
+		if ($model->hasMethod('getCount')) {
+			return $model->getCount();
+		}
+
+		return $model->find('count');
+	}
+
+	/**
 	 * Return the request data after processing the fields.
 	 *
 	 * @return array
@@ -347,6 +361,28 @@ class AdminToolbarComponent extends Component {
 	}
 
 	/**
+	 * Set a count for every model association.
+	 *
+	 * @param Model $model
+	 */
+	public function setAssociationCounts(Model $model) {
+		$counts = array();
+
+		foreach (array($model->hasMany, $model->hasAndBelongsToMany) as $property) {
+			foreach ($property as $alias => $assoc) {
+				$class = isset($assoc['with']) ? $assoc['with'] : $assoc['className'];
+
+				$counts[$alias] = Admin::introspectModel($class)->find('count', array(
+					'conditions' => array($assoc['foreignKey'] => $model->id),
+					'contain' => false
+				));
+			}
+		}
+
+		$this->Controller->set('counts', $counts);
+	}
+
+	/**
 	 * Set belongsTo data for select inputs. If there are too many records, switch to type ahead.
 	 *
 	 * @param Model $model
@@ -356,7 +392,7 @@ class AdminToolbarComponent extends Component {
 
 		foreach ($model->belongsTo as $alias => $assoc) {
 			$object = Admin::introspectModel($assoc['className']);
-			$count = $object->find('count');
+			$count = $this->getRecordCount($object);
 
 			// Add to type ahead if too many records
 			if (!$count || $count > $object->admin['associationLimit']) {

@@ -5,6 +5,17 @@ $fields = $this->Admin->filterFields($withModel); ?>
 
 <section class="has-and-belongs-to-many">
 	<h5>
+		<?php if (isset($counts[$alias])) {
+			$total = $counts[$alias];
+			$count = $assoc['limit'] ?: count($results);
+
+			if ($count > $total) {
+				$count = $total;
+			} ?>
+
+			<span class="muted pull-right"><?php echo __d('admin', '%s of %s', array($count, $total)); ?></span>
+		<?php } ?>
+
 		<?php echo $this->Admin->outputAssocName($foreignModel, $alias, $assoc['className']); ?> &rarr;
 		<?php echo $this->Admin->outputAssocName($withModel, $withModel->alias, $assoc['with']); ?>
 	</h5>

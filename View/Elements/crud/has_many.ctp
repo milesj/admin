@@ -3,7 +3,20 @@ $foreignModel = $this->Admin->introspect($assoc['className']);
 $fields = $this->Admin->filterFields($foreignModel, $assoc['fields']); ?>
 
 <section class="has-many">
-	<h5><?php echo $this->Admin->outputAssocName($foreignModel, $alias, $assoc['className']); ?></h5>
+	<h5>
+		<?php if (isset($counts[$alias])) {
+			$total = $counts[$alias];
+			$count = $assoc['limit'] ?: count($results);
+
+			if ($count > $total) {
+				$count = $total;
+			} ?>
+
+			<span class="muted pull-right"><?php echo __d('admin', '%s of %s', array($count, $total)); ?></span>
+		<?php } ?>
+
+		<?php echo $this->Admin->outputAssocName($foreignModel, $alias, $assoc['className']); ?>
+	</h5>
 
 	<table class="table table-striped table-bordered table-hover clickable">
 		<thead>

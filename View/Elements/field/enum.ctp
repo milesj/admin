@@ -1,17 +1,20 @@
 <?php
+$class = 'enum enum-' . $field .' enum-' . $field . '-' . $value;
+
 if (is_numeric($value)) {
-	if (!isset($model->enum[$field][$value])) { ?>
+	if (empty($model->enum[$field][$value])) { ?>
 
 		<span class="enum text-error">INVALID ENUM: <?php echo $value; ?></span>
 
-	<?php } else {
-		$enum = $model->enum[$field][$value]; ?>
+	<?php } else { ?>
 
-		<span class="enum enum-<?php echo mb_strtolower($enum); ?>"><?php echo $enum; ?></span>
+		<span class="<?php echo $class; ?>">
+			<?php echo $this->Utility->enum($model->qualifiedName, $field, $value); ?>
+		</span>
 
 	<?php }
 } else { ?>
 
-	<span class="enum enum-<?php echo mb_strtolower($value); ?>"><?php echo $value; ?></span>
+	<span class="<?php echo $class; ?>"><?php echo $value; ?></span>
 
 <?php } ?>

@@ -41,7 +41,7 @@ class AdminAppController extends Controller {
 	 */
 	public $helpers = array(
 		'Html', 'Session', 'Form', 'Time', 'Text', 'Paginator',
-		'Utility.Breadcrumb', 'Admin.Admin'
+		'Utility.Breadcrumb', 'Utility.Utility', 'Admin.Admin'
 	);
 
 	/**
