@@ -26,8 +26,8 @@ if ($modelParam) {
 					<li class="dropdown">
 						<a data-toggle="dropdown" class="dropdown-toggle user" href="javascript:;">
 							<?php
-							if ($avatar = $user[$config['User']['fieldMap']['avatar']]) {
-								echo $this->Html->image($avatar, array('class' => 'avatar'));
+							if (!empty($user[$config['User']['fieldMap']['avatar']])) {
+								echo $this->Html->image($user[$config['User']['fieldMap']['avatar']], array('class' => 'avatar'));
 							}
 
 							$profileUrl = $config['User']['routes']['profile'];

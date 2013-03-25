@@ -1,11 +1,11 @@
 <?php
-if (!empty($data['belongsTo']) && !empty($value)) {
+if (!empty($data['belongsTo']) && !empty($value) || $data['type'] === 'relation') {
 	$element = 'belongs_to';
 
 } else if ($field === $model->primaryKey) {
 	$element = 'id';
 
-} else if ($this->Admin->isImage($model, $field)) {
+} else if (in_array($field, $model->admin['fileFields']) || isset($model->admin['fileFields'][$field])) {
 	$element = 'image';
 
 } else if (in_array($field, $model->admin['fileFields'])) {

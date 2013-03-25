@@ -212,26 +212,6 @@ class AdminHelper extends AppHelper {
 	}
 
 	/**
-	 * Check to see if the field is an image and if it should be rendered as one.
-	 *
-	 * @param Model $model
-	 * @param string $field
-	 * @return bool
-	 */
-	public function isImage(Model $model, $field) {
-		foreach ($model->admin['imageFields'] as $key => $value) {
-			if ($key === $field) {
-				return in_array($this->request->params['action'], (array) $value);
-
-			} else if ($value === $field) {
-				return true;
-			}
-		}
-
-		return false;
-	}
-
-	/**
 	 * Generate a nested list of deletion model dependencies.
 	 *
 	 * @param array $list
