@@ -514,16 +514,10 @@ msgid "action_log.batch_delete"
 msgstr "%s deleted multiple %s"
 
 msgid "action_log.process"
-msgstr "%s processed %s"
+msgstr "%s processed %s %s"
 
 msgid "action_log.batch_process"
 msgstr "%s processed multiple %s"
-
-msgid "action_log.acl_sync"
-msgstr "%s synced ACL trees"
-
-msgid "action_log.acl_grant"
-msgstr "%s granted ACL access"
 
 # AROs
 msgid "aro.administrator"

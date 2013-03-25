@@ -51,7 +51,7 @@ class AclController extends AdminAppController {
 		}
 
 		if ($this->Acl->allow($aroAlias, $acoAlias)) {
-			$this->AdminToolbar->logAction(ActionLog::ACL_GRANT, null, null, sprintf('Granted %s access to %s', $aroAlias, $acoAlias));
+			$this->AdminToolbar->logAction(ActionLog::CREATE, $this->Permission, $this->Acl->adapter()->Permission->id, sprintf('Granted %s access to %s', $aroAlias, $acoAlias));
 			$this->AdminToolbar->setFlashMessage(__d('admin', 'Successfully granted %s permission to %s', array($aroAlias, $acoAlias)));
 		} else {
 			$this->AdminToolbar->setFlashMessage(__d('admin', 'Failed to grant %s permission to %s', array($aroAlias, $acoAlias)), 'error');

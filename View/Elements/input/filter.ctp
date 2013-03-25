@@ -14,7 +14,7 @@ switch ($data['type']) {
 		$params['type'] = 'select';
 
 		if ($data['type'] === 'enum') {
-			$params['options'] = $model->enum[$field];
+			$params['options'] = $this->Utility->enum($model->qualifiedName, $field);
 		} else {
 			$params['options'] = array(__d('admin', 'No'), __d('admin', 'Yes'));
 		}

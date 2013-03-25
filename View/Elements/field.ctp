@@ -8,6 +8,9 @@ if (!empty($data['belongsTo']) && !empty($value)) {
 } else if ($this->Admin->isImage($model, $field)) {
 	$element = 'image';
 
+} else if (in_array($field, $model->admin['fileFields'])) {
+	$element = 'file';
+
 } else {
 	$element = $data['type'];
 }

@@ -43,47 +43,45 @@ class LogsController extends AdminAppController {
 			}
 
 			if ($file = file($path, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES)) {
+				$log = array();
+
 				foreach ($file as $line) {
-					// Stack trace
-					if ($line[0] === '#') {
-						$stack[] = $line . PHP_EOL;
-
-					// Error message
-					} else {
-						if ($stack) {
-							$logs[$message]['stack'] = $stack;
-							$stack = null;
-						}
-
-						// Parse out substrings
-						if (!preg_match('/^([0-9\-:\s]+)\s([a-z]+:)\s(?:\[([a-z]+)\])?\s?(.*?)$/i', $line, $matches)) {
-							$stack = array();
-							continue;
-						}
-
-						$date = $matches[1];
+					// Exception message
+					if (preg_match('/^([0-9\-:\s]+)\s([a-z]+:)\s(?:\[([a-z]+)\])?\s?(.*?)$/i', $line, $matches)) {
 						$exception = $matches[3];
-						$message = $matches[4];
 
-						// Save mapping
-						if (isset($logs[$message])) {
-							$logs[$message]['count']++;
-							$logs[$message]['date'] = $date;
+						// Save the previous log
+						if ($log) {
+							$key = md5($log['url'] . $log['message']);
 
-						} else {
-							$logs[$message] = array(
-								'line' => $line,
-								'exception' => $exception,
-								'message' => $message,
-								'stack' => null,
-								'count' => 1,
-								'date' => $date
-							);
+							if (isset($logs[$key])) {
+								$logs[$key]['count']++;
+							} else {
+								$logs[$key] = $log;
+							}
 						}
+
+						// Start a new log
+						$log = array(
+							'line' => $line,
+							'exception' => $exception,
+							'message' => $matches[4],
+							'stack' => array(),
+							'count' => 1,
+							'date' => $matches[1],
+							'url' => null
+						);
 
 						if ($exception) {
-							$exceptions[$exception][] = $date;
+							$exceptions[$exception][] = $matches[1];
 						}
+					// Request URL
+					} else if (preg_match('/^Request URL: (.*?)$/i', $line, $matches)) {
+						$log['url'] = $matches[1];
+
+					// Stack trace
+					} else if ($line[0] === '#') {
+						$log['stack'][] = $line . PHP_EOL;
 					}
 				}
 			}

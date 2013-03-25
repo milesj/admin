@@ -13,7 +13,7 @@ echo $this->element('crud/actions'); ?>
 <h2><?php echo $this->Admin->outputIconTitle($model, $pageTitle); ?></h2>
 
 <?php
-echo $this->Form->create($model->alias, array('class' => 'form-horizontal', 'file' => true));
+echo $this->Form->create($model->alias, array('class' => 'form-horizontal', 'type' => 'file'));
 echo $this->element('crud/form_fields');
 echo $this->element('crud/form_extra');
 echo $this->element('form_actions');

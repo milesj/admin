@@ -123,10 +123,6 @@ class AdminHelper extends AppHelper {
 	public function getDisplayField(Model $model, $result) {
 		$displayField = $result[$model->alias][$model->displayField];
 
-		if ($model->displayField == $model->primaryKey) {
-			$displayField = '#' . $displayField;
-		}
-
 		if (!$displayField) {
 			$displayField = $this->Html->tag('span', '(' . __d('admin', 'No Title') . ')', array(
 				'class' => 'text-warning'

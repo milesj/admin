@@ -12,17 +12,15 @@ class ActionLog extends AdminAppModel {
 	const OTHER = 0;
 
 	// CRUD
-	const CREATE = 10;
-	const READ = 11;
-	const UPDATE = 12;
-	const DELETE = 13;
-	const BATCH_DELETE = 14;
-	const PROCESS = 15;
-	const BATCH_PROCESS = 16;
+	const CREATE = 1;
+	const READ = 2;
+	const UPDATE = 3;
+	const DELETE = 4;
+	const BATCH_DELETE = 5;
 
-	// ACL
-	const ACL_SYNC = 20;
-	const ACL_GRANT = 21;
+	// Misc
+	const PROCESS = 6;
+	const BATCH_PROCESS = 7;
 
 	/**
 	 * Display field.
@@ -56,9 +54,7 @@ class ActionLog extends AdminAppModel {
 			self::DELETE => 'DELETE',
 			self::BATCH_DELETE => 'BATCH_DELETE',
 			self::PROCESS => 'PROCESS',
-			self::BATCH_PROCESS => 'BATCH_PROCESS',
-			self::ACL_SYNC => 'ACL_SYNC',
-			self::ACL_GRANT => 'ACL_GRANT'
+			self::BATCH_PROCESS => 'BATCH_PROCESS'
 		)
 	);
 

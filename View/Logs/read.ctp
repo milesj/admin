@@ -12,6 +12,7 @@ echo $this->element('logs/actions'); ?>
 		<tr>
 			<th><span><?php echo __d('admin', 'Code'); ?></span></th>
 			<th><span><?php echo __d('admin', 'Exception'); ?></span></th>
+			<th><span><?php echo __d('admin', 'URL'); ?></span></th>
 			<th><span><?php echo __d('admin', 'Message'); ?></span></th>
 			<th><span><?php echo __d('admin', 'Count'); ?></span></th>
 			<th><span><?php echo __d('admin', 'Date'); ?></span></th>
@@ -61,6 +62,7 @@ echo $this->element('logs/actions'); ?>
 					<?php } ?>
 				</td>
 				<td><?php echo $log['exception']; ?></td>
+				<td><?php echo $log['url']; ?></td>
 				<td>
 					<?php if (!$log['stack']) {
 						echo $log['message'];
@@ -80,7 +82,7 @@ echo $this->element('logs/actions'); ?>
 		} else { ?>
 
 			<tr>
-				<td colspan="5" class="no-results">
+				<td colspan="6" class="no-results">
 					<?php echo __d('admin', 'No results to display'); ?>
 				</td>
 			</tr>

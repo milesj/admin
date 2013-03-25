@@ -1,1 +1,5 @@
-<?php echo $this->Html->image($value, array('alt' => '', 'class' => 'image'));
+<?php echo $this->Html->image($value, array(
+	'pathPrefix' => '',
+	'alt' => '',
+	'class' => 'image'
+));

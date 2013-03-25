@@ -56,7 +56,7 @@ echo $this->element('pagination'); ?>
 									$title = $result[$model->alias]['item'];
 
 									if (!$title) {
-										$title = '#' . $result[$model->alias]['foreign_key'];
+										$title = $result[$model->alias]['foreign_key'];
 									}
 
 									echo $this->Html->link($title, array('action' => 'read', $id)); ?>

@@ -45,7 +45,7 @@ echo $this->element('logs/actions'); ?>
 					));
 
 					// CRUD specific
-					if (in_array($result[$model->alias]['action'], array(ActionLog::CREATE, ActionLog::READ, ActionLog::UPDATE, ActionLog::DELETE))) {
+					if (in_array($result[$model->alias]['action'], array(ActionLog::CREATE, ActionLog::READ, ActionLog::UPDATE, ActionLog::DELETE, ActionLog::PROCESS))) {
 						$params[] = mb_strtolower($foreignModel->singularName);
 					}
 
@@ -54,7 +54,7 @@ echo $this->element('logs/actions'); ?>
 						$title = $result[$model->alias]['item'];
 
 						if (!$title) {
-							$title = '#' . $foreignKey;
+							$title = $foreignKey;
 						}
 
 						$params[] = $this->Html->link($title, array(
