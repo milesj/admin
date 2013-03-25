@@ -56,4 +56,27 @@ class AdminController extends AdminAppController {
 		$this->set('configuration', $config);
 	}
 
+	/**
+	 * Display all cache configurations.
+	 */
+	public function cache() {
+		$config = array();
+
+		foreach (Cache::configured() as $key) {
+			$temp = Cache::config($key);
+			$config[$key] = $temp['settings'];
+		}
+
+		ksort($config);
+
+		$this->set('configuration', $config);
+	}
+
+	/**
+	 * Display all route settings.
+	 */
+	public function routes() {
+		$this->set('routes', Router::$routes);
+	}
+
 }

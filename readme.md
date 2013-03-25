@@ -37,10 +37,10 @@ Create the ACL tables if you have not already.
 cake schema create DbAcl
 ```
 
-Set the ARO administrator alias in your bootstrap (defaults to administrator).
+Set the ARO administrator alias in your bootstrap (defaults to Administrator).
 
 ```php
-Configure::write('Admin.aliases.administrator', 'administrator');
+Configure::write('Admin.aliases.administrator', 'Administrator');
 ```
 
 Install the plugin and follow the on screen instructions (this will generate appropriate ACL records).

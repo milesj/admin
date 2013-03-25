@@ -12,7 +12,19 @@
 		'config' => array(
 			'title' => __d('admin', 'Configuration'),
 			'icon' => 'icon-cog'
-		)
+		),
+		'cache' => array(
+			'title' => __d('admin', 'Cache'),
+			'icon' => 'icon-hdd'
+		),
+		'routes' => array(
+			'title' => __d('admin', 'Routes'),
+			'icon' => 'icon-road'
+		),
+		/*'locales' => array(
+			'title' => __d('admin', 'Locales'),
+			'icon' => 'icon-globe'
+		)*/
 	);
 
 	foreach ($links as $action => $link) {

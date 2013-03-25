@@ -165,6 +165,6 @@ td.col-actions a.btn { display: inline-block; padding: 0 4px; }
 .gridalicious .well { margin: 0 20px 20px 0 !important; }
 .gridalicious .galcolumn:last-child .well { margin-right: 0 !important; }
 
-.controller-admin .action-config .gridalicious .well { padding: 0; }
-.controller-admin .action-config .gridalicious .well > h3 { margin: 19px; }
-.controller-admin .action-config .gridalicious .well .table { margin: -1px; width: 100.5%; max-width: 100.5%; }
+.gridalicious.config-grid .well { padding: 0; }
+.gridalicious.config-grid .well > h3 { margin: 19px; }
+.gridalicious.config-grid .well .table { margin: -1px; width: 100.5%; max-width: 100.5%; }
