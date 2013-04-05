@@ -1,16 +1,15 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: Admin v0.10.0\n"
-"POT-Creation-Date: 2013-03-21 03:35+0000\n"
-"PO-Revision-Date: 2013-03-20 20:41-0800\n"
+"Project-Id-Version: Admin Plugin\n"
+"POT-Creation-Date: 2013-04-05 07:05+0000\n"
+"PO-Revision-Date: 2013-04-05 00:08-0800\n"
 "Last-Translator: Miles Johnson <mileswjohnson@gmail.com>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n == 1 ? 0 : 1;\n"
-"X-Generator: Poedit 1.5.4\n"
-"X-Poedit-SourceCharset: UTF-8\n"
+"X-Generator: Poedit 1.5.5\n"
 
 #: /Config/bootstrap.php:36
 msgid "Admin"
@@ -36,113 +35,113 @@ msgstr ""
 msgid "Invalid User"
 msgstr ""
 
-#: /Controller/AdminAppController.php:91 /Controller/CrudController.php:33;291
-#: /Controller/ReportsController.php:111
+#: /Controller/AdminAppController.php:91 /Controller/CrudController.php:37;320
+#: /Controller/ReportsController.php:114
 msgid "Insufficient Access Permissions"
 msgstr ""
 
-#: /Controller/CrudController.php:30;155
+#: /Controller/CrudController.php:34;175
 msgid "Delete Access Protected"
 msgstr ""
 
-#: /Controller/CrudController.php:48
+#: /Controller/CrudController.php:52
 msgid "%s %s have been deleted"
 msgstr ""
 
-#: /Controller/CrudController.php:70
+#: /Controller/CrudController.php:79
 msgid "Successfully created a new %s"
 msgstr ""
 
-#: /Controller/CrudController.php:74
+#: /Controller/CrudController.php:83
 msgid "Failed to create a new %s"
 msgstr ""
 
-#: /Controller/CrudController.php:93;119;163;215
-#: /Controller/ReportsController.php:46
+#: /Controller/CrudController.php:106;139;187;244
+#: /Controller/ReportsController.php:49
 msgid "%s Not Found"
 msgstr ""
 
-#: /Controller/CrudController.php:111
+#: /Controller/CrudController.php:127
 msgid "Update Access Protected"
 msgstr ""
 
-#: /Controller/CrudController.php:132
+#: /Controller/CrudController.php:152
 msgid "Successfully updated %s with ID %s"
 msgstr ""
 
-#: /Controller/CrudController.php:136
+#: /Controller/CrudController.php:156
 msgid "Failed to update %s with ID %s"
 msgstr ""
 
-#: /Controller/CrudController.php:170 /Controller/ReportsController.php:66
+#: /Controller/CrudController.php:194 /Controller/ReportsController.php:69
 msgid "Successfully deleted %s with ID %s"
 msgstr ""
 
-#: /Controller/CrudController.php:174
+#: /Controller/CrudController.php:198
 msgid "Failed to delete %s with ID %s"
 msgstr ""
 
-#: /Controller/CrudController.php:191
+#: /Controller/CrudController.php:220
 msgid "Missing Query"
 msgstr ""
 
-#: /Controller/CrudController.php:221;244 /Controller/ReportsController.php:73
+#: /Controller/CrudController.php:250;273 /Controller/ReportsController.php:76
 msgid "Triggered %s.%s() process"
 msgstr ""
 
-#: /Controller/CrudController.php:222
+#: /Controller/CrudController.php:251
 msgid "Processed %s.%s() for ID %s"
 msgstr ""
 
-#: /Controller/CrudController.php:225;248
+#: /Controller/CrudController.php:254;277
 msgid "%s does not allow this process"
 msgstr ""
 
-#: /Controller/CrudController.php:245
+#: /Controller/CrudController.php:274
 msgid "Processed %s.%s() for %s"
 msgstr ""
 
-#: /Controller/CrudController.php:266
+#: /Controller/CrudController.php:295
 msgid "Invalid Model"
 msgstr ""
 
-#: /Controller/CrudController.php:273
+#: /Controller/CrudController.php:302
 msgid "Restricted Model"
 msgstr ""
 
-#: /Controller/LogsController.php:37
+#: /Controller/LogsController.php:36
 msgid "%s Log Not Found"
 msgstr ""
 
-#: /Controller/LogsController.php:42
+#: /Controller/LogsController.php:41
 msgid "Can not read %s as it exceeds 2MB"
 msgstr ""
 
-#: /Controller/ReportsController.php:67
+#: /Controller/ReportsController.php:70
 msgid "Via item report #%s"
 msgstr ""
 
-#: /Controller/ReportsController.php:74
+#: /Controller/ReportsController.php:77
 msgid "%s.%s() via item report #%s"
 msgstr ""
 
-#: /Controller/ReportsController.php:78
+#: /Controller/ReportsController.php:81
 msgid "Invalid Report Action"
 msgstr ""
 
-#: /Controller/ReportsController.php:81
+#: /Controller/ReportsController.php:84
 msgid "Changed report status to %s"
 msgstr ""
 
-#: /Controller/Component/AdminToolbarComponent.php:171
+#: /Controller/Component/AdminToolbarComponent.php:197
 msgid "Invalid log action type"
 msgstr ""
 
-#: /Controller/Component/AdminToolbarComponent.php:292
+#: /Controller/Component/AdminToolbarComponent.php:318
 msgid "Invalid item report type"
 msgstr ""
 
-#: /View/Acl/index.ctp:2 /View/Elements/navbar.ctp:27
+#: /View/Acl/index.ctp:2 /View/Elements/navbar.ctp:56
 msgid "ACL"
 msgstr ""
 
@@ -166,6 +165,10 @@ msgstr ""
 msgid "No access defined. Grant permission?"
 msgstr ""
 
+#: /View/Admin/cache.ctp:2;6 /View/Elements/admin/actions.ctp:17
+msgid "Cache"
+msgstr ""
+
 #: /View/Admin/config.ctp:2;6 /View/Elements/admin/actions.ctp:13
 msgid "Configuration"
 msgstr ""
@@ -174,7 +177,7 @@ msgstr ""
 msgid "Plugins"
 msgstr ""
 
-#: /View/Admin/index.ctp:26 /View/Helper/AdminHelper.php:365
+#: /View/Admin/index.ctp:26 /View/Helper/AdminHelper.php:331
 msgid "Add"
 msgstr ""
 
@@ -222,15 +225,15 @@ msgstr ""
 msgid "Belongs To"
 msgstr ""
 
-#: /View/Admin/models.ctp:19
+#: /View/Admin/models.ctp:19 /View/Elements/crud/read_extra.ctp:3
 msgid "Has One"
 msgstr ""
 
-#: /View/Admin/models.ctp:20
+#: /View/Admin/models.ctp:20 /View/Elements/crud/read_extra.ctp:4
 msgid "Has Many"
 msgstr ""
 
-#: /View/Admin/models.ctp:21
+#: /View/Admin/models.ctp:21 /View/Elements/crud/read_extra.ctp:5
 msgid "Has and Belongs to Many"
 msgstr ""
 
@@ -238,17 +241,33 @@ msgstr ""
 msgid "HABTM"
 msgstr ""
 
-#: /View/Crud/delete.ctp:8 /View/Elements/crud/actions.ctp:25
+#: /View/Admin/routes.ctp:2;27 /View/Elements/admin/actions.ctp:21
+msgid "Routes"
+msgstr ""
+
+#: /View/Admin/routes.ctp:32
+msgid "Route"
+msgstr ""
+
+#: /View/Admin/routes.ctp:33
+msgid "Pattern"
+msgstr ""
+
+#: /View/Admin/routes.ctp:34
+msgid "Defaults"
+msgstr ""
+
+#: /View/Admin/routes.ctp:35
+msgid "Options"
+msgstr ""
+
+#: /View/Crud/delete.ctp:7 /View/Elements/crud/actions.ctp:25
 #: /View/Reports/read.ctp:32
 msgid "Delete %s"
 msgstr ""
 
-#: /View/Crud/delete.ctp:10
+#: /View/Crud/delete.ctp:9
 msgid "Are you sure you want to delete %s?"
-msgstr ""
-
-#: /View/Crud/delete.ctp:16
-msgid "The associated records in the following models will also be deleted."
 msgstr ""
 
 #: /View/Crud/form.ctp:3 /View/Elements/crud/actions.ctp:13
@@ -257,10 +276,6 @@ msgstr ""
 
 #: /View/Crud/form.ctp:6 /View/Elements/crud/actions.ctp:19
 msgid "Edit %s"
-msgstr ""
-
-#: /View/Crud/form.ctp:43
-msgid "Associate With"
 msgstr ""
 
 #: /View/Crud/index.ctp:67 /View/Elements/admin/config.ctp:68
@@ -275,7 +290,7 @@ msgstr ""
 msgid "Delete"
 msgstr ""
 
-#: /View/Crud/index.ctp:100 /View/Logs/index.ctp:88 /View/Logs/read.ctp:84
+#: /View/Crud/index.ctp:100 /View/Logs/index.ctp:88 /View/Logs/read.ctp:86
 #: /View/Reports/index.ctp:81
 msgid "No results to display"
 msgstr ""
@@ -344,15 +359,31 @@ msgstr ""
 msgid "Cancel"
 msgstr ""
 
-#: /View/Elements/input.ctp:73
+#: /View/Elements/input.ctp:80
 msgid "Null?"
 msgstr ""
 
-#: /View/Elements/navbar.ctp:35 /View/Logs/index.ctp:2 /View/Logs/read.ctp:2
+#: /View/Elements/navbar.ctp:43
+msgid "View Site"
+msgstr ""
+
+#: /View/Elements/navbar.ctp:44
+msgid "View Profile"
+msgstr ""
+
+#: /View/Elements/navbar.ctp:45
+msgid "Settings"
+msgstr ""
+
+#: /View/Elements/navbar.ctp:46
+msgid "Logout"
+msgstr ""
+
+#: /View/Elements/navbar.ctp:64 /View/Logs/index.ctp:2 /View/Logs/read.ctp:2
 msgid "Logs"
 msgstr ""
 
-#: /View/Elements/navbar.ctp:44 /View/Reports/index.ctp:2
+#: /View/Elements/navbar.ctp:73 /View/Reports/index.ctp:2
 #: /View/Reports/read.ctp:2
 msgid "Reports"
 msgstr ""
@@ -382,6 +413,19 @@ msgstr ""
 msgid "Process"
 msgstr ""
 
+#: /View/Elements/crud/dependencies.ctp:4
+msgid "The associated records in the following models will also be deleted."
+msgstr ""
+
+#: /View/Elements/crud/form_extra.ctp:13
+msgid "Associate With"
+msgstr ""
+
+#: /View/Elements/crud/has_and_belongs_to_many.ctp:16
+#: /View/Elements/crud/has_many.ctp:15
+msgid "%s of %s"
+msgstr ""
+
 #: /View/Elements/field/boolean.ctp:3 /View/Elements/input/filter.ctp:19
 msgid "Yes"
 msgstr ""
@@ -390,23 +434,7 @@ msgstr ""
 msgid "No"
 msgstr ""
 
-#: /View/Elements/navbar.ctp:43
-msgid "View Site"
-msgstr ""
-
-#: /View/Elements/navbar.ctp:44
-msgid "View Profile"
-msgstr ""
-
-#: /View/Elements/navbar.ctp:45
-msgid "Settings"
-msgstr ""
-
-#: /View/Elements/navbar.ctp:46
-msgid "Logout"
-msgstr ""
-
-#: /View/Helper/AdminHelper.php:131
+#: /View/Helper/AdminHelper.php:127
 msgid "No Title"
 msgstr ""
 
@@ -443,14 +471,18 @@ msgid "Exception"
 msgstr ""
 
 #: /View/Logs/read.ctp:15
-msgid "Message"
+msgid "URL"
 msgstr ""
 
 #: /View/Logs/read.ctp:16
-msgid "Count"
+msgid "Message"
 msgstr ""
 
 #: /View/Logs/read.ctp:17
+msgid "Count"
+msgstr ""
+
+#: /View/Logs/read.ctp:18
 msgid "Date"
 msgstr ""
 
