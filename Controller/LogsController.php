@@ -31,7 +31,6 @@ class LogsController extends AdminAppController {
 		$logs = array();
 		$exceptions = array();
 		$message = null;
-		$stack = array();
 
 		if (!in_array($type, CakeLog::configured())) {
 			throw new NotFoundException(__d('admin', '%s Log Not Found', Inflector::humanize($type)));

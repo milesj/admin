@@ -18,7 +18,7 @@ class AdminSchema extends CakeSchema {
 	 * @return bool
 	 */
 	public function before($event = array()) {
-		// @todo doesnt work
+		// @todo doesn't work
 		//$db = ConnectionManager::getDataSource($this->connection);
 		//$db->config['prefix'] = ADMIN_PREFIX;
 

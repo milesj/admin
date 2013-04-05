@@ -56,8 +56,9 @@ cake Admin.install plugin Forum
 cake Admin.install model User
 ```
 
-Bootstrap the plugin and its routes.
+Bootstrap the plugins and its routes.
 
 ```php
 CakePlugin::load('Admin', array('bootstrap' => true, 'routes' => true));
+CakePlugin::load('Utility', array('bootstrap' => true, 'routes' => true));
 ```

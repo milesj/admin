@@ -5,6 +5,9 @@
  * @link		http://milesj.me/code/cakephp/admin
  */
 
+/**
+ * @property ItemReport $Model
+ */
 class ReportsController extends AdminAppController {
 
 	/**
