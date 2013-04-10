@@ -1,0 +1,11 @@
+# Always use LF
+* text eol=lf
+
+# Binary files
+*.png binary
+*.jpg binary
+*.otf binary
+*.eot binary
+*.ttf binary
+*.woff binary
+*.mo binary
