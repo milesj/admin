@@ -189,6 +189,31 @@ class AdminHelper extends AppHelper {
 	}
 
 	/**
+	 * Return a parse user route.
+	 *
+	 * @param string $route
+	 * @param array $user
+	 * @return string
+	 */
+	public function getUserRoute($route, array $user) {
+		$route = (array) Configure::read('User.routes.' . $route);
+
+		foreach ($route as &$value) {
+			if ($value === '{id}') {
+				$value = $user['id'];
+
+			} else if ($value === '{slug}' && isset($user['slug'])) {
+				$value = $user['slug'];
+
+			} else if ($value === '{username}') {
+				$value = $user[Configure::read('User.fieldMap.username')];
+			}
+		}
+
+		return $this->url($route);
+	}
+
+	/**
 	 * Check to see if a user has specific CRUD access for a model.
 	 *
 	 * @param string $model
@@ -280,9 +305,9 @@ class AdminHelper extends AppHelper {
 		$output = $this->outputIconTitle($model, $alias);
 
 		if ($className != $alias) {
-			$output .= ' (' . $this->Html->tag('span', $className, array(
-				'class' => 'muted'
-			)) . ')';
+			$output .= sprintf(' (%s)',
+				$this->Html->tag('span', $className, array('class' => 'muted'))
+			);
 		}
 
 		return $output;

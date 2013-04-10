@@ -281,9 +281,10 @@ class Admin {
 
 			// Apply default admin settings
 			$settings = isset($object->admin) ? $object->admin : array();
+			$defaultSettings = Configure::read('Admin.modelDefaults');
 
 			if (is_array($settings)) {
-				$settings = Hash::merge(Configure::read('Admin.modelDefaults'), $settings);
+				$settings = Hash::merge($defaultSettings, $settings);
 
 				if (!$settings['deletable']) {
 					$settings['batchDelete'] = false;
@@ -293,6 +294,8 @@ class Admin {
 				$settings['hideFields'] = array_merge($settings['hideFields'], $hideFields);
 
 				$object->admin = $settings;
+			} else {
+				$object->admin = $defaultSettings;
 			}
 
 			// Update associated settings

@@ -25,13 +25,9 @@ if ($modelParam) {
 				<ul class="nav pull-right">
 					<li class="dropdown">
 						<a data-toggle="dropdown" class="dropdown-toggle user" href="javascript:;">
-							<?php
-							if (!empty($user[$config['User']['fieldMap']['avatar']])) {
+							<?php if (!empty($user[$config['User']['fieldMap']['avatar']])) {
 								echo $this->Html->image($user[$config['User']['fieldMap']['avatar']], array('class' => 'avatar'));
-							}
-
-							$profileUrl = $config['User']['routes']['profile'];
-							$profileUrl['id'] = $user['id']; ?>
+							} ?>
 
 							<span class="name">
 								<?php echo $user[$config['User']['fieldMap']['username']]; ?>
@@ -41,7 +37,7 @@ if ($modelParam) {
 
 						<ul class="dropdown-menu">
 							<li><?php echo $this->Html->link(__d('admin', 'View Site'), '/'); ?></li>
-							<li><?php echo $this->Html->link(__d('admin', 'View Profile'), $profileUrl); ?></li>
+							<li><?php echo $this->Html->link(__d('admin', 'View Profile'), $this->Admin->getUserRoute('profile', $user)); ?></li>
 							<li><?php echo $this->Html->link(__d('admin', 'Settings'), $config['User']['routes']['settings']); ?></li>
 							<li><?php echo $this->Html->link(__d('admin', 'Logout'), $config['User']['routes']['logout']); ?></li>
 						</ul>
