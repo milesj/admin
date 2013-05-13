@@ -44,13 +44,15 @@ if ($result[$model->alias]['status'] == ItemReport::PENDING && $item) {
 			)); ?>
 		</div>
 
-		<div class="log-comment">
-			<?php echo $this->Form->input('log_comment', array(
-				'div' => false,
-				'maxlength' => 255,
-				'required' => true
-			)); ?>
-		</div>
+		<?php if ($config['Admin']['logActions']) { ?>
+			<div class="log-comment">
+				<?php echo $this->Form->input('log_comment', array(
+					'div' => false,
+					'maxlength' => 255,
+					'required' => true
+				)); ?>
+			</div>
+		<?php } ?>
 
 		<button type="submit" class="btn btn-large btn-danger">
 			<span class="icon-cog icon-white"></span>

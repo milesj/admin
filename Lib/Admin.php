@@ -285,11 +285,6 @@ class Admin {
 
 			if (is_array($settings)) {
 				$settings = Hash::merge($defaultSettings, $settings);
-
-				if (!$settings['deletable']) {
-					$settings['batchDelete'] = false;
-				}
-
 				$settings['fileFields'] = array_merge($settings['fileFields'], $settings['imageFields']);
 				$settings['hideFields'] = array_merge($settings['hideFields'], $hideFields);
 

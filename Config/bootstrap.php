@@ -67,7 +67,7 @@ Configure::write('Admin.modelDefaults', array(
 	'hideFields' => array('lft', 'rght'),
 	'paginate' => array(),
 	'associationLimit' => 75,
-	'batchDelete' => true,
+	'batchProcess' => true,
 	'actionButtons' => true,
 	'deletable' => true,
 	'editable' => true,

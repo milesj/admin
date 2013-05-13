@@ -30,26 +30,37 @@ class CrudController extends AdminAppController {
 
 		// Batch delete
 		if ($this->request->is('post')) {
-			if (!$this->Model->admin['batchDelete']) {
-				throw new ForbiddenException(__d('admin', 'Delete Access Protected'));
-
-			} else if (!$this->Acl->check(array(USER_MODEL => $this->Auth->user()), $this->Model->qualifiedName, 'delete')) {
-				throw new UnauthorizedException(__d('admin', 'Insufficient Access Permissions'));
+			if (!$this->Model->admin['batchProcess']) {
+				throw new ForbiddenException(__d('admin', 'Batch Access Protected'));
 			}
 
-			$count = 0;
-			$deleted = array();
+			$action = $this->request->data['Comment']['batch_action'];
+			$items = $this->request->data['Comment']['items'];
+			$processed = array();
 
-			foreach ($this->request->data[$this->Model->alias] as $id) {
-				if ($id && $this->Model->delete($id, true)) {
-					$count++;
-					$deleted[] = $id;
+			foreach ($items as $id) {
+				if (!$id) {
+					continue;
+				}
+
+				if ($action === 'delete_item') {
+					if ($this->Model->delete($id, true)) {
+						$processed[] = $id;
+					}
+				} else {
+					if (call_user_func(array($this->Model, $action), $id)) {
+						$processed[] = $id;
+					}
 				}
 			}
 
+			$count = count($processed);
+
 			if ($count > 0) {
-				$this->AdminToolbar->logAction(ActionLog::BATCH_DELETE, $this->Model, null, sprintf('Deleted IDs: %s', implode(', ', $deleted)));
-				$this->AdminToolbar->setFlashMessage(__d('admin', '%s %s have been deleted', array($count, mb_strtolower($this->Model->pluralName))));
+				$this->AdminToolbar->logAction(ActionLog::BATCH_DELETE, $this->Model, null, sprintf('Processed IDs: %s', implode(', ', $processed)));
+				$this->AdminToolbar->setFlashMessage(__d('admin', '%s %s have been processed', array($count, mb_strtolower($this->Model->pluralName))));
+
+				$this->request->data['Comment'] = array();
 			}
 		}
 

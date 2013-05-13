@@ -17,11 +17,9 @@ echo $this->element('pagination'); ?>
 	<table id="table" class="table table-striped table-bordered table-hover sortable clickable">
 		<thead>
 			<tr>
-				<?php if ($model->admin['batchDelete']) { ?>
+				<?php if ($model->admin['batchProcess']) { ?>
 					<th class="col-batch-delete">
-						<?php if ($this->Admin->hasAccess($model->qualifiedName, 'delete')) { ?>
-							<input type="checkbox" id="check-all">
-						<?php } ?>
+						<input type="checkbox" id="check-all">
 					</th>
 				<?php }
 
@@ -42,15 +40,14 @@ echo $this->element('pagination'); ?>
 					$id = $result[$model->alias][$model->primaryKey]; ?>
 
 					<tr>
-						<?php if ($model->admin['batchDelete']) { ?>
+						<?php if ($model->admin['batchProcess']) { ?>
 
 							<td class="col-batch-delete">
-								<?php echo $this->Form->input($id, array(
+								<?php echo $this->Form->input('Comment.items.' . $id, array(
 									'type' => 'checkbox',
 									'value' => $id,
 									'label' => false,
-									'div' => false,
-									'disabled' => !$this->Admin->hasAccess($model->qualifiedName, 'delete')
+									'div' => false
 								)); ?>
 							</td>
 
@@ -96,7 +93,7 @@ echo $this->element('pagination'); ?>
 			} else { ?>
 
 			<tr>
-				<td colspan="<?php echo count($model->fields) + $model->admin['batchDelete'] + $model->admin['actionButtons']; ?>" class="no-results">
+				<td colspan="<?php echo count($model->fields) + $model->admin['batchProcess'] + $model->admin['actionButtons']; ?>" class="no-results">
 					<?php echo __d('admin', 'No results to display'); ?>
 				</td>
 			</tr>
@@ -108,15 +105,39 @@ echo $this->element('pagination'); ?>
 <?php
 echo $this->element('pagination');
 
-if ($model->admin['batchDelete'] && $results && $this->Admin->hasAccess($model->qualifiedName, 'delete')) { ?>
+if ($model->admin['batchProcess'] && $results) {
+	$options = $this->Admin->getModelCallbacks($model);
+
+	if ($this->Admin->hasAccess($model->qualifiedName, 'delete')) {
+		$options['delete_item'] = __d('admin', 'Delete %s', $model->singularName);
+	}
+
+	if ($options) { ?>
 
 	<div class="well actions">
-		<button type="submit" class="btn btn-large btn-danger" onclick="return confirm('<?php echo __d('admin', 'Deleting will cascade through associations, are you sure?'); ?>');">
-			<span class="icon-trash icon-white"></span>
-			<?php echo __d('admin', 'Batch Delete'); ?>
+		<div class="redirect-to">
+			<?php echo $this->Form->input('batch_action', array(
+				'div' => false,
+				'options' => $options
+			)); ?>
+		</div>
+
+		<?php if ($config['Admin']['logActions']) { ?>
+			<div class="log-comment">
+				<?php echo $this->Form->input('log_comment', array(
+					'div' => false,
+					'maxlength' => 255,
+					'required' => true
+				)); ?>
+			</div>
+		<?php } ?>
+
+		<button type="submit" class="btn btn-large btn-danger">
+			<span class="icon-cogs icon-white"></span>
+			<?php echo __d('admin', 'Batch Process'); ?>
 		</button>
 	</div>
 
-<?php }
+<?php } }
 
 echo $this->Form->end();
