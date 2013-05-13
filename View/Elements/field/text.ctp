@@ -15,6 +15,6 @@ if ($this->action === 'read') {
 		<span class="text-warning">SERIALIZED</span>
 
 	<?php } else {
-		echo $this->Text->truncate(h($value), 100);
+		echo $this->Text->truncate(h(strip_tags($value)), 100);
 	}
 }

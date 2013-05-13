@@ -37,8 +37,12 @@ if ($modelParam) {
 
 						<ul class="dropdown-menu">
 							<li><?php echo $this->Html->link(__d('admin', 'View Site'), '/'); ?></li>
-							<li><?php echo $this->Html->link(__d('admin', 'View Profile'), $this->Admin->getUserRoute('profile', $user)); ?></li>
-							<li><?php echo $this->Html->link(__d('admin', 'Settings'), $config['User']['routes']['settings']); ?></li>
+							<?php if ($profileRoute = $this->Admin->getUserRoute('profile', $user)) { ?>
+								<li><?php echo $this->Html->link(__d('admin', 'View Profile'), $profileRoute); ?></li>
+							<?php }
+							if ($settingsRoute = $config['User']['routes']['settings']) { ?>
+								<li><?php echo $this->Html->link(__d('admin', 'Settings'), $settingsRoute); ?></li>
+							<?php } ?>
 							<li><?php echo $this->Html->link(__d('admin', 'Logout'), $config['User']['routes']['logout']); ?></li>
 						</ul>
 					</li>

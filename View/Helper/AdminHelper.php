@@ -196,7 +196,13 @@ class AdminHelper extends AppHelper {
 	 * @return string
 	 */
 	public function getUserRoute($route, array $user) {
-		$route = (array) Configure::read('User.routes.' . $route);
+		$route = Configure::read('User.routes.' . $route);
+
+		if (!$route) {
+			return null;
+		}
+
+		$route = (array) $route;
 
 		foreach ($route as &$value) {
 			if ($value === '{id}') {

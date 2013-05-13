@@ -77,7 +77,7 @@ if ($hasError) {
 					'checked' => $checked,
 					'div' => false,
 					'error' => false,
-					'label' => __d('admin', 'Null?')
+					'label' => __d('admin', 'Empty?')
 				)); ?>
 			</div>
 
