@@ -45,8 +45,16 @@ msgstr ""
 msgid "Delete Access Protected"
 msgstr ""
 
+#: /Controller/CrudController.php:34;175
+msgid "Batch Access Protected"
+msgstr ""
+
 #: /Controller/CrudController.php:52
 msgid "%s %s have been deleted"
+msgstr ""
+
+#: /Controller/CrudController.php:52
+msgid "%s %s have been processed"
 msgstr ""
 
 #: /Controller/CrudController.php:79
@@ -381,7 +389,7 @@ msgid "Cancel"
 msgstr ""
 
 #: /View/Elements/input.ctp:80
-msgid "Null?"
+msgid "Empty?"
 msgstr ""
 
 #: /View/Elements/navbar.ctp:43

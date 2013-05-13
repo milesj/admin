@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Admin Plugin\n"
 "POT-Creation-Date: 2013-04-05 07:05+0000\n"
-"PO-Revision-Date: 2013-04-05 00:08-0800\n"
+"PO-Revision-Date: 2013-05-12 18:57-0800\n"
 "Last-Translator: Miles Johnson <mileswjohnson@gmail.com>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -44,8 +44,16 @@ msgstr ""
 msgid "Delete Access Protected"
 msgstr ""
 
+#: /Controller/CrudController.php:34;175
+msgid "Batch Access Protected"
+msgstr ""
+
 #: /Controller/CrudController.php:52
 msgid "%s %s have been deleted"
+msgstr ""
+
+#: /Controller/CrudController.php:52
+msgid "%s %s have been processed"
 msgstr ""
 
 #: /Controller/CrudController.php:79
@@ -360,7 +368,7 @@ msgid "Cancel"
 msgstr ""
 
 #: /View/Elements/input.ctp:80
-msgid "Null?"
+msgid "Empty?"
 msgstr ""
 
 #: /View/Elements/navbar.ctp:43
