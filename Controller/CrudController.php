@@ -302,11 +302,11 @@ class CrudController extends AdminAppController {
 	public function isAuthorized($user = null) {
 		parent::isAuthorized($user);
 
-		if (empty($this->params['model'])) {
-			throw new ForbiddenException(__d('admin', 'Invalid Model'));
+		if (empty($this->params['named']['model'])) {
+		//	throw new ForbiddenException(__d('admin', 'Invalid Model'));
 		}
 
-		list($plugin, $model, $class) = Admin::parseName($this->params['model']);
+		list($plugin, $model, $class) = Admin::parseName($this->params['named']['model']);
 
 		// Don't allow certain models
 		if (in_array($class, Configure::read('Admin.ignoreModels'))) {
@@ -338,8 +338,8 @@ class CrudController extends AdminAppController {
 		parent::beforeFilter();
 
 		// Introspect model
-		if (isset($this->params['model'])) {
-			$this->Model = Admin::introspectModel($this->params['model']);
+		if (isset($this->params['named']['model'])) {
+			$this->Model = Admin::introspectModel($this->params['named']['model']);
 		}
 
 		// Parse request and set null fields to null
