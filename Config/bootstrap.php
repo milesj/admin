@@ -8,7 +8,7 @@
 /**
  * Plugin constants.
  */
-define('ADMIN_PLUGIN', dirname(__DIR__) . '/');
+define('ADMIN_PLUGIN', dirname('__DIR__') . '/');
 
 // User model
 if (!defined('USER_MODEL')) {
