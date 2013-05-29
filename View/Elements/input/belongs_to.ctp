@@ -39,10 +39,10 @@ if (empty($typeAhead[$field])) {
 		$(function() {
 			Admin.typeAhead(
 				'<?php echo $this->Form->domId(); ?>',
-				'<?php echo $this->Html->url(array('model' => Inflector::underscore($typeAhead[$field]['model']), 'action' => 'type_ahead')); ?>',
-				{
-					<?php echo $typeAhead[$field]['foreignKey']; ?>: '<?php echo $model->id; ?>'
-				}
+				'<?php echo $this->Html->url(array('model' => Inflector::underscore($typeAhead[$field]['model']), 'action' => 'type_ahead')); ?>'
+				<?php if ($foreignKey = $typeAhead[$field]['foreignKey']) { ?>, {
+					<?php echo $foreignKey; ?>: '<?php echo $model->id; ?>'
+				}<?php } ?>
 			);
 		});
 	</script>

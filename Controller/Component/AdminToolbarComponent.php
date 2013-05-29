@@ -409,10 +409,20 @@ class AdminToolbarComponent extends Component {
 					$class = Configure::read('Admin.coreName') . '.' . $class;
 				}
 
+				// Get the foreign key from the child -> parent
+				$foreignKey = null;
+
+				foreach ($object->belongsTo as $childAssoc) {
+					if ($childAssoc['className'] === $model->name) {
+						$foreignKey = $childAssoc['foreignKey'];
+						break;
+					}
+				}
+
 				$typeAhead[$assoc['foreignKey']] = array(
 					'alias' => $alias,
 					'model' => $class,
-					'foreignKey' => $object->belongsTo[$model->alias]['foreignKey']
+					'foreignKey' => $foreignKey
 				);
 
 			} else {
