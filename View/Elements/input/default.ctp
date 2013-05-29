@@ -12,7 +12,7 @@ switch ($data['type']) {
 		$params['class'] = 'span3';
 	break;
 	case 'text':
-		$params['class'] = 'span5';
+		$params['class'] = 'span10';
 		$params['type'] = 'textarea';
 	break;
 	case 'integer':

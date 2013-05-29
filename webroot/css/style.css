@@ -28,6 +28,7 @@ select { width: auto; margin-right: 2px; }
 .form-horizontal { margin: 20px 0; }
 .form-horizontal .control-label { width: 20%; font-weight: bold; }
 .form-horizontal .control-group .controls { margin-left: 21.5%; }
+.form-horizontal .control-group.is-editor textarea { min-height: 500px; }
 .form-horizontal .actions { text-align: center; }
 .form-horizontal .actions .btn { margin-left: 12px; }
 .form-horizontal .actions div { margin-bottom: 15px; }

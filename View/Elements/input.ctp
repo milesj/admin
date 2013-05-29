@@ -8,6 +8,10 @@ if ($hasError) {
 	$classes[] = 'error';
 }
 
+if (in_array($field, $model->admin['editorFields'])) {
+	$classes[] = 'is-editor';
+}
+
 if (isset($model->validate[$field])) {
 	$validate = $model->validate[$field];
 } else if (isset($model->validations['default'][$field])) {

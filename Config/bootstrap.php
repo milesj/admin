@@ -65,6 +65,7 @@ Configure::write('Admin.modelDefaults', array(
 	'imageFields' => array('image'),
 	'fileFields' => array('image', 'file'),
 	'hideFields' => array('lft', 'rght'),
+	'editorFields' => array('content'),
 	'paginate' => array(),
 	'associationLimit' => 75,
 	'batchProcess' => true,
