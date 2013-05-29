@@ -32,8 +32,9 @@ var Admin = {
 	 *
 	 * @param {String} id
 	 * @param {String} url
+	 * @param {Object} data
 	 */
-	typeAhead: function(id, url) {
+	typeAhead: function(id, url, data) {
 		var sourceMap = {},
 			inputTA = $('#' + id + 'TypeAhead'),
 			inputNull = $('#' + id + 'Null'),
@@ -43,10 +44,13 @@ var Admin = {
 			items: 15,
 			minLength: 1,
 			source: function(query, process) {
+				data = data || {};
+				data.query = query;
+
 				return $.ajax({
 					url: url,
 					type: 'get',
-					data: { query: query },
+					data: data,
 					dataType: 'json',
 					success: function(json) {
 						var source = [],

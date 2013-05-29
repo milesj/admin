@@ -231,12 +231,7 @@ class CrudController extends AdminAppController {
 			throw new BadRequestException(__d('admin', 'Missing Query'));
 		}
 
-		$results = $this->Model->find('list', array(
-			'conditions' => array($this->Model->alias . '.' . $this->Model->displayField . ' LIKE' => '%' . $this->request->query['query'] . '%'),
-			'contain' => false
-		));
-
-		$this->set('results', $results);
+		$this->set('results', $this->AdminToolbar->searchTypeAhead($this->Model, $this->request->query));
 		$this->set('_serialize', 'results');
 	}
 

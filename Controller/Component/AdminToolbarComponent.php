@@ -346,6 +346,28 @@ class AdminToolbarComponent extends Component {
 	}
 
 	/**
+	 * Search for a list of records that match the query.
+	 *
+	 * @param Model $model
+	 * @param array $query
+	 * @return array
+	 */
+	public function searchTypeAhead(Model $model, array $query) {
+		if ($model->hasMethod('searchTypeAhead')) {
+			return $model->searchTypeAhead($query);
+		}
+
+		$keyword = $query['query'];
+		unset($query['query']);
+
+		return $model->find('list', array(
+			'conditions' => array($model->alias . '.' . $model->displayField . ' LIKE' => '%' . $keyword . '%') + $query,
+			'order' => array($model->alias . '.' . $model->displayField => 'ASC'),
+			'contain' => false
+		));
+	}
+
+	/**
 	 * Set a count for every model association.
 	 *
 	 * @param Model $model
@@ -389,7 +411,8 @@ class AdminToolbarComponent extends Component {
 
 				$typeAhead[$assoc['foreignKey']] = array(
 					'alias' => $alias,
-					'model' => $class
+					'model' => $class,
+					'foreignKey' => $object->belongsTo[$model->alias]['foreignKey']
 				);
 
 			} else {
