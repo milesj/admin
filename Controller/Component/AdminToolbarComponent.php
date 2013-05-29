@@ -213,7 +213,7 @@ class AdminToolbarComponent extends Component {
 			}
 		}
 
-		$query['foreign_key'] = $id;
+		$query['foreign_key'] = (string) $id;
 		$query['comment'] = $comment;
 		$query['item'] = $item;
 

@@ -43,7 +43,7 @@ echo $this->element('pagination'); ?>
 						<?php if ($model->admin['batchProcess']) { ?>
 
 							<td class="col-batch-delete">
-								<?php echo $this->Form->input('Comment.items.' . $id, array(
+								<?php echo $this->Form->input($model->alias . '.items.' . $id, array(
 									'type' => 'checkbox',
 									'value' => $id,
 									'label' => false,

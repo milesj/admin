@@ -34,8 +34,8 @@ class CrudController extends AdminAppController {
 				throw new ForbiddenException(__d('admin', 'Batch Access Protected'));
 			}
 
-			$action = $this->request->data['Comment']['batch_action'];
-			$items = $this->request->data['Comment']['items'];
+			$action = $this->request->data[$this->Model->alias]['batch_action'];
+			$items = $this->request->data[$this->Model->alias]['items'];
 			$processed = array();
 
 			foreach ($items as $id) {
@@ -57,10 +57,10 @@ class CrudController extends AdminAppController {
 			$count = count($processed);
 
 			if ($count > 0) {
-				$this->AdminToolbar->logAction(ActionLog::BATCH_DELETE, $this->Model, null, sprintf('Processed IDs: %s', implode(', ', $processed)));
+				$this->AdminToolbar->logAction(ActionLog::BATCH_DELETE, $this->Model, '', sprintf('Processed IDs: %s', implode(', ', $processed)));
 				$this->AdminToolbar->setFlashMessage(__d('admin', '%s %s have been processed', array($count, mb_strtolower($this->Model->pluralName))));
 
-				$this->request->data['Comment'] = array();
+				$this->request->data[$this->Model->alias] = array();
 			}
 		}
 
@@ -276,7 +276,7 @@ class CrudController extends AdminAppController {
 		if ($model->Behaviors->loaded($behavior) && $model->hasMethod($method)) {
 			$model->Behaviors->{$behavior}->{$method}($model);
 
-			$this->AdminToolbar->logAction(ActionLog::PROCESS, $model, null, __d('admin', 'Triggered %s.%s() process', array($behavior, $method)));
+			$this->AdminToolbar->logAction(ActionLog::PROCESS, $model, '', __d('admin', 'Triggered %s.%s() process', array($behavior, $method)));
 			$this->AdminToolbar->setFlashMessage(__d('admin', 'Processed %s.%s() for %s', array($behavior, $method, mb_strtolower($model->pluralName))));
 
 		} else {
