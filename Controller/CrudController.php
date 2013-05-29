@@ -349,6 +349,9 @@ class CrudController extends AdminAppController {
 
 			$this->request->data = $data;
 		}
+
+		// Don't validate post since data changes constantly
+		$this->Security->validatePost = false;
 	}
 
 	/**
