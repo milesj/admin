@@ -7,6 +7,10 @@ echo $this->element('admin/actions'); ?>
 
 <div class="row-fluid config-grid" id="grid">
 	<?php foreach ($configuration as $group => $keys) {
+		if (!is_array($keys)) {
+			continue;
+		}
+
 		ksort($keys); ?>
 
 		<div class="well">
