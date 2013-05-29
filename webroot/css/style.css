@@ -18,7 +18,10 @@ h2 { margin-bottom: 20px; }
 	padding: 30px;
 	text-align: center; }
 
-.model-icon { min-width: 20px; margin-left: 2px; }
+.model-icon {
+	min-width: 20px !important;
+	display: inline-block !important;
+	margin-left: 2px; }
 
 /*----------------- Forms -----------------*/
 

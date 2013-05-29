@@ -16,10 +16,18 @@ if ($modelParam) {
 				<span class="icon-bar"></span>
 			</a>
 
-			<?php echo $this->Html->link($config['Admin']['appName'], array(
+			<?php $navTitle = $config['Admin']['appName'];
+
+			if (env('REMOTE_ADDR') === '127.0.0.1') {
+				$navTitle .= ' <span class="text-error">[dev]</span>';
+			} else {
+				$navTitle .= ' <span class="text-success">[prod]</span>';
+			}
+
+			echo $this->Html->link($navTitle, array(
 				'controller' => 'admin',
 				'action' => 'index'
-			), array('class' => 'brand')); ?>
+			), array('class' => 'brand', 'escape' => false)); ?>
 
 			<div class="nav-collapse navbar-inverse-collapse navbar-responsive-collapse collapse">
 				<ul class="nav pull-right">
