@@ -2,13 +2,14 @@
 $classes = array($data['type']);
 $hasError = isset($model->validationErrors[$field]);
 $isRequired = false;
+$isEditor = in_array($field, $model->admin['editorFields']);
 $validate = false;
 
 if ($hasError) {
 	$classes[] = 'error';
 }
 
-if (in_array($field, $model->admin['editorFields'])) {
+if ($isEditor) {
 	$classes[] = 'is-editor';
 }
 
@@ -87,4 +88,20 @@ if ($hasError) {
 
 		<?php } ?>
 	</div>
+
+	<?php $editorType = $model->admin['editorType'];
+
+	if ($isEditor && $editorType) {
+		$this->Html->script('Admin.jquery.markitup', array('inline' => false));
+		$this->Html->script('Admin.markitup/' . $editorType, array('inline' => false));
+		$this->Html->css('Admin.markitup', 'stylesheet', array('inline' => false));
+		$this->Html->css('Admin.markitup/' . $editorType, 'stylesheet', array('inline' => false)); ?>
+
+		<script type="text/javascript">
+			$(function() {
+				$('#<?php echo $this->Form->domId(); ?>').markItUp(mySettings);
+			});
+		</script>
+
+	<?php } ?>
 </div>

@@ -13,7 +13,10 @@ echo $this->Html->docType(); ?>
 	echo $this->Html->script('//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js');
 	echo $this->Html->script('Admin.bootstrap.min');
 	echo $this->Html->script('Admin.jquery.gridalicious.min');
-	echo $this->Html->script('Admin.admin'); ?>
+	echo $this->Html->script('Admin.admin');
+	echo $this->fetch('meta');
+	echo $this->fetch('css');
+	echo $this->fetch('script'); ?>
 </head>
 <body class="controller-<?php echo $this->request->controller; ?>">
 	<?php echo $this->element('Admin.navbar'); ?>
