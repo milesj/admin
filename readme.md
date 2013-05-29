@@ -1,9 +1,9 @@
-# Admin v0.18.0 #
+# Admin v0.19.0 #
 
 A CakePHP administration plugin that provides moderate CRUD functionality for application and plugin models.
 Utilizes CakePHP's built-in authentication, authorization and ACL systems for security.
 
-This plugin *does not work* with the CakeDC Users plugin or with any users table that uses UUIDs.
+This plugin *does not work* with the CakeDC Users plugin or with any tables that uses UUIDs.
 It also requires admin Routing prefixes to be *disabled*.
 
 ## Requirements ##
@@ -43,7 +43,7 @@ Set the ARO administrator alias in your bootstrap (defaults to Administrator).
 Configure::write('Admin.aliases.administrator', 'Administrator');
 ```
 
-Install the plugin and follow the on screen instructions (this will generate appropriate ACL records).
+Install the plugin through the command line (this will generate appropriate ACL records).
 
 ```
 cake Admin.install
@@ -59,6 +59,7 @@ cake Admin.install model User
 Bootstrap the plugins and its routes.
 
 ```php
-CakePlugin::load('Admin', array('bootstrap' => true, 'routes' => true));
+CakePlugin::loadAll();
 CakePlugin::load('Utility', array('bootstrap' => true, 'routes' => true));
+CakePlugin::load('Admin', array('bootstrap' => true, 'routes' => true));
 ```
