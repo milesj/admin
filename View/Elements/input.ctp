@@ -89,19 +89,10 @@ if ($hasError) {
 		<?php } ?>
 	</div>
 
-	<?php $editorType = $model->admin['editorType'];
-
-	if ($isEditor && $editorType) {
-		$this->Html->script('Admin.jquery.markitup', array('inline' => false));
-		$this->Html->script('Admin.markitup/' . $editorType, array('inline' => false));
-		$this->Html->css('Admin.markitup', 'stylesheet', array('inline' => false));
-		$this->Html->css('Admin.markitup/' . $editorType, 'stylesheet', array('inline' => false)); ?>
-
-		<script type="text/javascript">
-			$(function() {
-				$('#<?php echo $this->Form->domId(); ?>').markItUp(mySettings);
-			});
-		</script>
-
-	<?php } ?>
+	<?php // Include an element that may wrap the input with a wysiwyg
+	if ($isEditor && $model->admin['editorElement']) {
+		echo $this->element($model->admin['editorElement'], array(
+			'inputId' => $this->Form->domId()
+		));
+	} ?>
 </div>
