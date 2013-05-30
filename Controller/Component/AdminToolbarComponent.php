@@ -269,6 +269,10 @@ class AdminToolbarComponent extends Component {
 		}
 
 		// Set data to use in form
+		if (isset($this->Controller->request->data[$model->alias])) {
+			$data = array_merge($this->Controller->request->data[$model->alias], $data);
+		}
+
 		$this->Controller->request->data[$model->alias] = $data;
 
 		return $conditions;
