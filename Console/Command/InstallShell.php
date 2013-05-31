@@ -64,7 +64,7 @@ class InstallShell extends BaseInstallShell {
 		}
 
 		$admin = $this->RequestObject->addObject($adminAlias);
-		$userModel = ClassRegistry::init($this->usersModel);
+		$userModel = ClassRegistry::init($this->usersModel, true);
 
 		// Fetch user
 		$this->out('<question>What user would you like to give admin access?</question>');
@@ -148,7 +148,7 @@ class InstallShell extends BaseInstallShell {
 		$this->out();
 
 		$modelName = Inflector::classify($name ?: $this->args[0]);
-		$model = ClassRegistry::init($modelName);
+		$model = ClassRegistry::init($modelName, true);
 
 		if (get_class($model) === 'AppModel') {
 			$this->err(sprintf('<error>%s model does not exist</error>', $modelName));
