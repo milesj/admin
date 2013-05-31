@@ -24,6 +24,14 @@ Install the plugin with Composer.
 composer update
 ```
 
+Bootstrap the plugins and its routes.
+
+```php
+CakePlugin::loadAll();
+CakePlugin::load('Utility', array('bootstrap' => true, 'routes' => true));
+CakePlugin::load('Admin', array('bootstrap' => true, 'routes' => true));
+```
+
 Enable ACL in core.
 
 ```php
@@ -49,17 +57,9 @@ Install the plugin through the command line (this will generate appropriate ACL 
 cake Admin.install
 ```
 
-Install the plugins and models to enable CRUD functionality and enable access permissions.
+Install the plugins and models to enable CRUD functionality and access permissions.
 
 ```
 cake Admin.install plugin Forum
 cake Admin.install model User
-```
-
-Bootstrap the plugins and its routes.
-
-```php
-CakePlugin::loadAll();
-CakePlugin::load('Utility', array('bootstrap' => true, 'routes' => true));
-CakePlugin::load('Admin', array('bootstrap' => true, 'routes' => true));
 ```
