@@ -8,17 +8,19 @@ $formatArray = function($array) {
 	$output = array();
 
 	foreach ($array as $key => $value) {
-		if ($key === 'pass') {
+		if (!$value) {
 			continue;
 		}
 
-		if ($value) {
-			if (is_string($key)) {
-				$value = '<span class="muted">' . $key . ':</span> ' . $value;
-			}
-
-			$output[] = $value;
+		if (is_array($value)) {
+			$value = implode(', ', $value);
 		}
+
+		if (is_string($key)) {
+			$value = '<span class="muted">' . $key . ':</span> ' . $value;
+		}
+
+		$output[] = $value;
 	}
 
 	return implode(', ', $output);
