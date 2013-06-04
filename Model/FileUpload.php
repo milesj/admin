@@ -42,7 +42,7 @@ class FileUpload extends AdminAppModel {
 		if (CakePlugin::loaded('Uploader')) {
 			$this->actsAs['Uploader.Attachment'] = array(
 				'path' => array(
-					//'nameCallback' => 'formatName',
+					'nameCallback' => 'formatName',
 					'overwrite' => true,
 					'metaColumns' => array(
 						'size' => 'size',
@@ -73,6 +73,31 @@ class FileUpload extends AdminAppModel {
 	 */
 	public function formatName($name, $file) {
 		return md5($name . time());
+	}
+
+	/**
+	 * Return the original file name.
+	 *
+	 * @param string $name
+	 * @param \Transit\File $file
+	 * @return string
+	 */
+	public function formatTransformName($name, $file) {
+		return $this->getUploadedFile()->name();
+	}
+
+	/**
+	 * Remove transforms if file is not an image.
+	 *
+	 * @param array $options
+	 * @return array
+	 */
+	public function beforeUpload($options) {
+		if (!empty($this->data[$this->alias]['path']['type']) && strpos($this->data[$this->alias]['path']['type'], 'image') === false) {
+			$options['transforms'] = array();
+		}
+
+		return $options;
 	}
 
 }

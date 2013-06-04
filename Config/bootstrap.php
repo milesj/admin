@@ -69,7 +69,7 @@ Configure::write('Admin.logActions', true);
  */
 Configure::write('Admin.modelDefaults', array(
 	'imageFields' => array('image'),
-	'fileFields' => array('image', 'file'),
+	'fileFields' => array('file'),
 	'hideFields' => array('lft', 'rght'),
 	'editorFields' => array('content'),
 	'editorElement' => '',
@@ -131,6 +131,7 @@ Configure::write('Admin.viewOverrides', array());
 Configure::write('Admin.uploads.transforms', array(
 	'path_thumb' => array(
 		'method' => 'crop',
+		'nameCallback' => 'formatTransformName',
 		'append' => '-thumb',
 		'overwrite' => true,
 		'width' => 100,
@@ -138,6 +139,7 @@ Configure::write('Admin.uploads.transforms', array(
 	),
 	'path_large' => array(
 		'method' => 'resize',
+		'nameCallback' => 'formatTransformName',
 		'append' => '-large',
 		'overwrite' => true,
 		'aspect' => true,
