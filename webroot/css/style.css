@@ -51,11 +51,14 @@ select { width: auto; margin-right: 2px; }
 .filters { padding-right: 0; }
 .filters form { margin: 0; }
 
+.input-after,
 .error-message,
 .controls-null,
-.controls-null label { display: inline-block; margin-left: 10px; }
+.controls-null label{ display: inline-block; margin-left: 10px; }
 .controls-null label { margin-left: 5px; }
 .controls-null input { margin-top: -1px; }
+
+.input-after { color: #999999; }
 
 /*----------------- Tables -----------------*/
 
@@ -185,3 +188,4 @@ td.col-actions a.btn { display: inline-block; padding: 0 4px; }
 .controller-upload .input.textarea label { vertical-align: top; }
 .controller-upload .input.textarea textarea { width: 75%; }
 .controller-upload .input.checkbox { margin-left: 22%; font-weight: bold; }
+.controller-upload .error-message { color: red; }

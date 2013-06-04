@@ -11,11 +11,25 @@ class UploadController extends AdminAppController {
 	 * Upload a file and set transport and transform settings.
 	 */
 	public function index() {
-		if ($this->request->is('post')) {
-			$this->request->data['FileUpload']['user_id'] = $this->Auth->user('id');
+		$data = $this->request->data;
 
-			debug($this->request->data);
-		} else {
+		if ($this->request->is('post')) {
+			$data['FileUpload']['user_id'] = $this->Auth->user('id');
+
+			try {
+				if ($this->Model->save($data, true)) {
+					$this->Model->set($data);
+					$this->AdminToolbar->logAction(ActionLog::CREATE, $this->Model, $this->Model->id);
+
+					$this->AdminToolbar->setFlashMessage(__d('admin', 'Successfully uploaded a new file'));
+					$this->request->data = array();
+				}
+			} catch (Exception $e) {
+				$this->AdminToolbar->setFlashMessage($e->getMessage(), 'error');
+			}
+		}
+
+		if (empty($this->request->data)) {
 			$this->request->data['FileUpload'] = Configure::read('Admin.uploads');
 		}
 	}

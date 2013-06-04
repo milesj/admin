@@ -93,8 +93,35 @@ class FileUpload extends AdminAppModel {
 	 * @return array
 	 */
 	public function beforeUpload($options) {
-		if (!empty($this->data[$this->alias]['path']['type']) && strpos($this->data[$this->alias]['path']['type'], 'image') === false) {
+		$data = $this->data[$this->alias];
+
+		// Remove transforms for non-image files
+		if (!empty($data['path']['type']) && strpos($data['path']['type'], 'image') === false) {
 			$options['transforms'] = array();
+		}
+
+		// Overwrite transforms from UploadController::index()
+		if (!empty($data['transforms'])) {
+			$oldTransforms = $options['transforms'];
+			$options['transforms'] = array();
+
+			foreach (array('path_thumb', 'path_large') as $field) {
+				$newTransform = empty($oldTransforms[$field]) ? array() : $oldTransforms[$field];
+
+				// Only apply if checkbox is checked
+				if (!empty($data['transforms'][$field]['transform'])) {
+					$options['transforms'][$field] = array_merge($newTransform, $data['transforms'][$field]);
+				}
+			}
+		}
+
+		// Overwrite transport from UploadController::index()
+		if (!empty($data['transport'])) {
+			$options['transport'] = array();
+
+			if (!empty($data['transport']['class'])) {
+				$options['transport'] = $data['transport'];
+			}
 		}
 
 		return $options;

@@ -1,5 +1,7 @@
 <?php
-$this->Breadcrumb->add(__d('admin', 'Upload'), array('controller' => 'upload', 'action' => 'index')); ?>
+$this->Breadcrumb->add(__d('admin', 'Upload'), array('controller' => 'upload', 'action' => 'index'));
+
+if (CakePlugin::loaded('Uploader')) { ?>
 
 <div class="action-buttons">
 	<?php echo $this->Html->link('<span class="icon-upload"></span> ' . __d('admin', 'View All Uploads'),
@@ -30,12 +32,13 @@ $this->Breadcrumb->add(__d('admin', 'Upload'), array('controller' => 'upload', '
 				'label' => __d('admin', 'Service'),
 				'onchange' => "Admin.toggleUploadField(this, '.transport');",
 				'options' => array(
+					'' => __d('admin', 'None'),
 					's3' => __d('admin', 'AWS S3'),
 					'glacier' => __d('admin', 'AWS Glacier')
 				)
 			)); ?>
 
-			<div class="transport s3 glacier">
+			<div class="transport s3 glacier" style="display: none">
 				<?php
 				echo $this->Form->input('FileUpload.transport.accessKey', array('label' => __d('admin', 'Access Key')));
 				echo $this->Form->input('FileUpload.transport.secretKey', array('label' => __d('admin', 'Secret Key')));
@@ -54,10 +57,13 @@ $this->Breadcrumb->add(__d('admin', 'Upload'), array('controller' => 'upload', '
 				)); ?>
 			</div>
 
-			<div class="transport s3">
+			<div class="transport s3" style="display: none">
 				<?php
 				echo $this->Form->input('FileUpload.transport.bucket', array('label' => __d('admin', 'Bucket')));
-				echo $this->Form->input('FileUpload.transport.folder', array('label' => __d('admin', 'Folder')));
+				echo $this->Form->input('FileUpload.transport.folder', array(
+					'label' => __d('admin', 'Folder'),
+					'after' => '<div class="input-after">' . __d('admin', 'Requires trailing slash') . '</div>'
+				));
 				echo $this->Form->input('FileUpload.transport.scheme', array(
 					'label' => __d('admin', 'Scheme'),
 					'options' => array(
@@ -97,6 +103,7 @@ $this->Breadcrumb->add(__d('admin', 'Upload'), array('controller' => 'upload', '
 			<legend><?php echo $title; ?></legend>
 
 			<?php
+			echo $this->Form->input('FileUpload.transforms.' . $field . '.transform', array('label' => __d('admin', 'Generate image'), 'type' => 'checkbox', 'checked' => true));
 			echo $this->Form->input('FileUpload.transforms.' . $field . '.method', array(
 				'label' => __d('admin', 'Method'),
 				'onchange' => "Admin.toggleUploadField(this, '.transform');",
@@ -112,8 +119,8 @@ $this->Breadcrumb->add(__d('admin', 'Upload'), array('controller' => 'upload', '
 
 			<div class="transform resize crop">
 				<?php
-				echo $this->Form->input('FileUpload.transforms.' . $field . '.width', array('label' => __d('admin', 'Width')));
-				echo $this->Form->input('FileUpload.transforms.' . $field . '.height', array('label' => __d('admin', 'Height'))); ?>
+				echo $this->Form->input('FileUpload.transforms.' . $field . '.width', array('label' => __d('admin', 'Width'), 'class' => 'span1'));
+				echo $this->Form->input('FileUpload.transforms.' . $field . '.height', array('label' => __d('admin', 'Height'), 'class' => 'span1')); ?>
 			</div>
 
 			<div class="transform resize"<?php if ($currentValue !== 'resize') echo ' style="display: none"'; ?>>
@@ -166,6 +173,14 @@ $this->Breadcrumb->add(__d('admin', 'Upload'), array('controller' => 'upload', '
 
 		<?php } ?>
 	</div>
+
+	<script type="text/javascript">
+		$(function() {
+			$('#FileUploadTransportClass').change();
+			$('#FileUploadTransformsPathLargeMethod').change();
+			$('#FileUploadTransformsPathThumbMethod').change();
+		});
+	</script>
 </div>
 
 <div class="well actions">
@@ -175,4 +190,17 @@ $this->Breadcrumb->add(__d('admin', 'Upload'), array('controller' => 'upload', '
 	</button>
 </div>
 
-<?php echo $this->Form->end(); ?>
+<?php echo $this->Form->end();
+
+} else { ?>
+
+<div class="hero-unit align-center" style="margin-bottom: 0">
+	<h2>Uploading files requires the Uploader plugin</h2>
+
+	<a href="http://milesj.me/code/cakephp/uploader" target="_blank" class="btn btn-primary btn-large">
+		<span class="icon-external-link"></span>
+		<?php echo __d('admin', 'Download'); ?>
+	</a>
+</div>
+
+<?php } ?>
