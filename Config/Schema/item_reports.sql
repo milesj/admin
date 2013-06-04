@@ -17,4 +17,4 @@ CREATE TABLE `{prefix}item_reports` (
 	PRIMARY KEY (`id`),
 	KEY `reporter_id` (`reporter_id`),
 	KEY `resolver_id` (`resolver_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1;

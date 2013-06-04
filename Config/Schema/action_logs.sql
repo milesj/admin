@@ -12,4 +12,4 @@ CREATE TABLE `{prefix}action_logs` (
 	`created` datetime DEFAULT NULL,
 	PRIMARY KEY (`id`),
 	KEY `user_id` (`user_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1;

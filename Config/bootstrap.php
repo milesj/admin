@@ -42,6 +42,8 @@ Configure::write('Admin.coreName', 'Core');
 
 /**
  * Aliases for special AROs.
+ *
+ * @link http://milesj.me/code/cakephp/admin#acl-permissions
  */
 Configure::write('Admin.aliases', array(
 	'administrator' => 'Administrator',
@@ -55,11 +57,15 @@ Configure::write('Admin.ignoreModels', array());
 
 /**
  * Enable logging of administrator actions.
+ *
+ * @link http://milesj.me/code/cakephp/admin#activity-logs
  */
 Configure::write('Admin.logActions', true);
 
 /**
  * Default settings for each model.
+ *
+ * @link http://milesj.me/code/cakephp/admin#model-settings
  */
 Configure::write('Admin.modelDefaults', array(
 	'imageFields' => array('image'),
@@ -79,6 +85,8 @@ Configure::write('Admin.modelDefaults', array(
 /**
  * Behavior methods to execute as process callbacks.
  * The titles are passed through localization and will also replace %s with the model name.
+ *
+ * @link http://milesj.me/code/cakephp/admin#model-and-behavior-callbacks
  */
 Configure::write('Admin.behaviorCallbacks', array(
 	'Tree' => array(
@@ -94,23 +102,68 @@ Configure::write('Admin.behaviorCallbacks', array(
  * Model methods to execute as process callbacks.
  * The callback method accepts a record ID as the 1st argument.
  * The titles are passed through localization and will also replace %s with the model name.
+ *
+ * @link http://milesj.me/code/cakephp/admin#model-and-behavior-callbacks
  */
 Configure::write('Admin.modelCallbacks', array());
 
 /**
  * Provide overrides for CRUD actions.
  * This allows one to hook into the system and provide their own controller action logic.
+ *
+ * @link http://milesj.me/code/cakephp/admin#action-overrides
  */
 Configure::write('Admin.actionOverrides', array());
 
 /**
  * Provide overrides for CRUD views.
  * This allows one to hook into the system and provide their own view template logic.
+ *
+ * @link http://milesj.me/code/cakephp/admin#view-overrides
  */
 Configure::write('Admin.viewOverrides', array());
 
 /**
+ * Uploader.AttachmentBehavior image transformation settings.
+ *
+ * @link http://milesj.me/code/cakephp/uploader#transforming-images-resize-crop-etc
+ */
+Configure::write('Admin.uploads.transforms', array(
+	'path_thumb' => array(
+		'method' => 'crop',
+		'append' => '-thumb',
+		'overwrite' => true,
+		'width' => 100,
+		'height' => 100
+	),
+	'path_large' => array(
+		'method' => 'resize',
+		'append' => '-large',
+		'overwrite' => true,
+		'aspect' => true,
+		'width' => 800,
+		'height' => 600
+	)
+));
+
+/**
+ * Uploader.AttachmentBehavior remote transport settings.
+ *
+ * @link http://milesj.me/code/cakephp/uploader#transporting-to-the-cloud
+ */
+Configure::write('Admin.uploads.transport', array());
+
+/**
+ * Uploader FileValidationBehavior validation rules.
+ *
+ * @link http://milesj.me/code/cakephp/uploader#validating-an-upload
+ */
+Configure::write('Admin.uploads.validation', array('required' => true));
+
+/**
  * The user model for the application.
+ *
+ * @link http://milesj.me/code/cakephp/admin#user-customizing
  */
 Configure::write('User.model', USER_MODEL);
 
