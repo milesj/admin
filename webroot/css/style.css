@@ -151,7 +151,7 @@ td.col-actions a.btn { display: inline-block; padding: 0 4px; }
 .controller-acl .table td { padding: 0; }
 .controller-acl .table a { display: block; padding: 8px; color: #000; }
 .controller-acl .table a:hover { text-decoration: none; }
-.controller-acl .table a span { opacity: .1; }
+.controller-acl .table a span { opacity: .2; }
 .controller-acl .table a:hover span { opacity: 1; }
 .controller-acl .table .permission a { text-align: center; }
 .controller-acl .table .permission .action.allow { background-color: #DFF0D8; }
@@ -160,7 +160,7 @@ td.col-actions a.btn { display: inline-block; padding: 0 4px; }
 .controller-acl .table .permission .action.missing { background-color: #FCF8E3; }
 
 .controller-acl .matrix-head { background: #1B1B1B !important; border-color: #4b4b4b !important; }
-.controller-acl .matrix-head.matrix-y { width: 150px; }
+.controller-acl .matrix-head.matrix-y { min-width: 150px; }
 .controller-acl .matrix-head a { color: #c4c4c4; }
 .controller-acl .matrix-head a:hover { color: #fff; }
 

@@ -149,6 +149,10 @@ msgstr ""
 msgid "Invalid item report type"
 msgstr ""
 
+#: /View/Acl/index.ctp:8
+msgid "ACL is divided into 3 sections: objects requesting access (AROs), objects being controlled or objects being requested against (ACOs), and permissions providing CRUD access between requesters and controllers. The 3 sections can be found in the matrix table below. Each row represents a controller, each column represents a requester, and every intersecting cell represents the permission between the two. Green cells provide full access, while blue cells inherit from the parent, while red cells restrict access, and finally yellow cells which have no permissions defined. Clicking on a cell will either provide access, or allow the current permission to be changed."
+msgstr ""
+
 #: /View/Acl/index.ctp:2 /View/Elements/navbar.ctp:56
 msgid "ACL"
 msgstr ""

@@ -5,6 +5,10 @@ echo $this->element('acl/actions'); ?>
 
 <h2><?php echo __d('admin', 'Access Control Lists'); ?></h2>
 
+<p><?php echo __d('admin', 'ACL is divided into 3 sections: objects requesting access (AROs), objects being controlled or objects being requested against (ACOs), and permissions providing CRUD access between requesters and controllers. The 3 sections can be found in the matrix table below. Each row represents a controller, each column represents a requester, and every intersecting cell represents the permission between the two. Green cells provide full access, while blue cells inherit from the parent, while red cells restrict access, and finally yellow cells which have no permissions defined. Clicking on a cell will either provide access, or allow the current permission to be changed.'); ?></p>
+
+<br>
+
 <table class="table table-striped table-bordered">
 	<tbody>
 		<tr>
@@ -27,7 +31,7 @@ echo $this->element('acl/actions'); ?>
 		<?php foreach ($acos as $aco) { ?>
 
 			<tr>
-				<td class="matrix-head matrix-x">
+				<td class="matrix-head matrix-x" style="padding-left: <?php echo ($aco['ControlObject']['depth'] * 15) . 'px'; ?>">
 					<b><?php echo $this->Html->link($aco['ControlObject']['alias'], array(
 						'controller' => 'crud',
 						'action' => 'read',
@@ -88,11 +92,9 @@ echo $this->element('acl/actions'); ?>
 					} else { ?>
 
 						<td colspan="4" class="permission">
-							<?php if ($aco['ControlObject']['parent_id']) { ?>
-								<a href="<?php echo $url; ?>" class="action tip" title="<?php echo __d('admin', 'No access defined. Grant permission?'); ?>">
-									&nbsp;
-								</a>
-							<?php } ?>
+							<a href="<?php echo $url; ?>" class="action tip missing" title="<?php echo __d('admin', 'No access defined. Grant permission?'); ?>">
+								&nbsp;
+							</a>
 						</td>
 
 					<?php } ?>

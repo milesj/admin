@@ -50,9 +50,11 @@ class ControlObject extends Aco {
 	 * @var array
 	 */
 	public $admin = array(
-		'iconClass' => 'icon-wrench',
+		'iconClass' => 'icon-puzzle-piece',
 		'hideFields' => array('lft', 'rght'),
-		'editable' => false
+		'paginate' => array(
+			'order' => array('ControlObject.lft' => 'ASC')
+		)
 	);
 
 	/**
@@ -147,10 +149,10 @@ class ControlObject extends Aco {
 	 * @return array
 	 */
 	public function getAll() {
-		$this->recursive = 0;
+		$this->recursive = -1;
 
 		return $this->find('all', array(
-			'order' => array('ControlObject.alias' => 'ASC'),
+			'order' => array('ControlObject.lft' => 'ASC'),
 			'cache' => __METHOD__,
 			'cacheExpires' => '+1 hour'
 		));

@@ -81,7 +81,29 @@ class AclController extends AdminAppController {
 	 * @return array
 	 */
 	protected function getControllers() {
-		return $this->Aco->getAll();
+		$mapParentId = array();
+
+		$acos = $this->Aco->getAll();
+
+		// Map IDs to parent IDs
+		foreach ($acos as $aco) {
+			$mapParentId[$aco['ControlObject']['id']] = $aco['ControlObject']['parent_id'];
+		}
+
+		// Determine the child depth
+		foreach ($acos as &$aco) {
+			$depth = 0;
+			$id = $aco['ControlObject']['id'];
+
+			while (isset($mapParentId[$id])) {
+				$depth++;
+				$id = $mapParentId[$id];
+			}
+
+			$aco['ControlObject']['depth'] = $depth;
+		}
+
+		return $acos;
 	}
 
 	/**
@@ -90,42 +112,72 @@ class AclController extends AdminAppController {
 	 * @return array
 	 */
 	protected function getRequesters() {
-		$mapByAroId = array();
+		$mapParentId = array();
+		$mapAroId = array();
 
-		// Map out the permissions
-		if ($permissions = $this->Permission->getAll()) {
-			foreach ($permissions as $permission) {
-				$permission = $permission['ObjectPermission'];
-				$mapByAroId[$permission['aro_id']][$permission['aco_id']] = $permission;
-			}
+		$aros = $this->Aro->getAll();
+		$permissions = $this->Permission->getAll();
+
+		// Map ACOs to AROs indexed by IDs
+		foreach ($permissions as $permission) {
+			$permission = $permission['ObjectPermission'];
+
+			$mapAroId[$permission['aro_id']][$permission['aco_id']] = $permission;
 		}
 
-		// Grab the permissions for each aro
-		$aros = $this->Aro->getAll();
+		// Map IDs to parent IDs
+		foreach ($aros as $aro) {
+			$mapParentId[$aro['RequestObject']['id']] = $aro['RequestObject'];
+		}
 
-		if ($aros) {
-			foreach ($aros as &$aro) {
-				$aro['ObjectPermission'] = array();
-				$id = $aro['RequestObject']['id'];
-				$parent_id = $aro['RequestObject']['parent_id'];
+		// Loop through AROs and determine permissions
+		// While taking into account inheritance
+		foreach ($aros as &$aro) {
+			$id = $aro['RequestObject']['id'];
+			$parent_id = $aro['RequestObject']['parent_id'];
+			$inheritance = array();
 
-				// If inheriting from parent, force all values to 0 (inherit)
-				if ($parent_id && isset($mapByAroId[$parent_id])) {
-					$aro['ObjectPermission'] = array_map(function($value) {
-						return array_merge($value, array(
-							'_create' => 0,
-							'_read' => 0,
-							'_update' => 0,
-							'_delete' => 0
-						));
-					}, $mapByAroId[$parent_id]) + $aro['ObjectPermission'];
-				}
+			while (isset($mapParentId[$parent_id])) {
+				array_unshift($inheritance, $parent_id);
+				$parent_id = $mapParentId[$parent_id]['parent_id'];
+			}
 
-				// Individual perms should take precedence
-				if (isset($mapByAroId[$id])) {
-					$aro['ObjectPermission'] = $mapByAroId[$id] + $aro['ObjectPermission'];
+			$inheritance[] = $id;
+
+			// Fetch permissions from parents
+			$perms = array();
+			$parent_id = $aro['RequestObject']['parent_id']; // reset $parent_id
+
+			foreach ($inheritance as $pid) {
+				if (isset($mapAroId[$pid])) {
+					$perms = Hash::merge($perms, array_map(function($value) use ($id, $parent_id) {
+
+						// If the ARO on the permission doesn't match the current ARO
+						// It is being inherited, so force it to 0
+						if ($id != $value['aro_id']) {
+							$value = array_merge($value, array(
+								'_create' => 0,
+								'_read' => 0,
+								'_update' => 0,
+								'_delete' => 0
+							));
+
+						// Top level AROs cant inherit from nothing
+						// So change those values to denied
+						} else if (empty($parent_id)) {
+							foreach (array('_create', '_read', '_update', '_delete') as $action) {
+								if ($value[$action] == 0) {
+									$value[$action] = -1;
+								}
+							}
+						}
+
+						return $value;
+					}, $mapAroId[$pid]));
 				}
 			}
+
+			$aro['ObjectPermission'] = $perms;
 		}
 
 		return $aros;

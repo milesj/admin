@@ -52,7 +52,9 @@ class RequestObject extends Aro {
 	public $admin = array(
 		'iconClass' => 'icon-key',
 		'hideFields' => array('lft', 'rght'),
-		'editable' => false
+		'paginate' => array(
+			'order' => array('RequestObject.lft' => 'ASC')
+		)
 	);
 
 	/**
@@ -181,10 +183,11 @@ class RequestObject extends Aro {
 	 * @return array
 	 */
 	public function getAll() {
-		$this->recursive = 0;
+		$this->recursive = -1;
 
 		return $this->find('all', array(
 			'order' => array('RequestObject.lft' => 'ASC'),
+			'contain' => array('Parent'),
 			'cache' => __METHOD__,
 			'cacheExpires' => '+1 hour'
 		));
