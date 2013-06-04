@@ -5,9 +5,10 @@ echo $this->element('acl/actions'); ?>
 
 <h2><?php echo __d('admin', 'Access Control Lists'); ?></h2>
 
-<p><?php echo __d('admin', 'ACL is divided into 3 sections: objects requesting access (AROs), objects being controlled or objects being requested against (ACOs), and permissions providing CRUD access between requesters and controllers. The 3 sections can be found in the matrix table below. Each row represents a controller, each column represents a requester, and every intersecting cell represents the permission between the two. Green cells provide full access, while blue cells inherit from the parent, while red cells restrict access, and finally yellow cells which have no permissions defined. Clicking on a cell will either provide access, or allow the current permission to be changed.'); ?></p>
-
-<br>
+<div class="alert alert-info">
+	<?php echo __d('admin', 'ACL is divided into 3 parts: objects requesting access (AROs), objects being controlled (ACOs), and permissions providing CRUD access between requesters and controllers.'); ?>
+	<a href="http://milesj.me/code/cakephp/admin#acl-permissions"><?php echo __d('admin', 'Learn more about how ACL permissions work.'); ?></a>
+</div>
 
 <table class="table table-striped table-bordered">
 	<tbody>

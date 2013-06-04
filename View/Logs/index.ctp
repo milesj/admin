@@ -3,7 +3,7 @@ $this->Breadcrumb->add(__d('admin', 'Logs'), array('controller' => 'logs', 'acti
 
 echo $this->element('logs/actions'); ?>
 
-<h2><?php echo __d('admin', 'Action Logs'); ?></h2>
+<h2><?php echo $model->pluralName; ?></h2>
 
 <?php echo $this->element('pagination'); ?>
 

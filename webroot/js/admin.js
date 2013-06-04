@@ -135,6 +135,20 @@ var Admin = {
 				button.text(option);
 			});
 		});
+	},
+
+	/**
+	 * Toggle the grouped input fields within the upload form.
+	 *
+	 * @param {Element} select
+	 * @param {String} type
+	 */
+	toggleUploadField: function(select, type) {
+		var self = $(select),
+			fieldset = self.parents('fieldset');
+
+		fieldset.find(type).hide();
+		fieldset.find('.' + self.val()).show();
 	}
 
 };

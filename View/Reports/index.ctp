@@ -15,7 +15,7 @@ if ($this->request->data[$model->alias]['status'] == ItemReport::PENDING) {
 	<?php echo $this->element('button/filter'); ?>
 </div>
 
-<h2><?php echo $this->Admin->outputIconTitle($model, $pageTitle); ?></h2>
+<h2><?php echo $pageTitle; ?></h2>
 
 <?php
 echo $this->element('filters');

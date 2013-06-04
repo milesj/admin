@@ -14,6 +14,9 @@ Router::connect('/admin/logs', array('plugin' => 'admin', 'controller' => 'logs'
 Router::connect('/admin/reports/:action/*', array('plugin' => 'admin', 'controller' => 'reports'));
 Router::connect('/admin/reports', array('plugin' => 'admin', 'controller' => 'reports', 'action' => 'index'));
 
+Router::connect('/admin/upload/:action/*', array('plugin' => 'admin', 'controller' => 'upload'));
+Router::connect('/admin/upload', array('plugin' => 'admin', 'controller' => 'upload', 'action' => 'index'));
+
 Router::connect('/admin/:model/:action/*',
 	array('plugin' => 'admin', 'controller' => 'crud'),
 	array('model' => '[_a-z0-9]+\.[_a-z0-9]+'));

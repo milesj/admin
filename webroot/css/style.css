@@ -172,3 +172,16 @@ td.col-actions a.btn { display: inline-block; padding: 0 4px; }
 .gridalicious.config-grid .well { padding: 0; }
 .gridalicious.config-grid .well > h3 { margin: 19px; }
 .gridalicious.config-grid .well .table { margin: -1px; width: 100.5%; max-width: 100.5%; }
+
+/*----------------- Upload -----------------*/
+
+.controller-upload fieldset { padding-bottom: 30px; }
+.controller-upload .input { margin-bottom: 20px; }
+.controller-upload .input.select label,
+.controller-upload .input.text label,
+.controller-upload .input.number label,
+.controller-upload .input.file label,
+.controller-upload .input.textarea label { width: 20%; font-weight: bold; display: inline-block; margin-right: 2%; text-align: right; }
+.controller-upload .input.textarea label { vertical-align: top; }
+.controller-upload .input.textarea textarea { width: 75%; }
+.controller-upload .input.checkbox { margin-left: 22%; font-weight: bold; }

@@ -91,6 +91,14 @@ if ($modelParam) {
 						), array('escape' => false)); ?>
 					</li>
 
+					<li<?php echo ($controller === 'upload') ? ' class="active"' : ''; ?>>
+						<?php echo $this->Html->link(__d('admin', 'Upload'), array(
+							'plugin' => 'admin',
+							'controller' => 'upload',
+							'action' => 'index'
+						)); ?>
+					</li>
+
 					<li class="divider-vertical"></li>
 
 					<?php foreach ($this->Admin->getNavigation() as $plugin => $groups) {
