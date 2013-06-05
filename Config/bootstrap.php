@@ -134,8 +134,8 @@ Configure::write('Admin.uploads.transforms', array(
 		'nameCallback' => 'formatTransformName',
 		'append' => '-thumb',
 		'overwrite' => true,
-		'width' => 100,
-		'height' => 100
+		'width' => 250,
+		'height' => 150
 	),
 	'path_large' => array(
 		'method' => 'resize',

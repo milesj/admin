@@ -184,6 +184,16 @@ if (CakePlugin::loaded('Uploader')) { ?>
 </div>
 
 <div class="well actions">
+	<div class="redirect-to">
+		<?php echo $this->Form->input('redirect_to', array(
+			'div' => false,
+			'options' => array(
+				'upload' => __d('admin', 'Continue Uploading'),
+				'read' => __d('admin', '%s Overview', $model->singularName)
+			)
+		)); ?>
+	</div>
+
 	<button type="submit" class="btn btn-large btn-success">
 		<span class="icon-edit icon-white"></span>
 		<?php echo __d('admin', 'Upload'); ?>
@@ -195,11 +205,11 @@ if (CakePlugin::loaded('Uploader')) { ?>
 } else { ?>
 
 <div class="hero-unit align-center" style="margin-bottom: 0">
-	<h2>Uploading files requires the Uploader plugin</h2>
+	<h2><?php echo __d('admin', 'Install the Uploader to upload files'); ?></h2>
 
 	<a href="http://milesj.me/code/cakephp/uploader" target="_blank" class="btn btn-primary btn-large">
 		<span class="icon-external-link"></span>
-		<?php echo __d('admin', 'Download'); ?>
+		<?php echo __d('admin', 'Install'); ?>
 	</a>
 </div>
 

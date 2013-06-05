@@ -23,6 +23,10 @@ class UploadController extends AdminAppController {
 
 					$this->AdminToolbar->setFlashMessage(__d('admin', 'Successfully uploaded a new file'));
 					$this->request->data = array();
+
+					if ($data[$this->Model->alias]['redirect_to'] === 'read') {
+						$this->redirect(array('plugin' => 'admin', 'controller' => 'crud', 'action' => 'read', 'model' => $this->Model->urlSlug, $this->Model->id));
+					}
 				}
 			} catch (Exception $e) {
 				$this->AdminToolbar->setFlashMessage($e->getMessage(), 'error');

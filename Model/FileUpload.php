@@ -59,6 +59,8 @@ class FileUpload extends AdminAppModel {
 			$this->actsAs['Uploader.FileValidation'] = array(
 				'path' => Configure::read('Admin.uploads.validation')
 			);
+		} else {
+			$this->admin = false;
 		}
 
 		parent::__construct($id, $table, $ds);
