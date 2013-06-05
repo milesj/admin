@@ -335,6 +335,10 @@ class CrudController extends AdminAppController {
 		// Introspect model
 		if (isset($this->params['model'])) {
 			$this->Model = Admin::introspectModel($this->params['model']);
+
+			if (!$this->Model) {
+				throw new ForbiddenException(__d('admin', 'Invalid Model'));
+			}
 		}
 
 		// Parse request and set null fields to null

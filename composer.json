@@ -17,6 +17,9 @@
 		"mjohnson/utility": "~1.4",
 		"composer/installers": "*"
 	},
+	"suggest": {
+		"mjohnson/uploader": "~4.0"
+	},
 	"support": {
 		"source": "https://github.com/milesj/Admin"
 	}
