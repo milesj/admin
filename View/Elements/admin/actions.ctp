@@ -21,6 +21,11 @@
 			'title' => __d('admin', 'Routes'),
 			'icon' => 'icon-road'
 		),
+		'logs' => array(
+			'title' => __d('admin', 'Logs'),
+			'icon' => 'icon-exchange',
+			'url' => array('controller' => 'logs', 'action' => 'read', 'error')
+		),
 		/*'locales' => array(
 			'title' => __d('admin', 'Locales'),
 			'icon' => 'icon-globe'
@@ -29,13 +34,18 @@
 
 	foreach ($links as $action => $link) {
 		$class = 'btn btn-large';
+		$url = array('controller' => 'admin', 'action' => $action);
 
 		if ($this->action === $action) {
 			$class .= ' active';
 		}
 
+		if (!empty($link['url'])) {
+			$url = $link['url'];
+		}
+
 		echo $this->Html->link('<span class="' . $link['icon'] . '"></span> ' . $link['title'],
-			array('controller' => 'admin', 'action' => $action),
+			$url,
 			array('class' => $class, 'escape' => false));
 	} ?>
 
