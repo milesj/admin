@@ -5,7 +5,7 @@
 		echo $this->element('Admin.button/process_behavior');
 	}
 
-	if ($this->action === 'read') {
+	if ($this->action === 'read' || $this->action === 'update') {
 		echo $this->element('Admin.button/process_model');
 	}
 
