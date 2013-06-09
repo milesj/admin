@@ -163,6 +163,28 @@ Configure::write('Admin.uploads.transport', array());
 Configure::write('Admin.uploads.validation', array('required' => true));
 
 /**
+ * Mapping of controllers to display as top-level menu items.
+ */
+Configure::write('Admin.menu', array(
+	'acl' => array(
+		'title' => __d('admin', 'ACL'),
+		'url' => array('plugin' => 'admin', 'controller' => 'acl')
+	),
+	'logs' => array(
+		'title' => __d('admin', 'Logs'),
+		'url' => array('plugin' => 'admin', 'controller' => 'logs')
+	),
+	'reports' => array(
+		'title' => __d('admin', 'Reports'),
+		'url' => array('plugin' => 'admin', 'controller' => 'reports')
+	),
+	'upload' => array(
+		'title' => __d('admin', 'Upload'),
+		'url' => array('plugin' => 'admin', 'controller' => 'upload')
+	)
+));
+
+/**
  * The user model for the application.
  *
  * @link http://milesj.me/code/cakephp/admin#user-customizing

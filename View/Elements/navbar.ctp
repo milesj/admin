@@ -60,48 +60,29 @@ if ($modelParam) {
 				</ul>
 
 				<ul class="nav">
-					<li<?php echo ($controller === 'acl') ? ' class="active"' : ''; ?>>
-						<?php echo $this->Html->link(__d('admin', 'ACL'), array(
-							'plugin' => 'admin',
-							'controller' => 'acl',
-							'action' => 'index'
-						)); ?>
-					</li>
+					<?php // Loop top-level menu
+					$currentRoute = Router::currentRoute();
+					$currentSection = empty($currentRoute->options['section']) ? null : $currentRoute->options['section'];
 
-					<li<?php echo ($controller === 'logs') ? ' class="active"' : ''; ?>>
-						<?php echo $this->Html->link(__d('admin', 'Logs'), array(
-							'plugin' => 'admin',
-							'controller' => 'logs',
-							'action' => 'index'
-						)); ?>
-					</li>
+					foreach (Configure::read('Admin.menu') as $section => $menu) { ?>
 
-					<li<?php echo ($controller === 'reports') ? ' class="active"' : ''; ?>>
-						<?php
-						$title = __d('admin', 'Reports');
+						<li<?php echo ($currentSection === $section) ? ' class="active"' : ''; ?>>
+							<?php
+							$title = $menu['title'];
 
-						if (!empty($pendingReports)) {
-							$title .= ' <span class="label label-important">' . $pendingReports . '</span>';
-						}
+							if ($section === 'reports' && !empty($pendingReports)) {
+								$title .= ' <span class="label label-important">' . $pendingReports . '</span>';
+							}
 
-						echo $this->Html->link($title, array(
-							'plugin' => 'admin',
-							'controller' => 'reports',
-							'action' => 'index'
-						), array('escape' => false)); ?>
-					</li>
+							echo $this->Html->link($title, $menu['url'], array('escape' => false)); ?>
+						</li>
 
-					<li<?php echo ($controller === 'upload') ? ' class="active"' : ''; ?>>
-						<?php echo $this->Html->link(__d('admin', 'Upload'), array(
-							'plugin' => 'admin',
-							'controller' => 'upload',
-							'action' => 'index'
-						)); ?>
-					</li>
+					<?php } ?>
 
 					<li class="divider-vertical"></li>
 
-					<?php foreach ($this->Admin->getNavigation() as $plugin => $groups) {
+					<?php // Loop model menu
+					foreach ($this->Admin->getNavigation() as $plugin => $groups) {
 						if (empty($groups)) {
 							continue;
 						} ?>

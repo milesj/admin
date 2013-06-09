@@ -5,17 +5,10 @@
  * @link		http://milesj.me/code/cakephp/admin
  */
 
-Router::connect('/admin/acl/:action/*', array('plugin' => 'admin', 'controller' => 'acl'));
-Router::connect('/admin/acl', array('plugin' => 'admin', 'controller' => 'acl', 'action' => 'index'));
-
-Router::connect('/admin/logs/:action/*', array('plugin' => 'admin', 'controller' => 'logs'));
-Router::connect('/admin/logs', array('plugin' => 'admin', 'controller' => 'logs', 'action' => 'index'));
-
-Router::connect('/admin/reports/:action/*', array('plugin' => 'admin', 'controller' => 'reports'));
-Router::connect('/admin/reports', array('plugin' => 'admin', 'controller' => 'reports', 'action' => 'index'));
-
-Router::connect('/admin/upload/:action/*', array('plugin' => 'admin', 'controller' => 'upload'));
-Router::connect('/admin/upload', array('plugin' => 'admin', 'controller' => 'upload', 'action' => 'index'));
+foreach (Configure::read('Admin.menu') as $section => $menu) {
+	Router::connect('/admin/'. $section . '/:action/*', $menu['url'], array('section' => $section));
+	Router::connect('/admin/'. $section, $menu['url'] + array('action' => 'index'), array('section' => $section));
+}
 
 Router::connect('/admin/:model/:action/*',
 	array('plugin' => 'admin', 'controller' => 'crud'),
