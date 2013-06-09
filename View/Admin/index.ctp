@@ -1,8 +1,8 @@
 <?php if (!$this->Session->check('Admin')) { ?>
 	<div class="alert alert-danger">
 		<span class="icon-warning-sign"></span> &nbsp;
-		ACL permissions do not exist within the session and all access has been disabled.
-		<a href="http://milesj.me/code/cakephp/admin#faq">Please update session management and re-login.</a>
+		<?php echo __d('admin', 'ACL permissions do not exist within the session and all access has been disabled.'); ?>
+		<a href="http://milesj.me/code/cakephp/admin#faq"><?php echo __d('admin', 'Please update session management and re-login.'); ?></a>
 	</div>
 <?php }
 
