@@ -15,6 +15,30 @@ msgstr ""
 msgid "Admin"
 msgstr ""
 
+#: /Config/bootstrap.php:170
+#: /View/Acl/index.ctp:2
+#: /View/Upload/index.ctp:75
+msgid "ACL"
+msgstr ""
+
+#: /Config/bootstrap.php:174
+#: /View/Elements/admin/actions.ctp:25
+#: /View/Logs/index.ctp:2
+#: /View/Logs/read.ctp:2
+msgid "Logs"
+msgstr ""
+
+#: /Config/bootstrap.php:178
+#: /View/Reports/index.ctp:2
+#: /View/Reports/read.ctp:2
+msgid "Reports"
+msgstr ""
+
+#: /Config/bootstrap.php:182
+#: /View/Upload/index.ctp:2;210
+msgid "Upload"
+msgstr ""
+
 #: /Controller/AclController.php:36
 msgid "Invalid ARO/ACO IDs"
 msgstr ""
@@ -152,12 +176,6 @@ msgstr ""
 msgid "Invalid item report type"
 msgstr ""
 
-#: /View/Acl/index.ctp:2
-#: /View/Elements/navbar.ctp:64
-#: /View/Upload/index.ctp:75
-msgid "ACL"
-msgstr ""
-
 #: /View/Acl/index.ctp:6
 msgid "Access Control Lists"
 msgstr ""
@@ -194,6 +212,14 @@ msgstr ""
 #: /View/Admin/config.ctp:2;6
 #: /View/Elements/admin/actions.ctp:13
 msgid "Configuration"
+msgstr ""
+
+#: /View/Admin/index.ctp:4
+msgid "ACL permissions do not exist within the session and all access has been disabled."
+msgstr ""
+
+#: /View/Admin/index.ctp:5
+msgid "Please update session management and re-login."
 msgstr ""
 
 #: /View/Admin/index.ctp:11
@@ -383,7 +409,7 @@ msgid "Continue Editing"
 msgstr ""
 
 #: /View/Elements/form_actions.ctp:10
-#: /View/Upload/index.ctp:192
+#: /View/Upload/index.ctp:203
 msgid "%s Overview"
 msgstr ""
 
@@ -413,23 +439,6 @@ msgstr ""
 
 #: /View/Elements/navbar.ctp:54
 msgid "Logout"
-msgstr ""
-
-#: /View/Elements/navbar.ctp:72
-#: /View/Logs/index.ctp:2
-#: /View/Logs/read.ctp:2
-msgid "Logs"
-msgstr ""
-
-#: /View/Elements/navbar.ctp:81
-#: /View/Reports/index.ctp:2
-#: /View/Reports/read.ctp:2
-msgid "Reports"
-msgstr ""
-
-#: /View/Elements/navbar.ctp:95
-#: /View/Upload/index.ctp:2;199
-msgid "Upload"
 msgstr ""
 
 #: /View/Elements/pagination.ctp:8
@@ -553,11 +562,11 @@ msgid "View All Uploads"
 msgstr ""
 
 #: /View/Upload/index.ctp:17
-msgid "Uploading supports all types of files with no restrictions. Files can also be transported to a remote service. However, only image files will be transformed."
+msgid "Upload all types of files with no restrictions. Uploading also supports image transformation and remote transportation."
 msgstr ""
 
 #: /View/Upload/index.ctp:18
-msgid "Learn more about the Uploader plugin."
+msgid "Learn more about file uploading."
 msgstr ""
 
 #: /View/Upload/index.ctp:24
@@ -712,91 +721,99 @@ msgstr ""
 msgid "Scale"
 msgstr ""
 
-#: /View/Upload/index.ctp:117
-msgid "Prepend"
+#: /View/Upload/index.ctp:115
+msgid "Rotate"
 msgstr ""
 
 #: /View/Upload/index.ctp:118
+msgid "Prepend"
+msgstr ""
+
+#: /View/Upload/index.ctp:119
 msgid "Append"
 msgstr ""
 
-#: /View/Upload/index.ctp:122;131
+#: /View/Upload/index.ctp:123;132
 msgid "Width"
 msgstr ""
 
-#: /View/Upload/index.ctp:123;132
+#: /View/Upload/index.ctp:124;133
 msgid "Height"
 msgstr ""
 
-#: /View/Upload/index.ctp:129
+#: /View/Upload/index.ctp:130
 msgid "Mode"
 msgstr ""
 
-#: /View/Upload/index.ctp:135
+#: /View/Upload/index.ctp:136
 msgid "Allow greater than current dimension"
 msgstr ""
 
-#: /View/Upload/index.ctp:136
+#: /View/Upload/index.ctp:137
 msgid "Maintain aspect ratio"
 msgstr ""
 
-#: /View/Upload/index.ctp:142
+#: /View/Upload/index.ctp:143
 msgid "Location"
 msgstr ""
 
-#: /View/Upload/index.ctp:144
+#: /View/Upload/index.ctp:145
 msgid "Center"
 msgstr ""
 
-#: /View/Upload/index.ctp:145
+#: /View/Upload/index.ctp:146
 msgid "Top"
 msgstr ""
 
-#: /View/Upload/index.ctp:146
+#: /View/Upload/index.ctp:147
 msgid "Right"
 msgstr ""
 
-#: /View/Upload/index.ctp:147
+#: /View/Upload/index.ctp:148
 msgid "Bottom"
 msgstr ""
 
-#: /View/Upload/index.ctp:148
+#: /View/Upload/index.ctp:149
 msgid "Left"
 msgstr ""
 
-#: /View/Upload/index.ctp:156
+#: /View/Upload/index.ctp:157
 msgid "Direction"
 msgstr ""
 
-#: /View/Upload/index.ctp:158
+#: /View/Upload/index.ctp:159
 msgid "Vertical"
 msgstr ""
 
-#: /View/Upload/index.ctp:159
+#: /View/Upload/index.ctp:160
 msgid "Horizontal"
 msgstr ""
 
-#: /View/Upload/index.ctp:160
+#: /View/Upload/index.ctp:161
 msgid "Both"
 msgstr ""
 
-#: /View/Upload/index.ctp:168
+#: /View/Upload/index.ctp:169
 msgid "Percent"
 msgstr ""
 
-#: /View/Upload/index.ctp:191
+#: /View/Upload/index.ctp:178
+msgid "Degrees"
+msgstr ""
+
+#: /View/Upload/index.ctp:202
 msgid "Continue Uploading"
 msgstr ""
 
-#: /View/Upload/index.ctp:208
+#: /View/Upload/index.ctp:219
 msgid "Install the Uploader to upload files"
 msgstr ""
 
-#: /View/Upload/index.ctp:212
+#: /View/Upload/index.ctp:223
 msgid "Install"
 msgstr ""
 
-# CRUD
+#: CRUD
 msgid "Create"
 msgstr ""
 
@@ -806,7 +823,7 @@ msgstr ""
 msgid "Update"
 msgstr ""
 
-# Process Callbacks
+#: Process Callbacks
 msgid "Recover Tree"
 msgstr ""
 
@@ -816,7 +833,7 @@ msgstr ""
 msgid "Clear Cache"
 msgstr ""
 
-# Action Logs
+#: Action Logs
 msgid "action_log.other"
 msgstr "%s did something with %s"
 
@@ -841,14 +858,14 @@ msgstr "%s processed %s %s"
 msgid "action_log.batch_process"
 msgstr "%s processed multiple %s"
 
-# AROs
+#: AROs
 msgid "aro.administrator"
 msgstr "Administrator"
 
 msgid "aro.superModerator"
 msgstr "Super Moderator"
 
-# Item Reports
+#: Item Reports
 msgid "item_report.type.0"
 msgstr "Other"
 

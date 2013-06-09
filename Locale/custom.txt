@@ -1,7 +1,7 @@
 Custom strings that won't be generated through the shell.
 Will have to manually be added later on.
 
-# CRUD
+#: CRUD
 msgid "Create"
 msgstr ""
 
@@ -11,7 +11,7 @@ msgstr ""
 msgid "Update"
 msgstr ""
 
-# Process Callbacks
+#: Process Callbacks
 msgid "Recover Tree"
 msgstr ""
 
@@ -21,7 +21,7 @@ msgstr ""
 msgid "Clear Cache"
 msgstr ""
 
-# Action Logs
+#: Action Logs
 msgid "action_log.other"
 msgstr "%s did something with %s"
 
@@ -46,14 +46,14 @@ msgstr "%s processed %s %s"
 msgid "action_log.batch_process"
 msgstr "%s processed multiple %s"
 
-# AROs
+#: AROs
 msgid "aro.administrator"
 msgstr "Administrator"
 
 msgid "aro.superModerator"
 msgstr "Super Moderator"
 
-# Item Reports
+#: Item Reports
 msgid "item_report.type.0"
 msgstr "Other"
 
