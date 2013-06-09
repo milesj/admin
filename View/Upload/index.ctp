@@ -14,8 +14,8 @@ if (CakePlugin::loaded('Uploader')) { ?>
 <?php echo $this->Form->create($model->alias, array('class' => 'form-horizontal', 'type' => 'file')); ?>
 
 <div class="alert alert-info">
-	<?php echo __d('admin', 'Uploading supports all types of files with no restrictions. Files can also be transported to a remote service. However, only image files will be transformed.'); ?>
-	<a href="http://milesj.me/code/cakephp/uploader"><?php echo __d('admin', 'Learn more about the Uploader plugin.'); ?></a>
+	<?php echo __d('admin', 'Upload all types of files with no restrictions. Uploading also supports image transformation and remote transportation.'); ?>
+	<a href="http://milesj.me/code/cakephp/admin#file-uploading"><?php echo __d('admin', 'Learn more about file uploading.'); ?></a>
 </div>
 
 <div class="row-fluid">
@@ -111,7 +111,8 @@ if (CakePlugin::loaded('Uploader')) { ?>
 					'crop' => __d('admin', 'Crop'),
 					'resize' => __d('admin', 'Resize'),
 					'flip' => __d('admin', 'Flip'),
-					'scale' => __d('admin', 'Scale')
+					'scale' => __d('admin', 'Scale'),
+					'rotate' => __d('admin', 'Rotate')
 				)
 			));
 			echo $this->Form->input('FileUpload.transforms.' . $field . '.prepend', array('label' => __d('admin', 'Prepend')));
@@ -166,7 +167,17 @@ if (CakePlugin::loaded('Uploader')) { ?>
 				<?php
 				echo $this->Form->input('FileUpload.transforms.' . $field . '.percent', array(
 					'label' => __d('admin', 'Percent'),
-					'type' => 'number'
+					'type' => 'number',
+					'value' => .5
+				)); ?>
+			</div>
+
+			<div class="transform rotate"<?php if ($currentValue !== 'rotate') echo ' style="display: none"'; ?>>
+				<?php
+				echo $this->Form->input('FileUpload.transforms.' . $field . '.degrees', array(
+					'label' => __d('admin', 'Degrees'),
+					'type' => 'number',
+					'value' => 90
 				)); ?>
 			</div>
 		</fieldset>

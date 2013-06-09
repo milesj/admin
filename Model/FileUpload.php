@@ -40,6 +40,10 @@ class FileUpload extends AdminAppModel {
 	 */
 	public function __construct($id = false, $table = null, $ds = null) {
 		if (CakePlugin::loaded('Uploader')) {
+			$transforms = array(
+				'path' => array('method' => 'exif', 'self' => true)
+			) + Configure::read('Admin.uploads.transforms');
+
 			$this->actsAs['Uploader.Attachment'] = array(
 				'path' => array(
 					'nameCallback' => 'formatName',
@@ -51,7 +55,7 @@ class FileUpload extends AdminAppModel {
 						'height' => 'width',
 						'width' => 'height'
 					),
-					'transforms' => Configure::read('Admin.uploads.transforms'),
+					'transforms' => $transforms,
 					'transport' => Configure::read('Admin.uploads.transport')
 				)
 			);
