@@ -18,7 +18,7 @@ class AdminSchema extends CakeSchema {
 	 * @return bool
 	 */
 	public function before($event = array()) {
-		// @todo doesn't work
+		// TODO doesn't work
 		//$db = ConnectionManager::getDataSource($this->connection);
 		//$db->config['prefix'] = ADMIN_PREFIX;
 
@@ -67,6 +67,30 @@ class AdminSchema extends CakeSchema {
 			'PRIMARY' => array('column' => 'id', 'unique' => 1),
 			'reporter_id' => array('column' => 'reporter_id', 'unique' => 0),
 			'resolver_id' => array('column' => 'reporter_id', 'unique' => 0)
+		)
+	);
+
+	/**
+	 * File uploads table.
+	 *
+	 * @var array
+	 */
+	public $file_uploads = array(
+		'id' => array('type' => 'integer', 'null' => false, 'key' => 'primary'),
+		'user_id' => array('type' => 'integer', 'null' => true, 'default' => null, 'key' => 'index'),
+		'path' => array('type' => 'string', 'null' => false, 'length' => 255),
+		'path_thumb' => array('type' => 'string', 'null' => false, 'length' => 255),
+		'path_large' => array('type' => 'string', 'null' => false, 'length' => 255),
+		'size' => array('type' => 'integer', 'null' => false),
+		'ext' => array('type' => 'string', 'null' => false, 'length' => 10),
+		'type' => array('type' => 'string', 'null' => false, 'length' => 50),
+		'width' => array('type' => 'integer', 'null' => true, 'length' => 6),
+		'height' => array('type' => 'integer', 'null' => true, 'length' => 6),
+		'created' => array('type' => 'datetime', 'null' => true, 'default' => null),
+		'modified' => array('type' => 'datetime', 'null' => true, 'default' => null),
+		'indexes' => array(
+			'PRIMARY' => array('column' => 'id', 'unique' => 1),
+			'user_id' => array('column' => 'user_id', 'unique' => 0)
 		)
 	);
 
