@@ -137,6 +137,8 @@ class ControlObject extends Aco {
 		$this->create();
 
 		if ($this->save($query)) {
+			$this->deleteCache(array('ControlObject::hasAlias', $alias));
+
 			return $this->id;
 		}
 
