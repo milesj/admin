@@ -54,9 +54,9 @@ class InstallShell extends BaseInstallShell {
 	public function setupAcl() {
 		$adminAlias = Configure::read('Admin.aliases.administrator');
 
-		$this->out(sprintf('Administrator Role: <comment>%s</comment>', $adminAlias));
+		$this->out(sprintf('Administrator Role: <info>%s</info>', $adminAlias));
 
-		$answer = mb_strtoupper($this->in('<question>Is this correct?</question>', array('Y', 'N')));
+		$answer = mb_strtoupper($this->in('Is this correct?', array('Y', 'N')));
 
 		if ($answer === 'N') {
 			$this->out('<warning>Configure the role through Admin.aliases.administrator</warning>');
@@ -67,7 +67,7 @@ class InstallShell extends BaseInstallShell {
 		$userModel = ClassRegistry::init($this->usersModel, true);
 
 		// Fetch user
-		$this->out('<question>What user would you like to give admin access?</question>');
+		$this->out('What user would you like to give admin access?');
 		$user_id = $this->findUser();
 
 		// Give access
@@ -82,7 +82,7 @@ class InstallShell extends BaseInstallShell {
 			return false;
 		}
 
-		$this->out('<info>Access granted, proceeding...</info>');
+		$this->out('<success>Access granted, proceeding...</success>');
 		$this->plugin('Admin');
 		$this->plugin(Configure::read('Admin.coreName'));
 
@@ -120,7 +120,7 @@ class InstallShell extends BaseInstallShell {
 			return;
 		}
 
-		$this->out(sprintf('<info>Installing %s...</info>', $pluginName));
+		$this->out(sprintf('<success>Installing %s...</success>', $pluginName));
 
 		// Create parent object
 		$parent_id = $this->ControlObject->addObject($pluginName);
@@ -136,7 +136,7 @@ class InstallShell extends BaseInstallShell {
 			$this->Permission->allow($adminAlias, $pluginName . '/' . $model['id']);
 		}
 
-		$this->out(sprintf('<info>%s model ACOs installed</info>', $pluginName));
+		$this->out(sprintf('<success>%s model ACOs installed</success>', $pluginName));
 	}
 
 	/**
@@ -161,7 +161,7 @@ class InstallShell extends BaseInstallShell {
 			$plugin = Configure::read('Admin.coreName');
 		}
 
-		$this->out(sprintf('<info>Installing %s...</info>', $modelName));
+		$this->out(sprintf('<success>Installing %s...</success>', $modelName));
 
 		// Create parent object
 		$parent_id = $this->ControlObject->addObject($plugin);
@@ -173,7 +173,7 @@ class InstallShell extends BaseInstallShell {
 		// Give admin access
 		$this->Permission->allow(Configure::read('Admin.aliases.administrator'), $plugin . '/' . $alias);
 
-		$this->out(sprintf('<info>%s ACOs installed</info>', $modelName));
+		$this->out(sprintf('<success>%s ACOs installed</success>', $modelName));
 	}
 
 	/**
