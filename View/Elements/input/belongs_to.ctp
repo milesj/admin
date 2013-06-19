@@ -15,25 +15,30 @@ if (empty($typeAhead[$field])) {
 
 	if (isset($this->data[$alias][$model->{$alias}->displayField])) {
 		$value = $this->data[$alias][$model->{$alias}->displayField];
-	}
+	} ?>
 
-	echo $this->Form->input($field . '_type_ahead', array(
-		'div' => false,
-		'label' => false,
-		'type' => 'text',
-		'class' => 'span2 belongs-to',
-		'data-provide' => 'typeahead',
-		'autocomplete' => 'off',
-		'value' => $value,
-		'default' => $data['default']
-	));
+	<div class="type-ahead">
+		<?php
+		echo $this->Form->input($field . '_type_ahead', array(
+			'div' => false,
+			'label' => false,
+			'type' => 'text',
+			'class' => 'span3 belongs-to',
+			'data-provide' => 'typeahead',
+			'autocomplete' => 'off',
+			'value' => $value,
+			'default' => $data['default']
+		));
 
-	echo $this->Form->input($field, array(
-		'type' => 'text',
-		'div' => false,
-		'label' => false,
-		'style' => 'display: none'
-	)); ?>
+		echo $this->Form->input($field, array(
+			'type' => 'text',
+			'div' => false,
+			'label' => false,
+			'style' => 'display: none'
+		)); ?>
+
+		<span class="icon-search"></span>
+	</div>
 
 	<script type="text/javascript">
 		$(function() {
