@@ -8,6 +8,13 @@
 class AdminAppModel extends Model {
 
 	/**
+	 * Force plugin name.
+	 *
+	 * @type string
+	 */
+	public $plugin = 'Admin';
+
+	/**
 	 * Table prefix.
 	 *
 	 * @var string
