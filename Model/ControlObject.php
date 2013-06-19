@@ -153,8 +153,8 @@ class ControlObject extends Aco {
 
 		return $this->find('all', array(
 			'order' => array('ControlObject.lft' => 'ASC'),
-			'cache' => __METHOD__,
-			'cacheExpires' => '+1 hour'
+			//'cache' => __METHOD__,
+			//'cacheExpires' => '+1 hour'
 		));
 	}
 

@@ -104,8 +104,8 @@ class ObjectPermission extends Permission {
 	 */
 	public function getAll() {
 		return $this->find('all', array(
-			'cache' => __METHOD__,
-			'cacheExpires' => '+1 hour'
+			//'cache' => __METHOD__,
+			//'cacheExpires' => '+1 hour'
 		));
 	}
 

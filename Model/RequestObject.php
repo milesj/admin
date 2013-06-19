@@ -188,8 +188,8 @@ class RequestObject extends Aro {
 		return $this->find('all', array(
 			'order' => array('RequestObject.lft' => 'ASC'),
 			'contain' => array('Parent'),
-			'cache' => __METHOD__,
-			'cacheExpires' => '+1 hour'
+			//'cache' => __METHOD__,
+			//'cacheExpires' => '+1 hour'
 		));
 	}
 
