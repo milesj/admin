@@ -67,10 +67,7 @@ class AclController extends AdminAppController {
 		parent::beforeFilter();
 
 		$this->Aco = Admin::introspectModel('Admin.ControlObject');
-
 		$this->Aro = Admin::introspectModel('Admin.RequestObject');
-		$this->Aro->recursive = 0; // Use recursive as containable pulls in too much data
-
 		$this->Permission = Admin::introspectModel('Admin.ObjectPermission');
 		$this->Permission->cacheQueries = false;
 	}

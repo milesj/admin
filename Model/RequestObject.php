@@ -137,6 +137,8 @@ class RequestObject extends Aro {
 		$this->create();
 
 		if ($this->save($query)) {
+			$this->deleteCache(array('RequestObject::hasAlias', $alias));
+
 			return $this->getByAlias($alias);
 		}
 
@@ -171,6 +173,8 @@ class RequestObject extends Aro {
 		$this->create();
 
 		if ($this->save($query)) {
+			$this->deleteCache(array('RequestObject::hasAlias', $alias));
+
 			return $this->getByAlias($alias);
 		}
 
@@ -390,19 +394,20 @@ class RequestObject extends Aro {
 	 * @return bool
 	 */
 	public function isChildOf($user_id, $alias) {
-		$aro = $this->getByAlias($alias);
+		$aros = $this->node(array(
+			'model' => USER_MODEL,
+			'foreign_key' => $user_id
+		));
 
-		if (!$aro) {
-			return false;
+		if ($aros) {
+			foreach ($aros as $aro) {
+				if ($aro['RequestObject']['alias'] === $alias) {
+					return true;
+				}
+			}
 		}
 
-		return (bool) $this->find('count', array(
-			'conditions' => array(
-				'RequestObject.model' => USER_MODEL,
-				'RequestObject.foreign_key' => $user_id,
-				'RequestObject.parent_id' => $aro['RequestObject']['id']
-			)
-		));
+		return false;
 	}
 
 	/**
