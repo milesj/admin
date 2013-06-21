@@ -2,12 +2,8 @@
 
 $useFile = false;
 
-// Always allow on read action
-if ($this->action === 'read') {
-	$useFile = false;
-
 // If image is not allowed in this action, display a link
-} else if (isset($model->admin['imageFields'][$field])) {
+if (isset($model->admin['imageFields'][$field])) {
 	if (!in_array($this->action, (array) $model->admin['imageFields'][$field])) {
 		$useFile = true;
 	}
@@ -16,9 +12,9 @@ if ($this->action === 'read') {
 } else if (!in_array(strtolower(pathinfo($value,  PATHINFO_EXTENSION)), array('jpg', 'jpeg', 'png', 'gif'))) {
 	$useFile = true;
 
-// Validate image size
+// Validate image size on index
 } else if (!empty($result[$model->alias]['width'])) {
-	if ($result[$model->alias]['width'] > 200) {
+	if (($result[$model->alias]['width'] > 200) && $this->action === 'index') {
 		$useFile = true;
 	}
 
