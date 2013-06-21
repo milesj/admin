@@ -394,6 +394,10 @@ class RequestObject extends Aro {
 	 * @return bool
 	 */
 	public function isChildOf($user_id, $alias) {
+		if (!$user_id || !$alias) {
+			return false;
+		}
+
 		$aros = $this->node(array(
 			'model' => USER_MODEL,
 			'foreign_key' => $user_id
