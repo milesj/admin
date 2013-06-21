@@ -1,4 +1,4 @@
-# Admin v0.26.2 #
+# Admin v0.26.3 #
 
 A CakePHP administration plugin that provides moderate CRUD functionality for application and plugin models.
 Utilizes CakePHP's built-in authentication, authorization and ACL systems for security.
