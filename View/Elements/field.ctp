@@ -5,10 +5,7 @@ if (!empty($data['belongsTo']) && !empty($value) || $data['type'] === 'relation'
 } else if ($field === $model->primaryKey) {
 	$element = 'id';
 
-} else if (
-	in_array($field, $model->admin['imageFields']) || isset($model->admin['imageFields'][$field]) ||
-	($model->alias === 'FileUpload' && in_array($field, array('path', 'path_thumb', 'path_large')) && strpos($result[$model->alias]['type'], 'image') !== false)
-) {
+} else if (in_array($field, $model->admin['imageFields']) || isset($model->admin['imageFields'][$field])) {
 	$element = 'image';
 
 } else if (in_array($field, $model->admin['fileFields'])) {

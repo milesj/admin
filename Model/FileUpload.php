@@ -10,6 +10,13 @@ App::uses('AdminAppModel', 'Admin.Model');
 class FileUpload extends AdminAppModel {
 
 	/**
+	 * Use caption for display.
+	 *
+	 * @type string
+	 */
+	public $displayField = 'caption';
+
+	/**
 	 * Belongs to.
 	 *
 	 * @var array
@@ -27,8 +34,24 @@ class FileUpload extends AdminAppModel {
 	 */
 	public $admin = array(
 		'iconClass' => 'icon-upload',
-		'fileFields' => array('path', 'path_thumb', 'path_large'),
-		'hideFields' => array('path_thumb', 'path_large', 'size', 'ext', 'type', 'width', 'height')
+		'imageFields' => array(
+			'path',
+			'path_large',
+			'path_thumb' => array('index', 'read')
+		),
+		'hideFields' => array('path_thumb', 'path_large', 'size', 'ext', 'type', 'width', 'height'),
+		'paginate' => array(
+			'order' => array('FileUpload.created' => 'DESC')
+		)
+	);
+
+	/**
+	 * Validation.
+	 *
+	 * @type array
+	 */
+	public $validate = array(
+		'caption' => 'notEmpty'
 	);
 
 	/**
