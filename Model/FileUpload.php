@@ -75,8 +75,8 @@ class FileUpload extends AdminAppModel {
 						'size' => 'size',
 						'ext' => 'ext',
 						'type' => 'type',
-						'height' => 'width',
-						'width' => 'height'
+						'height' => 'height',
+						'width' => 'width'
 					),
 					'transforms' => $transforms,
 					'transport' => Configure::read('Admin.uploads.transport')
