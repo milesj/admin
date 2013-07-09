@@ -90,12 +90,11 @@ var Admin = {
 
 	/**
 	 * Monitor null input fields and toggle the checkbox depending on the input length.
-	 * Does not support date selects.
 	 */
 	nullChecks: function() {
 		$('.controls-null input:checkbox').each(function() {
 			var self = $(this),
-				related = $('#' + self.attr('id').replace('Null', ''));
+				related = self.parent().siblings('select, input');
 
 			if (related.length) {
 				var callback = function() {
