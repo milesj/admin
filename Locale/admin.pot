@@ -725,6 +725,10 @@ msgstr ""
 msgid "Rotate"
 msgstr ""
 
+#: /View/Upload/index.ctp:116
+msgid "Fit"
+msgstr ""
+
 #: /View/Upload/index.ctp:118
 msgid "Prepend"
 msgstr ""
@@ -799,6 +803,10 @@ msgstr ""
 
 #: /View/Upload/index.ctp:178
 msgid "Degrees"
+msgstr ""
+
+#: /View/Upload/index.ctp:194
+msgid "Fill"
 msgstr ""
 
 #: /View/Upload/index.ctp:202
