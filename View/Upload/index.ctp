@@ -117,7 +117,11 @@ if (CakePlugin::loaded('Uploader')) { ?>
 				)
 			));
 			echo $this->Form->input('FileUpload.transforms.' . $field . '.prepend', array('label' => __d('admin', 'Prepend')));
-			echo $this->Form->input('FileUpload.transforms.' . $field . '.append', array('label' => __d('admin', 'Append'))); ?>
+			echo $this->Form->input('FileUpload.transforms.' . $field . '.append', array('label' => __d('admin', 'Append')));
+			echo $this->Form->input('FileUpload.transforms.' . $field . '.transportDir', array(
+				'label' => __d('admin', 'Folder'),
+				'after' => '<div class="input-after">' . __d('admin', 'Requires trailing slash') . '</div>'
+			)); ?>
 
 			<div class="transform resize crop fit">
 				<?php
@@ -169,6 +173,7 @@ if (CakePlugin::loaded('Uploader')) { ?>
 				echo $this->Form->input('FileUpload.transforms.' . $field . '.percent', array(
 					'label' => __d('admin', 'Percent'),
 					'type' => 'number',
+					'class' => 'span1',
 					'value' => .5
 				)); ?>
 			</div>
@@ -178,27 +183,38 @@ if (CakePlugin::loaded('Uploader')) { ?>
 				echo $this->Form->input('FileUpload.transforms.' . $field . '.degrees', array(
 					'label' => __d('admin', 'Degrees'),
 					'type' => 'number',
+					'class' => 'span1',
 					'value' => 90
 				)); ?>
 			</div>
 
 			<div class="transform fit"<?php if ($currentValue !== 'fit') echo ' style="display: none"'; ?>>
-				<?php
-				echo $this->Form->input('FileUpload.transforms.' . $field . '.fill.red', array(
-					'label' => __d('admin', 'Red'),
-					'type' => 'number',
-					'class' => 'span1'
-				));
-				echo $this->Form->input('FileUpload.transforms.' . $field . '.fill.green', array(
-					'label' => __d('admin', 'Green'),
-					'type' => 'number',
-					'class' => 'span1'
-				));
-				echo $this->Form->input('FileUpload.transforms.' . $field . '.fill.blue', array(
-					'label' => __d('admin', 'Blue'),
-					'type' => 'number',
-					'class' => 'span1'
-				)); ?>
+				<div class="input number">
+					<?php
+					echo $this->Form->label('FileUpload.transforms.' . $field . '.fill.red', __d('admin', 'Fill'));
+					echo $this->Form->input('FileUpload.transforms.' . $field . '.fill.0', array(
+						'div' => false,
+						'label' => false,
+						'type' => 'number',
+						'class' => 'span1',
+						'value' => 0
+					)) . ' ';
+					echo $this->Form->input('FileUpload.transforms.' . $field . '.fill.1', array(
+						'div' => false,
+						'label' => false,
+						'type' => 'number',
+						'class' => 'span1',
+						'value' => 0
+					)) . ' ';
+					echo $this->Form->input('FileUpload.transforms.' . $field . '.fill.2', array(
+						'div' => false,
+						'label' => false,
+						'type' => 'number',
+						'class' => 'span1',
+						'value' => 0
+					)) . ' (RGB)';
+					?>
+				</div>
 			</div>
 		</fieldset>
 
