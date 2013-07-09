@@ -14,11 +14,11 @@
 	"require": {
 		"php": ">=5.3.0",
 		"ext-mbstring": "*",
-		"mjohnson/utility": "~1.4",
+		"mjohnson/utility": "~1.5",
 		"composer/installers": "*"
 	},
 	"suggest": {
-		"mjohnson/uploader": "~4.2"
+		"mjohnson/uploader": "~4.3"
 	},
 	"support": {
 		"source": "https://github.com/milesj/Admin"

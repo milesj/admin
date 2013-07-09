@@ -112,13 +112,14 @@ if (CakePlugin::loaded('Uploader')) { ?>
 					'resize' => __d('admin', 'Resize'),
 					'flip' => __d('admin', 'Flip'),
 					'scale' => __d('admin', 'Scale'),
-					'rotate' => __d('admin', 'Rotate')
+					'rotate' => __d('admin', 'Rotate'),
+					'fit' => __d('admin', 'Fit')
 				)
 			));
 			echo $this->Form->input('FileUpload.transforms.' . $field . '.prepend', array('label' => __d('admin', 'Prepend')));
 			echo $this->Form->input('FileUpload.transforms.' . $field . '.append', array('label' => __d('admin', 'Append'))); ?>
 
-			<div class="transform resize crop">
+			<div class="transform resize crop fit">
 				<?php
 				echo $this->Form->input('FileUpload.transforms.' . $field . '.width', array('label' => __d('admin', 'Width'), 'class' => 'span1'));
 				echo $this->Form->input('FileUpload.transforms.' . $field . '.height', array('label' => __d('admin', 'Height'), 'class' => 'span1')); ?>
@@ -178,6 +179,25 @@ if (CakePlugin::loaded('Uploader')) { ?>
 					'label' => __d('admin', 'Degrees'),
 					'type' => 'number',
 					'value' => 90
+				)); ?>
+			</div>
+
+			<div class="transform fit"<?php if ($currentValue !== 'fit') echo ' style="display: none"'; ?>>
+				<?php
+				echo $this->Form->input('FileUpload.transforms.' . $field . '.fill.red', array(
+					'label' => __d('admin', 'Red'),
+					'type' => 'number',
+					'class' => 'span1'
+				));
+				echo $this->Form->input('FileUpload.transforms.' . $field . '.fill.green', array(
+					'label' => __d('admin', 'Green'),
+					'type' => 'number',
+					'class' => 'span1'
+				));
+				echo $this->Form->input('FileUpload.transforms.' . $field . '.fill.blue', array(
+					'label' => __d('admin', 'Blue'),
+					'type' => 'number',
+					'class' => 'span1'
 				)); ?>
 			</div>
 		</fieldset>
