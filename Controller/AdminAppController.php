@@ -12,7 +12,7 @@ App::uses('ActionLog', 'Admin.Model');
  * @property Model $Model
  * @property AdminToolbarComponent $AdminToolbar
  */
-class AdminAppController extends Controller {
+class AdminAppController extends AppController {
 
 	/**
 	 * Remove parent models.
