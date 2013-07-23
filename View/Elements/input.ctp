@@ -40,7 +40,13 @@ if ($hasError) {
 } ?>
 
 <div class="control-group <?php echo implode(' ', $classes); ?>">
-	<?php echo $this->Form->label($field, $data['title'], array('class' => 'control-label')); ?>
+	<?php $label = $data['title'];
+
+	if (!empty($data['belongsTo'])) {
+		$label .= ' <span class="icon-search"></span>';
+	}
+
+	echo $this->Form->label($field, $label, array('class' => 'control-label', 'escape' => false)); ?>
 
 	<div class="controls">
 		<?php

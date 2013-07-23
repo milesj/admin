@@ -37,8 +37,6 @@ if (empty($typeAhead[$field])) {
 			'required' => false,
 			'style' => 'display: none'
 		)); ?>
-
-		<span class="icon-search"></span>
 	</div>
 
 	<script type="text/javascript">

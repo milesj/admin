@@ -36,8 +36,7 @@ select { width: auto; margin-right: 2px; }
 .form-horizontal .actions .btn { margin-left: 12px; }
 .form-horizontal .actions div { margin-bottom: 15px; }
 .form-horizontal .actions label { display: inline-block; margin-right: 10px; font-weight: bold; }
-.form-horizontal .type-ahead { display: inline; position: relative; }
-.form-horizontal .type-ahead .icon-search { position: absolute; top: 2px; right: 15px; z-index: 5; }
+.form-horizontal .type-ahead { display: inline; position: relative; padding-right: 25px; }
 
 .form-inline .control-group,
 .form-inline .control-group .controls { display: inline-block; width: auto; }
