@@ -34,6 +34,7 @@ if (empty($typeAhead[$field])) {
 			'type' => 'text',
 			'div' => false,
 			'label' => false,
+			'required' => false,
 			'style' => 'display: none'
 		)); ?>
 

@@ -234,7 +234,11 @@ class AdminToolbarComponent extends Component {
 		$enum = $model->enum;
 
 		foreach ($data as $key => $value) {
-			if (mb_substr($key, -7) === '_filter' || !isset($fields[$key])) {
+			if (mb_substr($key, -7) === '_filter' || mb_substr($key, -11) === '_type_ahead') {
+				$data[$key] = urldecode($value);
+				continue;
+
+			} else if (!isset($fields[$key])) {
 				continue;
 			}
 
@@ -243,7 +247,7 @@ class AdminToolbarComponent extends Component {
 
 			// Dates, times, numbers
 			if (isset($data[$key . '_filter'])) {
-				$operator = urldecode($data[$key . '_filter']);
+				$operator = $data[$key . '_filter'];
 				$operator = ($operator === '=') ? '' : ' ' . $operator;
 
 				if ($field['type'] === 'datetime') {
