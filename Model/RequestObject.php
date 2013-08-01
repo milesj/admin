@@ -277,7 +277,7 @@ class RequestObject extends Aro {
 		try {
 			$aros = $this->node(array(USER_MODEL => array('id' => $user_id)));
 		} catch (Exception $e) {
-			return null;
+			return array();
 		}
 
 		return $this->ObjectPermission->getByAroId(Hash::extract($aros, '{n}.RequestObject.id'));
@@ -328,9 +328,19 @@ class RequestObject extends Aro {
 		));
 
 		if ($results) {
+			// Grab the direct parents (or roles)
 			$results = $this->find('all', array(
 				'conditions' => array('RequestObject.id' => Hash::extract($results, '{n}.RequestObject.parent_id'))
 			));
+
+			// Also grab the children of the parents since the user has access to them as well
+			$results = array_merge($results, $this->find('all', array(
+				'conditions' => array(
+					'RequestObject.parent_id' => Hash::extract($results, '{n}.RequestObject.id'),
+					'RequestObject.model' => null,
+					'RequestObject.foreign_key' => null
+				)
+			)));
 		}
 
 		return $results;
@@ -390,22 +400,28 @@ class RequestObject extends Aro {
 	 * Check to see if a user is a child of a specific alias.
 	 *
 	 * @param int $user_id
-	 * @param string $alias
+	 * @param int|string $fk
 	 * @return bool
 	 */
-	public function isChildOf($user_id, $alias) {
-		if (!$user_id || !$alias) {
+	public function isChildOf($user_id, $fk) {
+		if (!$user_id || !$fk) {
 			return false;
 		}
 
-		$aros = $this->node(array(
-			'model' => USER_MODEL,
-			'foreign_key' => $user_id
-		));
+		try {
+			$aros = $this->node(array(
+				'model' => USER_MODEL,
+				'foreign_key' => $user_id
+			));
+		} catch (Exception $e) {
+			return false;
+		}
 
 		if ($aros) {
 			foreach ($aros as $aro) {
-				if ($aro['RequestObject']['alias'] === $alias) {
+				if (is_string($fk) && $aro['RequestObject']['alias'] == $fk) {
+					return true;
+				} else if (is_numeric($fk) && $aro['RequestObject']['id'] == $fk) {
 					return true;
 				}
 			}
