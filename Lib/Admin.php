@@ -227,15 +227,11 @@ class Admin {
 		return self::cache(array(__METHOD__, $model), function() use ($model) {
 			list($plugin, $model, $id, $class) = Admin::parseName($model);
 
-			// Don't use ClassRegistry is it returns inconsistent results
 			$pluginPath = ($plugin !== 'Core') ? $plugin . '.' : '';
-
-			App::uses($model, $pluginPath . 'Model');
-
-			$object = new $model();
+			$object = ClassRegistry::init($pluginPath . $model);
 
 			// Exit early if disabled
-			if (empty($object->useTable) || (isset($object->admin) && $object->admin === false)) {
+			if (!$object || empty($object->useTable) || (isset($object->admin) && $object->admin === false)) {
 				return null;
 			}
 
