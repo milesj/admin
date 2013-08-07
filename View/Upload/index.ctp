@@ -3,23 +3,26 @@ $this->Breadcrumb->add(__d('admin', 'Upload'), array('controller' => 'upload', '
 
 if (CakePlugin::loaded('Uploader')) { ?>
 
-<div class="action-buttons">
-	<?php echo $this->Html->link('<span class="icon-upload"></span> ' . __d('admin', 'View All Uploads'),
-		array('controller' => 'crud', 'action' => 'index', 'model' => 'admin.file_upload'),
-		array('class' => 'btn btn-primary btn-large', 'escape' => false)); ?>
+<div class="title">
+	<div class="action-buttons">
+		<?php echo $this->Html->link('<span class="icon-upload"></span> ' . __d('admin', 'View All Uploads'),
+			array('controller' => 'crud', 'action' => 'index', 'model' => 'admin.file_upload'),
+			array('class' => 'btn btn-primary', 'escape' => false)); ?>
+	</div>
+
+	<h2><?php echo $model->singularName; ?></h2>
 </div>
 
-<h2><?php echo $model->singularName; ?></h2>
+<div class="container">
+	<?php echo $this->Form->create($model->alias, array('class' => 'form-horizontal', 'type' => 'file')); ?>
 
-<?php echo $this->Form->create($model->alias, array('class' => 'form-horizontal', 'type' => 'file')); ?>
+	<div class="alert alert-info">
+		<?php echo __d('admin', 'Upload all types of files with no restrictions. Uploading also supports image transformation and remote transportation.'); ?>
+		<a href="http://milesj.me/code/cakephp/admin#file-uploading" class="alert-link"><?php echo __d('admin', 'Learn more about file uploading.'); ?></a>
+	</div>
 
-<div class="alert alert-info">
-	<?php echo __d('admin', 'Upload all types of files with no restrictions. Uploading also supports image transformation and remote transportation.'); ?>
-	<a href="http://milesj.me/code/cakephp/admin#file-uploading"><?php echo __d('admin', 'Learn more about file uploading.'); ?></a>
-</div>
-
-<div class="row-fluid">
-	<div class="span6">
+	<div class="row">
+	<div class="col-lg-6">
 		<?php
 		echo $this->Form->input('path', array('type' => 'file', 'label' => __d('admin', 'File')));
 		echo $this->Form->input('caption', array('type' => 'textarea', 'label' => __d('admin', 'Caption'))); ?>
@@ -90,166 +93,167 @@ if (CakePlugin::loaded('Uploader')) { ?>
 				echo $this->Form->input('FileUpload.transport.accountId', array('label' => __d('admin', 'Account ID'))); ?>
 			</div>
 		</fieldset>
-	</div>
+		</div>
 
-	<div class="span6">
-		<?php foreach (array(
-			'path_large' => __d('admin', 'Resized'),
-			'path_thumb' => __d('admin', 'Thumbnail')
-		) as $field => $title) {
-			$currentValue = !empty($this->request->data['FileUpload']['transforms'][$field]['method']) ? $this->request->data['FileUpload']['transforms'][$field]['method'] : 'resize'; ?>
+		<div class="col-lg-6">
+			<?php foreach (array(
+				'path_large' => __d('admin', 'Resized'),
+				'path_thumb' => __d('admin', 'Thumbnail')
+			) as $field => $title) {
+				$currentValue = !empty($this->request->data['FileUpload']['transforms'][$field]['method']) ? $this->request->data['FileUpload']['transforms'][$field]['method'] : 'resize'; ?>
 
-		<fieldset>
-			<legend><?php echo $title; ?></legend>
+			<fieldset>
+				<legend><?php echo $title; ?></legend>
 
-			<?php
-			echo $this->Form->input('FileUpload.transforms.' . $field . '.transform', array('label' => __d('admin', 'Generate image'), 'type' => 'checkbox', 'checked' => true));
-			echo $this->Form->input('FileUpload.transforms.' . $field . '.method', array(
-				'label' => __d('admin', 'Method'),
-				'onchange' => "Admin.toggleUploadField(this, '.transform');",
-				'options' => array(
-					'crop' => __d('admin', 'Crop'),
-					'resize' => __d('admin', 'Resize'),
-					'flip' => __d('admin', 'Flip'),
-					'scale' => __d('admin', 'Scale'),
-					'rotate' => __d('admin', 'Rotate'),
-					'fit' => __d('admin', 'Fit')
-				)
-			));
-			echo $this->Form->input('FileUpload.transforms.' . $field . '.prepend', array('label' => __d('admin', 'Prepend')));
-			echo $this->Form->input('FileUpload.transforms.' . $field . '.append', array('label' => __d('admin', 'Append')));
-			echo $this->Form->input('FileUpload.transforms.' . $field . '.transportDir', array(
-				'label' => __d('admin', 'Folder'),
-				'after' => '<div class="input-after">' . __d('admin', 'Requires trailing slash') . '</div>'
-			)); ?>
-
-			<div class="transform resize crop fit">
 				<?php
-				echo $this->Form->input('FileUpload.transforms.' . $field . '.width', array('label' => __d('admin', 'Width'), 'class' => 'span1'));
-				echo $this->Form->input('FileUpload.transforms.' . $field . '.height', array('label' => __d('admin', 'Height'), 'class' => 'span1')); ?>
-			</div>
-
-			<div class="transform resize"<?php if ($currentValue !== 'resize') echo ' style="display: none"'; ?>>
-				<?php
-				echo $this->Form->input('FileUpload.transforms.' . $field . '.mode', array(
-					'label' => __d('admin', 'Mode'),
+				echo $this->Form->input('FileUpload.transforms.' . $field . '.transform', array('label' => __d('admin', 'Generate image'), 'type' => 'checkbox', 'checked' => true));
+				echo $this->Form->input('FileUpload.transforms.' . $field . '.method', array(
+					'label' => __d('admin', 'Method'),
+					'onchange' => "Admin.toggleUploadField(this, '.transform');",
 					'options' => array(
-						'width' => __d('admin', 'Width'),
-						'height' => __d('admin', 'Height')
+						'crop' => __d('admin', 'Crop'),
+						'resize' => __d('admin', 'Resize'),
+						'flip' => __d('admin', 'Flip'),
+						'scale' => __d('admin', 'Scale'),
+						'rotate' => __d('admin', 'Rotate'),
+						'fit' => __d('admin', 'Fit')
 					)
 				));
-				echo $this->Form->input('FileUpload.transforms.' . $field . '.expand', array('label' => __d('admin', 'Allow greater than current dimension'), 'type' => 'checkbox'));
-				echo $this->Form->input('FileUpload.transforms.' . $field . '.aspect', array('label' => __d('admin', 'Maintain aspect ratio'), 'type' => 'checkbox')); ?>
-			</div>
-
-			<div class="transform crop"<?php if ($currentValue !== 'crop') echo ' style="display: none"'; ?>>
-				<?php
-				echo $this->Form->input('FileUpload.transforms.' . $field . '.location', array(
-					'label' => __d('admin', 'Location'),
-					'options' => array(
-						'center' => __d('admin', 'Center'),
-						'top' => __d('admin', 'Top'),
-						'right' => __d('admin', 'Right'),
-						'bottom' => __d('admin', 'Bottom'),
-						'left' => __d('admin', 'Left')
-					)
+				echo $this->Form->input('FileUpload.transforms.' . $field . '.prepend', array('label' => __d('admin', 'Prepend')));
+				echo $this->Form->input('FileUpload.transforms.' . $field . '.append', array('label' => __d('admin', 'Append')));
+				echo $this->Form->input('FileUpload.transforms.' . $field . '.transportDir', array(
+					'label' => __d('admin', 'Folder'),
+					'after' => '<div class="input-after">' . __d('admin', 'Requires trailing slash') . '</div>'
 				)); ?>
-			</div>
 
-			<div class="transform flip"<?php if ($currentValue !== 'flip') echo ' style="display: none"'; ?>>
-				<?php
-				echo $this->Form->input('FileUpload.transforms.' . $field . '.direction', array(
-					'label' => __d('admin', 'Direction'),
-					'options' => array(
-						'vertical' => __d('admin', 'Vertical'),
-						'horizontal' => __d('admin', 'Horizontal'),
-						'both' => __d('admin', 'Both')
-					)
-				)); ?>
-			</div>
-
-			<div class="transform scale"<?php if ($currentValue !== 'scale') echo ' style="display: none"'; ?>>
-				<?php
-				echo $this->Form->input('FileUpload.transforms.' . $field . '.percent', array(
-					'label' => __d('admin', 'Percent'),
-					'type' => 'number',
-					'class' => 'span1',
-					'value' => .5
-				)); ?>
-			</div>
-
-			<div class="transform rotate"<?php if ($currentValue !== 'rotate') echo ' style="display: none"'; ?>>
-				<?php
-				echo $this->Form->input('FileUpload.transforms.' . $field . '.degrees', array(
-					'label' => __d('admin', 'Degrees'),
-					'type' => 'number',
-					'class' => 'span1',
-					'value' => 90
-				)); ?>
-			</div>
-
-			<div class="transform fit"<?php if ($currentValue !== 'fit') echo ' style="display: none"'; ?>>
-				<div class="input number">
+				<div class="transform resize crop fit">
 					<?php
-					echo $this->Form->label('FileUpload.transforms.' . $field . '.fill.red', __d('admin', 'Fill'));
-					echo $this->Form->input('FileUpload.transforms.' . $field . '.fill.0', array(
-						'div' => false,
-						'label' => false,
-						'type' => 'number',
-						'class' => 'span1',
-						'value' => 0
-					)) . ' ';
-					echo $this->Form->input('FileUpload.transforms.' . $field . '.fill.1', array(
-						'div' => false,
-						'label' => false,
-						'type' => 'number',
-						'class' => 'span1',
-						'value' => 0
-					)) . ' ';
-					echo $this->Form->input('FileUpload.transforms.' . $field . '.fill.2', array(
-						'div' => false,
-						'label' => false,
-						'type' => 'number',
-						'class' => 'span1',
-						'value' => 0
-					)) . ' (RGB)';
-					?>
+					echo $this->Form->input('FileUpload.transforms.' . $field . '.width', array('label' => __d('admin', 'Width'), 'class' => 'span1'));
+					echo $this->Form->input('FileUpload.transforms.' . $field . '.height', array('label' => __d('admin', 'Height'), 'class' => 'span1')); ?>
 				</div>
-			</div>
-		</fieldset>
 
-		<?php } ?>
+				<div class="transform resize"<?php if ($currentValue !== 'resize') echo ' style="display: none"'; ?>>
+					<?php
+					echo $this->Form->input('FileUpload.transforms.' . $field . '.mode', array(
+						'label' => __d('admin', 'Mode'),
+						'options' => array(
+							'width' => __d('admin', 'Width'),
+							'height' => __d('admin', 'Height')
+						)
+					));
+					echo $this->Form->input('FileUpload.transforms.' . $field . '.expand', array('label' => __d('admin', 'Allow greater than current dimension'), 'type' => 'checkbox'));
+					echo $this->Form->input('FileUpload.transforms.' . $field . '.aspect', array('label' => __d('admin', 'Maintain aspect ratio'), 'type' => 'checkbox')); ?>
+				</div>
+
+				<div class="transform crop"<?php if ($currentValue !== 'crop') echo ' style="display: none"'; ?>>
+					<?php
+					echo $this->Form->input('FileUpload.transforms.' . $field . '.location', array(
+						'label' => __d('admin', 'Location'),
+						'options' => array(
+							'center' => __d('admin', 'Center'),
+							'top' => __d('admin', 'Top'),
+							'right' => __d('admin', 'Right'),
+							'bottom' => __d('admin', 'Bottom'),
+							'left' => __d('admin', 'Left')
+						)
+					)); ?>
+				</div>
+
+				<div class="transform flip"<?php if ($currentValue !== 'flip') echo ' style="display: none"'; ?>>
+					<?php
+					echo $this->Form->input('FileUpload.transforms.' . $field . '.direction', array(
+						'label' => __d('admin', 'Direction'),
+						'options' => array(
+							'vertical' => __d('admin', 'Vertical'),
+							'horizontal' => __d('admin', 'Horizontal'),
+							'both' => __d('admin', 'Both')
+						)
+					)); ?>
+				</div>
+
+				<div class="transform scale"<?php if ($currentValue !== 'scale') echo ' style="display: none"'; ?>>
+					<?php
+					echo $this->Form->input('FileUpload.transforms.' . $field . '.percent', array(
+						'label' => __d('admin', 'Percent'),
+						'type' => 'number',
+						'class' => 'span1',
+						'value' => .5
+					)); ?>
+				</div>
+
+				<div class="transform rotate"<?php if ($currentValue !== 'rotate') echo ' style="display: none"'; ?>>
+					<?php
+					echo $this->Form->input('FileUpload.transforms.' . $field . '.degrees', array(
+						'label' => __d('admin', 'Degrees'),
+						'type' => 'number',
+						'class' => 'span1',
+						'value' => 90
+					)); ?>
+				</div>
+
+				<div class="transform fit"<?php if ($currentValue !== 'fit') echo ' style="display: none"'; ?>>
+					<div class="input number">
+						<?php
+						echo $this->Form->label('FileUpload.transforms.' . $field . '.fill.red', __d('admin', 'Fill'));
+						echo $this->Form->input('FileUpload.transforms.' . $field . '.fill.0', array(
+							'div' => false,
+							'label' => false,
+							'type' => 'number',
+							'class' => 'span1',
+							'value' => 0
+						)) . ' ';
+						echo $this->Form->input('FileUpload.transforms.' . $field . '.fill.1', array(
+							'div' => false,
+							'label' => false,
+							'type' => 'number',
+							'class' => 'span1',
+							'value' => 0
+						)) . ' ';
+						echo $this->Form->input('FileUpload.transforms.' . $field . '.fill.2', array(
+							'div' => false,
+							'label' => false,
+							'type' => 'number',
+							'class' => 'span1',
+							'value' => 0
+						)) . ' (RGB)';
+						?>
+					</div>
+				</div>
+			</fieldset>
+
+			<?php } ?>
+		</div>
+
+		<script type="text/javascript">
+			$(function() {
+				$('#FileUploadTransportClass').change();
+				$('#FileUploadTransformsPathLargeMethod').change();
+				$('#FileUploadTransformsPathThumbMethod').change();
+			});
+		</script>
 	</div>
 
-	<script type="text/javascript">
-		$(function() {
-			$('#FileUploadTransportClass').change();
-			$('#FileUploadTransformsPathLargeMethod').change();
-			$('#FileUploadTransformsPathThumbMethod').change();
-		});
-	</script>
-</div>
+	<div class="well actions">
+		<div class="redirect-to">
+			<?php echo $this->Form->input('redirect_to', array(
+				'div' => false,
+				'options' => array(
+					'upload' => __d('admin', 'Continue Uploading'),
+					'read' => __d('admin', '%s Overview', $model->singularName)
+				)
+			)); ?>
+		</div>
 
-<div class="well actions">
-	<div class="redirect-to">
-		<?php echo $this->Form->input('redirect_to', array(
-			'div' => false,
-			'options' => array(
-				'upload' => __d('admin', 'Continue Uploading'),
-				'read' => __d('admin', '%s Overview', $model->singularName)
-			)
-		)); ?>
+		<button type="submit" class="btn btn-large btn-success">
+			<span class="icon-edit icon-white"></span>
+			<?php echo __d('admin', 'Upload'); ?>
+		</button>
 	</div>
 
-	<button type="submit" class="btn btn-large btn-success">
-		<span class="icon-edit icon-white"></span>
-		<?php echo __d('admin', 'Upload'); ?>
-	</button>
+	<?php echo $this->Form->end(); ?>
 </div>
 
-<?php echo $this->Form->end();
-
-} else { ?>
+<?php } else { ?>
 
 <div class="hero-unit align-center" style="margin-bottom: 0">
 	<h2><?php echo __d('admin', 'Install the Uploader to upload files'); ?></h2>

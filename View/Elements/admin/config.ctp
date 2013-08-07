@@ -26,7 +26,7 @@ $flatten = function($array) {
 				<td>
 					<?php if (is_bool($value)) { ?>
 
-						<span class="text-error"><?php echo $value ? 'true' : 'false'; ?></span>
+						<span class="text-danger"><?php echo $value ? 'true' : 'false'; ?></span>
 
 					<?php } else if (is_numeric($value)) { ?>
 
@@ -34,7 +34,7 @@ $flatten = function($array) {
 
 					<?php } else if (empty($value)) { ?>
 
-						<span class="muted">(empty)</span>
+						<span class="text-muted">(empty)</span>
 
 					<?php } else if (is_string($value)) {
 						if (mb_strlen($value) >= 30 && strpos($value, ' ') === false) { ?>
@@ -69,18 +69,22 @@ $flatten = function($array) {
 								<span class="icon-external-link" style="font-size: 10px"></span>
 							</a>
 
-							<div id="modal-<?php echo $id; ?>" class="modal hide">
-								<div class="modal-header">
-									<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-									<h3><?php echo $parent . $key; ?></h3>
-								</div>
+							<div class="modal fade" id="modal-<?php echo $id; ?>">
+								<div class="modal-dialog">
+									<div class="modal-content">
+										<div class="modal-header">
+											<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+											<h4 class="modal-title"><?php echo $parent . $key; ?></h4>
+										</div>
 
-								<div class="modal-body">
-									<?php echo $this->element('admin/config', array(
-										'data' => $value,
-										'parent' => $parent . $key . '.',
-										'depth' => ($depth + 1)
-									)); ?>
+										<div class="modal-body">
+											<?php echo $this->element('admin/config', array(
+												'data' => $value,
+												'parent' => $parent . $key . '.',
+												'depth' => ($depth + 1)
+											)); ?>
+										</div>
+									</div>
 								</div>
 							</div>
 

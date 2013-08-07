@@ -3,22 +3,24 @@ $foreignModel = $this->Admin->introspect($assoc['className']);
 $withModel = $this->Admin->introspect($assoc['with']);
 $fields = $this->Admin->filterFields($withModel); ?>
 
-<section class="has-and-belongs-to-many">
-	<h5>
-		<?php if (isset($counts[$alias])) {
-			$total = $counts[$alias];
-			$count = $assoc['limit'] ?: count($results);
+<div class="panel habtm">
+	<div class="panel-heading">
+		<h3 class="panel-title">
+			<?php if (isset($counts[$alias])) {
+				$total = $counts[$alias];
+				$count = $assoc['limit'] ?: count($results);
 
-			if ($count > $total) {
-				$count = $total;
-			} ?>
+				if ($count > $total) {
+					$count = $total;
+				} ?>
 
-			<span class="muted pull-right"><?php echo __d('admin', '%s of %s', array($count, $total)); ?></span>
-		<?php } ?>
+				<span class="text-muted pull-right"><?php echo __d('admin', '%s of %s', array($count, $total)); ?></span>
+			<?php } ?>
 
-		<?php echo $this->Admin->outputAssocName($foreignModel, $alias, $assoc['className']); ?> &rarr;
-		<?php echo $this->Admin->outputAssocName($withModel, $withModel->alias, $assoc['with']); ?>
-	</h5>
+			<?php echo $this->Admin->outputAssocName($foreignModel, $alias, $assoc['className']); ?> &rarr;
+			<?php echo $this->Admin->outputAssocName($withModel, $withModel->alias, $assoc['with']); ?>
+		</h3>
+	</div>
 
 	<table class="table table-striped table-bordered table-hover clickable">
 		<thead>
@@ -71,4 +73,4 @@ $fields = $this->Admin->filterFields($withModel); ?>
 			<?php } ?>
 		</tbody>
 	</table>
-</section>
+</div>

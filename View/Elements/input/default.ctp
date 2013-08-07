@@ -3,20 +3,16 @@ $params = array(
 	'div' => false,
 	'label' => false,
 	'type' => 'text',
+	'class' => 'form-control',
 	'default' => isset($data['default']) ? $data['default'] : '',
 	'empty' => ($this->action === 'index')
 );
 
 switch ($data['type']) {
-	case 'string':
-		$params['class'] = 'span3';
-	break;
 	case 'text':
-		$params['class'] = 'span10';
 		$params['type'] = 'textarea';
 	break;
 	case 'integer':
-		$params['class'] = 'span1';
 		$params['type'] = 'number';
 	break;
 	case 'boolean':

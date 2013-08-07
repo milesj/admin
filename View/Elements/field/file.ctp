@@ -7,4 +7,4 @@ if (!preg_match('/^([a-z]+)s?:\/\//', $value) && $value[0] !== '/') {
 	$value = '/' . $value;
 }
 
-echo $this->Html->link($title, $value, array('escape' => false));
+echo $this->Html->link($title, $value, array('escape' => false, 'class' => 'type file'));

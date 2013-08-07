@@ -12,42 +12,42 @@ class RequestObject extends Aro {
 	/**
 	 * Overwrite Aro name.
 	 *
-	 * @var string
+	 * @type string
 	 */
 	public $name = 'RequestObject';
 
 	/**
 	 * Use alias as display.
 	 *
-	 * @var string
+	 * @type string
 	 */
 	public $displayField = 'alias';
 
 	/**
 	 * Use aros table.
 	 *
-	 * @var string
+	 * @type string
 	 */
 	public $useTable = 'aros';
 
 	/**
 	 * Disable recursion.
 	 *
-	 * @var int
+	 * @type int
 	 */
 	public $recursive = -1;
 
 	/**
 	 * Force to admin plugin.
 	 *
-	 * @var string
+	 * @type string
 	 */
 	public $plugin = 'Admin';
 
 	/**
 	 * Admin settings.
 	 *
-	 * @var array
+	 * @type array
 	 */
 	public $admin = array(
 		'iconClass' => 'icon-key',
@@ -60,7 +60,7 @@ class RequestObject extends Aro {
 	/**
 	 * Belongs to.
 	 *
-	 * @var array
+	 * @type array
 	 */
 	public $belongsTo = array(
 		'Parent' => array(
@@ -77,7 +77,7 @@ class RequestObject extends Aro {
 	/**
 	 * Has many.
 	 *
-	 * @var array
+	 * @type array
 	 */
 	public $hasMany = array(
 		'Children' => array(
@@ -91,7 +91,7 @@ class RequestObject extends Aro {
 	/**
 	 * Has and belongs to many.
 	 *
-	 * @var array
+	 * @type array
 	 */
 	public $hasAndBelongsToMany = array(
 		'ControlObject' => array(
@@ -105,7 +105,7 @@ class RequestObject extends Aro {
 	/**
 	 * Behaviors.
 	 *
-	 * @var array
+	 * @type array
 	 */
 	public $actsAs = array(
 		'Tree' => array('type' => 'nested'),

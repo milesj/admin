@@ -5,7 +5,6 @@ foreach ($data['belongsTo'] as $foreignModel => $className) {
 	$belongsTo = $this->Admin->introspect($className);
 
 	if (!empty($result[$foreignModel][$belongsTo->primaryKey])) {
-
 		echo $this->Html->link($result[$foreignModel][$belongsTo->displayField], array(
 			'plugin' => 'admin',
 			'controller' => 'crud',
@@ -13,7 +12,7 @@ foreach ($data['belongsTo'] as $foreignModel => $className) {
 			'model' => $belongsTo->urlSlug,
 			$value
 		), array(
-			'class' => 'belongs-to'
+			'class' => 'type belongs-to'
 		));
 
 		$rendered = true;
@@ -23,6 +22,6 @@ foreach ($data['belongsTo'] as $foreignModel => $className) {
 
 if (!$rendered) { ?>
 
-	<span class="belongs-to text-error">INVALID ASSOC: <?php echo $value; ?></span>
+	<span class="type belongs-to text-danger">INVALID ASSOC: <?php echo $value; ?></span>
 
 <?php }

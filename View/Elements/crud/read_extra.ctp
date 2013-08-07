@@ -22,17 +22,17 @@ foreach ($properties as $property => $title) {
 
 	if ($associations) { ?>
 
-	<div class="row-fluid">
-		<h3 class="text-info"><?php echo $title; ?></h3>
+		<div class="associations">
+			<h3 class="text-info"><?php echo $title; ?></h3>
 
-		<?php // Loop over the model relations
-		foreach ($associations as $alias => $assoc) {
-			echo $this->element('Admin.crud/' . Inflector::underscore($property), array(
-				'alias' => $alias,
-				'assoc' => $assoc,
-				'results' => $result[$alias]
-			));
-		} ?>
-	</div>
+			<?php // Loop over the model relations
+			foreach ($associations as $alias => $assoc) {
+				echo $this->element('Admin.crud/' . Inflector::underscore($property), array(
+					'alias' => $alias,
+					'assoc' => $assoc,
+					'results' => $result[$alias]
+				));
+			} ?>
+		</div>
 
 <?php } } ?>

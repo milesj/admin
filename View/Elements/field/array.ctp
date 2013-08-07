@@ -2,7 +2,7 @@
 	return;
 } ?>
 
-<ul style="margin-bottom: 0">
+<ul class="type array">
 	<?php foreach ($value as $key => $value) { ?>
 
 		<li>

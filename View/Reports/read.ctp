@@ -4,32 +4,36 @@ $this->Breadcrumb->add($this->Admin->getDisplayField($model, $result), array('co
 
 $itemModel = $this->Admin->introspect($result[$model->alias]['model']); ?>
 
-<h2><?php echo $this->Admin->outputIconTitle($model, $this->Admin->getDisplayField($model, $result)); ?></h2>
-
-<div class="row-fluid">
-	<?php echo $this->element('crud/read_table'); ?>
+<div class="title">
+	<h2><?php echo $this->Admin->outputIconTitle($model, $this->Admin->getDisplayField($model, $result)); ?></h2>
 </div>
 
-<?php // Does item still exist?
-if ($item) { ?>
+<div class="container">
+	<?php echo $this->element('crud/read_table');
 
-	<div class="row-fluid">
-		<h3 class="text-info"><?php echo __d('admin', 'Reported %s', $itemModel->singularName); ?></h3>
+	if (!empty($item)) { ?>
 
-		<?php echo $this->element('crud/read_table', array(
-			'result' => $item,
-			'model' => $itemModel
-		)); ?>
-	</div>
+		<div class="reported-item">
+			<h3 class="text-info"><?php echo __d('admin', 'Reported %s', $itemModel->singularName); ?></h3>
 
-<?php }
+			<?php echo $this->element('crud/read_table', array(
+				'result' => $item,
+				'model' => $itemModel
+			)); ?>
+		</div>
 
-// Show form if report is still pending
-if ($result[$model->alias]['status'] == ItemReport::PENDING && $item) {
-	$options = $this->Admin->getModelCallbacks($itemModel);
+	<?php } ?>
+</div>
 
-	if ($this->Admin->hasAccess($itemModel, 'delete')) {
-		$options['delete_item'] = __d('admin', 'Delete %s', $itemModel->singularName);
+<?php if ($result[$model->alias]['status'] == ItemReport::PENDING) {
+	if (!empty($item)) {
+		$options = $this->Admin->getModelCallbacks($itemModel);
+
+		if ($this->Admin->hasAccess($itemModel, 'delete')) {
+			$options['delete_item'] = __d('admin', 'Delete %s', $itemModel->singularName);
+		}
+	} else {
+		$options = array();
 	}
 
 	$options['invalid_report'] = __d('admin', 'Mark As Invalid');

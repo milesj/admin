@@ -17,42 +17,42 @@ class AdminAppModel extends Model {
 	/**
 	 * Table prefix.
 	 *
-	 * @var string
+	 * @type string
 	 */
 	public $tablePrefix = ADMIN_PREFIX;
 
 	/**
 	 * Database config.
 	 *
-	 * @var string
+	 * @type string
 	 */
 	public $useDbConfig = ADMIN_DATABASE;
 
 	/**
 	 * Cache queries.
 	 *
-	 * @var boolean
+	 * @type boolean
 	 */
 	public $cacheQueries = true;
 
 	/**
 	 * No recursion.
 	 *
-	 * @var int
+	 * @type int
 	 */
 	public $recursive = -1;
 
 	/**
 	 * Enum mapping.
 	 *
-	 * @var array
+	 * @type array
 	 */
 	public $enum = array();
 
 	/**
 	 * Behaviors.
 	 *
-	 * @var array
+	 * @type array
 	 */
 	public $actsAs = array(
 		'Containable',

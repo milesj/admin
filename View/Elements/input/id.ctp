@@ -2,6 +2,6 @@
 	'div' => false,
 	'label' => false,
 	'type' => 'text',
-	'class' => 'span1',
+	'class' => 'form-control',
 	'readonly' => true
 ));

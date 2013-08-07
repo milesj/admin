@@ -2,19 +2,25 @@
 	<div class="alert alert-danger">
 		<span class="icon-warning-sign"></span> &nbsp;
 		<?php echo __d('admin', 'ACL permissions do not exist within the session and all access has been disabled.'); ?>
-		<a href="http://milesj.me/code/cakephp/admin#faq"><?php echo __d('admin', 'Please update session management and re-login.'); ?></a>
+		<a href="http://milesj.me/code/cakephp/admin#faq" class="alert-link"><?php echo __d('admin', 'Please update session management and re-login.'); ?></a>
 	</div>
-<?php }
+<?php } ?>
 
-echo $this->element('admin/actions'); ?>
+<div class="title">
+	<?php echo $this->element('admin/actions'); ?>
 
-<h2><?php echo __d('admin', 'Plugins'); ?></h2>
+	<h2><?php echo __d('admin', 'Plugins'); ?></h2>
+</div>
 
-<div class="row-fluid" id="grid">
+<div class="container">
+	<div class="grid" id="grid">
+
 	<?php foreach ($plugins as $plugin) { ?>
 
-		<div id="<?php echo $plugin['slug']; ?>" class="well">
-			<h3><?php echo $plugin['title']; ?></h3>
+		<div class="panel" id="<?php echo $plugin['slug']; ?>">
+			<div class="panel-heading">
+				<h3 class="panel-title"><?php echo $plugin['title']; ?></h3>
+			</div>
 
 			<ul class="nav nav-pills nav-stacked">
 				<?php foreach ($plugin['models'] as $model) {
@@ -41,9 +47,9 @@ echo $this->element('admin/actions'); ?>
 							<?php echo $this->Admin->outputIconTitle($model); ?>
 
 							<?php if (!$model['installed']) { ?>
-								<span class="label label-important tip" title="<?php echo __d('admin', 'Not Installed'); ?>">&nbsp;!&nbsp;</span>
+								<span class="label label-danger tip" title="<?php echo __d('admin', 'Not Installed'); ?>">&nbsp;!&nbsp;</span>
 							<?php } else { ?>
-								<span class="muted">(<?php echo number_format($counts[$model['class']]); ?>)</span>
+								<span class="text-muted">(<?php echo number_format($counts[$model['class']]); ?>)</span>
 							<?php } ?>
 						</a>
 					</li>
@@ -53,4 +59,6 @@ echo $this->element('admin/actions'); ?>
 		</div>
 
 	<?php } ?>
+
+	</div>
 </div>

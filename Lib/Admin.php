@@ -10,7 +10,7 @@ class Admin {
 	/**
 	 * Cached data.
 	 *
-	 * @var array
+	 * @type array
 	 */
 	protected static $_cache = array();
 
@@ -240,6 +240,10 @@ class Admin {
 			$object->Behaviors->load('Utility.Cacheable');
 			$object->cacheQueries = false;
 			$object->recursive = -1;
+
+			if ($plugin !== 'Core') {
+				$object->plugin = $plugin;
+			}
 
 			// Inherit enums from parent classes
 			if ($object->Behaviors->hasMethod('enum')) {

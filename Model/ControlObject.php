@@ -12,42 +12,42 @@ class ControlObject extends Aco {
 	/**
 	 * Overwrite Aco name.
 	 *
-	 * @var string
+	 * @type string
 	 */
 	public $name = 'ControlObject';
 
 	/**
 	 * Use alias as display.
 	 *
-	 * @var string
+	 * @type string
 	 */
 	public $displayField = 'alias';
 
 	/**
 	 * Use acos table.
 	 *
-	 * @var string
+	 * @type string
 	 */
 	public $useTable = 'acos';
 
 	/**
 	 * Disable recursion.
 	 *
-	 * @var int
+	 * @type int
 	 */
 	public $recursive = -1;
 
 	/**
 	 * Force to admin plugin.
 	 *
-	 * @var string
+	 * @type string
 	 */
 	public $plugin = 'Admin';
 
 	/**
 	 * Admin settings.
 	 *
-	 * @var array
+	 * @type array
 	 */
 	public $admin = array(
 		'iconClass' => 'icon-puzzle-piece',
@@ -60,7 +60,7 @@ class ControlObject extends Aco {
 	/**
 	 * Belongs to.
 	 *
-	 * @var array
+	 * @type array
 	 */
 	public $belongsTo = array(
 		'Parent' => array(
@@ -77,7 +77,7 @@ class ControlObject extends Aco {
 	/**
 	 * Has many.
 	 *
-	 * @var array
+	 * @type array
 	 */
 	public $hasMany = array(
 		'Children' => array(
@@ -91,7 +91,7 @@ class ControlObject extends Aco {
 	/**
 	 * Has and belongs to many.
 	 *
-	 * @var array
+	 * @type array
 	 */
 	public $hasAndBelongsToMany = array(
 		'RequestObject' => array(
@@ -105,7 +105,7 @@ class ControlObject extends Aco {
 	/**
 	 * Behaviors.
 	 *
-	 * @var array
+	 * @type array
 	 */
 	public $actsAs = array(
 		'Tree' => array('type' => 'nested'),

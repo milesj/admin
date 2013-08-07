@@ -6,8 +6,10 @@ if (empty($results[$foreignModel->primaryKey])) {
 	return;
 } ?>
 
-<section class="has-one">
-	<h5><?php echo $this->Admin->outputAssocName($foreignModel, $alias, $assoc['className']); ?></h5>
+<div class="panel has-one">
+	<div class="panel-heading">
+		<h3 class="panel-title"><?php echo $this->Admin->outputAssocName($foreignModel, $alias, $assoc['className']); ?></h3>
+	</div>
 
 	<table class="table table-striped table-bordered table-hover clickable">
 		<thead>
@@ -37,4 +39,4 @@ if (empty($results[$foreignModel->primaryKey])) {
 			</tr>
 		</tbody>
 	</table>
-</section>
+</div>

@@ -16,28 +16,28 @@ class ObjectPermission extends Permission {
 	/**
 	 * Overwrite Permission name.
 	 *
-	 * @var string
+	 * @type string
 	 */
 	public $name = 'ObjectPermission';
 
 	/**
 	 * Disable recursion.
 	 *
-	 * @var int
+	 * @type int
 	 */
 	public $recursive = -1;
 
 	/**
 	 * Force to admin plugin.
 	 *
-	 * @var string
+	 * @type string
 	 */
 	public $plugin = 'Admin';
 
 	/**
 	 * Belongs to.
 	 *
-	 * @var array
+	 * @type array
 	 */
 	public $belongsTo = array(
 		'RequestObject' => array(
@@ -53,7 +53,7 @@ class ObjectPermission extends Permission {
 	/**
 	 * Behaviors.
 	 *
-	 * @var array
+	 * @type array
 	 */
 	public $actsAs = array(
 		'Containable',
@@ -63,7 +63,7 @@ class ObjectPermission extends Permission {
 	/**
 	 * Enumerable fields.
 	 *
-	 * @var array
+	 * @type array
 	 */
 	public $enum = array(
 		'_create' => array(
@@ -91,7 +91,7 @@ class ObjectPermission extends Permission {
 	/**
 	 * Admin settings.
 	 *
-	 * @var array
+	 * @type array
 	 */
 	public $admin = array(
 		'iconClass' => 'icon-lock'

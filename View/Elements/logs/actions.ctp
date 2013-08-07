@@ -1,7 +1,7 @@
 <div class="action-buttons">
 	<?php
 	foreach (CakeLog::configured() as $stream) {
-		$class = 'btn btn-large';
+		$class = 'btn btn-default';
 
 		if (isset($type) && $stream == $type) {
 			$class .= ' active';

@@ -164,7 +164,7 @@ $(function() {
 	$('#grid').gridalicious({
 		width: 400,
 		gutter: 0,
-		selector: '.well',
+		selector: '.panel',
 		animationOptions: {
 			complete: function() {
 				$('#grid').find('> div:hidden').remove();

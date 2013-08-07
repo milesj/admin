@@ -19,7 +19,7 @@ class FileUpload extends AdminAppModel {
 	/**
 	 * Belongs to.
 	 *
-	 * @var array
+	 * @type array
 	 */
 	public $belongsTo = array(
 		'User' => array(
@@ -30,7 +30,7 @@ class FileUpload extends AdminAppModel {
 	/**
 	 * Admin settings.
 	 *
-	 * @var array
+	 * @type array
 	 */
 	public $admin = array(
 		'iconClass' => 'icon-upload',

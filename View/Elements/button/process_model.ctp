@@ -1,7 +1,7 @@
 <?php if ($options = $this->Admin->getModelCallbacks($model)) { ?>
 
 <div class="btn-group">
-	<button data-toggle="dropdown" class="btn btn-large dropdown-toggle">
+	<button data-toggle="dropdown" class="btn btn-default dropdown-toggle">
 		<span class="icon-cog"></span>
 		<?php echo __d('admin', 'Process'); ?>
 		<span class="caret"></span>

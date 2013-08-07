@@ -1,26 +1,35 @@
 <?php
-$this->Breadcrumb->add(__d('admin', 'Configuration'), array('controller' => 'admin', 'action' => 'config'));
+$this->Breadcrumb->add(__d('admin', 'Configuration'), array('controller' => 'admin', 'action' => 'config')); ?>
 
-echo $this->element('admin/actions'); ?>
+<div class="title">
+	<?php echo $this->element('admin/actions'); ?>
 
-<h2><?php echo __d('admin', 'Configuration'); ?></h2>
+	<h2><?php echo __d('admin', 'Configuration'); ?></h2>
+</div>
 
-<div class="row-fluid config-grid" id="grid">
-	<?php foreach ($configuration as $group => $keys) {
-		if (!is_array($keys)) {
-			continue;
-		}
+<div class="container">
+	<div class="grid" id="grid">
 
-		ksort($keys); ?>
+		<?php foreach ($configuration as $group => $keys) {
+			if (!is_array($keys)) {
+				continue;
+			}
 
-		<div class="well">
-			<h3><?php echo $group; ?></h3>
+			ksort($keys); ?>
 
-			<?php echo $this->element('admin/config', array(
-				'data' => $keys,
-				'parent' => $group . '.',
-				'depth' => 0
-			)) ?>
-		</div>
-	<?php } ?>
+			<div class="panel">
+				<div class="panel-heading">
+					<h3 class="panel-title"><?php echo $group; ?></h3>
+				</div>
+
+				<?php echo $this->element('admin/config', array(
+					'data' => $keys,
+					'parent' => $group . '.',
+					'depth' => 0
+				)) ?>
+			</div>
+
+		<?php } ?>
+
+	</div>
 </div>

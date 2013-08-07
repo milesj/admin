@@ -1,96 +1,100 @@
 <?php
-$this->Breadcrumb->add(__d('admin', 'Logs'), array('controller' => 'logs', 'action' => 'index'));
+$this->Breadcrumb->add(__d('admin', 'Logs'), array('controller' => 'logs', 'action' => 'index')); ?>
 
-echo $this->element('logs/actions'); ?>
+<div class="title">
+	<?php echo $this->element('logs/actions'); ?>
 
-<h2><?php echo $model->pluralName; ?></h2>
+	<h2><?php echo $model->pluralName; ?></h2>
+</div>
 
-<?php echo $this->element('pagination'); ?>
+<div class="container">
+	<?php echo $this->element('pagination', array('class' => 'top')); ?>
 
-<table id="table" class="table table-striped table-bordered table-hover sortable clickable">
-	<thead>
-		<tr>
-			<?php foreach (array('id', 'user_id', 'action', 'item', 'comment', 'created') as $field) { ?>
-				<th class="col-<?php echo $field; ?>">
-					<?php echo $this->Paginator->sort($field, $model->fields[$field]['title']); ?>
-				</th>
-			<?php } ?>
-		</tr>
-	</thead>
-	<tbody>
-		<?php if ($results) {
-			foreach ($results as $result) {
-				$id = $result[$model->alias][$model->primaryKey];
-				$foreignModel = $this->Admin->introspect($result[$model->alias]['model']);
-				$userModel = $this->Admin->introspect(USER_MODEL); ?>
-
+	<table id="table" class="table table-striped table-bordered table-hover sortable clickable">
+		<thead>
 			<tr>
-				<?php echo $this->element('field_cell', array(
-					'result' => $result,
-					'field' => 'id',
-					'data' => $model->fields['id']
-				)); ?>
+				<?php foreach (array('id', 'user_id', 'action', 'item', 'comment', 'created') as $field) { ?>
+					<th class="col-<?php echo $field; ?>">
+						<?php echo $this->Paginator->sort($field, $model->fields[$field]['title']); ?>
+					</th>
+				<?php } ?>
+			</tr>
+		</thead>
+		<tbody>
+			<?php if ($results) {
+				foreach ($results as $result) {
+					$id = $result[$model->alias][$model->primaryKey];
+					$foreignModel = $this->Admin->introspect($result[$model->alias]['model']);
+					$userModel = $this->Admin->introspect(USER_MODEL); ?>
 
-				<td colspan="3">
-					<?php
-					$message = 'action_log.' . mb_strtolower($result[$model->alias]['action_enum']);
-					$params = array();
+				<tr>
+					<?php echo $this->element('field_cell', array(
+						'result' => $result,
+						'field' => 'id',
+						'data' => $model->fields['id']
+					)); ?>
 
-					// Grab the user
-					$params[] = $this->Html->link($result['User'][$userModel->displayField], array(
-						'controller' => 'crud',
-						'action' => 'read',
-						$result[$model->alias]['user_id'],
-						'model' => $userModel->urlSlug
-					));
+					<td colspan="3">
+						<?php
+						$message = 'action_log.' . mb_strtolower($result[$model->alias]['action_enum']);
+						$params = array();
 
-					// CRUD specific
-					if (in_array($result[$model->alias]['action'], array(ActionLog::CREATE, ActionLog::READ, ActionLog::UPDATE, ActionLog::DELETE, ActionLog::PROCESS))) {
-						$params[] = mb_strtolower($foreignModel->singularName);
-					}
-
-					// Grab the item
-					if ($foreignKey = $result[$model->alias]['foreign_key']) {
-						$title = $result[$model->alias]['item'];
-
-						if (!$title) {
-							$title = $foreignKey;
-						}
-
-						$params[] = $this->Html->link($title, array(
+						// Grab the user
+						$params[] = $this->Html->link($result['User'][$userModel->displayField], array(
 							'controller' => 'crud',
 							'action' => 'read',
-							$foreignKey,
-							'model' => $foreignModel->urlSlug
-						), array('class' => 'click-target'));
+							$result[$model->alias]['user_id'],
+							'model' => $userModel->urlSlug
+						));
 
-					} else if ($foreignModel) {
-						$params[] = mb_strtolower($foreignModel->pluralName);
-					}
+						// CRUD specific
+						if (in_array($result[$model->alias]['action'], array(ActionLog::CREATE, ActionLog::READ, ActionLog::UPDATE, ActionLog::DELETE, ActionLog::PROCESS))) {
+							$params[] = mb_strtolower($foreignModel->singularName);
+						}
 
-					echo __d('admin', $message, $params); ?>
-				</td>
+						// Grab the item
+						if ($foreignKey = $result[$model->alias]['foreign_key']) {
+							$title = $result[$model->alias]['item'];
 
-				<?php foreach (array('comment', 'created') as $field) {
-					echo $this->element('field_cell', array(
-						'result' => $result,
-						'field' => $field,
-						'data' => $model->fields[$field]
-					));
-				} ?>
-			</tr>
+							if (!$title) {
+								$title = $foreignKey;
+							}
 
-			<?php }
-		} else { ?>
+							$params[] = $this->Html->link($title, array(
+								'controller' => 'crud',
+								'action' => 'read',
+								$foreignKey,
+								'model' => $foreignModel->urlSlug
+							), array('class' => 'click-target'));
 
-			<tr>
-				<td colspan="6" class="no-results">
-					<?php echo __d('admin', 'No results to display'); ?>
-				</td>
-			</tr>
+						} else if ($foreignModel) {
+							$params[] = mb_strtolower($foreignModel->pluralName);
+						}
 
-		<?php } ?>
-	</tbody>
-</table>
+						echo __d('admin', $message, $params); ?>
+					</td>
 
-<?php echo $this->element('pagination'); ?>
+					<?php foreach (array('comment', 'created') as $field) {
+						echo $this->element('field_cell', array(
+							'result' => $result,
+							'field' => $field,
+							'data' => $model->fields[$field]
+						));
+					} ?>
+				</tr>
+
+				<?php }
+			} else { ?>
+
+				<tr>
+					<td colspan="6" class="no-results">
+						<?php echo __d('admin', 'No results to display'); ?>
+					</td>
+				</tr>
+
+			<?php } ?>
+		</tbody>
+	</table>
+
+	<?php echo $this->element('pagination', array('class' => 'bottom')); ?>
+</div>

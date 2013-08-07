@@ -17,7 +17,7 @@ if (!empty($data['belongsTo']) && !empty($value) || $data['type'] === 'relation'
 
 if ($value === null || $value === '') { ?>
 
-	<div class="muted align-center">-</div>
+	<div class="text-muted align-center">-</div>
 
 <?php } else {
 	echo $this->element('Admin.field/' . $element, array(

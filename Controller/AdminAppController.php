@@ -17,14 +17,14 @@ class AdminAppController extends AppController {
 	/**
 	 * Remove parent models.
 	 *
-	 * @var array
+	 * @type array
 	 */
 	public $uses = array();
 
 	/**
 	 * Components.
 	 *
-	 * @var array
+	 * @type array
 	 */
 	public $components = array(
 		'Session', 'Security', 'Cookie', 'Acl', 'RequestHandler',
@@ -37,7 +37,7 @@ class AdminAppController extends AppController {
 	/**
 	 * Helpers.
 	 *
-	 * @var array
+	 * @type array
 	 */
 	public $helpers = array(
 		'Html', 'Session', 'Form', 'Time', 'Text', 'Paginator',
@@ -47,21 +47,21 @@ class AdminAppController extends AppController {
 	/**
 	 * Plugin configuration.
 	 *
-	 * @var array
+	 * @type array
 	 */
 	public $config = array();
 
 	/**
 	 * Paginate defaults.
 	 *
-	 * @var array
+	 * @type array
 	 */
 	public $paginate = array();
 
 	/**
 	 * Use plugin layout.
 	 *
-	 * @var string
+	 * @type string
 	 */
 	public $layout = 'admin';
 

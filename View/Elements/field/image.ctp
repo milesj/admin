@@ -38,6 +38,6 @@ if ($useFile) {
 	echo $this->Html->image($value, array(
 		'pathPrefix' => '',
 		'alt' => '',
-		'class' => 'image'
+		'class' => 'type image'
 	));
 }

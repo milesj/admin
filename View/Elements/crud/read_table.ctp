@@ -3,7 +3,7 @@
 		<?php foreach ($model->fields as $field => $data) { ?>
 
 			<tr>
-				<td class="span5">
+				<td>
 					<b><?php echo $data['title']; ?></b>
 				</td>
 				<td>

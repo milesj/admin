@@ -1,11 +1,11 @@
 <?php if ($options = $this->Admin->getBehaviorCallbacks($model)) { ?>
 
 <div class="btn-group">
-	<button data-toggle="dropdown" class="btn btn-large dropdown-toggle">
+	<a href="javascript:;" data-toggle="dropdown" class="btn btn-default dropdown-toggle">
 		<span class="icon-cog"></span>
 		<?php echo __d('admin', 'Process'); ?>
 		<span class="caret"></span>
-	</button>
+	</a>
 
 	<ul class="dropdown-menu">
 		<?php foreach ($options as $option) { ?>

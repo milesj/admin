@@ -18,7 +18,7 @@ class InstallShell extends BaseInstallShell {
 	/**
 	 * Models.
 	 *
-	 * @var array
+	 * @type array
 	 */
 	public $uses = array('Admin.RequestObject', 'Admin.ControlObject', 'Permission');
 

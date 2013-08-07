@@ -28,7 +28,7 @@ class ItemReport extends AdminAppModel {
 	/**
 	 * Belongs to.
 	 *
-	 * @var array
+	 * @type array
 	 */
 	public $belongsTo = array(
 		'Reporter' => array(
@@ -44,7 +44,7 @@ class ItemReport extends AdminAppModel {
 	/**
 	 * Admin settings.
 	 *
-	 * @var array
+	 * @type array
 	 */
 	public $admin = array(
 		'iconClass' => 'icon-flag',
@@ -55,7 +55,7 @@ class ItemReport extends AdminAppModel {
 	/**
 	 * Enum mapping.
 	 *
-	 * @var array
+	 * @type array
 	 */
 	public $enum = array(
 		'status' => array(

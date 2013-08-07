@@ -6,7 +6,7 @@ $isEditor = in_array($field, $model->admin['editorFields']);
 $validate = false;
 
 if ($hasError) {
-	$classes[] = 'error';
+	$classes[] = 'has-error';
 }
 
 if ($isEditor) {
@@ -29,26 +29,27 @@ if ($validate) {
 	}
 
 	if ($isRequired) {
-		$classes[] = 'required';
+		$classes[] = 'is-required';
 	}
 }
 
 if ($hasError) {
-	$classes[] = 'text-error';
+	$classes[] = 'text-danger';
 } else if ($isRequired) {
 	$classes[] = 'text-info';
 } ?>
 
-<div class="control-group <?php echo implode(' ', $classes); ?>">
-	<?php $label = $data['title'];
+<div class="form-group <?php echo implode(' ', $classes); ?>">
+	<?php
+	$label = $data['title'];
 
 	if (!empty($data['belongsTo'])) {
-		$label .= ' <span class="icon-search"></span>';
+		$label .= ' <span class="icon-search tip" title="' . __d('admin', 'Belongs To Lookup') . '"></span>';
 	}
 
-	echo $this->Form->label($field, $label, array('class' => 'control-label', 'escape' => false)); ?>
+	echo $this->Form->label($field, $label, array('class' => 'control-label col-lg-3', 'escape' => false)); ?>
 
-	<div class="controls">
+	<div class="col-lg-9">
 		<?php
 		$element = 'default';
 
@@ -82,7 +83,7 @@ if ($hasError) {
 				$checked = ($data['default'] === null);
 			} ?>
 
-			<div class="controls-null">
+			<div class="form-null">
 				<?php echo $this->Form->input($field . '_null', array(
 					'type' => 'checkbox',
 					'checked' => $checked,

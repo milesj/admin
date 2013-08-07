@@ -2,29 +2,32 @@
 $this->Admin->setBreadcrumbs($model, null, $this->action);
 $this->Paginator->options(array(
 	'url' => array_merge($this->params['named'], array('model' => $model->urlSlug))
-));
+)); ?>
 
-echo $this->element('crud/actions'); ?>
+<div class="title">
+	<?php echo $this->element('crud/actions'); ?>
 
-<h2><?php echo $this->Admin->outputIconTitle($model, $model->pluralName); ?></h2>
+	<h2><?php echo $this->Admin->outputIconTitle($model, $model->pluralName); ?></h2>
+</div>
 
-<?php
-echo $this->element('filters');
+<div class="container">
+	<?php
+	echo $this->element('filters');
 
-echo $this->Form->create($model->alias, array('class' => 'form-horizontal'));
-echo $this->element('pagination'); ?>
+	echo $this->Form->create($model->alias, array('class' => 'form-horizontal'));
+	echo $this->element('pagination', array('class' => 'top')); ?>
 
 	<table id="table" class="table table-striped table-bordered table-hover sortable clickable">
 		<thead>
 			<tr>
 				<?php if ($model->admin['batchProcess']) { ?>
-					<th class="col-batch-delete">
-						<input type="checkbox" id="check-all">
+					<th class="col-checkbox">
+						<span><input type="checkbox" id="check-all"></span>
 					</th>
 				<?php }
 
 				if ($model->admin['actionButtons']) { ?>
-					<th class="col-actions">-</th>
+					<th class="col-actions"> </th>
 				<?php }
 
 				foreach ($model->fields as $field => $data) { ?>
@@ -42,7 +45,7 @@ echo $this->element('pagination'); ?>
 					<tr>
 						<?php if ($model->admin['batchProcess']) { ?>
 
-							<td class="col-batch-delete">
+							<td class="col-checkbox">
 								<?php echo $this->Form->input($model->alias . '.items.' . $id, array(
 									'type' => 'checkbox',
 									'value' => $id,
@@ -61,19 +64,19 @@ echo $this->element('pagination'); ?>
 									if ($this->Admin->hasAccess($model->qualifiedName, 'read')) {
 										echo $this->Html->link('<span class="icon-search"></span>',
 											array('action' => 'read', $id, 'model' => $model->urlSlug),
-											array('class' => 'btn btn-mini', 'escape' => false, 'title' => __d('admin', 'View')));
+											array('class' => 'btn btn-xs btn-default', 'escape' => false, 'title' => __d('admin', 'View')));
 									}
 
 									if ($this->Admin->hasAccess($model->qualifiedName, 'update') && $model->admin['editable']) {
 										echo $this->Html->link('<span class="icon-edit"></span>',
 											array('action' => 'update', $id, 'model' => $model->urlSlug),
-											array('class' => 'btn btn-mini', 'escape' => false, 'title' => __d('admin', 'Edit')));
+											array('class' => 'btn btn-xs btn-default', 'escape' => false, 'title' => __d('admin', 'Edit')));
 									}
 
 									if ($this->Admin->hasAccess($model->qualifiedName, 'delete') && $model->admin['deletable']) {
 										echo $this->Html->link('<span class="icon-remove"></span>',
 											array('action' => 'delete', $id, 'model' => $model->urlSlug),
-											array('class' => 'btn btn-mini', 'escape' => false, 'title' => __d('admin', 'Delete')));
+											array('class' => 'btn btn-xs btn-default', 'escape' => false, 'title' => __d('admin', 'Delete')));
 									} ?>
 								</div>
 							</td>
@@ -102,42 +105,43 @@ echo $this->element('pagination'); ?>
 		</tbody>
 	</table>
 
-<?php
-echo $this->element('pagination');
+	<?php
+	echo $this->element('pagination', array('class' => 'bottom'));
 
-if ($model->admin['batchProcess'] && $results) {
-	$options = $this->Admin->getModelCallbacks($model);
+	if ($model->admin['batchProcess'] && $results) {
+		$options = $this->Admin->getModelCallbacks($model);
 
-	if ($this->Admin->hasAccess($model->qualifiedName, 'delete')) {
-		$options['delete_item'] = __d('admin', 'Delete %s', $model->singularName);
-	}
+		if ($this->Admin->hasAccess($model->qualifiedName, 'delete')) {
+			$options['delete_item'] = __d('admin', 'Delete %s', $model->singularName);
+		}
 
-	if ($options) { ?>
+		if ($options) { ?>
 
-	<div class="well actions">
-		<div class="redirect-to">
-			<?php echo $this->Form->input('batch_action', array(
-				'div' => false,
-				'options' => $options
-			)); ?>
-		</div>
-
-		<?php if ($config['Admin']['logActions']) { ?>
-			<div class="log-comment">
-				<?php echo $this->Form->input('log_comment', array(
+		<div class="well actions">
+			<div class="redirect-to">
+				<?php echo $this->Form->input('batch_action', array(
 					'div' => false,
-					'maxlength' => 255,
-					'required' => true
+					'options' => $options
 				)); ?>
 			</div>
-		<?php } ?>
 
-		<button type="submit" class="btn btn-large btn-danger">
-			<span class="icon-cogs icon-white"></span>
-			<?php echo __d('admin', 'Batch Process'); ?>
-		</button>
-	</div>
+			<?php if ($config['Admin']['logActions']) { ?>
+				<div class="log-comment">
+					<?php echo $this->Form->input('log_comment', array(
+						'div' => false,
+						'maxlength' => 255,
+						'required' => true
+					)); ?>
+				</div>
+			<?php } ?>
 
-<?php } }
+			<button type="submit" class="btn btn-large btn-danger">
+				<span class="icon-cogs icon-white"></span>
+				<?php echo __d('admin', 'Batch Process'); ?>
+			</button>
+		</div>
 
-echo $this->Form->end();
+	<?php } }
+
+	echo $this->Form->end(); ?>
+</div>

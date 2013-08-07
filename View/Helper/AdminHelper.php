@@ -12,7 +12,7 @@ class AdminHelper extends AppHelper {
 	/**
 	 * Helpers.
 	 *
-	 * @var array
+	 * @type array
 	 */
 	public $helpers = array('Html', 'Session', 'Utility.Breadcrumb');
 
@@ -233,6 +233,22 @@ class AdminHelper extends AppHelper {
 	}
 
 	/**
+	 * Check to see if the user has a role.
+	 *
+	 * @param int|string $role
+	 * @return bool
+	 */
+	public function hasRole($role) {
+		$roles = (array) $this->Session->read('Acl.roles');
+
+		if (is_numeric($role)) {
+			return isset($roles[$role]);
+		}
+
+		return in_array($role, $roles);
+	}
+
+	/**
 	 * Return a modified model object.
 	 *
 	 * @param string $model
@@ -240,6 +256,24 @@ class AdminHelper extends AppHelper {
 	 */
 	public function introspect($model) {
 		return Admin::introspectModel($model);
+	}
+
+	/**
+	 * Return true if the user is an admin.
+	 *
+	 * @return bool
+	 */
+	public function isAdmin() {
+		return (bool) $this->Session->read('Acl.isAdmin');
+	}
+
+	/**
+	 * Return true if the user is a super mod.
+	 *
+	 * @return bool
+	 */
+	public function isSuper() {
+		return ($this->isAdmin() || $this->Session->read('Acl.isSuper'));
 	}
 
 	/**
@@ -312,7 +346,7 @@ class AdminHelper extends AppHelper {
 
 		if ($className != $alias) {
 			$output .= sprintf(' (%s)',
-				$this->Html->tag('span', $className, array('class' => 'muted'))
+				$this->Html->tag('span', $className, array('class' => 'text-muted'))
 			);
 		}
 

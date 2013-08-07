@@ -33,7 +33,7 @@
 	);
 
 	foreach ($links as $action => $link) {
-		$class = 'btn btn-large';
+		$class = 'btn btn-default';
 		$url = array('controller' => 'admin', 'action' => $action);
 
 		if ($this->action === $action) {

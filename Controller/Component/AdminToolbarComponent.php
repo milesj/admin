@@ -9,13 +9,15 @@ App::uses('Admin', 'Admin.Lib');
 
 /**
  * @property Controller $Controller
+ * @property AuthComponent $Auth
+ * @property SessionComponent $Session
  */
 class AdminToolbarComponent extends Component {
 
 	/**
 	 * Components.
 	 *
-	 * @var array
+	 * @type array
 	 */
 	public $components = array('Auth', 'Session');
 
@@ -44,6 +46,7 @@ class AdminToolbarComponent extends Component {
 			$roles = ClassRegistry::init('Admin.RequestObject')->getRoles($user_id);
 			$isAdmin = false;
 			$isSuper = false;
+			$roleMap = array();
 
 			foreach ($roles as $role) {
 				if (!$isAdmin && $role['RequestObject']['alias'] == Configure::read('Admin.aliases.administrator')) {
@@ -53,11 +56,13 @@ class AdminToolbarComponent extends Component {
 				if (!$isSuper && $role['RequestObject']['alias'] == Configure::read('Admin.aliases.superModerator')) {
 					$isSuper = true;
 				}
+
+				$roleMap[$role['RequestObject']['id']] = $role['RequestObject']['alias'];
 			}
 
 			$this->Session->write('Acl.isAdmin', $isAdmin);
 			$this->Session->write('Acl.isSuper', $isSuper);
-			$this->Session->write('Acl.roles', Hash::extract($roles, '{n}.RequestObject.id'));
+			$this->Session->write('Acl.roles', $roleMap);
 		}
 	}
 

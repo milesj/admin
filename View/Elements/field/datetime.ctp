@@ -1,1 +1,1 @@
-<?php echo $value;
+<span class="type datetime"><?php echo $value; ?></span>

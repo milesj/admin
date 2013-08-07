@@ -25,14 +25,14 @@ class ActionLog extends AdminAppModel {
 	/**
 	 * Display field.
 	 *
-	 * @var string
+	 * @type string
 	 */
 	public $displayField = 'item';
 
 	/**
 	 * Belongs to.
 	 *
-	 * @var array
+	 * @type array
 	 */
 	public $belongsTo = array(
 		'User' => array(
@@ -43,7 +43,7 @@ class ActionLog extends AdminAppModel {
 	/**
 	 * Enum mapping.
 	 *
-	 * @var array
+	 * @type array
 	 */
 	public $enum = array(
 		'action' => array(
@@ -61,7 +61,7 @@ class ActionLog extends AdminAppModel {
 	/**
 	 * Admin settings.
 	 *
-	 * @var array
+	 * @type array
 	 */
 	public $admin = array(
 		'iconClass' => 'icon-exchange',
