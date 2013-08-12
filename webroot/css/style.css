@@ -24,22 +24,25 @@ table { width: 100%; }
 /*------------------ UI ------------------*/
 
 .nav { position: fixed; width: 100%; top: 0; left: 0; z-index: 500; background: #1d1f21; border-bottom: 1px solid #121213; }
-.nav-buttons { float: right; padding: 5px; }
-.nav-brand { vertical-align: top; display: inline-block; height: 50px; line-height: 50px; padding: 0 1.25rem; font-size: 1.2rem; color: #fff; }
+.nav-buttons { float: right; padding: 6px 1.25rem; }
+.nav-brand { vertical-align: top; display: inline-block; height: 56px; line-height: 56px; padding: 0 1.25rem; font-size: 1.2rem; color: #fff; }
 .nav-brand:hover { color: #fff; }
 .nav-menu { vertical-align: top; display: inline-block; list-style: none; margin: 0; padding: 0; }
 .nav-menu > li { float: left; position: relative; margin-right: 1px; }
-.nav-menu > li > a { display: block; color: #f8f8f8; padding: 0 1.25rem; height: 50px; line-height: 50px; outline: none; }
+.nav-menu > li > a { display: block; color: #E5E5E5; padding: 0 1.25rem; height: 56px; line-height: 56px; outline: none; }
 .nav-menu > li > a:hover { background-color: #52555a; }
 .nav-menu > li > a .caret-down { border-top-color: #fff; top: 2px; margin-left: 3px; }
 .nav-menu > li > a .badge { top: -1px; }
 .nav-menu > li.is-active > a { font-weight: bold; }
 .nav-menu > li.is-active > a,
-.nav-menu > li > a.is-active { background-color: #67696d; }
+.nav-menu > li > a.is-active { background-color: #67696d; color: #fff; }
 
 .alert,
 .button,
-.modal-outer { border-radius: 3px; }
+.panel,
+.modal-outer { border-radius: .3rem; }
+
+.button .caret-down { border-top-color: #fff; margin-left: 3px; bottom: -1px; }
 
 .table a { display: block; }
 .table thead th { white-space: nowrap; }
@@ -56,10 +59,17 @@ table { width: 100%; }
 
 .dropdown li a:hover .model-icon { color: #fff; }
 
+.modal { max-width: 800px; }
+.modal-body { max-height: 500px; overflow-y: auto; }
+
 .pagination ul { float: right; margin: 0; }
 .pagination .counter { height: 40px; line-height: 40px; vertical-align: middle; }
 .pagination .counter span { font-weight: bold; }
 .pagination.bottom { margin-bottom: 0 }
+
+.panel { border: 1px solid #e5e5e5; background: #fbfbfb; margin-bottom: 1.5rem; }
+.panel-head { background: #f5f5f5; padding: 1rem; }
+.panel-body { padding: 1rem; border-top: 1px solid #e5e5e5; }
 
 /*------------------ Forms ------------------*/
 

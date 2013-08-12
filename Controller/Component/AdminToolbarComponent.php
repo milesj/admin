@@ -397,14 +397,24 @@ class AdminToolbarComponent extends Component {
 			return $model->searchTypeAhead($query);
 		}
 
-		$keyword = $query['query'];
-		unset($query['query']);
+		$keyword = $query['term'];
+		unset($query['term']);
 
-		return $model->find('list', array(
+		$results = $model->find('all', array(
 			'conditions' => array($model->alias . '.' . $model->displayField . ' LIKE' => '%' . $keyword . '%') + $query,
 			'order' => array($model->alias . '.' . $model->displayField => 'ASC'),
 			'contain' => false
 		));
+		$data = array();
+
+		foreach ($results as $result) {
+			$data[] = array(
+				'id' => $result[$model->alias][$model->primaryKey],
+				'title' => $result[$model->alias][$model->displayField]
+			);
+		}
+
+		return $data;
 	}
 
 	/**

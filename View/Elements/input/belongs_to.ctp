@@ -17,38 +17,33 @@ if (empty($typeAhead[$field])) {
 
 	if (isset($this->data[$alias][$model->{$alias}->displayField])) {
 		$value = $this->data[$alias][$model->{$alias}->displayField];
-	} ?>
+	}
 
-	<div class="type-ahead">
-		<?php
-		echo $this->Form->input($field . '_type_ahead', array(
-			'div' => false,
-			'label' => false,
-			'type' => 'text',
-			'class' => 'input input-belongs-to',
-			'data-provide' => 'typeahead',
-			'autocomplete' => 'off',
-			'value' => $value,
-			'default' => $data['default']
-		));
+	echo $this->Form->input($field . '_type_ahead', array(
+		'div' => false,
+		'label' => false,
+		'type' => 'text',
+		'class' => 'input input-belongs-to span-4',
+		'autocomplete' => 'off',
+		'value' => $value,
+		'default' => $data['default']
+	));
 
-		echo $this->Form->input($field, array(
-			'type' => 'text',
-			'div' => false,
-			'label' => false,
-			'required' => false,
-			'style' => 'display: none'
-		)); ?>
-	</div>
+	echo $this->Form->input($field, array(
+		'type' => 'hidden',
+		'div' => false,
+		'label' => false,
+		'required' => false
+	)); ?>
 
 	<script type="text/javascript">
-		$(function() {
+		window.addEvent('domready', function() {
 			Admin.typeAhead(
 				'<?php echo $this->Form->domId(); ?>',
-				'<?php echo $this->Html->url(array('model' => Inflector::underscore($typeAhead[$field]['model']), 'action' => 'type_ahead')); ?>'
-				<?php if ($foreignKey = $typeAhead[$field]['foreignKey']) { ?>, {
-					<?php echo $foreignKey; ?>: '<?php echo $model->id; ?>'
-				}<?php } ?>
+				'<?php echo $this->Html->url(array('model' => Inflector::underscore($typeAhead[$field]['model']), 'action' => 'type_ahead')); ?>',
+				{
+					<?php if ($foreignKey = $typeAhead[$field]['foreignKey']) { echo $foreignKey; ?>: '<?php echo $model->id; ?>' <?php } ?>
+				}
 			);
 		});
 	</script>

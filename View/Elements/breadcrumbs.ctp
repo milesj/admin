@@ -1,5 +1,5 @@
 <?php if ($crumbs = $this->Breadcrumb->get()) { ?>
-	<nav class="breadcrumbs small">
+	<nav class="breadcrumbs">
 		<ul>
 			<?php foreach ($crumbs as $i => $crumb) { ?>
 				<li>

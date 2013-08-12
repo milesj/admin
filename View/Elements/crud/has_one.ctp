@@ -7,36 +7,38 @@ if (empty($results[$foreignModel->primaryKey])) {
 } ?>
 
 <div class="panel has-one">
-	<div class="panel-heading">
+	<div class="panel-head">
 		<h5><?php echo $this->Admin->outputAssocName($foreignModel, $alias, $assoc['className']); ?></h5>
 	</div>
 
-	<table class="table table-striped table-bordered table-hover clickable">
-		<thead>
-			<tr>
-				<?php foreach ($fields as $field => $data) { ?>
-					<th class="col-<?php echo $field; ?> type-<?php echo $data['type']; ?>">
-						<span><?php echo $data['title']; ?></span>
-					</th>
-				<?php } ?>
-			</tr>
-		</thead>
-		<tbody>
-			<tr>
-				<?php foreach ($fields as $field => $data) { ?>
+	<div class="panel-body">
+		<table class="table table--hover table--clickable">
+			<thead>
+				<tr>
+					<?php foreach ($fields as $field => $data) { ?>
+						<th class="col-<?php echo $field; ?> type-<?php echo $data['type']; ?>">
+							<span><?php echo $data['title']; ?></span>
+						</th>
+					<?php } ?>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<?php foreach ($fields as $field => $data) { ?>
 
-					<td class="col-<?php echo $field; ?> type-<?php echo $data['type']; ?>">
-						<?php echo $this->element('Admin.field', array(
-							'result' => $results,
-							'field' => $field,
-							'data' => $data,
-							'value' => $results[$field],
-							'model' => $foreignModel
-						)); ?>
-					</td>
+						<td class="col-<?php echo $field; ?> type-<?php echo $data['type']; ?>">
+							<?php echo $this->element('Admin.field', array(
+								'result' => $results,
+								'field' => $field,
+								'data' => $data,
+								'value' => $results[$field],
+								'model' => $foreignModel
+							)); ?>
+						</td>
 
-				<?php } ?>
-			</tr>
-		</tbody>
-	</table>
+					<?php } ?>
+				</tr>
+			</tbody>
+		</table>
+	</div>
 </div>

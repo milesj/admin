@@ -9,8 +9,8 @@ if ($modelParam) {
 
 <div class="nav clear-after">
 	<div class="nav-buttons">
-		<div class="button-group">
-			<button type="button" class="button info js-toggle" data-toggle="#nav-dropdown">
+		<div class="button-group round">
+			<button type="button" class="button last info js-toggle" data-toggle="#nav-dropdown">
 				<?php if (!empty($user[$config['User']['fieldMap']['avatar']])) {
 					echo $this->Html->image($user[$config['User']['fieldMap']['avatar']], array('class' => 'avatar'));
 				} ?>

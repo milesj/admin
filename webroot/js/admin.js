@@ -45,55 +45,28 @@ var Admin = {
 	 * @param {Object} data
 	 */
 	typeAhead: function(id, url, data) {
-		var sourceMap = {},
-			inputTA = $('#' + id + 'TypeAhead'),
-			inputNull = $('#' + id + 'Null'),
-			inputRaw = $('#' + id);
+		var inputNull = $(id + 'Null'),
+			inputRaw = $(id);
 
-		inputTA.typeahead({
-			items: 15,
-			minLength: 1,
-			source: function(query, process) {
-				data = data || {};
-				data.query = query;
+		Titon.TypeAhead.factory(id + 'TypeAhead', {
+			sorter: false,
+			matcher: false,
+			shadow: true,
+			source: url,
+			query: data,
+			onSelect: function(item) {
+				inputRaw.set('value', item.id);
 
-				return $.ajax({
-					url: url,
-					type: 'get',
-					data: data,
-					dataType: 'json',
-					success: function(json) {
-						var source = [],
-							display;
-
-						$.each(json, function(id, title) {
-							// Display ID in front of title
-							//display = (id != title) ? id + ' - ' + title : title;
-							display = title;
-
-							sourceMap[display] = [id, title];
-							source.push(display);
-						});
-
-						return process(source);
-					}
-				});
+				if (inputNull) {
+					inputNull.set('checked', false);
+				}
 			},
-			updater: function(item) {
-				item = sourceMap[item];
+			onReset: function() {
+				inputRaw.set('value', '');
 
-				inputRaw.val(item[0]);
-				inputNull.prop('checked', false);
-
-				return item[1];
-			}
-		});
-
-		// Reset raw input if type ahead is cleared
-		inputTA.keyup(function() {
-			if (!this.value) {
-				inputRaw.val('');
-				inputNull.prop('checked', true);
+				if (inputNull) {
+					inputNull.set('checked', true);
+				}
 			}
 		});
 	},
@@ -123,14 +96,7 @@ var Admin = {
 	 * Toggle the filters box and button.
 	 */
 	filterToggle: function() {
-		var filters = $('filters');
-
-		if (filters.style.display === 'none') {
-			filters.show(true);
-		} else {
-			filters.hide(true);
-		}
-
+		$('filters').toggle();
 		$('filter-toggle').toggleClass('is-active');
 	},
 
@@ -177,6 +143,7 @@ window.addEvent('domready', function() {
 	Titon.Toggle.factory('.js-toggle');
 
 	Titon.Tooltip.factory('.js-tooltip', {
+		animation: 'from-above',
 		position: 'topCenter'
 	});
 });

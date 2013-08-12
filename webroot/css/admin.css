@@ -6,13 +6,14 @@
 
 /*------------------ CRUD ------------------*/
 
-.controller-crud .associations { margin: 1.25rem 0; }
+.controller-crud .associations { margin: 2rem 0; }
+.controller-crud .associations h3 { margin-bottom: 1rem; }
 
 /*------------------ ACL ------------------*/
 
 .controller-acl .table { width: auto; }
 .controller-acl .table td { padding: 0; }
-.controller-acl .table a { display: block; padding: 8px; color: #000; }
+.controller-acl .table a { display: block; padding: 1rem; color: #000; }
 .controller-acl .table a span { opacity: .2; }
 .controller-acl .table a:hover { text-decoration: none; }
 .controller-acl .table a:hover span { opacity: 1; }
@@ -22,8 +23,8 @@
 .controller-acl .table .permission .action.deny { background-color: #f2dede; }
 .controller-acl .table .permission .action.missing { background-color: #fcf8e3; }
 
-.controller-acl .matrix-head { background: #2E2F2F !important; border-color: #3A3C3C !important; color: #fff; }
-.controller-acl .matrix-head a { color: #999999; }
+.controller-acl .matrix-head { background: #1d1f21 !important; border-color: #52555a !important; color: #fff; }
+.controller-acl .matrix-head a { color: #E5E5E5; }
 .controller-acl .matrix-head a:hover { color: #fff; }
 .controller-acl .matrix-head.matrix-y { min-width: 150px; }
 

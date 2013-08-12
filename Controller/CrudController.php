@@ -227,7 +227,7 @@ class CrudController extends AdminAppController {
 		$this->viewClass = 'Json';
 		$this->layout = 'ajax';
 
-		if (empty($this->request->query['query'])) {
+		if (empty($this->request->query['term'])) {
 			throw new BadRequestException(__d('admin', 'Missing Query'));
 		}
 

@@ -8,24 +8,24 @@ $this->Breadcrumb->add(__d('admin', 'Cache'), array('controller' => 'admin', 'ac
 </div>
 
 <div class="container">
-	<div class="grid" id="grid">
 
 		<?php foreach ($configuration as $group => $keys) {
 			ksort($keys); ?>
 
 			<div class="panel">
-				<div class="panel-heading">
-					<h3 class="panel-title"><?php echo $group; ?></h3>
+				<div class="panel-head">
+					<h4><?php echo $group; ?></h4>
 				</div>
 
-				<?php echo $this->element('admin/config', array(
-					'data' => $keys,
-					'parent' => $group . '.',
-					'depth' => 0
-				)) ?>
+				<div class="panel-body">
+					<?php echo $this->element('admin/config', array(
+						'data' => $keys,
+						'parent' => $group . '.',
+						'depth' => 0
+					)) ?>
+				</div>
 			</div>
 
 		<?php } ?>
 
-	</div>
 </div>

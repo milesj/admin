@@ -13,52 +13,52 @@
 </div>
 
 <div class="container">
-	<div class="grid" id="grid">
 
 	<?php foreach ($plugins as $plugin) { ?>
 
 		<div class="panel" id="<?php echo $plugin['slug']; ?>">
-			<div class="panel-heading">
-				<h3 class="panel-title"><?php echo $plugin['title']; ?></h3>
+			<div class="panel-head">
+				<h4><?php echo $plugin['title']; ?></h4>
 			</div>
 
-			<ul class="nav-pills nav-stacked">
-				<?php foreach ($plugin['models'] as $model) {
-					$url = $this->Html->url(array(
-						'controller' => 'crud',
-						'action' => 'index',
-						'model' => $model['url']
-					)); ?>
+			<div class="panel-body">
+				<ul class="nav-pills nav-stacked">
+					<?php foreach ($plugin['models'] as $model) {
+						$url = $this->Html->url(array(
+							'controller' => 'crud',
+							'action' => 'index',
+							'model' => $model['url']
+						)); ?>
 
-					<li>
-						<?php if ($model['installed']) {
-							echo $this->Html->link('<span class="icon-plus"></span>', array(
-								'controller' => 'crud',
-								'action' => 'create',
-								'model' => $model['url']
-							), array(
-								'data-tooltip' => __d('admin', 'Add'),
-								'class' => 'pull-right js-tooltip',
-								'escape' => false
-							));
-						} ?>
+						<li>
+							<?php if ($model['installed']) {
+								echo $this->Html->link('<span class="icon-plus"></span>', array(
+									'controller' => 'crud',
+									'action' => 'create',
+									'model' => $model['url']
+								), array(
+									'data-tooltip' => __d('admin', 'Add'),
+									'class' => 'pull-right js-tooltip',
+									'escape' => false
+								));
+							} ?>
 
-						<a href="<?php echo $url; ?>">
-							<?php echo $this->Admin->outputIconTitle($model); ?>
+							<a href="<?php echo $url; ?>">
+								<?php echo $this->Admin->outputIconTitle($model); ?>
 
-							<?php if (!$model['installed']) { ?>
-								<span class="label error js-tooltip" data-tooltip="<?php echo __d('admin', 'Not Installed'); ?>">&nbsp;!&nbsp;</span>
-							<?php } else { ?>
-								<span class="text-muted">(<?php echo number_format($counts[$model['class']]); ?>)</span>
-							<?php } ?>
-						</a>
-					</li>
+								<?php if (!$model['installed']) { ?>
+									<span class="label error js-tooltip" data-tooltip="<?php echo __d('admin', 'Not Installed'); ?>">&nbsp;!&nbsp;</span>
+								<?php } else { ?>
+									<span class="text-muted">(<?php echo number_format($counts[$model['class']]); ?>)</span>
+								<?php } ?>
+							</a>
+						</li>
 
-				<?php } ?>
-			</ul>
+					<?php } ?>
+				</ul>
+			</div>
 		</div>
 
 	<?php } ?>
 
-	</div>
 </div>
