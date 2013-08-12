@@ -11,10 +11,11 @@ if ($this->action !== 'delete') {
 	), $options);
 } ?>
 
-<div class="well actions">
+<div class="form-actions">
 	<div class="redirect-to">
 		<?php echo $this->Form->input('redirect_to', array(
 			'div' => false,
+			'class' => 'input',
 			'options' => $options
 		)); ?>
 	</div>
@@ -25,7 +26,8 @@ if ($this->action !== 'delete') {
 			<?php echo $this->Form->input('log_comment', array(
 				'div' => false,
 				'maxlength' => 255,
-				'required' => in_array($this->action, array('update', 'delete'))
+				'required' => in_array($this->action, array('update', 'delete')),
+				'class' => 'input'
 			)); ?>
 		</div>
 
@@ -33,24 +35,24 @@ if ($this->action !== 'delete') {
 
 	if ($this->action === 'delete') { ?>
 
-		<button type="submit" class="btn btn-large btn-danger">
+		<button type="submit" class="button large error">
 			<span class="icon-remove icon-white"></span>
 			<?php echo __d('admin', 'Yes, Delete'); ?>
 		</button>
 
 	<?php } else { ?>
 
-		<button type="submit" class="btn btn-large btn-success">
+		<button type="submit" class="button large success">
 			<span class="icon-edit icon-white"></span>
 			<?php echo __d('admin', $this->action === 'create' ? 'Create' : 'Update'); ?>
 		</button>
 
-		<button type="reset" class="btn btn-large btn-info">
+		<button type="reset" class="button large info">
 			<span class="icon-undo icon-white"></span>
 			<?php echo __d('admin', 'Reset'); ?>
 		</button>
 
-		<a href="<?php echo $this->Html->url(array('action' => 'index', 'model' => $model->urlSlug)); ?>" class="btn btn-large">
+		<a href="<?php echo $this->Html->url(array('action' => 'index', 'model' => $model->urlSlug)); ?>" class="button large">
 			<span class="icon-ban-circle"></span>
 			<?php echo __d('admin', 'Cancel'); ?>
 		</a>

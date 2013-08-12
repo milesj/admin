@@ -3,13 +3,13 @@ $params = $this->Paginator->params();
 
 if ($params['count'] > 0) { ?>
 
-	<nav class="paging <?php echo $class; ?>">
-		<ul class="pagination">
+	<nav class="pagination pagination--grouped round <?php echo $class; ?>">
+		<ul>
 			<?php echo $this->Paginator->numbers(array(
 				'first' => __d('admin', 'First'),
 				'last' => __d('admin', 'Last'),
 				'currentTag' => 'a',
-				'currentClass' => 'active',
+				'currentClass' => 'is-active',
 				'separator' => '',
 				'ellipsis' => '<li><span>...</span></li>',
 				'tag' => 'li'

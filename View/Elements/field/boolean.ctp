@@ -4,6 +4,6 @@
 
 <?php } else { ?>
 
-	<span class="type boolean text-danger"><?php echo __d('admin', 'No'); ?></span>
+	<span class="type boolean text-error"><?php echo __d('admin', 'No'); ?></span>
 
 <?php } ?>

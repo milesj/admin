@@ -10,7 +10,7 @@ $this->Breadcrumb->add(Inflector::humanize($type), array('controller' => 'logs',
 </div>
 
 <div class="container">
-	<table id="table" class="table table-striped table-bordered sortable">
+	<table id="table" class="table">
 		<thead>
 			<tr>
 				<th><span><?php echo __d('admin', 'Code'); ?></span></th>
@@ -33,7 +33,7 @@ $this->Breadcrumb->add(Inflector::humanize($type), array('controller' => 'logs',
 
 						// Via fatal
 						if (mb_stripos($log['message'], 'fatal') !== false) {
-							$class = 'label-danger';
+							$class = 'error';
 							$text = 'FATAL';
 
 						// Via exception
@@ -47,14 +47,14 @@ $this->Breadcrumb->add(Inflector::humanize($type), array('controller' => 'logs',
 							}
 
 							if ($ex instanceof HttpException) {
-								$class = 'label-warning';
+								$class = 'warning';
 
 							} else if ($ex instanceof FatalErrorException) {
-								$class = 'label-danger';
+								$class = 'error';
 								$text = 'FATAL';
 
 							} else if ($ex instanceof CakeException) {
-								$class = 'label-info';
+								$class = 'info';
 							}
 						}
 

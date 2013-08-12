@@ -1,5 +1,5 @@
 <?php if (!$this->Session->check('Admin')) { ?>
-	<div class="alert alert-danger">
+	<div class="alert error">
 		<span class="icon-warning-sign"></span> &nbsp;
 		<?php echo __d('admin', 'ACL permissions do not exist within the session and all access has been disabled.'); ?>
 		<a href="http://milesj.me/code/cakephp/admin#faq" class="alert-link"><?php echo __d('admin', 'Please update session management and re-login.'); ?></a>
@@ -22,7 +22,7 @@
 				<h3 class="panel-title"><?php echo $plugin['title']; ?></h3>
 			</div>
 
-			<ul class="nav nav-pills nav-stacked">
+			<ul class="nav-pills nav-stacked">
 				<?php foreach ($plugin['models'] as $model) {
 					$url = $this->Html->url(array(
 						'controller' => 'crud',
@@ -37,8 +37,8 @@
 								'action' => 'create',
 								'model' => $model['url']
 							), array(
-								'title' => __d('admin', 'Add'),
-								'class' => 'pull-right tip',
+								'data-tooltip' => __d('admin', 'Add'),
+								'class' => 'pull-right js-tooltip',
 								'escape' => false
 							));
 						} ?>
@@ -47,7 +47,7 @@
 							<?php echo $this->Admin->outputIconTitle($model); ?>
 
 							<?php if (!$model['installed']) { ?>
-								<span class="label label-danger tip" title="<?php echo __d('admin', 'Not Installed'); ?>">&nbsp;!&nbsp;</span>
+								<span class="label error js-tooltip" data-tooltip="<?php echo __d('admin', 'Not Installed'); ?>">&nbsp;!&nbsp;</span>
 							<?php } else { ?>
 								<span class="text-muted">(<?php echo number_format($counts[$model['class']]); ?>)</span>
 							<?php } ?>

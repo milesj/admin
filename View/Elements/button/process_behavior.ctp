@@ -1,13 +1,13 @@
 <?php if ($options = $this->Admin->getBehaviorCallbacks($model)) { ?>
 
-<div class="btn-group">
-	<a href="javascript:;" data-toggle="dropdown" class="btn btn-default dropdown-toggle">
+<div class="button-group round">
+	<button type="button" data-toggle="#process-behavior" class="button js-toggle">
 		<span class="icon-cog"></span>
 		<?php echo __d('admin', 'Process'); ?>
-		<span class="caret"></span>
-	</a>
+		<span class="caret-down"></span>
+	</button>
 
-	<ul class="dropdown-menu">
+	<ul class="dropdown dropdown--right" id="process-behavior">
 		<?php foreach ($options as $option) { ?>
 			<li>
 				<?php echo $this->Html->link(__d('admin', $option['title'], $model->singularName), array(

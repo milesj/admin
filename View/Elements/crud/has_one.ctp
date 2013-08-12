@@ -8,7 +8,7 @@ if (empty($results[$foreignModel->primaryKey])) {
 
 <div class="panel has-one">
 	<div class="panel-heading">
-		<h3 class="panel-title"><?php echo $this->Admin->outputAssocName($foreignModel, $alias, $assoc['className']); ?></h3>
+		<h5><?php echo $this->Admin->outputAssocName($foreignModel, $alias, $assoc['className']); ?></h5>
 	</div>
 
 	<table class="table table-striped table-bordered table-hover clickable">

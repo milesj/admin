@@ -10,7 +10,7 @@ $this->Breadcrumb->add(__d('admin', 'Logs'), array('controller' => 'logs', 'acti
 <div class="container">
 	<?php echo $this->element('pagination', array('class' => 'top')); ?>
 
-	<table id="table" class="table table-striped table-bordered table-hover sortable clickable">
+	<table id="table" class="table table--hover table--sortable table--clickable">
 		<thead>
 			<tr>
 				<?php foreach (array('id', 'user_id', 'action', 'item', 'comment', 'created') as $field) { ?>

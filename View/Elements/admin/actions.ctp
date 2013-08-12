@@ -33,11 +33,11 @@
 	);
 
 	foreach ($links as $action => $link) {
-		$class = 'btn btn-default';
+		$class = 'button';
 		$url = array('controller' => 'admin', 'action' => $action);
 
 		if ($this->action === $action) {
-			$class .= ' active';
+			$class .= ' is-active';
 		}
 
 		if (!empty($link['url'])) {

@@ -6,7 +6,8 @@ if (empty($typeAhead[$field])) {
 		'div' => false,
 		'label' => false,
 		'empty' => ($this->action === 'index' || $data['null']),
-		'class' => 'form-control'
+		'class' => 'input',
+		'type' => 'select'
 	));
 
 // Use a text box with type ahead via AJAX
@@ -24,7 +25,7 @@ if (empty($typeAhead[$field])) {
 			'div' => false,
 			'label' => false,
 			'type' => 'text',
-			'class' => 'form-control input-belongs-to',
+			'class' => 'input input-belongs-to',
 			'data-provide' => 'typeahead',
 			'autocomplete' => 'off',
 			'value' => $value,

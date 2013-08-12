@@ -1,9 +1,9 @@
-<table class="table table-striped table-bordered">
+<table class="table">
 	<tbody>
 		<?php foreach ($model->fields as $field => $data) { ?>
 
 			<tr>
-				<td>
+				<td class="span-2">
 					<b><?php echo $data['title']; ?></b>
 				</td>
 				<td>

@@ -4,7 +4,7 @@ $fields = $this->Admin->filterFields($foreignModel, $assoc['fields']); ?>
 
 <div class="panel has-many">
 	<div class="panel-heading">
-		<h3 class="panel-title">
+		<h5>
 			<?php if (isset($counts[$alias])) {
 				$total = $counts[$alias];
 				$count = $assoc['limit'] ?: count($results);
@@ -17,7 +17,7 @@ $fields = $this->Admin->filterFields($foreignModel, $assoc['fields']); ?>
 			<?php } ?>
 
 			<?php echo $this->Admin->outputAssocName($foreignModel, $alias, $assoc['className']); ?>
-		</h3>
+		</h5>
 	</div>
 
 	<table class="table table-striped table-bordered table-hover clickable">

@@ -14,10 +14,10 @@ $this->Paginator->options(array(
 	<?php
 	echo $this->element('filters');
 
-	echo $this->Form->create($model->alias, array('class' => 'form-horizontal'));
+	echo $this->Form->create($model->alias, array('class' => 'form--horizontal'));
 	echo $this->element('pagination', array('class' => 'top')); ?>
 
-	<table id="table" class="table table-striped table-bordered table-hover sortable clickable">
+	<table id="table" class="table table--hover table--clickable table--sortable">
 		<thead>
 			<tr>
 				<?php if ($model->admin['batchProcess']) { ?>
@@ -59,24 +59,24 @@ $this->Paginator->options(array(
 						if ($model->admin['actionButtons']) { ?>
 
 							<td class="col-actions">
-								<div class="btn-group">
+								<div class="button-group round">
 									<?php
 									if ($this->Admin->hasAccess($model->qualifiedName, 'read')) {
 										echo $this->Html->link('<span class="icon-search"></span>',
 											array('action' => 'read', $id, 'model' => $model->urlSlug),
-											array('class' => 'btn btn-xs btn-default', 'escape' => false, 'title' => __d('admin', 'View')));
+											array('class' => 'button', 'escape' => false, 'title' => __d('admin', 'View')));
 									}
 
 									if ($this->Admin->hasAccess($model->qualifiedName, 'update') && $model->admin['editable']) {
 										echo $this->Html->link('<span class="icon-edit"></span>',
 											array('action' => 'update', $id, 'model' => $model->urlSlug),
-											array('class' => 'btn btn-xs btn-default', 'escape' => false, 'title' => __d('admin', 'Edit')));
+											array('class' => 'button', 'escape' => false, 'title' => __d('admin', 'Edit')));
 									}
 
 									if ($this->Admin->hasAccess($model->qualifiedName, 'delete') && $model->admin['deletable']) {
 										echo $this->Html->link('<span class="icon-remove"></span>',
 											array('action' => 'delete', $id, 'model' => $model->urlSlug),
-											array('class' => 'btn btn-xs btn-default', 'escape' => false, 'title' => __d('admin', 'Delete')));
+											array('class' => 'button', 'escape' => false, 'title' => __d('admin', 'Delete')));
 									} ?>
 								</div>
 							</td>
@@ -117,10 +117,11 @@ $this->Paginator->options(array(
 
 		if ($options) { ?>
 
-		<div class="well actions">
+		<div class="form-actions">
 			<div class="redirect-to">
 				<?php echo $this->Form->input('batch_action', array(
 					'div' => false,
+					'class' => 'input',
 					'options' => $options
 				)); ?>
 			</div>
@@ -130,12 +131,13 @@ $this->Paginator->options(array(
 					<?php echo $this->Form->input('log_comment', array(
 						'div' => false,
 						'maxlength' => 255,
-						'required' => true
+						'required' => true,
+						'class' => 'input'
 					)); ?>
 				</div>
 			<?php } ?>
 
-			<button type="submit" class="btn btn-large btn-danger">
+			<button type="submit" class="button large error">
 				<span class="icon-cogs icon-white"></span>
 				<?php echo __d('admin', 'Batch Process'); ?>
 			</button>

@@ -2,5 +2,5 @@
 	'div' => false,
 	'label' => false,
 	'type' => 'file',
-	'class' => 'form-control'
+	'class' => 'input'
 ));

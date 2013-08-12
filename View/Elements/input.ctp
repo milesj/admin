@@ -31,25 +31,19 @@ if ($validate) {
 	if ($isRequired) {
 		$classes[] = 'is-required';
 	}
-}
-
-if ($hasError) {
-	$classes[] = 'text-danger';
-} else if ($isRequired) {
-	$classes[] = 'text-info';
 } ?>
 
-<div class="form-group <?php echo implode(' ', $classes); ?>">
+<div class="field <?php echo implode(' ', $classes); ?>">
 	<?php
 	$label = $data['title'];
 
 	if (!empty($data['belongsTo'])) {
-		$label .= ' <span class="icon-search tip" title="' . __d('admin', 'Belongs To Lookup') . '"></span>';
+		$label .= ' <span class="icon-search js-tooltip" data-tooltip="' . __d('admin', 'Belongs To Lookup') . '"></span>';
 	}
 
-	echo $this->Form->label($field, $label, array('class' => 'control-label col-lg-3', 'escape' => false)); ?>
+	echo $this->Form->label($field, $label, array('class' => 'field-label col-3', 'escape' => false)); ?>
 
-	<div class="col-lg-9">
+	<div class="col-7">
 		<?php
 		$element = 'default';
 
@@ -83,7 +77,7 @@ if ($hasError) {
 				$checked = ($data['default'] === null);
 			} ?>
 
-			<div class="form-null">
+			<div class="field-null">
 				<?php echo $this->Form->input($field . '_null', array(
 					'type' => 'checkbox',
 					'checked' => $checked,

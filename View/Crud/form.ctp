@@ -16,7 +16,7 @@ $this->Admin->setBreadcrumbs($model, $result, $this->action); ?>
 
 <div class="container">
 	<?php
-	echo $this->Form->create($model->alias, array('class' => 'form-horizontal', 'type' => 'file'));
+	echo $this->Form->create($model->alias, array('class' => 'form--horizontal', 'type' => 'file'));
 	echo $this->element('crud/form_fields');
 	echo $this->element('crud/form_extra');
 	echo $this->element('form_actions');

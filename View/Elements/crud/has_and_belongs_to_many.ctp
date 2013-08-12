@@ -5,7 +5,7 @@ $fields = $this->Admin->filterFields($withModel); ?>
 
 <div class="panel habtm">
 	<div class="panel-heading">
-		<h3 class="panel-title">
+		<h5>
 			<?php if (isset($counts[$alias])) {
 				$total = $counts[$alias];
 				$count = $assoc['limit'] ?: count($results);
@@ -19,7 +19,7 @@ $fields = $this->Admin->filterFields($withModel); ?>
 
 			<?php echo $this->Admin->outputAssocName($foreignModel, $alias, $assoc['className']); ?> &rarr;
 			<?php echo $this->Admin->outputAssocName($withModel, $withModel->alias, $assoc['with']); ?>
-		</h3>
+		</h5>
 	</div>
 
 	<table class="table table-striped table-bordered table-hover clickable">

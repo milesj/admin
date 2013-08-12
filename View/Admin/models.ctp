@@ -8,26 +8,26 @@ $this->Breadcrumb->add(__d('admin', 'Models'), array('controller' => 'admin', 'a
 </div>
 
 <div class="container">
-	<table class="table table-striped table-bordered sortable">
+	<table class="table table--hover">
 		<thead>
 			<tr>
-				<th><span><?php echo __d('admin', 'Model'); ?></span></th>
-				<th><span class="tip" title="<?php echo __d('admin', 'Primary Key'); ?>"><?php echo __d('admin', 'PK'); ?></span></th>
-				<th><span><?php echo __d('admin', 'Display Field'); ?></span></th>
-				<th><span><?php echo __d('admin', 'Database'); ?></span></th>
-				<th><span><?php echo __d('admin', 'Table'); ?></span></th>
-				<th><span><?php echo __d('admin', 'Schema'); ?></span></th>
-				<th><span><?php echo __d('admin', 'Behaviors'); ?></span></th>
-				<th><span><?php echo __d('admin', 'Belongs To'); ?></span></th>
-				<th><span><?php echo __d('admin', 'Has One'); ?></span></th>
-				<th><span><?php echo __d('admin', 'Has Many'); ?></span></th>
-				<th><span class="tip" title="<?php echo __d('admin', 'Has and Belongs to Many'); ?>"><?php echo __d('admin', 'HABTM'); ?></span></th>
+				<th><?php echo __d('admin', 'Model'); ?></th>
+				<th class="js-tooltip" data-tooltip="<?php echo __d('admin', 'Primary Key'); ?>"><?php echo __d('admin', 'PK'); ?></span></th>
+				<th><?php echo __d('admin', 'Display Field'); ?></th>
+				<th><?php echo __d('admin', 'Database'); ?></th>
+				<th><?php echo __d('admin', 'Table'); ?></th>
+				<th><?php echo __d('admin', 'Schema'); ?></th>
+				<th><?php echo __d('admin', 'Behaviors'); ?></th>
+				<th><?php echo __d('admin', 'Belongs To'); ?></th>
+				<th><?php echo __d('admin', 'Has One'); ?></th>
+				<th><?php echo __d('admin', 'Has Many'); ?></th>
+				<th class="js-tooltip" data-tooltip="<?php echo __d('admin', 'Has and Belongs to Many'); ?>"><?php echo __d('admin', 'HABTM'); ?></th>
 			</tr>
 		</thead>
 		<tbody>
 			<?php foreach ($plugins as $plugin) { ?>
 
-				<tr class="active">
+				<tr class="divider">
 					<td colspan="11"><b><?php echo $plugin['title']; ?></b></td>
 				</tr>
 
@@ -45,7 +45,7 @@ $this->Breadcrumb->add(__d('admin', 'Models'), array('controller' => 'admin', 'a
 					<td><?php echo $object->primaryKey; ?></td>
 					<td>
 						<?php if ($object->displayField == $object->primaryKey) { ?>
-							<span class="label label-warning"><?php echo ('N/A'); ?></span>
+							<span class="label warning"><?php echo ('N/A'); ?></span>
 						<?php } else {
 							echo $object->displayField;
 						} ?>

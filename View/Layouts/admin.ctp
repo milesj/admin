@@ -5,13 +5,13 @@ echo $this->Html->docType(); ?>
 	<?php echo $this->Html->charset(); ?>
 	<title><?php echo $this->Breadcrumb->pageTitle($config['Admin']['appName'], array('reverse' => true)); ?></title>
 	<?php
-	echo $this->Html->css('//netdna.bootstrapcdn.com/bootstrap/3.0.0-rc1/css/bootstrap.min.css');
-	echo $this->Html->css('//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.min.css');
+	echo $this->Html->css('Admin.titon-0.4.0.min');
+	echo $this->Html->css('Admin.font-awesome.min');
 	echo $this->Html->css('Admin.style');
 	echo $this->Html->css('Admin.admin');
-	echo $this->Html->script('//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js');
-	echo $this->Html->script('//netdna.bootstrapcdn.com/bootstrap/3.0.0-rc1/js/bootstrap.min.js');
-	echo $this->Html->script('Admin.jquery.gridalicious.min');
+	echo $this->Html->script('//ajax.googleapis.com/ajax/libs/mootools/1.4.5/mootools-yui-compressed.js');
+	echo $this->Html->script('Admin.mootools-more-1.4.0.1');
+	echo $this->Html->script('Admin.titon-0.4.0.min');
 	echo $this->Html->script('Admin.admin');
 	echo $this->fetch('meta');
 	echo $this->fetch('css');

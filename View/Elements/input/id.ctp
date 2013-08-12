@@ -2,6 +2,6 @@
 	'div' => false,
 	'label' => false,
 	'type' => 'text',
-	'class' => 'form-control',
+	'class' => 'input',
 	'readonly' => true
 ));

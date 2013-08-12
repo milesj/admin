@@ -23,7 +23,7 @@ foreach ($properties as $property => $title) {
 	if ($associations) { ?>
 
 		<div class="associations">
-			<h3 class="text-info"><?php echo $title; ?></h3>
+			<h3><?php echo $title; ?></h3>
 
 			<?php // Loop over the model relations
 			foreach ($associations as $alias => $assoc) {

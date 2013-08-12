@@ -4,7 +4,7 @@ $class = 'type enum enum-' . $field .' enum-' . $field . '-' . $value;
 if (is_numeric($value)) {
 	if (empty($model->enum[$field][$value])) { ?>
 
-		<span class="type enum text-danger">INVALID ENUM: <?php echo $value; ?></span>
+		<span class="type enum text-error">INVALID ENUM: <?php echo $value; ?></span>
 
 	<?php } else { ?>
 

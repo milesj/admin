@@ -18,7 +18,7 @@ $flatten = function($array) {
 	return implode('<br>', $output);
 }; ?>
 
-<table class="table table-bordered table-striped">
+<table class="table">
 	<tbody>
 		<?php foreach ($data as $key => $value) { ?>
 			<tr>
@@ -26,7 +26,7 @@ $flatten = function($array) {
 				<td>
 					<?php if (is_bool($value)) { ?>
 
-						<span class="text-danger"><?php echo $value ? 'true' : 'false'; ?></span>
+						<span class="text-error"><?php echo $value ? 'true' : 'false'; ?></span>
 
 					<?php } else if (is_numeric($value)) { ?>
 
@@ -39,7 +39,7 @@ $flatten = function($array) {
 					<?php } else if (is_string($value)) {
 						if (mb_strlen($value) >= 30 && strpos($value, ' ') === false) { ?>
 
-							<span class="text-success tip" title="<?php echo h($value); ?>"><?php echo $this->Text->truncate($value, 30); ?></span>
+							<span class="text-success js-tooltip" data-tooltip="<?php echo h($value); ?>"><?php echo $this->Text->truncate($value, 30); ?></span>
 
 						<?php } else { ?>
 
@@ -64,27 +64,24 @@ $flatten = function($array) {
 						} else {
 							$id = rand(); ?>
 
-							<a href="#modal-<?php echo $id; ?>" data-toggle="modal">
+							<a href="#modal-<?php echo $id; ?>" class="js-modal">
 								<?php echo __d('admin', 'View'); ?>
 								<span class="icon-external-link" style="font-size: 10px"></span>
 							</a>
 
-							<div class="modal fade" id="modal-<?php echo $id; ?>">
-								<div class="modal-dialog">
-									<div class="modal-content">
-										<div class="modal-header">
-											<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-											<h4 class="modal-title"><?php echo $parent . $key; ?></h4>
-										</div>
-
-										<div class="modal-body">
-											<?php echo $this->element('admin/config', array(
-												'data' => $value,
-												'parent' => $parent . $key . '.',
-												'depth' => ($depth + 1)
-											)); ?>
-										</div>
-									</div>
+							<div id="modal-<?php echo $id; ?>" style="display: none;">
+								<div class="modal-head">
+									<h3><?php echo $parent . $key; ?></h3>
+								</div>
+								<div class="modal-body">
+									<?php echo $this->element('admin/config', array(
+										'data' => $value,
+										'parent' => $parent . $key . '.',
+										'depth' => ($depth + 1)
+									)); ?>
+								</div>
+								<div class="modal-foot">
+									<button type="button" class="button modal-event-close"><?php echo __d('admin', 'Close'); ?></button>
 								</div>
 							</div>
 

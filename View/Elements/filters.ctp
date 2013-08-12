@@ -1,5 +1,5 @@
 
-<div id="filters" class="well well-small filters" style="display: none">
+<div id="filters" class="form-filters" style="display: none">
 	<?php
 	$controller = $this->request->controller;
 	$url = array('controller' => $controller, 'action' => 'proxy');
@@ -12,7 +12,7 @@
 
 	echo $this->Form->create($model->alias, array(
 		'url' => $url,
-		'class' => 'form-inline')
+		'class' => 'form--inline')
 	);
 
 	foreach ($model->fields as $field => $data) {
@@ -26,16 +26,16 @@
 			$classes[] = 'warning';
 		} ?>
 
-		<div class="control-group <?php echo implode(' ', $classes); ?>">
+		<div class="field <?php echo implode(' ', $classes); ?>">
 			<?php $label = $data['title'];
 
 			if (!empty($data['belongsTo'])) {
 				$label .= ' <span class="icon-search"></span>';
 			}
 
-			echo $this->Form->label($field, $label, array('class' => 'control-label', 'escape' => false)); ?>
+			echo $this->Form->label($field, $label, array('class' => 'field-label', 'escape' => false)); ?>
 
-			<div class="controls">
+			<div class="field-input">
 				<?php
 				// Belongs to is the only special case
 				if (!empty($data['belongsTo'])) {
@@ -59,12 +59,12 @@
 							'value' => $compValue
 						)); ?>
 
-						<div class="btn-group">
-							<button data-toggle="dropdown" class="btn dropdown-toggle">
+						<div class="button-group">
+							<button type="button" data-toggle="#filter-<?php echo $field; ?>" class="button js-toggle">
 								<?php echo $compValue; ?>
 							</button>
 
-							<ul class="dropdown-menu">
+							<ul class="dropdown" id="filter-<?php echo $field; ?>">
 								<li><a href="javascript:;" data-filter="="><?php echo __d('admin', 'Equals'); ?></a></li>
 								<li><a href="javascript:;" data-filter="!="><?php echo __d('admin', 'Not Equals'); ?></a></li>
 								<li><a href="javascript:;" data-filter=">"><?php echo __d('admin', 'Greater Than'); ?></a></li>
@@ -92,16 +92,18 @@
 
 	<?php } ?>
 
-	<button type="submit" class="btn btn-info">
+	<button type="submit" class="button info">
 		<?php echo __d('admin', 'Filter'); ?>
 	</button>
 
-	<a href="<?php echo $this->Html->url($reset); ?>" class="btn">
+	<a href="<?php echo $this->Html->url($reset); ?>" class="button">
 		<?php echo __d('admin', 'Reset'); ?>
 	</a>
 
 	<script type="text/javascript">
-		$(function() {
+		window.addEvent('domready', function() {
+			$('filter-toggle').addEvent('click', Admin.filterToggle);
+
 			Admin.filterComparisons();
 
 			<?php if (!empty($this->request->params['named'])) { ?>

@@ -14,7 +14,7 @@ $itemModel = $this->Admin->introspect($result[$model->alias]['model']); ?>
 	if (!empty($item)) { ?>
 
 		<div class="reported-item">
-			<h3 class="text-info"><?php echo __d('admin', 'Reported %s', $itemModel->singularName); ?></h3>
+			<h3><?php echo __d('admin', 'Reported %s', $itemModel->singularName); ?></h3>
 
 			<?php echo $this->element('crud/read_table', array(
 				'result' => $item,
@@ -38,12 +38,13 @@ $itemModel = $this->Admin->introspect($result[$model->alias]['model']); ?>
 
 	$options['invalid_report'] = __d('admin', 'Mark As Invalid');
 
-	echo $this->Form->create($model->alias, array('class' => 'form-horizontal')); ?>
+	echo $this->Form->create($model->alias, array('class' => 'form--horizontal')); ?>
 
-	<div class="well actions">
+	<div class="form-actions">
 		<div class="redirect-to">
 			<?php echo $this->Form->input('report_action', array(
 				'div' => false,
+				'class' => 'input',
 				'options' => $options
 			)); ?>
 		</div>
@@ -53,12 +54,13 @@ $itemModel = $this->Admin->introspect($result[$model->alias]['model']); ?>
 				<?php echo $this->Form->input('log_comment', array(
 					'div' => false,
 					'maxlength' => 255,
-					'required' => true
+					'required' => true,
+					'class' => 'input'
 				)); ?>
 			</div>
 		<?php } ?>
 
-		<button type="submit" class="btn btn-large btn-danger">
+		<button type="submit" class="button large error">
 			<span class="icon-cog icon-white"></span>
 			<?php echo __d('admin', 'Process Report'); ?>
 		</button>

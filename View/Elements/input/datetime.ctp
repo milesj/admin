@@ -2,5 +2,5 @@
 	'div' => false,
 	'label' => false,
 	'default' => $data['default'],
-	'class' => 'form-control'
+	'class' => 'input'
 ));

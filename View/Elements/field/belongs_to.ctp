@@ -22,6 +22,6 @@ foreach ($data['belongsTo'] as $foreignModel => $className) {
 
 if (!$rendered) { ?>
 
-	<span class="type belongs-to text-danger">INVALID ASSOC: <?php echo $value; ?></span>
+	<span class="type belongs-to text-error">INVALID RELATION: <?php echo $value; ?></span>
 
 <?php }

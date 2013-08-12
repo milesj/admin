@@ -5,25 +5,35 @@ var Admin = {
 	 * Initialize global events.
 	 */
 	initialize: function() {
-		$('.clickable tbody tr').click(function(e) {
+		var el;
+
+		// Add button class to pagination links since CakePHP doesn't support it
+		$$('.pagination a').addClass('button');
+
+		// Make table rows clickable
+		$$('.table--clickable tbody tr').addEvent('click', function(e) {
 			var target = $(e.target),
-				tag = target.prop('tagName').toLowerCase();
+				tag = target.get('tag').toLowerCase();
 
 			if (tag === 'a' || tag === 'input') {
 				return;
 			}
 
-			var id = $(this).find('.click-target');
+			var id = $(this).getElement('.click-target');
 
-			if (id.length) {
-				location.href = id.attr('href');
+			if (id) {
+				location.href = id.get('href');
 			}
 		});
 
-		$('#check-all').click(function() {
-			$('#table').find('input[type="checkbox"]:not(:disabled)').prop('checked', $(this).prop('checked'));
-		});
+		// Check all checkbox on tables
+		if (el = $('check-all')) {
+			el.addEvent('click', function() {
+				$('table').getElements('input[type="checkbox"]').set('checked', this.checked);
+			});
+		}
 
+		// Trigger null checks for forms
 		Admin.nullChecks();
 	},
 
@@ -92,19 +102,18 @@ var Admin = {
 	 * Monitor null input fields and toggle the checkbox depending on the input length.
 	 */
 	nullChecks: function() {
-		$('.controls-null input:checkbox').each(function() {
-			var self = $(this),
-				related = self.parent().siblings('select, input');
+		$$('.field-null input[type="checkbox"]').each(function(cb) {
+			var related = cb.getParent().getSiblings('select, input');
 
-			if (related.length) {
+			if (related) {
 				var callback = function() {
-					self.prop('checked', !(this.value));
-				};
+					this.set('checked', !(this.value.length));
+				}.bind(cb);
 
-				if (related.prop('tagName').toLowerCase() === 'input') {
-					related.keyup(callback);
+				if (related.get('tag') === 'input') {
+					related.addEvent('keyup', callback);
 				} else {
-					related.change(callback);
+					related.addEvent('change', callback);
 				}
 			}
 		});
@@ -114,16 +123,23 @@ var Admin = {
 	 * Toggle the filters box and button.
 	 */
 	filterToggle: function() {
-		$('#filters').toggle();
-		$('#filter-toggle').toggleClass('active');
+		var filters = $('filters');
+
+		if (filters.style.display === 'none') {
+			filters.show(true);
+		} else {
+			filters.hide(true);
+		}
+
+		$('filter-toggle').toggleClass('is-active');
 	},
 
 	/**
 	 * Allow filter comparison dropdowns to change input fields with the chosen option.
 	 */
 	filterComparisons: function() {
-		$('#filters').find('.input-prepend').each(function() {
-			var self = $(this),
+		$('filters').getElements('.input-prepend').each(function() {
+			/*var self = $(this),
 				filter = self.find('input[type="hidden"]'),
 				button = self.find('button');
 
@@ -132,43 +148,35 @@ var Admin = {
 
 				filter.val(option);
 				button.text(option);
-			});
+			});*/
 		});
 	},
 
 	/**
 	 * Toggle the grouped input fields within the upload form.
 	 *
-	 * @param {Element} select
-	 * @param {String} type
+	 * @param {DOMEvent} e
 	 */
-	toggleUploadField: function(select, type) {
-		var self = $(select),
-			fieldset = self.parents('fieldset');
+	toggleUploadField: function(e) {
+		var self = e.target,
+			fieldset = self.getParent('fieldset');
 
-		fieldset.find(type).hide();
-		fieldset.find('.' + self.val()).show();
+		fieldset.getElements(self.get('data-target')).hide(true);
+		fieldset.getElements('.' + self.get('value')).show(true);
 	}
 
 };
 
-$(function() {
+window.addEvent('domready', function() {
 	Admin.initialize();
 
-	// Tooltips
-	$('.tip').tooltip({
-		placement: 'top'
+	Titon.Modal.factory('.js-modal', {
+		animation: 'slide-in-top'
 	});
 
-	// Grids
-	$('#grid').gridalicious({
-		width: 400,
-		gutter: 0,
-		selector: '.panel',
-		animationOptions: {
-			complete: function() {
-				$('#grid').find('> div:hidden').remove();
-			}
-		}
+	Titon.Toggle.factory('.js-toggle');
+
+	Titon.Tooltip.factory('.js-tooltip', {
+		position: 'topCenter'
 	});
 });

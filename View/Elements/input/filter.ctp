@@ -5,7 +5,7 @@ $params = array(
 	'type' => 'text',
 	'default' => '',
 	'required' => false,
-	'class' => 'form-control'
+	'class' => 'input'
 );
 
 switch ($data['type']) {

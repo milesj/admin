@@ -7,13 +7,13 @@ $this->Breadcrumb->add(__d('admin', 'ACL'), array('controller' => 'acl', 'action
 	<h2><?php echo __d('admin', 'Access Control Lists'); ?></h2>
 </div>
 
-<div class="alert alert-info">
+<div class="alert info">
 	<?php echo __d('admin', 'ACL is divided into 3 parts: objects requesting access (AROs), objects being controlled (ACOs), and permissions providing CRUD access between requesters and controllers.'); ?>
 	<a href="http://milesj.me/code/cakephp/admin#acl-permissions" class="alert-link"><?php echo __d('admin', 'Learn more about how ACL permissions work.'); ?></a>
 </div>
 
 <div class="container">
-	<table class="table table-striped table-bordered">
+	<table class="table">
 		<tbody>
 			<tr>
 				<td> </td>
@@ -87,7 +87,7 @@ $this->Breadcrumb->add(__d('admin', 'ACL'), array('controller' => 'acl', 'action
 								} ?>
 
 							<td class="permission">
-								<a href="<?php echo $url; ?>" class="action tip <?php echo $class; ?>" title="<?php echo $tooltip; ?>" data-animation="false">
+								<a href="<?php echo $url; ?>" class="action js-tooltip <?php echo $class; ?>" data-tooltip="<?php echo $tooltip; ?>">
 									<span class="<?php echo $icon; ?>"></span>
 								</a>
 							</td>
@@ -96,9 +96,7 @@ $this->Breadcrumb->add(__d('admin', 'ACL'), array('controller' => 'acl', 'action
 						} else { ?>
 
 							<td colspan="4" class="permission">
-								<a href="<?php echo $url; ?>" class="action tip missing"
-									title="<?php echo __d('admin', 'No access defined. Grant permission?'); ?>"
-									data-animation="false">
+								<a href="<?php echo $url; ?>" class="action js-tooltip missing" data-tooltip="<?php echo __d('admin', 'No access defined. Grant permission?'); ?>">
 									&nbsp;
 								</a>
 							</td>

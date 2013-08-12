@@ -11,10 +11,10 @@ $displayField = $this->Admin->getDisplayField($model, $result); ?>
 <div class="container">
 	<p><?php echo __d('admin', 'Are you sure you want to delete %s?', $this->Html->link($displayField, array('action' => 'read', $id, 'model' => $model->urlSlug))); ?></p>
 
-	<?php echo $this->element('crud/dependencies');
+	<?php
+	echo $this->element('crud/dependencies');
 
-	// Confirm delete form
-	echo $this->Form->create($model->alias, array('class' => 'form-horizontal'));
+	echo $this->Form->create($model->alias);
 	echo $this->element('form_actions');
 	echo $this->Form->end(); ?>
 </div>

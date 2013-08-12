@@ -31,13 +31,13 @@ function formatArray($array) {
 </div>
 
 <div class="container">
-	<table class="table table-striped table-bordered sortable">
+	<table class="table">
 		<thead>
 			<tr>
-				<th><span><?php echo __d('admin', 'Route'); ?></span></th>
-				<th><span><?php echo __d('admin', 'Pattern'); ?></span></th>
-				<th><span><?php echo __d('admin', 'Defaults'); ?></span></th>
-				<th><span><?php echo __d('admin', 'Options'); ?></span></th>
+				<th><?php echo __d('admin', 'Route'); ?></th>
+				<th><?php echo __d('admin', 'Pattern'); ?></th>
+				<th><?php echo __d('admin', 'Defaults'); ?></th>
+				<th><?php echo __d('admin', 'Options'); ?></th>
 			</tr>
 		</thead>
 		<tbody>
