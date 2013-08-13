@@ -168,19 +168,23 @@ Configure::write('Admin.uploads.validation', array('required' => true));
 Configure::write('Admin.menu', array(
 	'acl' => array(
 		'title' => __d('admin', 'ACL'),
-		'url' => array('plugin' => 'admin', 'controller' => 'acl', 'action' => 'index')
+		'url' => array('plugin' => 'admin', 'controller' => 'acl', 'action' => 'index'),
+		'count' => ''
 	),
 	'logs' => array(
 		'title' => __d('admin', 'Logs'),
-		'url' => array('plugin' => 'admin', 'controller' => 'logs', 'action' => 'index')
+		'url' => array('plugin' => 'admin', 'controller' => 'logs', 'action' => 'index'),
+		'count' => ''
 	),
 	'reports' => array(
 		'title' => __d('admin', 'Reports'),
-		'url' => array('plugin' => 'admin', 'controller' => 'reports', 'action' => 'index')
+		'url' => array('plugin' => 'admin', 'controller' => 'reports', 'action' => 'index'),
+		'count' => ''
 	),
 	'upload' => array(
 		'title' => __d('admin', 'Upload'),
-		'url' => array('plugin' => 'admin', 'controller' => 'upload', 'action' => 'index')
+		'url' => array('plugin' => 'admin', 'controller' => 'upload', 'action' => 'index'),
+		'count' => ''
 	)
 ));
 

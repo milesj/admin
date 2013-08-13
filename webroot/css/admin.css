@@ -24,10 +24,9 @@
 .controller-acl .table a:hover { text-decoration: none; }
 .controller-acl .table a:hover span { opacity: 1; }
 .controller-acl .table .permission a { text-align: center; }
-.controller-acl .table .permission .action.allow { background-color: #dff0d8; }
-.controller-acl .table .permission .action.inherit { background-color: #d9edf7; }
-.controller-acl .table .permission .action.deny { background-color: #f2dede; }
-.controller-acl .table .permission .action.missing { background-color: #fcf8e3; }
+.controller-acl .table .permission .action.allow { background-color: #e7f2dd; }
+.controller-acl .table .permission .action.inherit { background-color: #dbf1fa; }
+.controller-acl .table .permission .action.deny { background-color: #fdc5c1; }
 
 .controller-acl .matrix-head { background: #1d1f21 !important; border-color: #52555a !important; color: #fff; }
 .controller-acl .matrix-head a { color: #E5E5E5; }
@@ -36,7 +35,7 @@
 
 /*------------------ Logs ------------------*/
 
-.controller-logs table a { display: inline-block; }
+.controller-logs table tbody a { display: inline-block; }
 
 /*------------------ Reports ------------------*/
 
@@ -49,6 +48,9 @@
 .controller-upload .field .field-col .checkbox label { margin-left: 5px; }
 .controller-upload .field .field-help { vertical-align: middle; margin: 8px 0 0 10px; display: inline-block; }
 .controller-upload .field textarea { min-height: 100px; }
+
+.controller-upload .splash { padding: 100px; text-align: center; border: 1px solid #e5e5e5; background: #fbfbfb; border-radius: .3em; }
+.controller-upload .splash h2 { margin-bottom: 25px; }
 
 /*----------------- Form -----------------*/
 

@@ -64,6 +64,9 @@ class AdminToolbarComponent extends Component {
 			$this->Session->write('Acl.isSuper', $isSuper);
 			$this->Session->write('Acl.roles', $roleMap);
 		}
+
+		// Set reported count
+		Configure::write('Admin.menu.reports.count', Admin::introspectModel('Admin.ItemReport')->getCountByStatus());
 	}
 
 	/**
@@ -73,7 +76,13 @@ class AdminToolbarComponent extends Component {
 	 * @param Controller $controller
 	 */
 	public function beforeRender(Controller $controller) {
-		$controller->set('pendingReports', Admin::introspectModel('Admin.ItemReport')->getCountByStatus());
+		$badges = array();
+
+		foreach (Configure::read('Admin.menu') as $section => $menu) {
+			$badges[$section] = $menu['count'];
+		}
+
+		$controller->set('badgeCounts', $badges);
 
 		if (isset($controller->Model)) {
 			$controller->set('model', $controller->Model);

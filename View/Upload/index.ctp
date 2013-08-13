@@ -370,8 +370,8 @@ if (CakePlugin::loaded('Uploader')) { ?>
 
 <?php } else { ?>
 
-<div class="hero-unit align-center" style="margin-bottom: 0">
-	<h2><?php echo __d('admin', 'Install the Uploader to upload files'); ?></h2>
+<div class="splash">
+	<h2 class="alert-title"><?php echo __d('admin', 'Install the Uploader to upload files'); ?></h2>
 
 	<a href="http://milesj.me/code/cakephp/uploader" target="_blank" class="button info large">
 		<span class="icon-external-link"></span>

@@ -59,8 +59,8 @@ if ($modelParam) {
 				<?php
 				$title = $menu['title'];
 
-				if ($section === 'reports' && !empty($pendingReports)) {
-					$title .= ' <span class="badge warning">' . $pendingReports . '</span>';
+				if (!empty($badgeCounts[$section])) {
+					$title .= ' <span class="badge warning">' . $badgeCounts[$section] . '</span>';
 				}
 
 				echo $this->Html->link($title, $menu['url'], array('escape' => false)); ?>

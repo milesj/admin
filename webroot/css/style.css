@@ -88,10 +88,11 @@ table { width: 100%; }
 .form-filters .field,
 .form-filters .form-actions { margin: .5rem; }
 .form-filters .form-actions { background: none; border: 0; padding: 0; }
+.form-filters .field.integer .input { width: 100px; }
+.form-filters .field-type-ahead { width: 225px; }
 
 .field.boolean .checkbox { padding-top: 7px; }
 .field-type-ahead { display: inline-block; vertical-align: middle; height: 45px; } /* need height for it to align properly */
-.form-filters .field-type-ahead { width: 225px; }
 
 .error-message { color: #b94a48; margin-top: 5px; }
 textarea.input { min-height: 300px; }
