@@ -2,7 +2,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Admin Plugin\n"
-"POT-Creation-Date: 2013-04-05 07:05+0000\n"
+"POT-Creation-Date: 2013-08-12 18:11-0700\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: Miles Johnson <mileswjohnson@gmail.com>\n"
 "Language-Team: \n"
@@ -17,7 +17,7 @@ msgstr ""
 
 #: /Config/bootstrap.php:170
 #: /View/Acl/index.ctp:2
-#: /View/Upload/index.ctp:75
+#: /View/Upload/index.ctp:114
 msgid "ACL"
 msgstr ""
 
@@ -35,7 +35,7 @@ msgid "Reports"
 msgstr ""
 
 #: /Config/bootstrap.php:182
-#: /View/Upload/index.ctp:2;210
+#: /View/Upload/index.ctp:2;364
 msgid "Upload"
 msgstr ""
 
@@ -168,48 +168,48 @@ msgstr ""
 msgid "Successfully uploaded a new file"
 msgstr ""
 
-#: /Controller/Component/AdminToolbarComponent.php:197
+#: /Controller/Component/AdminToolbarComponent.php:229
 msgid "Invalid log action type"
 msgstr ""
 
-#: /Controller/Component/AdminToolbarComponent.php:322
+#: /Controller/Component/AdminToolbarComponent.php:358
 msgid "Invalid item report type"
 msgstr ""
 
-#: /View/Acl/index.ctp:6
+#: /View/Acl/index.ctp:7
 msgid "Access Control Lists"
 msgstr ""
 
-#: /View/Acl/index.ctp:9
+#: /View/Acl/index.ctp:11
 msgid "ACL is divided into 3 parts: objects requesting access (AROs), objects being controlled (ACOs), and permissions providing CRUD access between requesters and controllers."
 msgstr ""
 
-#: /View/Acl/index.ctp:10
+#: /View/Acl/index.ctp:12
 msgid "Learn more about how ACL permissions work."
 msgstr ""
 
-#: /View/Acl/index.ctp:74
+#: /View/Acl/index.ctp:77
 msgid "Has Access"
 msgstr ""
 
-#: /View/Acl/index.ctp:78
+#: /View/Acl/index.ctp:81
 msgid "Inherited from %s"
 msgstr ""
 
-#: /View/Acl/index.ctp:82
+#: /View/Acl/index.ctp:85
 msgid "Restricted Access"
 msgstr ""
 
-#: /View/Acl/index.ctp:96
+#: /View/Acl/index.ctp:99
 msgid "No access defined. Grant permission?"
 msgstr ""
 
-#: /View/Admin/cache.ctp:2;6
+#: /View/Admin/cache.ctp:2;7
 #: /View/Elements/admin/actions.ctp:17
 msgid "Cache"
 msgstr ""
 
-#: /View/Admin/config.ctp:2;6
+#: /View/Admin/config.ctp:2;7
 #: /View/Elements/admin/actions.ctp:13
 msgid "Configuration"
 msgstr ""
@@ -222,109 +222,109 @@ msgstr ""
 msgid "Please update session management and re-login."
 msgstr ""
 
-#: /View/Admin/index.ctp:11
+#: /View/Admin/index.ctp:12
 #: /View/Elements/admin/actions.ctp:5
 msgid "Plugins"
 msgstr ""
 
-#: /View/Admin/index.ctp:34
-#: /View/Helper/AdminHelper.php:362
+#: /View/Admin/index.ctp:41
+#: /View/Helper/AdminHelper.php:396
 msgid "Add"
 msgstr ""
 
-#: /View/Admin/index.ctp:44
+#: /View/Admin/index.ctp:51
 msgid "Not Installed"
 msgstr ""
 
-#: /View/Admin/models.ctp:2;6
+#: /View/Admin/models.ctp:2;7
 #: /View/Elements/admin/actions.ctp:9
 msgid "Models"
 msgstr ""
 
-#: /View/Admin/models.ctp:11
+#: /View/Admin/models.ctp:14
 msgid "Model"
 msgstr ""
 
-#: /View/Admin/models.ctp:12
+#: /View/Admin/models.ctp:15
 msgid "Primary Key"
 msgstr ""
 
-#: /View/Admin/models.ctp:12
+#: /View/Admin/models.ctp:15
 msgid "PK"
 msgstr ""
 
-#: /View/Admin/models.ctp:13
+#: /View/Admin/models.ctp:16
 msgid "Display Field"
 msgstr ""
 
-#: /View/Admin/models.ctp:14
+#: /View/Admin/models.ctp:17
 msgid "Database"
 msgstr ""
 
-#: /View/Admin/models.ctp:15
+#: /View/Admin/models.ctp:18
 msgid "Table"
 msgstr ""
 
-#: /View/Admin/models.ctp:16
+#: /View/Admin/models.ctp:19
 msgid "Schema"
 msgstr ""
 
-#: /View/Admin/models.ctp:17
+#: /View/Admin/models.ctp:20
 msgid "Behaviors"
 msgstr ""
 
-#: /View/Admin/models.ctp:18
+#: /View/Admin/models.ctp:21
 msgid "Belongs To"
 msgstr ""
 
-#: /View/Admin/models.ctp:19
+#: /View/Admin/models.ctp:22
 #: /View/Elements/crud/read_extra.ctp:3
 msgid "Has One"
 msgstr ""
 
-#: /View/Admin/models.ctp:20
+#: /View/Admin/models.ctp:23
 #: /View/Elements/crud/read_extra.ctp:4
 msgid "Has Many"
 msgstr ""
 
-#: /View/Admin/models.ctp:21
+#: /View/Admin/models.ctp:24
 #: /View/Elements/crud/read_extra.ctp:5
 msgid "Has and Belongs to Many"
 msgstr ""
 
-#: /View/Admin/models.ctp:21
+#: /View/Admin/models.ctp:24
 msgid "HABTM"
 msgstr ""
 
-#: /View/Admin/routes.ctp:2;29
+#: /View/Admin/routes.ctp:2;30
 #: /View/Elements/admin/actions.ctp:21
 msgid "Routes"
 msgstr ""
 
-#: /View/Admin/routes.ctp:34
+#: /View/Admin/routes.ctp:37
 msgid "Route"
 msgstr ""
 
-#: /View/Admin/routes.ctp:35
+#: /View/Admin/routes.ctp:38
 msgid "Pattern"
 msgstr ""
 
-#: /View/Admin/routes.ctp:36
+#: /View/Admin/routes.ctp:39
 msgid "Defaults"
 msgstr ""
 
-#: /View/Admin/routes.ctp:37
+#: /View/Admin/routes.ctp:40
 msgid "Options"
 msgstr ""
 
-#: /View/Crud/delete.ctp:7
-#: /View/Crud/index.ctp:112
+#: /View/Crud/delete.ctp:8
+#: /View/Crud/index.ctp:115
 #: /View/Elements/crud/actions.ctp:25
-#: /View/Reports/read.ctp:32
+#: /View/Reports/read.ctp:33
 msgid "Delete %s"
 msgstr ""
 
-#: /View/Crud/delete.ctp:9
+#: /View/Crud/delete.ctp:12
 msgid "Are you sure you want to delete %s?"
 msgstr ""
 
@@ -338,61 +338,66 @@ msgstr ""
 msgid "Edit %s"
 msgstr ""
 
-#: /View/Crud/index.ctp:64
+#: /View/Crud/index.ctp:67
 #: /View/Elements/admin/config.ctp:68
 msgid "View"
 msgstr ""
 
-#: /View/Crud/index.ctp:70
+#: /View/Crud/index.ctp:73
 msgid "Edit"
 msgstr ""
 
-#: /View/Crud/index.ctp:76
+#: /View/Crud/index.ctp:79
 msgid "Delete"
 msgstr ""
 
-#: /View/Crud/index.ctp:97
-#: /View/Logs/index.ctp:88
-#: /View/Logs/read.ctp:86
-#: /View/Reports/index.ctp:81
+#: /View/Crud/index.ctp:100
+#: /View/Logs/index.ctp:91
+#: /View/Logs/read.ctp:89
+#: /View/Reports/index.ctp:76
 msgid "No results to display"
 msgstr ""
 
-#: /View/Crud/index.ctp:137
+#: /View/Crud/index.ctp:142
 msgid "Batch Process"
 msgstr ""
 
-#: /View/Elements/filters.ctp:62
+#: /View/Elements/filters.ctp:33
+#: /View/Elements/input.ctp:41
+msgid "Belongs To Lookup"
+msgstr ""
+
+#: /View/Elements/filters.ctp:57
 msgid "Equals"
 msgstr ""
 
-#: /View/Elements/filters.ctp:63
+#: /View/Elements/filters.ctp:58
 msgid "Not Equals"
 msgstr ""
 
-#: /View/Elements/filters.ctp:64
+#: /View/Elements/filters.ctp:59
 msgid "Greater Than"
 msgstr ""
 
-#: /View/Elements/filters.ctp:65
+#: /View/Elements/filters.ctp:60
 msgid "Greater Than or Equal"
 msgstr ""
 
-#: /View/Elements/filters.ctp:66
+#: /View/Elements/filters.ctp:61
 msgid "Less Than"
 msgstr ""
 
-#: /View/Elements/filters.ctp:67
+#: /View/Elements/filters.ctp:62
 msgid "Less Than or Equal"
 msgstr ""
 
-#: /View/Elements/filters.ctp:90
+#: /View/Elements/filters.ctp:92
 #: /View/Elements/button/filter.ctp:2
 msgid "Filter"
 msgstr ""
 
-#: /View/Elements/filters.ctp:94
-#: /View/Elements/form_actions.ctp:50
+#: /View/Elements/filters.ctp:96
+#: /View/Elements/form_actions.ctp:52
 msgid "Reset"
 msgstr ""
 
@@ -409,48 +414,48 @@ msgid "Continue Editing"
 msgstr ""
 
 #: /View/Elements/form_actions.ctp:10
-#: /View/Upload/index.ctp:203
+#: /View/Upload/index.ctp:357
 msgid "%s Overview"
 msgstr ""
 
-#: /View/Elements/form_actions.ctp:38
+#: /View/Elements/form_actions.ctp:40
 msgid "Yes, Delete"
 msgstr ""
 
-#: /View/Elements/form_actions.ctp:55
+#: /View/Elements/form_actions.ctp:57
 msgid "Cancel"
 msgstr ""
 
-#: /View/Elements/input.ctp:85
+#: /View/Elements/input.ctp:86
 msgid "Empty?"
 msgstr ""
 
-#: /View/Elements/navbar.ctp:47
+#: /View/Elements/navigation.ctp:23
 msgid "View Site"
 msgstr ""
 
-#: /View/Elements/navbar.ctp:49
+#: /View/Elements/navigation.ctp:26
 msgid "View Profile"
 msgstr ""
 
-#: /View/Elements/navbar.ctp:52
+#: /View/Elements/navigation.ctp:29
 msgid "Settings"
 msgstr ""
 
-#: /View/Elements/navbar.ctp:54
+#: /View/Elements/navigation.ctp:34
 msgid "Logout"
 msgstr ""
 
-#: /View/Elements/pagination.ctp:8
-msgid "Showing %s-%s of %s"
-msgstr ""
-
-#: /View/Elements/pagination.ctp:17
+#: /View/Elements/pagination.ctp:9
 msgid "First"
 msgstr ""
 
-#: /View/Elements/pagination.ctp:18
+#: /View/Elements/pagination.ctp:10
 msgid "Last"
+msgstr ""
+
+#: /View/Elements/pagination.ctp:20
+msgid "Showing %s-%s of %s"
 msgstr ""
 
 #: /View/Elements/acl/actions.ctp:3
@@ -459,6 +464,10 @@ msgstr ""
 
 #: /View/Elements/acl/actions.ctp:7
 msgid "Add Controller"
+msgstr ""
+
+#: /View/Elements/admin/config.ctp:84
+msgid "Close"
 msgstr ""
 
 #: /View/Elements/button/process_behavior.ctp:6
@@ -474,18 +483,18 @@ msgstr ""
 msgid "Associate With"
 msgstr ""
 
-#: /View/Elements/crud/has_and_belongs_to_many.ctp:16
-#: /View/Elements/crud/has_many.ctp:15
+#: /View/Elements/crud/has_and_belongs_to_many.ctp:17
+#: /View/Elements/crud/has_many.ctp:16
 msgid "%s of %s"
 msgstr ""
 
 #: /View/Elements/field/boolean.ctp:3
-#: /View/Elements/input/filter.ctp:19
+#: /View/Elements/input/filter.ctp:20
 msgid "Yes"
 msgstr ""
 
 #: /View/Elements/field/boolean.ctp:7
-#: /View/Elements/input/filter.ctp:19
+#: /View/Elements/input/filter.ctp:20
 msgid "No"
 msgstr ""
 
@@ -497,11 +506,11 @@ msgstr ""
 msgid "Dashboard"
 msgstr ""
 
-#: /View/Layouts/admin.ctp:49
+#: /View/Layouts/admin.ctp:36
 msgid "Powered by the %s v%s"
 msgstr ""
 
-#: /View/Layouts/admin.ctp:50
+#: /View/Layouts/admin.ctp:37
 msgid "Created by %s"
 msgstr ""
 
@@ -509,31 +518,31 @@ msgstr ""
 msgid "System"
 msgstr ""
 
-#: /View/Logs/read.ctp:8
+#: /View/Logs/read.ctp:9
 msgid "System Logs"
 msgstr ""
 
-#: /View/Logs/read.ctp:13
+#: /View/Logs/read.ctp:16
 msgid "Code"
 msgstr ""
 
-#: /View/Logs/read.ctp:14
+#: /View/Logs/read.ctp:17
 msgid "Exception"
 msgstr ""
 
-#: /View/Logs/read.ctp:15
+#: /View/Logs/read.ctp:18
 msgid "URL"
 msgstr ""
 
-#: /View/Logs/read.ctp:16
+#: /View/Logs/read.ctp:19
 msgid "Message"
 msgstr ""
 
-#: /View/Logs/read.ctp:17
+#: /View/Logs/read.ctp:20
 msgid "Count"
 msgstr ""
 
-#: /View/Logs/read.ctp:18
+#: /View/Logs/read.ctp:21
 msgid "Date"
 msgstr ""
 
@@ -549,275 +558,275 @@ msgstr ""
 msgid "Reported %s"
 msgstr ""
 
-#: /View/Reports/read.ctp:35
+#: /View/Reports/read.ctp:39
 msgid "Mark As Invalid"
 msgstr ""
 
-#: /View/Reports/read.ctp:59
+#: /View/Reports/read.ctp:65
 msgid "Process Report"
 msgstr ""
 
-#: /View/Upload/index.ctp:7
+#: /View/Upload/index.ctp:8
 msgid "View All Uploads"
 msgstr ""
 
-#: /View/Upload/index.ctp:17
+#: /View/Upload/index.ctp:20
 msgid "Upload all types of files with no restrictions. Uploading also supports image transformation and remote transportation."
 msgstr ""
 
-#: /View/Upload/index.ctp:18
+#: /View/Upload/index.ctp:21
 msgid "Learn more about file uploading."
 msgstr ""
 
-#: /View/Upload/index.ctp:24
+#: /View/Upload/index.ctp:30
 msgid "File"
 msgstr ""
 
-#: /View/Upload/index.ctp:25
+#: /View/Upload/index.ctp:37
 msgid "Caption"
 msgstr ""
 
-#: /View/Upload/index.ctp:28
+#: /View/Upload/index.ctp:42
 msgid "Transport To"
 msgstr ""
 
-#: /View/Upload/index.ctp:32
+#: /View/Upload/index.ctp:47
 msgid "Service"
 msgstr ""
 
-#: /View/Upload/index.ctp:35
+#: /View/Upload/index.ctp:51
 msgid "None"
 msgstr ""
 
-#: /View/Upload/index.ctp:36
+#: /View/Upload/index.ctp:52
 msgid "AWS S3"
 msgstr ""
 
-#: /View/Upload/index.ctp:37
+#: /View/Upload/index.ctp:53
 msgid "AWS Glacier"
 msgstr ""
 
-#: /View/Upload/index.ctp:43
+#: /View/Upload/index.ctp:61
 msgid "Access Key"
 msgstr ""
 
-#: /View/Upload/index.ctp:44
+#: /View/Upload/index.ctp:67
 msgid "Secret Key"
 msgstr ""
 
-#: /View/Upload/index.ctp:46
+#: /View/Upload/index.ctp:73
 msgid "Region"
 msgstr ""
 
-#: /View/Upload/index.ctp:48
+#: /View/Upload/index.ctp:75
 msgid "US East - Virginia"
 msgstr ""
 
-#: /View/Upload/index.ctp:49
+#: /View/Upload/index.ctp:76
 msgid "US West - California"
 msgstr ""
 
-#: /View/Upload/index.ctp:50
+#: /View/Upload/index.ctp:77
 msgid "US West 2 - Oregon"
 msgstr ""
 
-#: /View/Upload/index.ctp:51
+#: /View/Upload/index.ctp:78
 msgid "EU West - Ireland"
 msgstr ""
 
-#: /View/Upload/index.ctp:52
+#: /View/Upload/index.ctp:79
 msgid "AP Southeast - Singapore"
 msgstr ""
 
-#: /View/Upload/index.ctp:53
+#: /View/Upload/index.ctp:80
 msgid "AP Southeast 2 - Sydney"
 msgstr ""
 
-#: /View/Upload/index.ctp:54
+#: /View/Upload/index.ctp:81
 msgid "AP Northeast - Tokyo"
 msgstr ""
 
-#: /View/Upload/index.ctp:55
+#: /View/Upload/index.ctp:82
 msgid "SA East - Sao Paulo"
 msgstr ""
 
-#: /View/Upload/index.ctp:62
+#: /View/Upload/index.ctp:92
 msgid "Bucket"
 msgstr ""
 
-#: /View/Upload/index.ctp:64
+#: /View/Upload/index.ctp:98;197
 msgid "Folder"
 msgstr ""
 
-#: /View/Upload/index.ctp:65
+#: /View/Upload/index.ctp:99;198
 msgid "Requires trailing slash"
 msgstr ""
 
-#: /View/Upload/index.ctp:68
+#: /View/Upload/index.ctp:105
 msgid "Scheme"
 msgstr ""
 
-#: /View/Upload/index.ctp:77
+#: /View/Upload/index.ctp:116
 msgid "Public Read"
 msgstr ""
 
-#: /View/Upload/index.ctp:78
+#: /View/Upload/index.ctp:117
 msgid "Public Read Write"
 msgstr ""
 
-#: /View/Upload/index.ctp:79
+#: /View/Upload/index.ctp:118
 msgid "Authenticated Read"
 msgstr ""
 
-#: /View/Upload/index.ctp:80
+#: /View/Upload/index.ctp:119
 msgid "Bucket Owner Read"
 msgstr ""
 
-#: /View/Upload/index.ctp:81
+#: /View/Upload/index.ctp:120
 msgid "Bucket Owner Full Control"
 msgstr ""
 
-#: /View/Upload/index.ctp:82
+#: /View/Upload/index.ctp:121
 msgid "Private"
 msgstr ""
 
-#: /View/Upload/index.ctp:89
+#: /View/Upload/index.ctp:131
 msgid "Vault"
 msgstr ""
 
-#: /View/Upload/index.ctp:90
+#: /View/Upload/index.ctp:137
 msgid "Account ID"
 msgstr ""
 
-#: /View/Upload/index.ctp:97
+#: /View/Upload/index.ctp:147
 msgid "Resized"
 msgstr ""
 
-#: /View/Upload/index.ctp:98
+#: /View/Upload/index.ctp:148
 msgid "Thumbnail"
 msgstr ""
 
-#: /View/Upload/index.ctp:106
+#: /View/Upload/index.ctp:160
 msgid "Generate image"
 msgstr ""
 
-#: /View/Upload/index.ctp:108
+#: /View/Upload/index.ctp:170
 msgid "Method"
 msgstr ""
 
-#: /View/Upload/index.ctp:111
+#: /View/Upload/index.ctp:173
 msgid "Crop"
 msgstr ""
 
-#: /View/Upload/index.ctp:112
+#: /View/Upload/index.ctp:174
 msgid "Resize"
 msgstr ""
 
-#: /View/Upload/index.ctp:113
+#: /View/Upload/index.ctp:175
 msgid "Flip"
 msgstr ""
 
-#: /View/Upload/index.ctp:114
+#: /View/Upload/index.ctp:176
 msgid "Scale"
 msgstr ""
 
-#: /View/Upload/index.ctp:115
+#: /View/Upload/index.ctp:177
 msgid "Rotate"
 msgstr ""
 
-#: /View/Upload/index.ctp:116
+#: /View/Upload/index.ctp:178
 msgid "Fit"
 msgstr ""
 
-#: /View/Upload/index.ctp:118
+#: /View/Upload/index.ctp:185
 msgid "Prepend"
 msgstr ""
 
-#: /View/Upload/index.ctp:119
+#: /View/Upload/index.ctp:191
 msgid "Append"
 msgstr ""
 
-#: /View/Upload/index.ctp:123;132
+#: /View/Upload/index.ctp:206;223
 msgid "Width"
 msgstr ""
 
-#: /View/Upload/index.ctp:124;133
+#: /View/Upload/index.ctp:212;224
 msgid "Height"
 msgstr ""
 
-#: /View/Upload/index.ctp:130
+#: /View/Upload/index.ctp:221
 msgid "Mode"
 msgstr ""
 
-#: /View/Upload/index.ctp:136
+#: /View/Upload/index.ctp:233
 msgid "Allow greater than current dimension"
 msgstr ""
 
-#: /View/Upload/index.ctp:137
+#: /View/Upload/index.ctp:243
 msgid "Maintain aspect ratio"
 msgstr ""
 
-#: /View/Upload/index.ctp:143
+#: /View/Upload/index.ctp:254
 msgid "Location"
 msgstr ""
 
-#: /View/Upload/index.ctp:145
+#: /View/Upload/index.ctp:256
 msgid "Center"
 msgstr ""
 
-#: /View/Upload/index.ctp:146
+#: /View/Upload/index.ctp:257
 msgid "Top"
 msgstr ""
 
-#: /View/Upload/index.ctp:147
+#: /View/Upload/index.ctp:258
 msgid "Right"
 msgstr ""
 
-#: /View/Upload/index.ctp:148
+#: /View/Upload/index.ctp:259
 msgid "Bottom"
 msgstr ""
 
-#: /View/Upload/index.ctp:149
+#: /View/Upload/index.ctp:260
 msgid "Left"
 msgstr ""
 
-#: /View/Upload/index.ctp:157
+#: /View/Upload/index.ctp:270
 msgid "Direction"
 msgstr ""
 
-#: /View/Upload/index.ctp:159
+#: /View/Upload/index.ctp:272
 msgid "Vertical"
 msgstr ""
 
-#: /View/Upload/index.ctp:160
+#: /View/Upload/index.ctp:273
 msgid "Horizontal"
 msgstr ""
 
-#: /View/Upload/index.ctp:161
+#: /View/Upload/index.ctp:274
 msgid "Both"
 msgstr ""
 
-#: /View/Upload/index.ctp:169
+#: /View/Upload/index.ctp:284
 msgid "Percent"
 msgstr ""
 
-#: /View/Upload/index.ctp:178
+#: /View/Upload/index.ctp:295
 msgid "Degrees"
 msgstr ""
 
-#: /View/Upload/index.ctp:194
+#: /View/Upload/index.ctp:304
 msgid "Fill"
 msgstr ""
 
-#: /View/Upload/index.ctp:202
+#: /View/Upload/index.ctp:356
 msgid "Continue Uploading"
 msgstr ""
 
-#: /View/Upload/index.ctp:219
+#: /View/Upload/index.ctp:374
 msgid "Install the Uploader to upload files"
 msgstr ""
 
-#: /View/Upload/index.ctp:223
+#: /View/Upload/index.ctp:378
 msgid "Install"
 msgstr ""
 
