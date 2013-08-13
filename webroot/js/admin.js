@@ -12,14 +12,14 @@ var Admin = {
 
 		// Make table rows clickable
 		$$('.table--clickable tbody tr').addEvent('click', function(e) {
-			var target = $(e.target),
+			var target = e.target,
 				tag = target.get('tag').toLowerCase();
 
 			if (tag === 'a' || tag === 'input') {
 				return;
 			}
 
-			var id = $(this).getElement('.click-target');
+			var id = target.getParent('tr').getElement('.click-target');
 
 			if (id) {
 				location.href = id.get('href');
@@ -45,10 +45,11 @@ var Admin = {
 	 * @param {Object} data
 	 */
 	typeAhead: function(id, url, data) {
-		var inputNull = $(id + 'Null'),
+		var inputTA = $(id + 'TypeAhead'),
+			inputNull = $(id + 'Null'),
 			inputRaw = $(id);
 
-		Titon.TypeAhead.factory(id + 'TypeAhead', {
+		Titon.TypeAhead.factory(inputTA, {
 			sorter: false,
 			matcher: false,
 			shadow: true,
@@ -80,8 +81,8 @@ var Admin = {
 
 			if (related) {
 				var callback = function() {
-					this.set('checked', !(this.value.length));
-				}.bind(cb);
+					cb.set('checked', !(this.value.length));
+				};
 
 				if (related.get('tag') === 'input') {
 					related.addEvent('keyup', callback);
@@ -104,17 +105,16 @@ var Admin = {
 	 * Allow filter comparison dropdowns to change input fields with the chosen option.
 	 */
 	filterComparisons: function() {
-		$('filters').getElements('.input-prepend').each(function() {
-			/*var self = $(this),
-				filter = self.find('input[type="hidden"]'),
-				button = self.find('button');
+		$('filters').getElements('.input-group').each(function(group) {
+			var filter = group.getElements('input[type="hidden"]'),
+				button = group.getElements('button');
 
-			self.find('ul a').click(function() {
-				var option = $(this).data('filter');
+			group.getElements('ul a').addEvent('click', function() {
+				var option = this.get('data-filter');
 
-				filter.val(option);
-				button.text(option);
-			});*/
+				filter.set('value', option);
+				button.set('text', option);
+			});
 		});
 	},
 
@@ -127,8 +127,8 @@ var Admin = {
 		var self = e.target,
 			fieldset = self.getParent('fieldset');
 
-		fieldset.getElements(self.get('data-target')).hide(true);
-		fieldset.getElements('.' + self.get('value')).show(true);
+		fieldset.getElements(self.get('data-target')).hide();
+		fieldset.getElements('.' + self.get('value')).show();
 	}
 
 };

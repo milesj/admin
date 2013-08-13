@@ -17,33 +17,34 @@ if (empty($typeAhead[$field])) {
 
 	if (isset($this->data[$alias][$model->{$alias}->displayField])) {
 		$value = $this->data[$alias][$model->{$alias}->displayField];
-	}
+	} ?>
 
-	echo $this->Form->input($field . '_type_ahead', array(
-		'div' => false,
-		'label' => false,
-		'type' => 'text',
-		'class' => 'input input-belongs-to span-4',
-		'autocomplete' => 'off',
-		'value' => $value,
-		'default' => $data['default']
-	));
+	<div class="field-type-ahead span-4">
+		<?php
+		echo $this->Form->input($field . '_type_ahead', array(
+			'div' => false,
+			'label' => false,
+			'type' => 'text',
+			'class' => 'input input-belongs-to span-12',
+			'autocomplete' => 'off',
+			'value' => $value,
+			'default' => $data['default']
+		));
 
-	echo $this->Form->input($field, array(
-		'type' => 'hidden',
-		'div' => false,
-		'label' => false,
-		'required' => false
-	)); ?>
+		echo $this->Form->input($field, array(
+			'type' => 'hidden',
+			'div' => false,
+			'label' => false,
+			'required' => false
+		)); ?>
+	</div>
 
 	<script type="text/javascript">
 		window.addEvent('domready', function() {
 			Admin.typeAhead(
 				'<?php echo $this->Form->domId(); ?>',
 				'<?php echo $this->Html->url(array('model' => Inflector::underscore($typeAhead[$field]['model']), 'action' => 'type_ahead')); ?>',
-				{
-					<?php if ($foreignKey = $typeAhead[$field]['foreignKey']) { echo $foreignKey; ?>: '<?php echo $model->id; ?>' <?php } ?>
-				}
+				<?php echo json_encode(array_filter(array($typeAhead[$field]['foreignKey'] => $model->id)), JSON_FORCE_OBJECT); ?>
 			);
 		});
 	</script>

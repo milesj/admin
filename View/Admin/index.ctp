@@ -13,6 +13,7 @@
 </div>
 
 <div class="container">
+	<div class="panels">
 
 	<?php foreach ($plugins as $plugin) { ?>
 
@@ -22,7 +23,7 @@
 			</div>
 
 			<div class="panel-body">
-				<ul class="nav-pills nav-stacked">
+				<ul class="plugin-list">
 					<?php foreach ($plugin['models'] as $model) {
 						$url = $this->Html->url(array(
 							'controller' => 'crud',
@@ -38,7 +39,7 @@
 									'model' => $model['url']
 								), array(
 									'data-tooltip' => __d('admin', 'Add'),
-									'class' => 'pull-right js-tooltip',
+									'class' => 'float-right js-tooltip',
 									'escape' => false
 								));
 							} ?>
@@ -61,4 +62,5 @@
 
 	<?php } ?>
 
+	</div>
 </div>

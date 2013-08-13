@@ -8,6 +8,7 @@ $this->Breadcrumb->add(__d('admin', 'Configuration'), array('controller' => 'adm
 </div>
 
 <div class="container">
+	<div class="panels">
 
 		<?php foreach ($configuration as $group => $keys) {
 			if (!is_array($keys)) {
@@ -32,4 +33,5 @@ $this->Breadcrumb->add(__d('admin', 'Configuration'), array('controller' => 'adm
 
 		<?php } ?>
 
+	</div>
 </div>

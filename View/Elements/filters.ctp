@@ -23,19 +23,19 @@
 		$classes = array($data['type']);
 
 		if (isset($this->data[$model->alias][$field]) && $this->data[$model->alias][$field] !== '') {
-			$classes[] = 'warning';
+			$classes[] = 'has-warning';
 		} ?>
 
 		<div class="field <?php echo implode(' ', $classes); ?>">
 			<?php $label = $data['title'];
 
 			if (!empty($data['belongsTo'])) {
-				$label .= ' <span class="icon-search"></span>';
+				$label .= ' <span class="icon-search js-tooltip" data-tooltip="' . __d('admin', 'Belongs To Lookup') . '"></span>';
 			}
 
 			echo $this->Form->label($field, $label, array('class' => 'field-label', 'escape' => false)); ?>
 
-			<div class="field-input">
+			<div class="input-group round">
 				<?php
 				// Belongs to is the only special case
 				if (!empty($data['belongsTo'])) {
@@ -45,43 +45,38 @@
 					));
 
 				// Display a comparison dropdown for filters
-				} else if (in_array($data['type'], array('integer', 'datetime'))) { ?>
+				} else if (in_array($data['type'], array('integer', 'datetime'))) {
+					$compValue = isset($this->data[$model->alias][$field . '_filter']) ? $this->data[$model->alias][$field . '_filter'] : '='; ?>
 
-					<div class="input-prepend">
-						<?php
-						$compValue = isset($this->data[$model->alias][$field . '_filter']) ? $this->data[$model->alias][$field . '_filter'] : '=';
+					<div class="button-group">
+						<button type="button" data-toggle="#filter-<?php echo $field; ?>" class="button js-toggle">
+							<?php echo $compValue; ?>
+						</button>
 
-						echo $this->Form->input($field . '_filter', array(
-							'type' => 'hidden',
-							'div' => false,
-							'error' => false,
-							'label' => false,
-							'value' => $compValue
-						)); ?>
-
-						<div class="button-group">
-							<button type="button" data-toggle="#filter-<?php echo $field; ?>" class="button js-toggle">
-								<?php echo $compValue; ?>
-							</button>
-
-							<ul class="dropdown" id="filter-<?php echo $field; ?>">
-								<li><a href="javascript:;" data-filter="="><?php echo __d('admin', 'Equals'); ?></a></li>
-								<li><a href="javascript:;" data-filter="!="><?php echo __d('admin', 'Not Equals'); ?></a></li>
-								<li><a href="javascript:;" data-filter=">"><?php echo __d('admin', 'Greater Than'); ?></a></li>
-								<li><a href="javascript:;" data-filter=">="><?php echo __d('admin', 'Greater Than or Equal'); ?></a></li>
-								<li><a href="javascript:;" data-filter="<"><?php echo __d('admin', 'Less Than'); ?></a></li>
-								<li><a href="javascript:;" data-filter="<="><?php echo __d('admin', 'Less Than or Equal'); ?></a></li>
-							</ul>
-						</div>
-
-						<?php
-						echo $this->element('Admin.input/filter', array(
-							'field' => $field,
-							'data' => $data
-						)); ?>
+						<ul class="dropdown" id="filter-<?php echo $field; ?>">
+							<li><a href="javascript:;" data-filter="="><?php echo __d('admin', 'Equals'); ?></a></li>
+							<li><a href="javascript:;" data-filter="!="><?php echo __d('admin', 'Not Equals'); ?></a></li>
+							<li><a href="javascript:;" data-filter=">"><?php echo __d('admin', 'Greater Than'); ?></a></li>
+							<li><a href="javascript:;" data-filter=">="><?php echo __d('admin', 'Greater Than or Equal'); ?></a></li>
+							<li><a href="javascript:;" data-filter="<"><?php echo __d('admin', 'Less Than'); ?></a></li>
+							<li><a href="javascript:;" data-filter="<="><?php echo __d('admin', 'Less Than or Equal'); ?></a></li>
+						</ul>
 					</div>
 
-				<?php } else {
+					<?php
+					echo $this->Form->input($field . '_filter', array(
+						'type' => 'hidden',
+						'div' => false,
+						'error' => false,
+						'label' => false,
+						'value' => $compValue
+					));
+
+					echo $this->element('Admin.input/filter', array(
+						'field' => $field,
+						'data' => $data
+					));
+				} else {
 					echo $this->element('Admin.input/filter', array(
 						'field' => $field,
 						'data' => $data
@@ -92,13 +87,15 @@
 
 	<?php } ?>
 
-	<button type="submit" class="button info">
-		<?php echo __d('admin', 'Filter'); ?>
-	</button>
+	<div class="form-actions">
+		<button type="submit" class="button info">
+			<?php echo __d('admin', 'Filter'); ?>
+		</button>
 
-	<a href="<?php echo $this->Html->url($reset); ?>" class="button">
-		<?php echo __d('admin', 'Reset'); ?>
-	</a>
+		<a href="<?php echo $this->Html->url($reset); ?>" class="button">
+			<?php echo __d('admin', 'Reset'); ?>
+		</a>
+	</div>
 
 	<script type="text/javascript">
 		window.addEvent('domready', function() {

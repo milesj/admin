@@ -70,7 +70,7 @@ $this->Breadcrumb->add(Inflector::humanize($type), array('controller' => 'logs',
 						<?php if (!$log['stack']) {
 							echo $log['message'];
 						} else { ?>
-							<a href="javascript:;" onclick="$('#stack-<?php echo $i; ?>').toggle();"><?php echo strip_tags($log['message']); ?></a>
+							<a href="javascript:;" onclick="$('stack-<?php echo $i; ?>').toggle();"><?php echo strip_tags($log['message']); ?></a>
 
 							<div id="stack-<?php echo $i; ?>" class="text-muted" style="display: none;">
 								<?php echo implode('<br>', $log['stack']); ?>

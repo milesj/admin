@@ -8,6 +8,7 @@ $this->Breadcrumb->add(__d('admin', 'Cache'), array('controller' => 'admin', 'ac
 </div>
 
 <div class="container">
+	<div class="panels">
 
 		<?php foreach ($configuration as $group => $keys) {
 			ksort($keys); ?>
@@ -28,4 +29,5 @@ $this->Breadcrumb->add(__d('admin', 'Cache'), array('controller' => 'admin', 'ac
 
 		<?php } ?>
 
+	</div>
 </div>

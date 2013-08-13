@@ -2,7 +2,13 @@
 
 /*------------------ Admin ------------------*/
 
-
+.controller-admin .plugin-list { list-style: none; margin: 0; padding: 0; }
+.controller-admin .plugin-list a { display: block; padding: 5px 15px; }
+.controller-admin .plugin-list a.float-right { display: none; }
+.controller-admin .plugin-list li:hover a.float-right { display: block; color: #fff; }
+.controller-admin .plugin-list a:hover { background: #45c5eb; color: #fff; border-radius: .3rem; }
+.controller-admin .plugin-list a:hover .model-icon { color: #fff; }
+.controller-admin .plugin-list a:hover .text-muted { color: #dbf1fa; }
 
 /*------------------ CRUD ------------------*/
 
@@ -39,8 +45,10 @@
 
 /*------------------ Upload ------------------*/
 
-.controller-upload .field .col-2 { margin-right: 1rem; }
+.controller-upload .field .col-2 { margin-right: 1.5rem; }
 .controller-upload .field .field-col .checkbox label { margin-left: 5px; }
+.controller-upload .field .field-help { vertical-align: middle; margin: 8px 0 0 10px; display: inline-block; }
+.controller-upload .field textarea { min-height: 100px; }
 
 /*----------------- Form -----------------*/
 
