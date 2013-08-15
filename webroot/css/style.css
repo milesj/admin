@@ -25,6 +25,8 @@ table { width: 100%; }
 
 .nav { position: fixed; width: 100%; top: 0; left: 0; z-index: 500; background: #1d1f21; border-bottom: 1px solid #121213; padding: 0 1.5rem; }
 .nav-buttons { float: right; padding-top: 8px; }
+.nav-buttons .button { margin-left: 7px; }
+.nav-buttons .button-group { margin-right: -4px; }
 .nav-brand { vertical-align: top; display: inline-block; margin-right: 1.5rem; height: 60px; line-height: 60px; font-size: 1.2rem; color: #fff; }
 .nav-brand:hover { color: #fff; }
 .nav-menu { vertical-align: top; display: inline-block; list-style: none; margin: 0; padding: 0; }
@@ -63,7 +65,7 @@ table { width: 100%; }
 .modal-body { max-height: 500px; overflow-y: auto; }
 
 .pagination ul { float: right; margin: 0; }
-.pagination .counter { height: 40px; line-height: 40px; vertical-align: middle; }
+.pagination .counter { height: 45px; line-height: 45px; vertical-align: middle; }
 .pagination .counter span { font-weight: bold; }
 .pagination.bottom { margin-bottom: 0 }
 

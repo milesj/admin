@@ -25,4 +25,11 @@ if ($params['count'] > 0) { ?>
 		</div>
 	</nav>
 
+	<script type="text/javascript">
+		window.addEvent('domready', function() {
+			// Add button class to pagination links since CakePHP doesn't support it
+			$$('.pagination a').addClass('button');
+		});
+	</script>
+
 <?php } ?>

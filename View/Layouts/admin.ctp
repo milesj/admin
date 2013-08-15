@@ -18,28 +18,30 @@ echo $this->Html->docType(); ?>
 	echo $this->fetch('script'); ?>
 </head>
 <body class="controller-<?php echo $this->request->controller; ?>">
-	<div class="head">
-		<?php echo $this->element('Admin.navigation'); ?>
-	</div>
+	<div class="skeleton">
+		<header class="head">
+			<?php echo $this->element('Admin.navigation'); ?>
+		</header>
 
-	<div class="body action-<?php echo $this->action; ?>">
-		<?php
-		$this->Breadcrumb->prepend(__d('admin', 'Dashboard'), array('controller' => 'admin', 'action' => 'index'));
+		<div class="body action-<?php echo $this->action; ?>">
+			<?php
+			$this->Breadcrumb->prepend(__d('admin', 'Dashboard'), array('controller' => 'admin', 'action' => 'index'));
 
-		echo $this->element('Admin.breadcrumbs');
-		echo $this->Session->flash();
-		echo $this->fetch('content'); ?>
-	</div>
-
-	<footer class="foot">
-		<div class="copyright">
-			<?php printf(__d('admin', 'Powered by the %s v%s'), $this->Html->link('Admin Plugin', 'http://milesj.me/code/cakephp/admin'), mb_strtoupper($config['Admin']['version'])); ?><br>
-			<?php printf(__d('admin', 'Created by %s'), $this->Html->link('Miles Johnson', 'http://milesj.me')); ?>
+			echo $this->element('Admin.breadcrumbs');
+			echo $this->Session->flash();
+			echo $this->fetch('content'); ?>
 		</div>
 
-		<?php if (!CakePlugin::loaded('DebugKit')) {
-			echo $this->element('sql_dump');
-		} ?>
-	</footer>
+		<footer class="foot">
+			<div class="copyright">
+				<?php printf(__d('admin', 'Powered by the %s v%s'), $this->Html->link('Admin Plugin', 'http://milesj.me/code/cakephp/admin'), mb_strtoupper($config['Admin']['version'])); ?><br>
+				<?php printf(__d('admin', 'Created by %s'), $this->Html->link('Miles Johnson', 'http://milesj.me')); ?>
+			</div>
+
+			<?php if (!CakePlugin::loaded('DebugKit')) {
+				echo $this->element('sql_dump');
+			} ?>
+		</footer>
+	</div>
 </body>
 </html>

@@ -7,7 +7,7 @@ if ($modelParam) {
 	list($pluginParam, $modelParam) = pluginSplit($modelParam);
 } ?>
 
-<div class="nav clear-after">
+<nav class="nav clear-after">
 	<div class="nav-buttons">
 		<div class="button-group round">
 			<button type="button" class="button last info js-toggle" data-toggle="#nav-dropdown">
@@ -132,4 +132,4 @@ if ($modelParam) {
 
 		<?php } ?>
 	</ul>
-</div>
+</nav>

@@ -7,9 +7,6 @@ var Admin = {
 	initialize: function() {
 		var el;
 
-		// Add button class to pagination links since CakePHP doesn't support it
-		$$('.pagination a').addClass('button');
-
 		// Make table rows clickable
 		$$('.table--clickable tbody tr').addEvent('click', function(e) {
 			var target = e.target,
