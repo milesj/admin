@@ -12,14 +12,16 @@ table { width: 100%; }
 .body { padding: 1.5rem; background: #fff; }
 .foot { border-top: 1px solid #e5e5e5; text-align: center; padding: 25px; }
 
-.title { margin: 2rem 0 1.5rem 0; }
-.title h2 { margin: 0; }
-.title:after { content: ""; clear: both; display: block; }
-
-.action-buttons { float: right; }
+.action-buttons { text-align: right; margin: 1.5rem 0; }
 .action-buttons .button { margin-left: 10px; }
 .action-buttons .button span[class*="icon-"] { margin-right: 3px; }
 .action-buttons .button-group { margin-left: 10px; margin-right: -3px; }
+.action-buttons:last-child { margin-bottom: 0; }
+
+.title { margin: 2rem 0 1.5rem 0; }
+.title h2 { margin: 0; }
+.title:after { content: ""; clear: both; display: block; }
+.title .action-buttons { float: right; margin: 0; }
 
 /*------------------ UI ------------------*/
 
@@ -46,16 +48,10 @@ table { width: 100%; }
 
 .button .caret-down { border-top-color: #fff; margin-left: 3px; bottom: -1px; }
 
-.table a { display: block; }
 .table thead th { white-space: nowrap; }
 .table .no-results { text-align: center; padding: 25px; }
-.table.table--clickable tbody tr { cursor: pointer; }
-.table.table--sortable thead th { padding: 0; }
-.table.table--sortable thead span { padding: 0.76rem; display: block; }
-.table.table--sortable thead a { background: #e5e5e5; color: #000; padding: 0.76rem; }
-.table.table--sortable thead a:hover,
 .table.table--sortable thead a.desc,
-.table.table--sortable thead a.asc { background: #dddddd; }
+.table.table--sortable thead a.asc { background: #d9d9d9; }
 
 .breadcrumbs { margin-top: 0; }
 
@@ -71,8 +67,8 @@ table { width: 100%; }
 
 .panel { border: 1px solid #e5e5e5; background: #fbfbfb; margin-bottom: 1.5rem; }
 .panel:nth-child(4n) { margin-right: 0; }
-.panel-head { background: #f5f5f5; padding: 1rem; border-top-left-radius: .3rem; border-top-right-radius: .3rem; }
-.panel-body { padding: 1rem; border-top: 1px solid #e5e5e5; }
+.panel-head { background: #f5f5f5; padding: 1rem; border-top-left-radius: .3rem; border-top-right-radius: .3rem; border-bottom: 1px solid #e5e5e5; }
+.panel-body { padding: 1rem; }
 
 .panels .panel { display: inline-block; margin-right: 1.5rem; vertical-align: top; width: 23%; }
 
@@ -81,7 +77,7 @@ table { width: 100%; }
 .form--horizontal .field .col-7 { margin-left: 1.5rem; }
 
 .form-filters,
-.form-actions { margin-top: 2rem; padding: 1rem; background: #f8f8f8; border: 1px solid #e5e5e5; border-radius: 3px; }
+.form-actions { margin-top: 1.5rem; padding: 1rem; background: #f8f8f8; border: 1px solid #e5e5e5; border-radius: .3rem; }
 .form-actions label { display: inline-block; padding-right: 1rem; font-weight: bold; position: relative; top: 2px; }
 .form-actions .redirect-to,
 .form-actions .log-comment { margin-bottom: 1rem; }

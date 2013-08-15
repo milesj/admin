@@ -1,4 +1,5 @@
 .model-icon { min-width: 20px !important; display: inline-block !important; margin-left: 2px; }
+.table a { display: block; }
 
 /*------------------ Admin ------------------*/
 
