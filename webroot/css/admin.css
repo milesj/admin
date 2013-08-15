@@ -67,5 +67,5 @@
 .type-datetime { text-align: right !important; }
 
 .col-checkbox { width: 15px; }
-.col-actions { width: 15px; padding: .8rem !important; }
+.col-actions { width: 15px; padding: .5rem !important; }
 .col-actions .button { display: inline-block; padding: 3px 4px; float: none; font-size: .8rem; }

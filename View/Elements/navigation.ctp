@@ -44,6 +44,7 @@ if ($modelParam) {
 	}
 
 	echo $this->Html->link($navTitle, array(
+		'plugin' => 'admin',
 		'controller' => 'admin',
 		'action' => 'index'
 	), array('class' => 'nav-brand', 'escape' => false)); ?>

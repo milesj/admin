@@ -50,6 +50,7 @@ table { width: 100%; }
 
 .table thead th { white-space: nowrap; }
 .table .no-results { text-align: center; padding: 25px; }
+.table.table--clickable tbody tr { cursor: pointer; }
 .table.table--sortable thead a.desc,
 .table.table--sortable thead a.asc { background: #d9d9d9; }
 

@@ -49,11 +49,10 @@ var Admin = {
 	 * @param {Object} data
 	 */
 	typeAhead: function(id, url, data) {
-		var inputTA = $(id + 'TypeAhead'),
-			inputNull = $(id + 'Null'),
+		var inputNull = $(id + 'Null'),
 			inputRaw = $(id);
 
-		Titon.TypeAhead.factory(inputTA, {
+		Titon.TypeAhead.factory('#' + id + 'TypeAhead', {
 			sorter: false,
 			matcher: false,
 			shadow: true,
@@ -147,7 +146,6 @@ window.addEvent('domready', function() {
 	Titon.Toggle.factory('.js-toggle');
 
 	Titon.Tooltip.factory('.js-tooltip', {
-		animation: 'from-above',
 		position: 'topCenter'
 	});
 });
