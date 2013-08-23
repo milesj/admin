@@ -13,7 +13,7 @@ It also requires admin Routing prefixes to be *disabled*.
 * CakePHP 2.3.*
 	* ACL
 	* Auth
-	* Utility Plugin v1.5.* - https://github.com/milesj/Utility
+	* Utility Plugin v1.5.* - https://github.com/milesj/utility
 * Composer
 
 ## Quick Installation ##
