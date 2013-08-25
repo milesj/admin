@@ -45,7 +45,7 @@
 
 /*------------------ Upload ------------------*/
 
-.controller-upload .field .col-2 { margin-right: 1.5rem; }
+.controller-upload .field .col.span-2 { margin-right: 1.5rem; }
 .controller-upload .field .field-col .checkbox label { margin-left: 5px; }
 .controller-upload .field .field-help { vertical-align: middle; margin: 8px 0 0 10px; display: inline-block; }
 .controller-upload .field textarea { min-height: 100px; }

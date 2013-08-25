@@ -22,19 +22,19 @@ if (CakePlugin::loaded('Uploader')) { ?>
 	</div>
 
 	<div class="grid">
-		<div class="col-6">
+		<div class="col span-6">
 			<?php
 			echo $this->Form->input('path', array(
 				'div' => 'field',
 				'type' => 'file',
-				'label' => array('class' => 'field-label col-2', 'text' => __d('admin', 'File')),
+				'label' => array('class' => 'field-label col span-2', 'text' => __d('admin', 'File')),
 				'class' => 'input'
 			));
 
 			echo $this->Form->input('caption', array(
 				'div' => 'field',
 				'type' => 'textarea',
-				'label' => array('class' => 'field-label col-2', 'text' => __d('admin', 'Caption')),
+				'label' => array('class' => 'field-label col span-2', 'text' => __d('admin', 'Caption')),
 				'class' => 'input span-8'
 			)); ?>
 
@@ -44,7 +44,7 @@ if (CakePlugin::loaded('Uploader')) { ?>
 				<?php
 				echo $this->Form->input('FileUpload.transport.class', array(
 					'div' => 'field',
-					'label' => array('text' => __d('admin', 'Service'), 'class' => 'field-label col-2'),
+					'label' => array('text' => __d('admin', 'Service'), 'class' => 'field-label col span-2'),
 					'data-target' => '.transport',
 					'class' => 'input',
 					'options' => array(
@@ -58,19 +58,19 @@ if (CakePlugin::loaded('Uploader')) { ?>
 					<?php
 					echo $this->Form->input('FileUpload.transport.accessKey', array(
 						'div' => 'field',
-						'label' => array('class' => 'field-label col-2', 'text' => __d('admin', 'Access Key')),
+						'label' => array('class' => 'field-label col span-2', 'text' => __d('admin', 'Access Key')),
 						'class' => 'input span-6'
 					));
 
 					echo $this->Form->input('FileUpload.transport.secretKey', array(
 						'div' => 'field',
-						'label' => array('class' => 'field-label col-2', 'text' => __d('admin', 'Secret Key')),
+						'label' => array('class' => 'field-label col span-2', 'text' => __d('admin', 'Secret Key')),
 						'class' => 'input span-6'
 					));
 
 					echo $this->Form->input('FileUpload.transport.region', array(
 						'div' => 'field',
-						'label' => array('class' => 'field-label col-2', 'text' => __d('admin', 'Region')),
+						'label' => array('class' => 'field-label col span-2', 'text' => __d('admin', 'Region')),
 						'options' => array(
 							'us-east-1' => __d('admin', 'US East - Virginia'),
 							'us-west-1' => __d('admin', 'US West - California'),
@@ -89,20 +89,20 @@ if (CakePlugin::loaded('Uploader')) { ?>
 					<?php
 					echo $this->Form->input('FileUpload.transport.bucket', array(
 						'div' => 'field',
-						'label' => array('class' => 'field-label col-2', 'text' => __d('admin', 'Bucket')),
+						'label' => array('class' => 'field-label col span-2', 'text' => __d('admin', 'Bucket')),
 						'class' => 'input'
 					));
 
 					echo $this->Form->input('FileUpload.transport.folder', array(
 						'div' => 'field',
-						'label' => array('class' => 'field-label col-2', 'text' => __d('admin', 'Folder')),
+						'label' => array('class' => 'field-label col span-2', 'text' => __d('admin', 'Folder')),
 						'after' => '<div class="field-help">' . __d('admin', 'Requires trailing slash') . '</div>',
 						'class' => 'input'
 					));
 
 					echo $this->Form->input('FileUpload.transport.scheme', array(
 						'div' => 'field',
-						'label' => array('class' => 'field-label col-2', 'text' => __d('admin', 'Scheme')),
+						'label' => array('class' => 'field-label col span-2', 'text' => __d('admin', 'Scheme')),
 						'options' => array(
 							'https' => 'HTTPS',
 							'http' => 'HTTP'
@@ -111,7 +111,7 @@ if (CakePlugin::loaded('Uploader')) { ?>
 					));
 					echo $this->Form->input('FileUpload.transport.acl', array(
 						'div' => 'field',
-						'label' => array('class' => 'field-label col-2', 'text' => __d('admin', 'ACL')),
+						'label' => array('class' => 'field-label col span-2', 'text' => __d('admin', 'ACL')),
 						'options' => array(
 							'public-read' => __d('admin', 'Public Read'),
 							'public-read-write' => __d('admin', 'Public Read Write'),
@@ -128,20 +128,20 @@ if (CakePlugin::loaded('Uploader')) { ?>
 					<?php
 					echo $this->Form->input('FileUpload.transport.vault', array(
 						'div' => 'field',
-						'label' => array('class' => 'field-label col-2', 'text' => __d('admin', 'Vault')),
+						'label' => array('class' => 'field-label col span-2', 'text' => __d('admin', 'Vault')),
 						'class' => 'input'
 					));
 
 					echo $this->Form->input('FileUpload.transport.accountId', array(
 						'div' => 'field',
-						'label' => array('class' => 'field-label col-2', 'text' => __d('admin', 'Account ID')),
+						'label' => array('class' => 'field-label col span-2', 'text' => __d('admin', 'Account ID')),
 						'class' => 'input'
 					)); ?>
 				</div>
 			</fieldset>
 		</div>
 
-		<div class="col-6">
+		<div class="col span-6">
 			<?php
 			foreach (array(
 				'path_large' => __d('admin', 'Resized'),
@@ -153,7 +153,7 @@ if (CakePlugin::loaded('Uploader')) { ?>
 				<legend><?php echo $title; ?></legend>
 
 				<div class="field">
-					<div class="field-col col-8 push-2">
+					<div class="field-col col span-8 push-2">
 						<?php
 						echo $this->Form->input('FileUpload.transforms.' . $field . '.transform', array(
 							'div' => 'checkbox',
@@ -167,7 +167,7 @@ if (CakePlugin::loaded('Uploader')) { ?>
 				<?php
 				echo $this->Form->input('FileUpload.transforms.' . $field . '.method', array(
 					'div' => 'field',
-					'label' => array('class' => 'field-label col-2', 'text' => __d('admin', 'Method')),
+					'label' => array('class' => 'field-label col span-2', 'text' => __d('admin', 'Method')),
 					'data-target' => '.transform',
 					'options' => array(
 						'crop' => __d('admin', 'Crop'),
@@ -182,19 +182,19 @@ if (CakePlugin::loaded('Uploader')) { ?>
 
 				echo $this->Form->input('FileUpload.transforms.' . $field . '.prepend', array(
 					'div' => 'field',
-					'label' => array('class' => 'field-label col-2', 'text' => __d('admin', 'Prepend')),
+					'label' => array('class' => 'field-label col span-2', 'text' => __d('admin', 'Prepend')),
 					'class' => 'input'
 				));
 
 				echo $this->Form->input('FileUpload.transforms.' . $field . '.append', array(
 					'div' => 'field',
-					'label' => array('class' => 'field-label col-2', 'text' => __d('admin', 'Append')),
+					'label' => array('class' => 'field-label col span-2', 'text' => __d('admin', 'Append')),
 					'class' => 'input'
 				));
 
 				echo $this->Form->input('FileUpload.transforms.' . $field . '.transportDir', array(
 					'div' => 'field',
-					'label' => array('class' => 'field-label col-2', 'text' => __d('admin', 'Folder')),
+					'label' => array('class' => 'field-label col span-2', 'text' => __d('admin', 'Folder')),
 					'after' => '<div class="field-help">' . __d('admin', 'Requires trailing slash') . '</div>',
 					'class' => 'input'
 				)); ?>
@@ -203,13 +203,13 @@ if (CakePlugin::loaded('Uploader')) { ?>
 					<?php
 					echo $this->Form->input('FileUpload.transforms.' . $field . '.width', array(
 						'div' => 'field',
-						'label' => array('class' => 'field-label col-2', 'text' => __d('admin', 'Width')),
+						'label' => array('class' => 'field-label col span-2', 'text' => __d('admin', 'Width')),
 						'class' => 'input span-1'
 					));
 
 					echo $this->Form->input('FileUpload.transforms.' . $field . '.height', array(
 						'div' => 'field',
-						'label' => array('class' => 'field-label col-2', 'text' => __d('admin', 'Height')),
+						'label' => array('class' => 'field-label col span-2', 'text' => __d('admin', 'Height')),
 						'class' => 'input span-1'
 					)); ?>
 				</div>
@@ -218,7 +218,7 @@ if (CakePlugin::loaded('Uploader')) { ?>
 					<?php
 					echo $this->Form->input('FileUpload.transforms.' . $field . '.mode', array(
 						'div' => 'field',
-						'label' => array('class' => 'field-label col-2', 'text' => __d('admin', 'Mode')),
+						'label' => array('class' => 'field-label col span-2', 'text' => __d('admin', 'Mode')),
 						'options' => array(
 							'width' => __d('admin', 'Width'),
 							'height' => __d('admin', 'Height')
@@ -227,7 +227,7 @@ if (CakePlugin::loaded('Uploader')) { ?>
 					)); ?>
 
 					<div class="field">
-						<div class="field-col col-8 push-2">
+						<div class="field-col col span-8 push-2">
 							<?php echo $this->Form->input('FileUpload.transforms.' . $field . '.expand', array(
 								'div' => 'checkbox',
 								'label' => __d('admin', 'Allow greater than current dimension'),
@@ -237,7 +237,7 @@ if (CakePlugin::loaded('Uploader')) { ?>
 					</div>
 
 					<div class="field">
-						<div class="field-col col-8 push-2">
+						<div class="field-col col span-8 push-2">
 							<?php echo $this->Form->input('FileUpload.transforms.' . $field . '.aspect', array(
 								'div' => 'checkbox',
 								'label' => __d('admin', 'Maintain aspect ratio'),
@@ -251,7 +251,7 @@ if (CakePlugin::loaded('Uploader')) { ?>
 					<?php
 					echo $this->Form->input('FileUpload.transforms.' . $field . '.location', array(
 						'div' => 'field',
-						'label' => array('class' => 'field-label col-2', 'text' => __d('admin', 'Location')),
+						'label' => array('class' => 'field-label col span-2', 'text' => __d('admin', 'Location')),
 						'options' => array(
 							'center' => __d('admin', 'Center'),
 							'top' => __d('admin', 'Top'),
@@ -267,7 +267,7 @@ if (CakePlugin::loaded('Uploader')) { ?>
 					<?php
 					echo $this->Form->input('FileUpload.transforms.' . $field . '.direction', array(
 						'div' => 'field',
-						'label' => array('class' => 'field-label col-2', 'text' => __d('admin', 'Direction')),
+						'label' => array('class' => 'field-label col span-2', 'text' => __d('admin', 'Direction')),
 						'options' => array(
 							'vertical' => __d('admin', 'Vertical'),
 							'horizontal' => __d('admin', 'Horizontal'),
@@ -281,7 +281,7 @@ if (CakePlugin::loaded('Uploader')) { ?>
 					<?php
 					echo $this->Form->input('FileUpload.transforms.' . $field . '.percent', array(
 						'div' => 'field',
-						'label' => array('class' => 'field-label col-2', 'text' => __d('admin', 'Percent')),
+						'label' => array('class' => 'field-label col span-2', 'text' => __d('admin', 'Percent')),
 						'type' => 'number',
 						'class' => 'input span-1',
 						'value' => .5
@@ -292,7 +292,7 @@ if (CakePlugin::loaded('Uploader')) { ?>
 					<?php
 					echo $this->Form->input('FileUpload.transforms.' . $field . '.degrees', array(
 						'div' => 'field',
-						'label' => array('class' => 'field-label col-2', 'text' => __d('admin', 'Degrees')),
+						'label' => array('class' => 'field-label col span-2', 'text' => __d('admin', 'Degrees')),
 						'type' => 'number',
 						'class' => 'input span-1',
 						'value' => 90
@@ -301,9 +301,9 @@ if (CakePlugin::loaded('Uploader')) { ?>
 
 				<div class="transform fit"<?php if ($currentValue !== 'fit') echo ' style="display: none"'; ?>>
 					<div class="field">
-						<?php echo $this->Form->label('FileUpload.transforms.' . $field . '.fill.red', __d('admin', 'Fill'), array('class' => 'field-label col-2')); ?>
+						<?php echo $this->Form->label('FileUpload.transforms.' . $field . '.fill.red', __d('admin', 'Fill'), array('class' => 'field-label col span-2')); ?>
 
-						<div class="col-8">
+						<div class="col span-8">
 							<?php
 							echo $this->Form->input('FileUpload.transforms.' . $field . '.fill.0', array(
 								'div' => false,

@@ -41,9 +41,9 @@ if ($validate) {
 		$label .= ' <span class="icon-search js-tooltip" data-tooltip="' . __d('admin', 'Belongs To Lookup') . '"></span>';
 	}
 
-	echo $this->Form->label($field, $label, array('class' => 'field-label col-3', 'escape' => false)); ?>
+	echo $this->Form->label($field, $label, array('class' => 'field-label col span-3', 'escape' => false)); ?>
 
-	<div class="col-7">
+	<div class="col span-7">
 		<?php
 		$element = 'default';
 

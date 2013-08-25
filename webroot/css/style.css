@@ -75,7 +75,7 @@ table { width: 100%; }
 
 /*------------------ Forms ------------------*/
 
-.form--horizontal .field .col-7 { margin-left: 1.5rem; }
+.form--horizontal .field .col.span-7 { margin-left: 1.5rem; }
 
 .form-filters,
 .form-actions { margin-top: 1.5rem; padding: 1rem; background: #f8f8f8; border: 1px solid #e5e5e5; border-radius: .3rem; }
