@@ -1,4 +1,4 @@
-# Admin v1.1.1 #
+# Admin v1.1.2 #
 
 A CakePHP administration plugin that provides moderate CRUD functionality for application and plugin models.
 Utilizes CakePHP's built-in authentication, authorization and ACL systems for security.
@@ -16,50 +16,6 @@ It also requires admin Routing prefixes to be *disabled*.
 	* Utility Plugin v1.5.* - https://github.com/milesj/utility
 * Composer
 
-## Quick Installation ##
+## Documentation ##
 
-Install the plugin with Composer.
-
-```
-composer update
-```
-
-Bootstrap the plugins and its routes.
-
-```php
-CakePlugin::loadAll();
-CakePlugin::load('Utility', array('bootstrap' => true, 'routes' => true));
-CakePlugin::load('Admin', array('bootstrap' => true, 'routes' => true));
-```
-
-Enable ACL in core.
-
-```php
-Configure::write('Acl.classname', 'DbAcl');
-Configure::write('Acl.database', 'default');
-```
-
-Create the ACL tables if you have not already.
-
-```
-cake schema create DbAcl
-```
-
-Set the ARO administrator alias in your bootstrap (defaults to Administrator).
-
-```php
-Configure::write('Admin.aliases.administrator', 'Administrator');
-```
-
-Install the plugin through the command line (this will generate appropriate ACL records).
-
-```
-cake Admin.install
-```
-
-Install the plugins and models to enable CRUD functionality and access permissions.
-
-```
-cake Admin.install plugin Forum
-cake Admin.install model User
-```
+Thorough documentation can be found here: http://milesj.me/code/cakephp/admin
