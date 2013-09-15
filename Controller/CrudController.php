@@ -91,7 +91,7 @@ class CrudController extends AdminAppController {
 				$this->AdminToolbar->redirectAfter($this->Model);
 
 			} else {
-				$this->AdminToolbar->setFlashMessage(__d('admin', 'Failed to create a new %s', mb_strtolower($this->Model->singularName)), 'error');
+				$this->AdminToolbar->setFlashMessage(__d('admin', 'Failed to create a new %s', mb_strtolower($this->Model->singularName)), 'is-error');
 			}
 		}
 
@@ -164,7 +164,7 @@ class CrudController extends AdminAppController {
 				$this->AdminToolbar->redirectAfter($this->Model);
 
 			} else {
-				$this->AdminToolbar->setFlashMessage(__d('admin', 'Failed to update %s with ID %s', array(mb_strtolower($this->Model->singularName), $id)), 'error');
+				$this->AdminToolbar->setFlashMessage(__d('admin', 'Failed to update %s with ID %s', array(mb_strtolower($this->Model->singularName), $id)), 'is-error');
 			}
 		} else {
 			$this->request->data = $result;
@@ -206,7 +206,7 @@ class CrudController extends AdminAppController {
 				$this->AdminToolbar->redirectAfter($this->Model);
 
 			} else {
-				$this->AdminToolbar->setFlashMessage(__d('admin', 'Failed to delete %s with ID %s', array(mb_strtolower($this->Model->singularName), $id)), 'error');
+				$this->AdminToolbar->setFlashMessage(__d('admin', 'Failed to delete %s with ID %s', array(mb_strtolower($this->Model->singularName), $id)), 'is-error');
 			}
 		}
 
@@ -257,7 +257,7 @@ class CrudController extends AdminAppController {
 			$this->AdminToolbar->setFlashMessage(__d('admin', 'Processed %s.%s() for ID %s', array($model->alias, $method, $id)));
 
 		} else {
-			$this->AdminToolbar->setFlashMessage(__d('admin', '%s does not allow this process', $model->singularName), 'error');
+			$this->AdminToolbar->setFlashMessage(__d('admin', '%s does not allow this process', $model->singularName), 'is-error');
 		}
 
 		$this->redirect($this->referer());
@@ -280,7 +280,7 @@ class CrudController extends AdminAppController {
 			$this->AdminToolbar->setFlashMessage(__d('admin', 'Processed %s.%s() for %s', array($behavior, $method, mb_strtolower($model->pluralName))));
 
 		} else {
-			$this->AdminToolbar->setFlashMessage(__d('admin', '%s does not allow this process', $model->singularName), 'error');
+			$this->AdminToolbar->setFlashMessage(__d('admin', '%s does not allow this process', $model->singularName), 'is-error');
 		}
 
 		$this->redirect($this->referer());

@@ -1,5 +1,5 @@
 <?php if (!$this->Session->check('Admin')) { ?>
-	<div class="alert error">
+	<div class="alert is-error">
 		<span class="icon-warning-sign"></span> &nbsp;
 		<?php echo __d('admin', 'ACL permissions do not exist within the session and all access has been disabled.'); ?>
 		<a href="http://milesj.me/code/cakephp/admin#faq" class="alert-link"><?php echo __d('admin', 'Please update session management and re-login.'); ?></a>
@@ -13,7 +13,7 @@
 </div>
 
 <div class="container">
-	<div class="panels">
+	<div class="panels js-matrix">
 
 	<?php foreach ($plugins as $plugin) { ?>
 
@@ -48,7 +48,7 @@
 								<?php echo $this->Admin->outputIconTitle($model); ?>
 
 								<?php if (!$model['installed']) { ?>
-									<span class="label error js-tooltip" data-tooltip="<?php echo __d('admin', 'Not Installed'); ?>">&nbsp;!&nbsp;</span>
+									<span class="label is-error js-tooltip" data-tooltip="<?php echo __d('admin', 'Not Installed'); ?>">&nbsp;!&nbsp;</span>
 								<?php } else { ?>
 									<span class="text-muted">(<?php echo number_format($counts[$model['class']]); ?>)</span>
 								<?php } ?>

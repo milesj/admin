@@ -8,7 +8,7 @@ $this->Breadcrumb->add(__d('admin', 'Configuration'), array('controller' => 'adm
 </div>
 
 <div class="container">
-	<div class="panels">
+	<div class="panels js-matrix">
 
 		<?php foreach ($configuration as $group => $keys) {
 			if (!is_array($keys)) {

@@ -7,7 +7,7 @@ if (CakePlugin::loaded('Uploader')) { ?>
 	<div class="action-buttons">
 		<?php echo $this->Html->link('<span class="icon-upload"></span> ' . __d('admin', 'View All Uploads'),
 			array('controller' => 'crud', 'action' => 'index', 'model' => 'admin.file_upload'),
-			array('class' => 'button info', 'escape' => false)); ?>
+			array('class' => 'button is-info', 'escape' => false)); ?>
 	</div>
 
 	<h2><?php echo $model->singularName; ?></h2>
@@ -16,7 +16,7 @@ if (CakePlugin::loaded('Uploader')) { ?>
 <div class="container">
 	<?php echo $this->Form->create($model->alias, array('class' => 'form--horizontal', 'type' => 'file')); ?>
 
-	<div class="alert info">
+	<div class="alert is-info">
 		<?php echo __d('admin', 'Upload all types of files with no restrictions. Uploading also supports image transformation and remote transportation.'); ?>
 		<a href="http://milesj.me/code/cakephp/admin#file-uploading" class="alert-link"><?php echo __d('admin', 'Learn more about file uploading.'); ?></a>
 	</div>
@@ -359,7 +359,7 @@ if (CakePlugin::loaded('Uploader')) { ?>
 			)); ?>
 		</div>
 
-		<button type="submit" class="button large success">
+		<button type="submit" class="button large is-success">
 			<span class="icon-edit icon-white"></span>
 			<?php echo __d('admin', 'Upload'); ?>
 		</button>
@@ -373,7 +373,7 @@ if (CakePlugin::loaded('Uploader')) { ?>
 <div class="splash">
 	<h2 class="alert-title"><?php echo __d('admin', 'Install the Uploader to upload files'); ?></h2>
 
-	<a href="http://milesj.me/code/cakephp/uploader" target="_blank" class="button info large">
+	<a href="http://milesj.me/code/cakephp/uploader" target="_blank" class="button is-info large">
 		<span class="icon-external-link"></span>
 		<?php echo __d('admin', 'Install'); ?>
 	</a>

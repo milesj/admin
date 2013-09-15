@@ -7,7 +7,7 @@ $this->Breadcrumb->add(__d('admin', 'ACL'), array('controller' => 'acl', 'action
 	<h2><?php echo __d('admin', 'Access Control Lists'); ?></h2>
 </div>
 
-<div class="alert info">
+<div class="alert is-info">
 	<?php echo __d('admin', 'ACL is divided into 3 parts: objects requesting access (AROs), objects being controlled (ACOs), and permissions providing CRUD access between requesters and controllers.'); ?>
 	<a href="http://milesj.me/code/cakephp/admin#acl-permissions" class="alert-link"><?php echo __d('admin', 'Learn more about how ACL permissions work.'); ?></a>
 </div>

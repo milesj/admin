@@ -33,7 +33,7 @@ $this->Breadcrumb->add(Inflector::humanize($type), array('controller' => 'logs',
 
 						// Via fatal
 						if (mb_stripos($log['message'], 'fatal') !== false) {
-							$class = 'error';
+							$class = 'is-error';
 							$text = 'FATAL';
 
 						// Via exception
@@ -47,14 +47,14 @@ $this->Breadcrumb->add(Inflector::humanize($type), array('controller' => 'logs',
 							}
 
 							if ($ex instanceof HttpException) {
-								$class = 'warning';
+								$class = 'is-warning';
 
 							} else if ($ex instanceof FatalErrorException) {
-								$class = 'error';
+								$class = 'is-error';
 								$text = 'FATAL';
 
 							} else if ($ex instanceof CakeException) {
-								$class = 'info';
+								$class = 'is-info';
 							}
 						}
 

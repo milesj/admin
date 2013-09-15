@@ -137,7 +137,7 @@ $this->Paginator->options(array(
 				</div>
 			<?php } ?>
 
-			<button type="submit" class="button large error">
+			<button type="submit" class="button large is-error">
 				<span class="icon-cogs icon-white"></span>
 				<?php echo __d('admin', 'Batch Process'); ?>
 			</button>

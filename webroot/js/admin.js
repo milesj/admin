@@ -52,7 +52,7 @@ var Admin = {
 		var inputNull = $(id + 'Null'),
 			inputRaw = $(id);
 
-		Titon.TypeAhead.factory('#' + id + 'TypeAhead', {
+		$(id + 'TypeAhead').typeAhead({
 			sorter: false,
 			matcher: false,
 			shadow: true,
@@ -139,13 +139,19 @@ var Admin = {
 window.addEvent('domready', function() {
 	Admin.initialize();
 
-	Titon.Modal.factory('.js-modal', {
+	$$('.js-modal').modal({
 		animation: 'slide-in-top'
 	});
 
-	Titon.Toggle.factory('.js-toggle');
+	$$('.js-dropdown').dropdown();
 
-	Titon.Tooltip.factory('.js-tooltip', {
+	$$('.js-tooltip').tooltip({
 		position: 'topCenter'
 	});
+
+    $$('.js-matrix').matrix({
+        width: 400,
+        gutter: 30,
+        selector: '.panel'
+    });
 });

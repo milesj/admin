@@ -45,7 +45,7 @@ $this->Breadcrumb->add(__d('admin', 'Models'), array('controller' => 'admin', 'a
 					<td><?php echo $object->primaryKey; ?></td>
 					<td>
 						<?php if ($object->displayField == $object->primaryKey) { ?>
-							<span class="label warning"><?php echo ('N/A'); ?></span>
+							<span class="label is-warning"><?php echo ('N/A'); ?></span>
 						<?php } else {
 							echo $object->displayField;
 						} ?>

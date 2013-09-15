@@ -60,7 +60,7 @@ $itemModel = $this->Admin->introspect($result[$model->alias]['model']); ?>
 			</div>
 		<?php } ?>
 
-		<button type="submit" class="button large error">
+		<button type="submit" class="button large is-error">
 			<span class="icon-cog icon-white"></span>
 			<?php echo __d('admin', 'Process Report'); ?>
 		</button>

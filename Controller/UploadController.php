@@ -29,7 +29,7 @@ class UploadController extends AdminAppController {
 					}
 				}
 			} catch (Exception $e) {
-				$this->AdminToolbar->setFlashMessage($e->getMessage(), 'error');
+				$this->AdminToolbar->setFlashMessage($e->getMessage(), 'is-error');
 			}
 		}
 

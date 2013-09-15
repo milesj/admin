@@ -35,19 +35,19 @@ if ($this->action !== 'delete') {
 
 	if ($this->action === 'delete') { ?>
 
-		<button type="submit" class="button large error">
+		<button type="submit" class="button large is-error">
 			<span class="icon-remove icon-white"></span>
 			<?php echo __d('admin', 'Yes, Delete'); ?>
 		</button>
 
 	<?php } else { ?>
 
-		<button type="submit" class="button large success">
+		<button type="submit" class="button large is-success">
 			<span class="icon-edit icon-white"></span>
 			<?php echo __d('admin', $this->action === 'create' ? 'Create' : 'Update'); ?>
 		</button>
 
-		<button type="reset" class="button large info">
+		<button type="reset" class="button large is-info">
 			<span class="icon-undo icon-white"></span>
 			<?php echo __d('admin', 'Reset'); ?>
 		</button>

@@ -518,7 +518,7 @@ class AdminToolbarComponent extends Component {
 	 * @param string $message
 	 * @param string $type
 	 */
-	public function setFlashMessage($message, $type = 'success') {
+	public function setFlashMessage($message, $type = 'is-success') {
 		$this->Session->setFlash($message, 'flash', array('class' => $type));
 	}
 

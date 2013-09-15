@@ -73,6 +73,8 @@ table { width: 100%; }
 
 .panels .panel { display: inline-block; margin-right: 1.5rem; vertical-align: top; width: 23%; }
 
+.matrix.no-columns .panel { display: block; width: 100%; margin-right: 0; margin-bottom: 1.5rem; }
+
 /*------------------ Forms ------------------*/
 
 .form--horizontal .field .col.span-7 { margin-left: 1.5rem; }
@@ -95,3 +97,11 @@ table { width: 100%; }
 
 .error-message { color: #b94a48; margin-top: 5px; }
 textarea.input { min-height: 300px; }
+
+/*------------------ Responsive ------------------*/
+
+@media only screen and (max-width: 480px) {
+    html { font-size: 13px; }
+    body { padding-top: 0; }
+    .nav { position: relative; }
+}
