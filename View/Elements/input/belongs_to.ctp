@@ -1,5 +1,10 @@
 <?php
 
+$overwrite_value = null;
+if (!empty($this->params['named'][$field]) && ctype_digit($this->params['named'][$field])) {
+	$overwrite_value = $this->params['named'][$field];
+}
+
 // Display a select menu of options
 if (empty($typeAhead[$field])) {
 	echo $this->Form->input($field, array(
@@ -7,7 +12,8 @@ if (empty($typeAhead[$field])) {
 		'label' => false,
 		'empty' => ($this->action === 'index' || $data['null']),
 		'class' => 'input',
-		'type' => 'select'
+		'type' => 'select',
+		'value' => $overwrite_value
 	));
 
 // Use a text box with type ahead via AJAX

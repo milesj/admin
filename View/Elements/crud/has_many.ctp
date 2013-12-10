@@ -21,6 +21,15 @@ $fields = $this->Admin->filterFields($foreignModel, $assoc['fields']); ?>
 	</div>
 
 	<div class="panel-body">
+		<div class="action-buttons">
+			<?php
+			if ($this->Admin->hasAccess($foreignModel->qualifiedName, 'create')) {
+				echo $this->Html->link('<span class="icon-pencil icon-white"></span> ' . __d('admin', 'Add %s', $foreignModel->singularName),
+					array('action' => 'create', 'model' => $foreignModel->urlSlug, $assoc['foreignKey'] => $result[$model->alias][$model->primaryKey]),
+					array('class' => 'button is-info', 'escape' => false));
+			}
+			?>
+		</div>
 		<table class="table table--hover table--clickable">
 			<thead>
 				<tr>

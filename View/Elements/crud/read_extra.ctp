@@ -15,7 +15,7 @@ foreach ($properties as $property => $title) {
 			if (!empty($result[$alias][$foreignModel->primaryKey])) {
 				$associations[$alias] = $assoc;
 			}
-		} else if (!empty($result[$alias])) {
+		} else if (!empty($result[$alias]) || $property == 'hasMany') {
 			$associations[$alias] = $assoc;
 		}
 	}
