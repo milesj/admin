@@ -340,7 +340,7 @@ class AdminToolbarComponent extends Component {
 			$className = $model->belongsTo[$parentName]['className'];
 			$foreignKey = $model->belongsTo[$parentName]['foreignKey'];
 			$id = !empty($this->Controller->request->data[$model->alias][$foreignKey]) ? $this->Controller->request->data[$model->alias][$foreignKey] : null;
-			$foreignModel = Admin::introspectModel(($model->plugin ? $model->plugin . '.' : '') . $className); // a best-guess that associated model shares plugin
+			$foreignModel = Admin::introspectModel($className);
 			$url = array('plugin' => 'admin', 'controller' => 'crud', 'action' => $id ? 'read' : 'index', $id, 'model' => $foreignModel->urlSlug);
 		
 		} else {

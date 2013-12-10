@@ -1,5 +1,5 @@
 <?php
-$foreignModel = $this->Admin->introspect(($model->plugin ? $model->plugin . '.' : '') . $assoc['className']); // a best-guess that associated model shares plugin
+$foreignModel = $this->Admin->introspect($assoc['className']);
 $fields = $this->Admin->filterFields($foreignModel, $assoc['fields']); ?>
 
 <div class="panel has-many">
