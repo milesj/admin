@@ -168,7 +168,6 @@ class AdminHelper extends AppHelper {
 	 * Return a list of valid links for a record
 	 *
 	 * @param Model $model
-	 * @param string $scope
 	 * @return array
 	 */
 	public function getModelLinks(Model $model) {
