@@ -34,12 +34,16 @@ if ($links = $this->Admin->getModelLinks($model)) { ?>
 	</button>
 
 	<ul class="dropdown dropdown--right" id="links">
-		<?php foreach ($links as $title => $config) { ?>
+		<?php foreach ($links as $title => $url) { 
+			if (!isset($url['plugin'])) {
+				$url['plugin'] = false;
+			}
+			?>
 			<li>
 				<?php echo $this->Html->link(
 					__d('admin', $title, $model->singularName),
-					$config['url'] + array($model->id),
-					!empty($config['options']) ? $config['options'] : null
+					$url + array($model->id),
+					array('target' => '_blank')
 				); ?>
 			</li>
 		<?php } ?>
