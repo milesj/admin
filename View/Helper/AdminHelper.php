@@ -165,6 +165,23 @@ class AdminHelper extends AppHelper {
 	}
 
 	/**
+	 * Return a list of valid links for a record
+	 *
+	 * @param Model $model
+	 * @param string $scope
+	 * @return array
+	 */
+	public function getModelLinks(Model $model) {
+		$models = Configure::read('Admin.modelLinks');
+
+		if (isset($models[$model->qualifiedName])) {
+			return $models[$model->qualifiedName];
+		}
+
+		return array();
+	}
+
+	/**
 	 * Return a list of models grouped by plugin, to use in the navigation menu.
 	 *
 	 * @return array
