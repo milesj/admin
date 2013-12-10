@@ -334,14 +334,27 @@ class AdminToolbarComponent extends Component {
 			$action = $this->Controller->request->data[$model->alias]['redirect_to'];
 		}
 
-		$url = array('plugin' => 'admin', 'controller' => 'crud', 'action' => $action, 'model' => $model->urlSlug);
+		if ($action == 'parent') {
+			
+			$parentName = $this->Controller->request->data[$model->alias]['redirect_to_model'];
+			$className = $model->belongsTo[$parentName]['className'];
+			$foreignKey = $model->belongsTo[$parentName]['foreignKey'];
+			$id = !empty($this->Controller->request->data[$model->alias][$foreignKey]) ? $this->Controller->request->data[$model->alias][$foreignKey] : null;
+			$foreignModel = Admin::introspectModel(($model->plugin ? $model->plugin . '.' : '') . $className); // a best-guess that associated model shares plugin
+			$url = array('plugin' => 'admin', 'controller' => 'crud', 'action' => $id ? 'read' : 'index', $id, 'model' => $foreignModel->urlSlug);
+		
+		} else {
 
-		switch ($action) {
-			case 'read':
-			case 'update':
-			case 'delete':
-				$url[] = $model->id;
-			break;
+			$url = array('plugin' => 'admin', 'controller' => 'crud', 'action' => $action, 'model' => $model->urlSlug);
+
+			switch ($action) {
+				case 'read':
+				case 'update':
+				case 'delete':
+					$url[] = $model->id;
+				break;
+			}
+			
 		}
 
 		$this->Controller->redirect($url);

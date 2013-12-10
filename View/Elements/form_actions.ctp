@@ -9,7 +9,19 @@ if ($this->action !== 'delete') {
 		'update' => __d('admin', 'Continue Editing'),
 		'read' => __d('admin', '%s Overview', $model->singularName)
 	), $options);
-} ?>
+}
+
+foreach ($model->belongsTo as $parentName => $parentAssoc) {
+	if (!empty($this->params['named'][$parentAssoc['foreignKey']])) {
+		$options = array_merge(array(
+			'parent' => __d('admin', 'Back to parent %s', $parentName),
+		), $options);
+		echo $this->Form->input('redirect_to_model', array('type' => 'hidden', 'value' => $parentName));
+		break;
+	}
+}
+
+?>
 
 <div class="form-actions">
 	<div class="redirect-to">
