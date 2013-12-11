@@ -66,7 +66,7 @@ $flatten = function($array) {
 
 							<a href="#modal-<?php echo $id; ?>" class="js-modal">
 								<?php echo __d('admin', 'View'); ?>
-								<span class="icon-external-link" style="font-size: 10px"></span>
+								<span class="fa fa-external-link" style="font-size: 10px"></span>
 							</a>
 
 							<div id="modal-<?php echo $id; ?>" style="display: none;">

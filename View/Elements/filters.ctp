@@ -30,7 +30,7 @@
 			<?php $label = $data['title'];
 
 			if (!empty($data['belongsTo'])) {
-				$label .= ' <span class="icon-search js-tooltip" data-tooltip="' . __d('admin', 'Belongs To Lookup') . '"></span>';
+				$label .= ' <span class="fa fa-search js-tooltip" data-tooltip="' . __d('admin', 'Belongs To Lookup') . '"></span>';
 			}
 
 			echo $this->Form->label($field, $label, array('class' => 'field-label', 'escape' => false)); ?>
@@ -49,7 +49,7 @@
 					$compValue = isset($this->data[$model->alias][$field . '_filter']) ? $this->data[$model->alias][$field . '_filter'] : '='; ?>
 
 					<div class="button-group">
-						<button type="button" data-toggle="#filter-<?php echo $field; ?>" class="button js-dropdown">
+						<button type="button" data-dropdown="#filter-<?php echo $field; ?>" class="button js-dropdown">
 							<?php echo $compValue; ?>
 						</button>
 
@@ -98,8 +98,8 @@
 	</div>
 
 	<script type="text/javascript">
-		window.addEvent('domready', function() {
-			$('filter-toggle').addEvent('click', Admin.filterToggle);
+		$(function() {
+			$('#filter-toggle').click(Admin.filterToggle);
 
 			Admin.filterComparisons();
 

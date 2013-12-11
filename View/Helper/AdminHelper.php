@@ -387,7 +387,7 @@ class AdminHelper extends AppHelper {
 
 		if ($model['iconClass']) {
 			$title = $this->Html->tag('span', '&nbsp;', array(
-				'class' => 'model-icon ' . $model['iconClass']
+				'class' => 'model-icon fa ' . str_replace('icon-', 'fa-', $model['iconClass']) // FontAwesome 4.0 fix
 			)) . ' ' . $title;
 		}
 

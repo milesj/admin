@@ -12,7 +12,7 @@ if (empty($results[$foreignModel->primaryKey])) {
 	</div>
 
 	<div class="panel-body">
-		<table class="table table--hover table--clickable">
+		<table class="table has-hover is-clickable">
 			<thead>
 				<tr>
 					<?php foreach ($fields as $field => $data) { ?>

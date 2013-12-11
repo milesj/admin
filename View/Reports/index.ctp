@@ -26,7 +26,7 @@ if ($this->request->data[$model->alias]['status'] == ItemReport::PENDING) {
 	echo $this->Form->create($model->alias, array('class' => 'form--horizontal'));
 	echo $this->element('pagination', array('class' => 'top')); ?>
 
-		<table id="table" class="table table--hover table--clickable table--sortable">
+		<table id="table" class="table has-hover is-clickable is-sortable">
 			<thead>
 				<tr>
 					<?php foreach ($fieldsToShow as $field) { ?>

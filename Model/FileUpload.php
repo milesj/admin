@@ -33,7 +33,7 @@ class FileUpload extends AdminAppModel {
 	 * @type array
 	 */
 	public $admin = array(
-		'iconClass' => 'icon-upload',
+		'iconClass' => 'fa-upload',
 		'imageFields' => array(
 			'path',
 			'path_large',

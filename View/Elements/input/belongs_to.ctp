@@ -46,7 +46,7 @@ if (empty($typeAhead[$field])) {
 	</div>
 
 	<script type="text/javascript">
-		window.addEvent('domready', function() {
+		$(function() {
 			Admin.typeAhead(
 				'<?php echo $this->Form->domId(); ?>',
 				'<?php echo $this->Html->url(array('model' => Inflector::underscore($typeAhead[$field]['model']), 'action' => 'type_ahead')); ?>',

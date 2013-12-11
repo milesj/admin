@@ -94,7 +94,7 @@ class ObjectPermission extends Permission {
 	 * @type array
 	 */
 	public $admin = array(
-		'iconClass' => 'icon-lock'
+		'iconClass' => 'fa-lock'
 	);
 
 	/**

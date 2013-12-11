@@ -48,24 +48,24 @@ foreach ($model->belongsTo as $parentName => $parentAssoc) {
 	if ($this->action === 'delete') { ?>
 
 		<button type="submit" class="button large is-error">
-			<span class="icon-remove icon-white"></span>
+			<span class="fa fa-times icon-white"></span>
 			<?php echo __d('admin', 'Yes, Delete'); ?>
 		</button>
 
 	<?php } else { ?>
 
 		<button type="submit" class="button large is-success">
-			<span class="icon-edit icon-white"></span>
+			<span class="fa fa-edit icon-white"></span>
 			<?php echo __d('admin', $this->action === 'create' ? 'Create' : 'Update'); ?>
 		</button>
 
 		<button type="reset" class="button large is-info">
-			<span class="icon-undo icon-white"></span>
+			<span class="fa fa-undo icon-white"></span>
 			<?php echo __d('admin', 'Reset'); ?>
 		</button>
 
 		<a href="<?php echo $this->Html->url(array('action' => 'index', 'model' => $model->urlSlug)); ?>" class="button large">
-			<span class="icon-ban-circle"></span>
+			<span class="fa fa-ban"></span>
 			<?php echo __d('admin', 'Cancel'); ?>
 		</a>
 

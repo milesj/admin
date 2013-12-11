@@ -1,8 +1,8 @@
 <?php if ($options = $this->Admin->getBehaviorCallbacks($model)) { ?>
 
 <div class="button-group round">
-	<button type="button" data-toggle="#process-behavior" class="button last js-dropdown">
-		<span class="icon-cog"></span>
+	<button type="button" data-dropdown="#process-behavior" class="button last js-dropdown">
+		<span class="fa fa-cog"></span>
 		<?php echo __d('admin', 'Process'); ?>
 		<span class="caret-down"></span>
 	</button>

@@ -64,7 +64,7 @@ class ActionLog extends AdminAppModel {
 	 * @type array
 	 */
 	public $admin = array(
-		'iconClass' => 'icon-exchange',
+		'iconClass' => 'fa-exchange',
 		'editable' => false,
 		'deletable' => false,
 		'paginate' => array(

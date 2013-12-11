@@ -47,7 +47,7 @@ class ItemReport extends AdminAppModel {
 	 * @type array
 	 */
 	public $admin = array(
-		'iconClass' => 'icon-flag',
+		'iconClass' => 'fa-flag',
 		'editable' => false,
 		'deletable' => false
 	);

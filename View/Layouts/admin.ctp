@@ -8,8 +8,7 @@
 	echo $this->Html->css('Admin.font-awesome.min');
 	echo $this->Html->css('Admin.style');
 	echo $this->Html->css('Admin.admin');
-	echo $this->Html->script('//ajax.googleapis.com/ajax/libs/mootools/1.4.5/mootools-yui-compressed.js');
-	echo $this->Html->script('Admin.mootools-more.min');
+	echo $this->Html->script('//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js');
 	echo $this->Html->script('Admin.titon.min');
 	echo $this->Html->script('Admin.admin');
 	echo $this->fetch('meta');

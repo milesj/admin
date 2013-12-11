@@ -50,7 +50,7 @@ class RequestObject extends Aro {
 	 * @type array
 	 */
 	public $admin = array(
-		'iconClass' => 'icon-key',
+		'iconClass' => 'fa-key',
 		'hideFields' => array('lft', 'rght'),
 		'paginate' => array(
 			'order' => array('RequestObject.lft' => 'ASC')

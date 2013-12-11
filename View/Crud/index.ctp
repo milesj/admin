@@ -17,7 +17,7 @@ $this->Paginator->options(array(
 	echo $this->Form->create($model->alias, array('class' => 'form--horizontal'));
 	echo $this->element('pagination', array('class' => 'top')); ?>
 
-	<table id="table" class="table table--hover table--clickable table--sortable">
+	<table id="table" class="table has-hover is-clickable is-sortable">
 		<thead>
 			<tr>
 				<?php if ($model->admin['batchProcess']) { ?>
@@ -62,19 +62,19 @@ $this->Paginator->options(array(
 								<div class="button-group round">
 									<?php
 									if ($this->Admin->hasAccess($model->qualifiedName, 'read')) {
-										echo $this->Html->link('<span class="icon-search"></span>',
+										echo $this->Html->link('<span class="fa fa-search"></span>',
 											array('action' => 'read', $id, 'model' => $model->urlSlug),
 											array('class' => 'button', 'escape' => false, 'title' => __d('admin', 'View')));
 									}
 
 									if ($this->Admin->hasAccess($model->qualifiedName, 'update') && $model->admin['editable']) {
-										echo $this->Html->link('<span class="icon-edit"></span>',
+										echo $this->Html->link('<span class="fa fa-edit"></span>',
 											array('action' => 'update', $id, 'model' => $model->urlSlug),
 											array('class' => 'button', 'escape' => false, 'title' => __d('admin', 'Edit')));
 									}
 
 									if ($this->Admin->hasAccess($model->qualifiedName, 'delete') && $model->admin['deletable']) {
-										echo $this->Html->link('<span class="icon-remove"></span>',
+										echo $this->Html->link('<span class="fa fa-times"></span>',
 											array('action' => 'delete', $id, 'model' => $model->urlSlug),
 											array('class' => 'button', 'escape' => false, 'title' => __d('admin', 'Delete')));
 									} ?>
@@ -138,7 +138,7 @@ $this->Paginator->options(array(
 			<?php } ?>
 
 			<button type="submit" class="button large is-error">
-				<span class="icon-cogs icon-white"></span>
+				<span class="fa fa-cogs icon-white"></span>
 				<?php echo __d('admin', 'Batch Process'); ?>
 			</button>
 		</div>

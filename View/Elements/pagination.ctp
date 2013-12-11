@@ -20,9 +20,9 @@
 	</div>
 
 	<script type="text/javascript">
-		window.addEvent('domready', function() {
+		$(function() {
 			// Add button class to pagination links since CakePHP doesn't support it
-			$$('.pagination a').addClass('button');
+			$('.pagination a').addClass('button');
 		});
 	</script>
 </nav>

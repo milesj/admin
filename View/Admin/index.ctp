@@ -1,8 +1,8 @@
 <?php if (!$this->Session->check('Admin')) { ?>
-	<div class="alert is-error">
-		<span class="icon-warning-sign"></span> &nbsp;
+	<div class="notice is-error">
+		<span class="fa fa-warning-sign"></span> &nbsp;
 		<?php echo __d('admin', 'ACL permissions do not exist within the session and all access has been disabled.'); ?>
-		<a href="http://milesj.me/code/cakephp/admin#faq" class="alert-link"><?php echo __d('admin', 'Please update session management and re-login.'); ?></a>
+		<a href="http://milesj.me/code/cakephp/admin#faq" class="notice-link"><?php echo __d('admin', 'Please update session management and re-login.'); ?></a>
 	</div>
 <?php } ?>
 
@@ -33,7 +33,7 @@
 
 						<li>
 							<?php if ($model['installed']) {
-								echo $this->Html->link('<span class="icon-plus"></span>', array(
+								echo $this->Html->link('<span class="fa fa-plus"></span>', array(
 									'controller' => 'crud',
 									'action' => 'create',
 									'model' => $model['url']

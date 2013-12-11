@@ -6,6 +6,10 @@ $fields = $this->Admin->filterFields($withModel); ?>
 <div class="panel habtm">
 	<div class="panel-head">
 		<h5>
+			<?php echo $this->Admin->outputAssocName($foreignModel, $alias, $assoc['className']); ?>
+            <span class="text-muted">&rarr;</span>
+			<?php echo $this->Admin->outputAssocName($withModel, $withModel->alias, $assoc['with']); ?>
+
 			<?php if (isset($counts[$alias])) {
 				$total = $counts[$alias];
 				$count = $assoc['limit'] ?: count($results);
@@ -14,16 +18,13 @@ $fields = $this->Admin->filterFields($withModel); ?>
 					$count = $total;
 				} ?>
 
-				<span class="text-muted pull-right"><?php echo __d('admin', '%s of %s', array($count, $total)); ?></span>
+				<span class="text-muted">&mdash;</span> <?php echo __d('admin', '%s of %s', array($count, $total)); ?>
 			<?php } ?>
-
-			<?php echo $this->Admin->outputAssocName($foreignModel, $alias, $assoc['className']); ?> &rarr;
-			<?php echo $this->Admin->outputAssocName($withModel, $withModel->alias, $assoc['with']); ?>
 		</h5>
 	</div>
 
 	<div class="panel-body">
-		<table class="table table--hover table--clickable">
+		<table class="table has-hover is-clickable">
 			<thead>
 				<tr>
 					<th>

@@ -3,32 +3,32 @@
 	$links = array(
 		'index' => array(
 			'title' => __d('admin', 'Plugins'),
-			'icon' => 'icon-paste'
+			'icon' => 'fa fa-paste'
 		),
 		'models' => array(
 			'title' => __d('admin', 'Models'),
-			'icon' => 'icon-file'
+			'icon' => 'fa fa-file'
 		),
 		'config' => array(
 			'title' => __d('admin', 'Configuration'),
-			'icon' => 'icon-cog'
+			'icon' => 'fa fa-cog'
 		),
 		'cache' => array(
 			'title' => __d('admin', 'Cache'),
-			'icon' => 'icon-hdd'
+			'icon' => 'fa fa-hdd-o'
 		),
 		'routes' => array(
 			'title' => __d('admin', 'Routes'),
-			'icon' => 'icon-road'
+			'icon' => 'fa fa-road'
 		),
 		'logs' => array(
 			'title' => __d('admin', 'Logs'),
-			'icon' => 'icon-exchange',
+			'icon' => 'fa fa-exchange',
 			'url' => array('controller' => 'logs', 'action' => 'read', 'error')
 		),
 		/*'locales' => array(
 			'title' => __d('admin', 'Locales'),
-			'icon' => 'icon-globe'
+			'icon' => 'fa fa-globe'
 		)*/
 	);
 

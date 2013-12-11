@@ -15,27 +15,25 @@ var Admin = {
 		var el;
 
 		// Make table rows clickable
-		$$('.table--clickable tbody tr').addEvent('click', function(e) {
-			var target = e.target,
-				tag = target.get('tag').toLowerCase();
+		$('table.is-clickable tbody tr').click(function(e) {
+			var target = $(e.target),
+				tag = target.prop('tagName').toLowerCase();
 
 			if (tag === 'a' || tag === 'input') {
 				return;
 			}
 
-			var id = target.getParent('tr').getElement('.click-target');
+			var id = target.parent('tr').find('.click-target');
 
-			if (id) {
-				location.href = id.get('href');
+			if (id.length) {
+				location.href = id.attr('href');
 			}
 		});
 
 		// Check all checkbox on tables
-		if (el = $('check-all')) {
-			el.addEvent('click', function() {
-				$('table').getElements('input[type="checkbox"]').set('checked', this.checked);
-			});
-		}
+		$('#check-all').click(function() {
+            $('#table').find('input:checkbox').prop('checked', this.checked);
+        });
 
 		// Trigger null checks for forms
 		Admin.nullChecks();
@@ -49,28 +47,22 @@ var Admin = {
 	 * @param {Object} data
 	 */
 	typeAhead: function(id, url, data) {
-		var inputNull = $(id + 'Null'),
-			inputRaw = $(id);
+		var inputNull = $('#' + id + 'Null'),
+			inputRaw = $('#' + id);
 
-		$(id + 'TypeAhead').typeAhead({
+		$('#' + id + 'TypeAhead').typeAhead({
 			sorter: false,
 			matcher: false,
 			shadow: true,
 			source: url,
 			query: data,
 			onSelect: function(item) {
-				inputRaw.set('value', item.id);
-
-				if (inputNull) {
-					inputNull.set('checked', false);
-				}
+				inputRaw.val(item.id);
+                inputNull.prop('checked', false);
 			},
 			onReset: function() {
-				inputRaw.set('value', '');
-
-				if (inputNull) {
-					inputNull.set('checked', true);
-				}
+				inputRaw.val('');
+                inputNull.prop('checked', true);
 			}
 		});
 	},
@@ -79,18 +71,19 @@ var Admin = {
 	 * Monitor null input fields and toggle the checkbox depending on the input length.
 	 */
 	nullChecks: function() {
-		$$('.field-null input[type="checkbox"]').each(function(cb) {
-			var related = cb.getParent().getSiblings('select, input');
+		$('.field-null input[type="checkbox"]').each(function() {
+			var cb = $(this),
+                related = cb.parent().siblings('select, input');
 
-			if (related) {
+			if (related.length) {
 				var callback = function() {
-					cb.set('checked', !(this.value.length));
+					cb.prop('checked', !(this.value.length));
 				};
 
-				if (related.get('tag') === 'input') {
-					related.addEvent('keyup', callback);
+				if (related.prop('tagName').toLowerCase() === 'input') {
+					related.keyup(callback);
 				} else {
-					related.addEvent('change', callback);
+					related.change(callback);
 				}
 			}
 		});
@@ -100,23 +93,24 @@ var Admin = {
 	 * Toggle the filters box and button.
 	 */
 	filterToggle: function() {
-		$('filters').toggle();
-		$('filter-toggle').toggleClass('is-active');
+		$('#filters').toggle();
+		$('#filter-toggle').toggleClass('is-active');
 	},
 
 	/**
 	 * Allow filter comparison dropdowns to change input fields with the chosen option.
 	 */
 	filterComparisons: function() {
-		$('filters').getElements('.input-group').each(function(group) {
-			var filter = group.getElements('input[type="hidden"]'),
-				button = group.getElements('button');
+		$('#filters').find('.input-group').each(function() {
+			var group = $(this),
+                filter = group.find('input[type="hidden"]'),
+				button = group.find('button');
 
-			group.getElements('ul a').addEvent('click', function() {
-				var option = this.get('data-filter');
+			group.find('ul a').click(function() {
+				var option = $(this).data('filter');
 
-				filter.set('value', option);
-				button.set('text', option);
+				filter.val(option);
+				button.text(option);
 			});
 		});
 	},
@@ -127,29 +121,32 @@ var Admin = {
 	 * @param {DOMEvent} e
 	 */
 	toggleUploadField: function(e) {
-		var self = e.target,
-			fieldset = self.getParent('fieldset');
+		var self = $(e.target),
+			fieldset = self.parents('fieldset');
 
-		fieldset.getElements(self.get('data-target')).hide();
-		fieldset.getElements('.' + self.get('value')).show();
+        fieldset.find(self.data('target')).hide();
+
+        if (self.val()) {
+            fieldset.find('.' + self.val()).show();
+        }
 	}
 
 };
 
-window.addEvent('domready', function() {
+$(function() {
 	Admin.initialize();
 
-	$$('.js-modal').modal({
+	$('.js-modal').modal({
 		animation: 'slide-in-top'
 	});
 
-	$$('.js-dropdown').dropdown();
+	$('.js-dropdown').dropdown();
 
-	$$('.js-tooltip').tooltip({
+	$('.js-tooltip').tooltip({
 		position: 'topCenter'
 	});
 
-    $$('.js-matrix').matrix({
+    $('.js-matrix').matrix({
         width: 400,
         gutter: 30,
         selector: '.panel'

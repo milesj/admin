@@ -5,7 +5,7 @@ if (CakePlugin::loaded('Uploader')) { ?>
 
 <div class="title">
 	<div class="action-buttons">
-		<?php echo $this->Html->link('<span class="icon-upload"></span> ' . __d('admin', 'View All Uploads'),
+		<?php echo $this->Html->link('<span class="fa fa-upload"></span> ' . __d('admin', 'View All Uploads'),
 			array('controller' => 'crud', 'action' => 'index', 'model' => 'admin.file_upload'),
 			array('class' => 'button is-info', 'escape' => false)); ?>
 	</div>
@@ -16,9 +16,9 @@ if (CakePlugin::loaded('Uploader')) { ?>
 <div class="container">
 	<?php echo $this->Form->create($model->alias, array('class' => 'form--horizontal', 'type' => 'file')); ?>
 
-	<div class="alert is-info">
+	<div class="notice is-info">
 		<?php echo __d('admin', 'Upload all types of files with no restrictions. Uploading also supports image transformation and remote transportation.'); ?>
-		<a href="http://milesj.me/code/cakephp/admin#file-uploading" class="alert-link"><?php echo __d('admin', 'Learn more about file uploading.'); ?></a>
+		<a href="http://milesj.me/code/cakephp/admin#file-uploading" class="notice-link"><?php echo __d('admin', 'Learn more about file uploading.'); ?></a>
 	</div>
 
 	<div class="grid">
@@ -335,13 +335,13 @@ if (CakePlugin::loaded('Uploader')) { ?>
 		</div>
 
 		<script type="text/javascript">
-			window.addEvent('domready', function() {
+			$(function() {
 				['FileUploadTransportClass', 'FileUploadTransformsPathLargeMethod', 'FileUploadTransformsPathThumbMethod'].forEach(function(field) {
-					var input = $(field);
+					var input = $('#' + field);
 
 					input
-						.addEvent('change', Admin.toggleUploadField)
-						.fireEvent('change', { target: input });
+						.on('change', Admin.toggleUploadField)
+						.trigger('change');
 				});
 			});
 		</script>
@@ -360,7 +360,7 @@ if (CakePlugin::loaded('Uploader')) { ?>
 		</div>
 
 		<button type="submit" class="button large is-success">
-			<span class="icon-edit icon-white"></span>
+			<span class="fa fa-edit icon-white"></span>
 			<?php echo __d('admin', 'Upload'); ?>
 		</button>
 	</div>
@@ -371,10 +371,10 @@ if (CakePlugin::loaded('Uploader')) { ?>
 <?php } else { ?>
 
 <div class="splash">
-	<h2 class="alert-title"><?php echo __d('admin', 'Install the Uploader to upload files'); ?></h2>
+	<h2 class="notice-title"><?php echo __d('admin', 'Install the Uploader to upload files'); ?></h2>
 
 	<a href="http://milesj.me/code/cakephp/uploader" target="_blank" class="button is-info large">
-		<span class="icon-external-link"></span>
+		<span class="fa fa-external-link"></span>
 		<?php echo __d('admin', 'Install'); ?>
 	</a>
 </div>

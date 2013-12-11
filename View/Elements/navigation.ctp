@@ -10,7 +10,7 @@ if ($modelParam) {
 <nav class="nav clear-after">
 	<div class="nav-buttons">
 		<div class="button-group round">
-			<button type="button" class="button last js-dropdown" data-toggle="#nav-dropdown">
+			<button type="button" class="button last js-dropdown" data-dropdown="#nav-dropdown">
 				<?php if (!empty($user[$config['User']['fieldMap']['avatar']])) {
 					echo $this->Html->image($user[$config['User']['fieldMap']['avatar']], array('class' => 'avatar'));
 				} ?>
@@ -61,7 +61,7 @@ if ($modelParam) {
 				$title = $menu['title'];
 
 				if (!empty($badgeCounts[$section])) {
-					$title .= ' <span class="badge is-warning">' . $badgeCounts[$section] . '</span>';
+					$title .= ' <span class="label--badge is-warning">' . $badgeCounts[$section] . '</span>';
 				}
 
 				echo $this->Html->link($title, $menu['url'], array('escape' => false)); ?>
@@ -78,7 +78,7 @@ if ($modelParam) {
 			$pluginLower = strtolower($plugin); ?>
 
 			<li<?php echo ($pluginLower === $pluginParam) ? ' class="is-active"' : ''; ?>>
-				<a href="javascript:;" class="js-dropdown" data-toggle="#nav-<?php echo $pluginLower; ?>">
+				<a href="javascript:;" class="js-dropdown" data-dropdown="#nav-<?php echo $pluginLower; ?>">
 					<?php echo $plugin; ?>
 					<span class="caret-down"></span>
 				</a>

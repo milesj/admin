@@ -8,7 +8,7 @@ $this->Breadcrumb->add(__d('admin', 'Models'), array('controller' => 'admin', 'a
 </div>
 
 <div class="container">
-	<table class="table table--hover">
+	<table class="table has-hover">
 		<thead>
 			<tr>
 				<th><?php echo __d('admin', 'Model'); ?></th>
@@ -27,7 +27,7 @@ $this->Breadcrumb->add(__d('admin', 'Models'), array('controller' => 'admin', 'a
 		<tbody>
 			<?php foreach ($plugins as $plugin) { ?>
 
-				<tr class="divider">
+				<tr class="table-divider">
 					<td colspan="11"><b><?php echo $plugin['title']; ?></b></td>
 				</tr>
 

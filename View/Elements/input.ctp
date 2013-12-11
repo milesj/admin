@@ -38,7 +38,7 @@ if ($validate) {
 	$label = $data['title'];
 
 	if (!empty($data['belongsTo'])) {
-		$label .= ' <span class="icon-search js-tooltip" data-tooltip="' . __d('admin', 'Belongs To Lookup') . '"></span>';
+		$label .= ' <span class="fa fa-search js-tooltip" data-tooltip="' . __d('admin', 'Belongs To Lookup') . '"></span>';
 	}
 
 	echo $this->Form->label($field, $label, array('class' => 'field-label col span-3', 'escape' => false)); ?>
