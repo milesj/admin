@@ -334,7 +334,7 @@ class AdminToolbarComponent extends Component {
             $action = $this->Controller->request->data[$model->alias]['redirect_to'];
         }
 
-        if ($action == 'parent') {
+        if ($action === 'parent') {
             $parentName = $this->Controller->request->data[$model->alias]['redirect_to_model'];
             $className = $model->belongsTo[$parentName]['className'];
             $foreignKey = $model->belongsTo[$parentName]['foreignKey'];

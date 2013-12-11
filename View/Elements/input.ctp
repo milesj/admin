@@ -63,9 +63,17 @@ if ($validate) {
             $element = 'datetime';
         }
 
+        // Value from named param
+        $overwriteValue = null;
+
+        if (!empty($this->params['named'][$field])) {
+            $overwriteValue = $this->params['named'][$field];
+        }
+
         echo $this->element('Admin.input/' . $element, array(
             'field' => $field,
-            'data' => $data
+            'data' => $data,
+            'overwriteValue' => $overwriteValue
         ));
 
         // Show a null checkbox for fields that support it

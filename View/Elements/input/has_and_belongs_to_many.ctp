@@ -2,5 +2,6 @@
     'div' => false,
     'label' => false,
     'class' => 'input',
-    'multiple' => true
+    'multiple' => true,
+    'default' => $overwriteValue
 ));

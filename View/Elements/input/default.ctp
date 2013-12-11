@@ -1,9 +1,10 @@
 <?php
+
 $params = array(
     'div' => false,
     'label' => false,
     'type' => 'text',
-    'default' => isset($data['default']) ? $data['default'] : '',
+    'default' => isset($data['default']) ? $data['default'] : $overwriteValue,
     'empty' => ($this->action === 'index')
 );
 

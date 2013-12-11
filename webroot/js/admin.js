@@ -12,7 +12,6 @@ var Admin = {
      * Initialize global events.
      */
     initialize: function() {
-        var el;
 
         // Make table rows clickable
         $('table.is-clickable tbody tr').click(function(e) {
@@ -118,7 +117,7 @@ var Admin = {
     /**
      * Toggle the grouped input fields within the upload form.
      *
-     * @param {DOMEvent} e
+     * @param {Event} e
      */
     toggleUploadField: function(e) {
         var self = $(e.target),
@@ -151,4 +150,6 @@ $(function() {
         gutter: 30,
         selector: '.panel'
     });
+
+    $('form').input();
 });

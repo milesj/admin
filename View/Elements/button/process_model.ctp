@@ -7,7 +7,7 @@
         <span class="caret-down"></span>
     </button>
 
-    <ul class="dropdown dropdown--right" id="process-model">
+    <ul class="dropdown push-over" id="process-model">
         <?php foreach ($options as $method => $title) { ?>
             <li>
                 <?php echo $this->Html->link(__d('admin', $title, $model->singularName), array(
@@ -33,7 +33,7 @@ if ($links = $this->Admin->getModelLinks($model)) { ?>
         <span class="caret-down"></span>
     </button>
 
-    <ul class="dropdown dropdown--right" id="links">
+    <ul class="dropdown push-over" id="links">
         <?php foreach ($links as $title => $url) {
             if (!isset($url['plugin'])) {
                 $url['plugin'] = false;

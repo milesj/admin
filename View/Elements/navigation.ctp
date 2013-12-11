@@ -19,7 +19,7 @@ if ($modelParam) {
                 <span class="caret-down"></span>
             </button>
 
-            <ul class="dropdown dropdown--right" id="nav-dropdown">
+            <ul class="dropdown push-over" id="nav-dropdown">
                 <li><?php echo $this->Html->link(__d('admin', 'View Site'), '/'); ?></li>
                 <?php
                 if ($profileRoute = $this->Admin->getUserRoute('profile', $user)) { ?>

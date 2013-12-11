@@ -7,7 +7,7 @@
         <span class="caret-down"></span>
     </button>
 
-    <ul class="dropdown dropdown--right" id="process-behavior">
+    <ul class="dropdown push-over" id="process-behavior">
         <?php foreach ($options as $option) { ?>
             <li>
                 <?php echo $this->Html->link(__d('admin', $option['title'], $model->singularName), array(

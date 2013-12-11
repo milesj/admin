@@ -16,12 +16,11 @@ foreach ($model->belongsTo as $parentName => $parentAssoc) {
         $options = array_merge(array(
             'parent' => __d('admin', 'Back to parent %s', $parentName),
         ), $options);
+
         echo $this->Form->input('redirect_to_model', array('type' => 'hidden', 'value' => $parentName));
         break;
     }
-}
-
-?>
+} ?>
 
 <div class="form-actions">
     <div class="redirect-to">
