@@ -108,6 +108,15 @@ Configure::write('Admin.behaviorCallbacks', array(
 Configure::write('Admin.modelCallbacks', array());
 
 /**
+ * Model record links listed in record read view.
+ * The URL specified will have the id of the record attached.
+ * The titles are passed through localization and will also replace %s with the model name.
+ *
+ * @link http://milesj.me/code/cakephp/admin#model-and-behavior-callbacks
+ */
+Configure::write('Admin.modelLinks', array());
+
+/**
  * Provide overrides for CRUD actions.
  * This allows one to hook into the system and provide their own controller action logic.
  *
