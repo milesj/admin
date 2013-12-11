@@ -9,11 +9,11 @@ It also requires admin Routing prefixes to be *disabled*.
 ## Requirements ##
 
 * PHP 5.3.*
-	* Multibyte
+    * Multibyte
 * CakePHP 2.3.*
-	* ACL
-	* Auth
-	* Utility Plugin v1.5.* - https://github.com/milesj/utility
+    * ACL
+    * Auth
+    * Utility Plugin v1.5.* - https://github.com/milesj/utility
 * Composer
 
 ## Documentation ##

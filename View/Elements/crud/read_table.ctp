@@ -1,22 +1,22 @@
 <table class="table">
-	<tbody>
-		<?php foreach ($model->fields as $field => $data) { ?>
+    <tbody>
+        <?php foreach ($model->fields as $field => $data) { ?>
 
-			<tr>
-				<td class="span-2">
-					<b><?php echo $data['title']; ?></b>
-				</td>
-				<td>
-					<?php echo $this->element('Admin.field', array(
-						'result' => $result,
-						'field' => $field,
-						'data' => $data,
-						'value' => $result[$model->alias][$field],
-						'model' => $model
-					)); ?>
-				</td>
-			</tr>
+            <tr>
+                <td class="span-2">
+                    <b><?php echo $data['title']; ?></b>
+                </td>
+                <td>
+                    <?php echo $this->element('Admin.field', array(
+                        'result' => $result,
+                        'field' => $field,
+                        'data' => $data,
+                        'value' => $result[$model->alias][$field],
+                        'model' => $model
+                    )); ?>
+                </td>
+            </tr>
 
-		<?php } ?>
-	</tbody>
+        <?php } ?>
+    </tbody>
 </table>

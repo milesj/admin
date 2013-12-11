@@ -3,32 +3,32 @@ $foreignModel = $this->Admin->introspect($assoc['className']);
 $fields = $this->Admin->filterFields($foreignModel, $assoc['fields']); ?>
 
 <div class="panel has-many">
-	<div class="panel-head">
-		<div class="action-buttons">
-			<?php
-			if ($this->Admin->hasAccess($foreignModel->qualifiedName, 'create')) {
-				echo $this->Html->link('<span class="fa fa-pencil icon-white"></span> ' . __d('admin', 'Add %s', $foreignModel->singularName),
-					array('action' => 'create', 'model' => $foreignModel->urlSlug, $assoc['foreignKey'] => $result[$model->alias][$model->primaryKey]),
-					array('class' => 'button small is-info', 'escape' => false));
-			}
-			?>
-		</div>
+    <div class="panel-head">
+        <div class="action-buttons">
+            <?php
+            if ($this->Admin->hasAccess($foreignModel->qualifiedName, 'create')) {
+                echo $this->Html->link('<span class="fa fa-pencil icon-white"></span> ' . __d('admin', 'Add %s', $foreignModel->singularName),
+                    array('action' => 'create', 'model' => $foreignModel->urlSlug, $assoc['foreignKey'] => $result[$model->alias][$model->primaryKey]),
+                    array('class' => 'button small is-info', 'escape' => false));
+            }
+            ?>
+        </div>
 
-		<h5>
-			<?php echo $this->Admin->outputAssocName($foreignModel, $alias, $assoc['className']); ?>
+        <h5>
+            <?php echo $this->Admin->outputAssocName($foreignModel, $alias, $assoc['className']); ?>
 
             <?php if (isset($counts[$alias])) {
-				$total = $counts[$alias];
-				$count = $assoc['limit'] ?: count($results);
+                $total = $counts[$alias];
+                $count = $assoc['limit'] ?: count($results);
 
-				if ($count > $total) {
-					$count = $total;
-				} ?>
+                if ($count > $total) {
+                    $count = $total;
+                } ?>
 
-				<span class="text-muted">&mdash;</span> <?php echo __d('admin', '%s of %s', array($count, $total)); ?>
-			<?php } ?>
-		</h5>
-	</div>
+                <span class="text-muted">&mdash;</span> <?php echo __d('admin', '%s of %s', array($count, $total)); ?>
+            <?php } ?>
+        </h5>
+    </div>
 
     <?php if(!empty($results)) { ?>
         <div class="panel-body">
