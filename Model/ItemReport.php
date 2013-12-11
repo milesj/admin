@@ -1,7 +1,7 @@
 <?php
 /**
- * @copyright    Copyright 2006-2013, Miles Johnson - http://milesj.me
- * @license        http://opensource.org/licenses/mit-license.php - Licensed under the MIT License
+ * @copyright   2006-2013, Miles Johnson - http://milesj.me
+ * @license     https://github.com/milesj/admin/blob/master/license.md
  * @link        http://milesj.me/code/cakephp/admin
  */
 
