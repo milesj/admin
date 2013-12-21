@@ -1,5 +1,7 @@
 <?php
 
+$overwriteValue = isset($overwriteValue) ? $overwriteValue : null;
+
 // Display a select menu of options
 if (empty($typeAhead[$field])) {
     echo $this->Form->input($field, array(

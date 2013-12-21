@@ -1,5 +1,7 @@
 <?php
 
+$overwriteValue = isset($overwriteValue) ? $overwriteValue : null;
+
 $params = array(
     'div' => false,
     'label' => false,

@@ -1,4 +1,7 @@
-<?php echo $this->Form->input($field, array(
+<?php
+$overwriteValue = isset($overwriteValue) ? $overwriteValue : null;
+
+echo $this->Form->input($field, array(
     'div' => false,
     'label' => false,
     'class' => 'input',
