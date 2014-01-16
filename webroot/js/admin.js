@@ -80,14 +80,14 @@ var Admin = {
 	 */
 	nullChecks: function() {
 		$$('.field-null input[type="checkbox"]').each(function(cb) {
-			var related = cb.getParent().getSiblings('select, input');
+			var related = cb.getParent().getSiblings('select, input, textarea');
 
 			if (related) {
 				var callback = function() {
 					cb.set('checked', !(this.value.length));
 				};
 
-				if (related.get('tag') === 'input') {
+				if (related.get('tag').toString() === 'input' || related.get('tag').toString() === 'textarea') {
 					related.addEvent('keyup', callback);
 				} else {
 					related.addEvent('change', callback);
