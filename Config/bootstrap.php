@@ -71,6 +71,7 @@ Configure::write('Admin.modelDefaults', array(
     'imageFields' => array('image'),
     'fileFields' => array('file'),
     'hideFields' => array('lft', 'rght'),
+    'hideColumns' => array(),
     'editorFields' => array('content'),
     'editorElement' => '',
     'paginate' => array(),
