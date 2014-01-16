@@ -30,7 +30,13 @@ $this->Paginator->options(array(
 					<th class="col-actions"> </th>
 				<?php }
 
-				foreach ($model->fields as $field => $data) { ?>
+				foreach ($model->fields as $field => $data) { 
+
+					if (in_array($field, $model->admin['hideColumns'])) {
+						continue;
+					}
+
+					?>
 					<th class="col-<?php echo $field; ?> type-<?php echo $data['type']; ?>">
 						<?php echo $this->Paginator->sort($field, $data['title']); ?>
 					</th>
@@ -84,6 +90,9 @@ $this->Paginator->options(array(
 						<?php }
 
 						foreach ($model->fields as $field => $data) {
+							if (in_array($field, $model->admin['hideColumns'])) {
+								continue;
+							}
 							echo $this->element('field_cell', array(
 								'result' => $result,
 								'field' => $field,
