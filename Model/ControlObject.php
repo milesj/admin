@@ -51,7 +51,7 @@ class ControlObject extends Aco {
      */
     public $admin = array(
         'iconClass' => 'fa-puzzle-piece',
-        'hideFields' => array('lft', 'rght'),
+        'hideFormFields' => array('lft', 'rght'),
         'paginate' => array(
             'order' => array('ControlObject.lft' => 'ASC')
         )

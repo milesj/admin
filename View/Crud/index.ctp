@@ -32,7 +32,7 @@ $this->Paginator->options(array(
 
                 foreach ($model->fields as $field => $data) { 
 
-                    if (in_array($field, $model->admin['hideColumns'])) {
+                    if (in_array($field, $model->admin['hideTableFields'])) {
                         continue;
                     }
 
@@ -90,7 +90,7 @@ $this->Paginator->options(array(
                         <?php }
 
                         foreach ($model->fields as $field => $data) {
-                            if (in_array($field, $model->admin['hideColumns'])) {
+                            if (in_array($field, $model->admin['hideTableFields'])) {
                                 continue;
                             }
 

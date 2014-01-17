@@ -70,8 +70,8 @@ Configure::write('Admin.logActions', true);
 Configure::write('Admin.modelDefaults', array(
     'imageFields' => array('image'),
     'fileFields' => array('file'),
-    'hideFields' => array('lft', 'rght'),
-    'hideColumns' => array(),
+    'hideFormFields' => array('lft', 'rght'),
+    'hideTableFields' => array(),
     'editorFields' => array('content'),
     'editorElement' => '',
     'paginate' => array(),
