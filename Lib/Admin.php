@@ -258,7 +258,8 @@ class Admin {
 
             // Generate a list of field (database column) data
             $fields = $object->schema();
-            $hideFields = array();
+            $hideFormFields = array();
+            $hideTableFields = array();
 
             foreach ($fields as $field => &$data) {
                 if ($field === 'id') {
@@ -273,7 +274,7 @@ class Admin {
 
                 // Hide counter cache and auto-date fields
                 if (in_array($field, array('created', 'modified')) || mb_substr($field, -6) === '_count') {
-                    $hideFields[] = $field;
+                    $hideFormFields[] = $field;
                 }
             }
 
@@ -288,10 +289,17 @@ class Admin {
             $settings = isset($object->admin) ? $object->admin : array();
             $defaultSettings = Configure::read('Admin.modelDefaults');
 
+	        // Backwards compatibility with old hideFields field
+	        if ( !empty($settings['hideFields']) ) {
+		        $settings['hideFormFields'] = $settings['hideFields'];
+		        unset($settings['hideFields']);
+	        }
+
             if (is_array($settings)) {
                 $settings = Hash::merge($defaultSettings, $settings);
                 $settings['fileFields'] = array_merge($settings['fileFields'], $settings['imageFields']);
-                $settings['hideFields'] = array_merge($settings['hideFields'], $hideFields);
+                $settings['hideFormFields'] = array_merge($settings['hideFormFields'], $hideFormFields);
+                $settings['hideTableFields'] = array_merge($settings['hideTableFields'], $hideTableFields);
 
                 $object->admin = $settings;
             } else {

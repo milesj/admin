@@ -72,14 +72,14 @@ var Admin = {
     nullChecks: function() {
         $('.field-null input[type="checkbox"]').each(function() {
             var cb = $(this),
-                related = cb.parent().siblings('select, input');
+                related = cb.parent().siblings('select, input, textarea');
 
             if (related.length) {
                 var callback = function() {
                     cb.prop('checked', !(this.value.length));
                 };
 
-                if (related.prop('tagName').toLowerCase() === 'input') {
+                if (related.prop('tagName').toLowerCase() === 'input' || related.prop('tagName').toLowerCase() === 'textarea') {
                     related.keyup(callback);
                 } else {
                     related.change(callback);

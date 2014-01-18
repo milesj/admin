@@ -39,7 +39,7 @@ class FileUpload extends AdminAppModel {
             'path_large',
             'path_thumb' => array('index', 'read')
         ),
-        'hideFields' => array('path_thumb', 'path_large', 'size', 'ext', 'type', 'width', 'height'),
+        'hideFormFields' => array('path_thumb', 'path_large', 'size', 'ext', 'type', 'width', 'height'),
         'paginate' => array(
             'order' => array('FileUpload.created' => 'DESC')
         )
