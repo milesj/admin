@@ -30,8 +30,7 @@ $this->Paginator->options(array(
                     <th class="col-actions"> </th>
                 <?php }
 
-                foreach ($model->fields as $field => $data) { 
-
+                foreach ($model->fields as $field => $data) {
                     if (in_array($field, $model->admin['hideTableFields'])) {
                         continue;
                     }

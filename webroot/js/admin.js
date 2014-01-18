@@ -75,11 +75,12 @@ var Admin = {
                 related = cb.parent().siblings('select, input, textarea');
 
             if (related.length) {
-                var callback = function() {
-                    cb.prop('checked', !(this.value.length));
-                };
+                var tag = related.prop('tagName').toLowerCase(),
+                    callback = function() {
+                        cb.prop('checked', !(this.value.length));
+                    };
 
-                if (related.prop('tagName').toLowerCase() === 'input' || related.prop('tagName').toLowerCase() === 'textarea') {
+                if (tag === 'input' || tag === 'textarea') {
                     related.keyup(callback);
                 } else {
                     related.change(callback);

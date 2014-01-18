@@ -289,11 +289,11 @@ class Admin {
             $settings = isset($object->admin) ? $object->admin : array();
             $defaultSettings = Configure::read('Admin.modelDefaults');
 
-	        // Backwards compatibility with old hideFields field
-	        if ( !empty($settings['hideFields']) ) {
-		        $settings['hideFormFields'] = $settings['hideFields'];
-		        unset($settings['hideFields']);
-	        }
+            // @version 1.3.0 - Backwards compatibility with old hideFields field
+            if (!empty($settings['hideFields'])) {
+                $settings['hideFormFields'] = $settings['hideFields'];
+                unset($settings['hideFields']);
+            }
 
             if (is_array($settings)) {
                 $settings = Hash::merge($defaultSettings, $settings);
