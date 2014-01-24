@@ -66,7 +66,9 @@ class AdminToolbarComponent extends Component {
         }
 
         // Set reported count
-        Configure::write('Admin.menu.reports.count', Admin::introspectModel('Admin.ItemReport')->getCountByStatus());
+        if (Configure::read('Admin.menu.reports')) {
+            Configure::write('Admin.menu.reports.count', Admin::introspectModel('Admin.ItemReport')->getCountByStatus());
+        }
     }
 
     /**
