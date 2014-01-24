@@ -226,8 +226,9 @@ class Admin {
     public static function introspectModel($model) {
         return self::cache(array(__METHOD__, $model), function() use ($model) {
             list($plugin, $model, $id, $class) = Admin::parseName($model);
+            $core = Configure::read('Admin.coreName');
 
-            $pluginPath = ($plugin !== 'Core') ? $plugin . '.' : '';
+            $pluginPath = ($plugin !== $core) ? $plugin . '.' : '';
             $object = ClassRegistry::init($pluginPath . $model);
 
             // Exit early if disabled
@@ -241,7 +242,7 @@ class Admin {
             $object->cacheQueries = false;
             $object->recursive = -1;
 
-            if ($plugin !== 'Core') {
+            if ($plugin !== $core) {
                 $object->plugin = $plugin;
             }
 
