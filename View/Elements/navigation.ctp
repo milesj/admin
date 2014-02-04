@@ -31,10 +31,9 @@ if ($modelParam) {
             </ul>
         </div>
 
-        <?php
-        if ($logoutRoute = $this->Admin->getUserRoute('logout', $user)) { ?>
-            <?php echo $this->Html->link(__d('admin', 'Logout'), $config['User']['routes']['logout'], array('class' => 'button is-error')); ?>
-        <?php } ?>
+        <?php if ($logoutRoute = $this->Admin->getUserRoute('logout', $user)) {
+            echo $this->Html->link(__d('admin', 'Logout'), $config['User']['routes']['logout'], array('class' => 'button is-error'));
+        } ?>
     </div>
 
     <?php // Brand name
