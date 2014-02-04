@@ -9,7 +9,7 @@
 <div class="title">
     <?php echo $this->element('admin/actions'); ?>
 
-    <h2><?php echo __d('admin', 'Plugins'); ?></h2>
+    <h2><?php echo Configure::read('Admin.appName'); ?></h2>
 </div>
 
 <div class="container">

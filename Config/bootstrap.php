@@ -197,6 +197,41 @@ Configure::write('Admin.menu', array(
 ));
 
 /**
+ * Mapping of admin sections to display as dashboard-level menu items.
+ */
+Configure::write('Admin.actions', array(
+    'index' => array(
+        'title' => __d('admin', 'Plugins'),
+        'icon' => 'fa fa-paste'
+    ),
+    'models' => array(
+        'title' => __d('admin', 'Models'),
+        'icon' => 'fa fa-file'
+    ),
+    'config' => array(
+        'title' => __d('admin', 'Configuration'),
+        'icon' => 'fa fa-cog'
+    ),
+    'cache' => array(
+        'title' => __d('admin', 'Cache'),
+        'icon' => 'fa fa-hdd-o'
+    ),
+    'routes' => array(
+        'title' => __d('admin', 'Routes'),
+        'icon' => 'fa fa-road'
+    ),
+    'logs' => array(
+        'title' => __d('admin', 'Logs'),
+        'icon' => 'fa fa-exchange',
+        'url' => array('controller' => 'logs', 'action' => 'read', 'error')
+    ),
+    /*'locales' => array(
+        'title' => __d('admin', 'Locales'),
+        'icon' => 'fa fa-globe'
+    )*/
+));
+
+/**
  * The user model for the application.
  *
  * @link http://milesj.me/code/cakephp/admin#user-customizing
