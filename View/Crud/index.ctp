@@ -17,6 +17,7 @@ $this->Paginator->options(array(
     echo $this->Form->create($model->alias, array('class' => 'form--horizontal'));
     echo $this->element('pagination', array('class' => 'top')); ?>
 
+    <div class="table-responsive">
     <table id="table" class="table has-hover is-clickable is-sortable">
         <thead>
             <tr>
@@ -113,6 +114,7 @@ $this->Paginator->options(array(
             <?php } ?>
         </tbody>
     </table>
+    </div>
 
     <?php
     echo $this->element('pagination', array('class' => 'bottom'));

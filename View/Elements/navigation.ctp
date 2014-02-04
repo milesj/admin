@@ -10,7 +10,7 @@ if ($modelParam) {
 <nav class="nav clear-after">
     <div class="nav-buttons">
         <div class="button-group round">
-            <button type="button" class="button last js-dropdown" data-dropdown="#nav-dropdown">
+            <button type="button" class="button last js-drop" data-drop="#nav-drop">
                 <?php if (!empty($user[$config['User']['fieldMap']['avatar']])) {
                     echo $this->Html->image($user[$config['User']['fieldMap']['avatar']], array('class' => 'avatar'));
                 } ?>
@@ -19,7 +19,7 @@ if ($modelParam) {
                 <span class="caret-down"></span>
             </button>
 
-            <ul class="dropdown push-over" id="nav-dropdown">
+            <ul class="drop--down reverse-align" id="nav-drop">
                 <li><?php echo $this->Html->link(__d('admin', 'View Site'), '/'); ?></li>
                 <?php
                 if ($profileRoute = $this->Admin->getUserRoute('profile', $user)) { ?>
@@ -80,12 +80,12 @@ if ($modelParam) {
             $pluginLower = strtolower($plugin); ?>
 
             <li<?php echo ($pluginLower === $pluginParam) ? ' class="is-active"' : ''; ?>>
-                <a href="javascript:;" class="js-dropdown" data-dropdown="#nav-<?php echo $pluginLower; ?>">
+                <a href="javascript:;" class="js-drop" data-drop="#nav-<?php echo $pluginLower; ?>">
                     <?php echo $plugin; ?>
                     <span class="caret-down"></span>
                 </a>
 
-                <ul class="dropdown" id="nav-<?php echo $pluginLower; ?>">
+                <ul class="drop--down" id="nav-<?php echo $pluginLower; ?>">
                     <?php // Single group
                     if (count($groups) == 1) {
                         $groups = array_values($groups);
@@ -113,7 +113,7 @@ if ($modelParam) {
                                     <span class="caret-right"></span>
                                 </a>
 
-                                <ul class="dropdown">
+                                <ul class="drop--down">
                                     <?php foreach ($models as $model) { ?>
 
                                         <li>
