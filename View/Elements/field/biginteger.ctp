@@ -1,0 +1,1 @@
+<span class="type integer"><?php echo number_format($value); ?></span>

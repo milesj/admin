@@ -1,4 +1,4 @@
 
-<div class="alert <?php echo $class; ?>">
-	<?php echo $message; ?>
+<div class="notice <?php echo $class; ?>">
+    <?php echo $message; ?>
 </div>

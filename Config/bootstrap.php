@@ -1,8 +1,8 @@
 <?php
 /**
- * @copyright	Copyright 2006-2013, Miles Johnson - http://milesj.me
- * @license		http://opensource.org/licenses/mit-license.php - Licensed under the MIT License
- * @link		http://milesj.me/code/cakephp/admin
+ * @copyright   2006-2013, Miles Johnson - http://milesj.me
+ * @license     https://github.com/milesj/admin/blob/master/license.md
+ * @link        http://milesj.me/code/cakephp/admin
  */
 
 /**
@@ -12,17 +12,17 @@ define('ADMIN_PLUGIN', dirname(__DIR__) . '/');
 
 // User model
 if (!defined('USER_MODEL')) {
-	define('USER_MODEL', 'User');
+    define('USER_MODEL', 'User');
 }
 
 // Table prefix
 if (!defined('ADMIN_PREFIX')) {
-	define('ADMIN_PREFIX', 'admin_');
+    define('ADMIN_PREFIX', 'admin_');
 }
 
 // Database config
 if (!defined('ADMIN_DATABASE')) {
-	define('ADMIN_DATABASE', Configure::read('Acl.database'));
+    define('ADMIN_DATABASE', Configure::read('Acl.database'));
 }
 
 /**
@@ -46,8 +46,8 @@ Configure::write('Admin.coreName', 'Core');
  * @link http://milesj.me/code/cakephp/admin#acl-permissions
  */
 Configure::write('Admin.aliases', array(
-	'administrator' => 'Administrator',
-	'superModerator' => 'SuperModerator'
+    'administrator' => 'Administrator',
+    'superModerator' => 'SuperModerator'
 ));
 
 /**
@@ -68,18 +68,19 @@ Configure::write('Admin.logActions', true);
  * @link http://milesj.me/code/cakephp/admin#model-settings
  */
 Configure::write('Admin.modelDefaults', array(
-	'imageFields' => array('image'),
-	'fileFields' => array('file'),
-	'hideFields' => array('lft', 'rght'),
-	'editorFields' => array('content'),
-	'editorElement' => '',
-	'paginate' => array(),
-	'associationLimit' => 75,
-	'batchProcess' => true,
-	'actionButtons' => true,
-	'deletable' => true,
-	'editable' => true,
-	'iconClass' => ''
+    'imageFields' => array('image'),
+    'fileFields' => array('file'),
+    'hideFormFields' => array('lft', 'rght'),
+    'hideTableFields' => array(),
+    'editorFields' => array('content'),
+    'editorElement' => '',
+    'paginate' => array(),
+    'associationLimit' => 75,
+    'batchProcess' => true,
+    'actionButtons' => true,
+    'deletable' => true,
+    'editable' => true,
+    'iconClass' => ''
 ));
 
 /**
@@ -89,13 +90,13 @@ Configure::write('Admin.modelDefaults', array(
  * @link http://milesj.me/code/cakephp/admin#model-and-behavior-callbacks
  */
 Configure::write('Admin.behaviorCallbacks', array(
-	'Tree' => array(
-		'recover' => 'Recover Tree',
-		'reorder' => 'Reorder Tree'
-	),
-	'Cacheable' => array(
-		'clearCache' => 'Clear Cache'
-	)
+    'Tree' => array(
+        'recover' => 'Recover Tree',
+        'reorder' => 'Reorder Tree'
+    ),
+    'Cacheable' => array(
+        'clearCache' => 'Clear Cache'
+    )
 ));
 
 /**
@@ -108,11 +109,9 @@ Configure::write('Admin.behaviorCallbacks', array(
 Configure::write('Admin.modelCallbacks', array());
 
 /**
- * Model record links listed in record read view.
+ * External model links to display in the read view.
  * The URL specified will have the id of the record attached.
  * The titles are passed through localization and will also replace %s with the model name.
- *
- * @link http://milesj.me/code/cakephp/admin#model-and-behavior-callbacks
  */
 Configure::write('Admin.modelLinks', array());
 
@@ -138,23 +137,23 @@ Configure::write('Admin.viewOverrides', array());
  * @link http://milesj.me/code/cakephp/uploader#transforming-images-resize-crop-etc
  */
 Configure::write('Admin.uploads.transforms', array(
-	'path_thumb' => array(
-		'method' => 'crop',
-		'nameCallback' => 'formatTransformName',
-		'append' => '-thumb',
-		'overwrite' => true,
-		'width' => 250,
-		'height' => 150
-	),
-	'path_large' => array(
-		'method' => 'resize',
-		'nameCallback' => 'formatTransformName',
-		'append' => '-large',
-		'overwrite' => true,
-		'aspect' => true,
-		'width' => 800,
-		'height' => 600
-	)
+    'path_thumb' => array(
+        'method' => 'crop',
+        'nameCallback' => 'formatTransformName',
+        'append' => '-thumb',
+        'overwrite' => true,
+        'width' => 250,
+        'height' => 150
+    ),
+    'path_large' => array(
+        'method' => 'resize',
+        'nameCallback' => 'formatTransformName',
+        'append' => '-large',
+        'overwrite' => true,
+        'aspect' => true,
+        'width' => 800,
+        'height' => 600
+    )
 ));
 
 /**
@@ -175,26 +174,61 @@ Configure::write('Admin.uploads.validation', array('required' => true));
  * Mapping of controllers to display as top-level menu items.
  */
 Configure::write('Admin.menu', array(
-	'acl' => array(
-		'title' => __d('admin', 'ACL'),
-		'url' => array('plugin' => 'admin', 'controller' => 'acl', 'action' => 'index'),
-		'count' => ''
-	),
-	'logs' => array(
-		'title' => __d('admin', 'Logs'),
-		'url' => array('plugin' => 'admin', 'controller' => 'logs', 'action' => 'index'),
-		'count' => ''
-	),
-	'reports' => array(
-		'title' => __d('admin', 'Reports'),
-		'url' => array('plugin' => 'admin', 'controller' => 'reports', 'action' => 'index'),
-		'count' => ''
-	),
-	'upload' => array(
-		'title' => __d('admin', 'Upload'),
-		'url' => array('plugin' => 'admin', 'controller' => 'upload', 'action' => 'index'),
-		'count' => ''
-	)
+    'acl' => array(
+        'title' => __d('admin', 'ACL'),
+        'url' => array('plugin' => 'admin', 'controller' => 'acl', 'action' => 'index'),
+        'count' => ''
+    ),
+    'logs' => array(
+        'title' => __d('admin', 'Logs'),
+        'url' => array('plugin' => 'admin', 'controller' => 'logs', 'action' => 'index'),
+        'count' => ''
+    ),
+    'reports' => array(
+        'title' => __d('admin', 'Reports'),
+        'url' => array('plugin' => 'admin', 'controller' => 'reports', 'action' => 'index'),
+        'count' => ''
+    ),
+    'upload' => array(
+        'title' => __d('admin', 'Upload'),
+        'url' => array('plugin' => 'admin', 'controller' => 'upload', 'action' => 'index'),
+        'count' => ''
+    )
+));
+
+/**
+ * Mapping of admin sections to display as dashboard-level menu items.
+ */
+Configure::write('Admin.actions', array(
+    'index' => array(
+        'title' => __d('admin', 'Plugins'),
+        'icon' => 'fa fa-paste'
+    ),
+    'models' => array(
+        'title' => __d('admin', 'Models'),
+        'icon' => 'fa fa-file'
+    ),
+    'config' => array(
+        'title' => __d('admin', 'Configuration'),
+        'icon' => 'fa fa-cog'
+    ),
+    'cache' => array(
+        'title' => __d('admin', 'Cache'),
+        'icon' => 'fa fa-hdd-o'
+    ),
+    'routes' => array(
+        'title' => __d('admin', 'Routes'),
+        'icon' => 'fa fa-road'
+    ),
+    'logs' => array(
+        'title' => __d('admin', 'Logs'),
+        'icon' => 'fa fa-exchange',
+        'url' => array('controller' => 'logs', 'action' => 'read', 'error')
+    ),
+    /*'locales' => array(
+        'title' => __d('admin', 'Locales'),
+        'icon' => 'fa fa-globe'
+    )*/
 ));
 
 /**
@@ -209,16 +243,16 @@ Configure::write('User.model', USER_MODEL);
  * for the username, email, status, etc fields, you can define their replacement here.
  */
 if (!Configure::check('User.fieldMap')) {
-	Configure::write('User.fieldMap', array(
-		'username'	=> 'username',
-		'password'	=> 'password',
-		'email'		=> 'email',
-		'status'	=> 'status',
-		'avatar'	=> 'avatar',
-		'locale'	=> 'locale',
-		'timezone'	=> 'timezone',
-		'lastLogin'	=> 'lastLogin'
-	));
+    Configure::write('User.fieldMap', array(
+        'username'    => 'username',
+        'password'    => 'password',
+        'email'        => 'email',
+        'status'    => 'status',
+        'avatar'    => 'avatar',
+        'locale'    => 'locale',
+        'timezone'    => 'timezone',
+        'lastLogin'    => 'lastLogin'
+    ));
 }
 
 /**
@@ -226,23 +260,23 @@ if (!Configure::check('User.fieldMap')) {
  * This column determines if the user is pending, currently active, or banned.
  */
 if (!Configure::check('User.statusMap')) {
-	Configure::write('User.statusMap', array(
-		'pending'	=> 0,
-		'active'	=> 1,
-		'banned'	=> 2
-	));
+    Configure::write('User.statusMap', array(
+        'pending'    => 0,
+        'active'    => 1,
+        'banned'    => 2
+    ));
 }
 
 /**
  * A map of external user management URLs.
  */
 if (!Configure::check('User.routes')) {
-	Configure::write('User.routes', array(
-		'login' => array('plugin' => false, 'admin' => false, 'controller' => 'users', 'action' => 'login'),
-		'logout' => array('plugin' => false, 'admin' => false, 'controller' => 'users', 'action' => 'logout'),
-		'signup' => array('plugin' => false, 'admin' => false, 'controller' => 'users', 'action' => 'signup'),
-		'forgotPass' => array('plugin' => false, 'admin' => false, 'controller' => 'users', 'action' => 'forgot_password'),
-		'settings' => array('plugin' => false, 'admin' => false, 'controller' => 'users', 'action' => 'settings'),
-		'profile' => array('plugin' => false, 'admin' => false, 'controller' => 'users', 'action' => 'profile', '{id}') // {slug}, {username}
-	));
+    Configure::write('User.routes', array(
+        'login' => array('plugin' => false, 'admin' => false, 'controller' => 'users', 'action' => 'login'),
+        'logout' => array('plugin' => false, 'admin' => false, 'controller' => 'users', 'action' => 'logout'),
+        'signup' => array('plugin' => false, 'admin' => false, 'controller' => 'users', 'action' => 'signup'),
+        'forgotPass' => array('plugin' => false, 'admin' => false, 'controller' => 'users', 'action' => 'forgot_password'),
+        'settings' => array('plugin' => false, 'admin' => false, 'controller' => 'users', 'action' => 'settings'),
+        'profile' => array('plugin' => false, 'admin' => false, 'controller' => 'users', 'action' => 'profile', '{id}') // {slug}, {username}
+    ));
 }

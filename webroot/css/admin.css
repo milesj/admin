@@ -63,7 +63,8 @@
 
 .type-integer,
 .type-boolean,
-.type-enum { text-align: center !important; }
+.type-enum,
+.type-float { text-align: center !important; }
 .type-datetime { text-align: right !important; }
 
 .col-checkbox { width: 15px; }

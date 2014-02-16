@@ -1,157 +1,158 @@
 /**
- * @copyright	Copyright 2006-2013, Miles Johnson - http://milesj.me
- * @license		http://opensource.org/licenses/mit-license.php - Licensed under the MIT License
- * @link		http://milesj.me/code/cakephp/admin
+ * @copyright    Copyright 2006-2013, Miles Johnson - http://milesj.me
+ * @license        http://opensource.org/licenses/mit-license.php - Licensed under the MIT License
+ * @link        http://milesj.me/code/cakephp/admin
  */
 
 'use strict';
 
 var Admin = {
 
-	/**
-	 * Initialize global events.
-	 */
-	initialize: function() {
-		var el;
+    /**
+     * Initialize global events.
+     */
+    initialize: function() {
 
-		// Make table rows clickable
-		$$('.table--clickable tbody tr').addEvent('click', function(e) {
-			var target = e.target,
-				tag = target.get('tag').toLowerCase();
+        // Make table rows clickable
+        $('table.is-clickable tbody tr').click(function(e) {
+            var target = $(e.target),
+                tag = target.prop('tagName').toLowerCase();
 
-			if (tag === 'a' || tag === 'input') {
-				return;
-			}
+            if (tag === 'a' || tag === 'input') {
+                return;
+            }
 
-			var id = target.getParent('tr').getElement('.click-target');
+            var id = target.parent('tr').find('.click-target');
 
-			if (id) {
-				location.href = id.get('href');
-			}
-		});
+            if (id.length) {
+                location.href = id.attr('href');
+            }
+        });
 
-		// Check all checkbox on tables
-		if (el = $('check-all')) {
-			el.addEvent('click', function() {
-				$('table').getElements('input[type="checkbox"]').set('checked', this.checked);
-			});
-		}
+        // Check all checkbox on tables
+        $('#check-all').click(function() {
+            $('#table').find('input:checkbox').prop('checked', this.checked);
+        });
 
-		// Trigger null checks for forms
-		Admin.nullChecks();
-	},
+        // Trigger null checks for forms
+        Admin.nullChecks();
+    },
 
-	/**
-	 * Initialize type ahead for belongs to input fields.
-	 *
-	 * @param {String} id
-	 * @param {String} url
-	 * @param {Object} data
-	 */
-	typeAhead: function(id, url, data) {
-		var inputNull = $(id + 'Null'),
-			inputRaw = $(id);
+    /**
+     * Initialize type ahead for belongs to input fields.
+     *
+     * @param {String} id
+     * @param {String} url
+     * @param {Object} data
+     */
+    typeAhead: function(id, url, data) {
+        var inputNull = $('#' + id + 'Null'),
+            inputRaw = $('#' + id);
 
-		$(id + 'TypeAhead').typeAhead({
-			sorter: false,
-			matcher: false,
-			shadow: true,
-			source: url,
-			query: data,
-			onSelect: function(item) {
-				inputRaw.set('value', item.id);
+        $('#' + id + 'TypeAhead').typeAhead({
+            sorter: false,
+            matcher: false,
+            shadow: true,
+            source: url,
+            query: data,
+            onSelect: function(item) {
+                inputRaw.val(item.id);
+                inputNull.prop('checked', false);
+            },
+            onReset: function() {
+                inputRaw.val('');
+                inputNull.prop('checked', true);
+            }
+        });
+    },
 
-				if (inputNull) {
-					inputNull.set('checked', false);
-				}
-			},
-			onReset: function() {
-				inputRaw.set('value', '');
+    /**
+     * Monitor null input fields and toggle the checkbox depending on the input length.
+     */
+    nullChecks: function() {
+        $('.field-null input[type="checkbox"]').each(function() {
+            var cb = $(this),
+                related = cb.parent().siblings('select, input, textarea');
 
-				if (inputNull) {
-					inputNull.set('checked', true);
-				}
-			}
-		});
-	},
+            if (related.length) {
+                var tag = related.prop('tagName').toLowerCase(),
+                    callback = function() {
+                        cb.prop('checked', !(this.value.length));
+                    };
 
-	/**
-	 * Monitor null input fields and toggle the checkbox depending on the input length.
-	 */
-	nullChecks: function() {
-		$$('.field-null input[type="checkbox"]').each(function(cb) {
-			var related = cb.getParent().getSiblings('select, input');
+                if (tag === 'input' || tag === 'textarea') {
+                    related.keyup(callback);
+                } else {
+                    related.change(callback);
+                }
+            }
+        });
+    },
 
-			if (related) {
-				var callback = function() {
-					cb.set('checked', !(this.value.length));
-				};
+    /**
+     * Toggle the filters box and button.
+     */
+    filterToggle: function() {
+        $('#filters').toggle();
+        $('#filter-toggle').toggleClass('is-active');
+    },
 
-				if (related.get('tag') === 'input') {
-					related.addEvent('keyup', callback);
-				} else {
-					related.addEvent('change', callback);
-				}
-			}
-		});
-	},
+    /**
+     * Allow filter comparison dropdowns to change input fields with the chosen option.
+     */
+    filterComparisons: function() {
+        $('#filters').find('.input-group').each(function() {
+            var group = $(this),
+                filter = group.find('input[type="hidden"]'),
+                button = group.find('button');
 
-	/**
-	 * Toggle the filters box and button.
-	 */
-	filterToggle: function() {
-		$('filters').toggle();
-		$('filter-toggle').toggleClass('is-active');
-	},
+            group.find('ul a').click(function() {
+                var option = $(this).data('filter');
 
-	/**
-	 * Allow filter comparison dropdowns to change input fields with the chosen option.
-	 */
-	filterComparisons: function() {
-		$('filters').getElements('.input-group').each(function(group) {
-			var filter = group.getElements('input[type="hidden"]'),
-				button = group.getElements('button');
+                filter.val(option);
+                button.text(option);
+            });
+        });
+    },
 
-			group.getElements('ul a').addEvent('click', function() {
-				var option = this.get('data-filter');
+    /**
+     * Toggle the grouped input fields within the upload form.
+     *
+     * @param {Event} e
+     */
+    toggleUploadField: function(e) {
+        var self = $(e.target),
+            fieldset = self.parents('fieldset');
 
-				filter.set('value', option);
-				button.set('text', option);
-			});
-		});
-	},
+        fieldset.find(self.data('target')).hide();
 
-	/**
-	 * Toggle the grouped input fields within the upload form.
-	 *
-	 * @param {DOMEvent} e
-	 */
-	toggleUploadField: function(e) {
-		var self = e.target,
-			fieldset = self.getParent('fieldset');
-
-		fieldset.getElements(self.get('data-target')).hide();
-		fieldset.getElements('.' + self.get('value')).show();
-	}
+        if (self.val()) {
+            fieldset.find('.' + self.val()).show();
+        }
+    }
 
 };
 
-window.addEvent('domready', function() {
-	Admin.initialize();
+$(function() {
+    Admin.initialize();
 
-	$$('.js-modal').modal({
-		animation: 'slide-in-top'
-	});
+    $('.js-modal').modal({
+        animation: 'slide-in-top'
+    });
 
-	$$('.js-dropdown').dropdown();
+    $('.js-drop').drop();
 
-	$$('.js-tooltip').tooltip({
-		position: 'topCenter'
-	});
+    $('.js-tooltip').tooltip({
+        position: 'topCenter'
+    });
 
-    $$('.js-matrix').matrix({
+    $('.js-matrix').matrix({
         width: 400,
         gutter: 30,
         selector: '.panel'
+    });
+
+    $('form').input({
+        native: true
     });
 });
