@@ -138,6 +138,18 @@ class Admin {
         });
     }
 
+    public static function isSuperAdmin() {
+        $superAdminSessionConditions = Configure::read('Admin.superAdminSessionConditions');
+        if (is_array($superAdminSessionConditions)) {
+            foreach ($superAdminSessionConditions as $condition => $value) {
+                if (Hash::get($_SESSION, $condition) == $value) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
     /**
      * Check to see if a user has specific CRUD access for a model.
      *
@@ -159,8 +171,8 @@ class Admin {
         if ($exit && !$exists) {
             return null;
         }
-
-        $pass = ($exists && $crud[$model->qualifiedName][$action]);
+        
+        $pass = (self::isSuperAdmin() || ($exists && $crud[$model->qualifiedName][$action]));
 
         // Check editable
         if ($action === 'update') {

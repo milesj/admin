@@ -77,7 +77,11 @@ class AdminAppController extends AppController {
         if (!$user) {
             throw new ForbiddenException(__d('admin', 'Invalid User'));
         }
-
+        
+        if (Admin::isSuperAdmin()) {
+            return true;
+        }
+        
         $aro = Admin::introspectModel('Admin.RequestObject');
 
         if ($aro->isAdmin($user['id'])) {
