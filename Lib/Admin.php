@@ -261,6 +261,7 @@ class Admin {
             $fields = $object->schema();
             $hideFormFields = array();
             $hideTableFields = array();
+            $hideReadFields = array();
 
             foreach ($fields as $field => &$data) {
                 if ($field === 'id') {
@@ -301,6 +302,7 @@ class Admin {
                 $settings['fileFields'] = array_merge($settings['fileFields'], $settings['imageFields']);
                 $settings['hideFormFields'] = array_merge($settings['hideFormFields'], $hideFormFields);
                 $settings['hideTableFields'] = array_merge($settings['hideTableFields'], $hideTableFields);
+                $settings['hideReadFields'] = array_merge($settings['hideReadFields'], $hideReadFields);
 
                 $object->admin = $settings;
             } else {
