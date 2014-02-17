@@ -1,7 +1,10 @@
 <table class="table">
     <tbody>
-        <?php foreach ($model->fields as $field => $data) { ?>
-
+        <?php foreach ($model->fields as $field => $data) { 
+            if (in_array($field, $model->admin['hideReadFields'])) {
+                continue;
+            }
+            ?>
             <tr>
                 <td class="span-2">
                     <b><?php echo $data['title']; ?></b>

@@ -72,6 +72,7 @@ Configure::write('Admin.modelDefaults', array(
     'fileFields' => array('file'),
     'hideFormFields' => array('lft', 'rght'),
     'hideTableFields' => array(),
+    'hideReadFields' => array(),
     'editorFields' => array('content'),
     'editorElement' => '',
     'paginate' => array(),
