@@ -69,6 +69,32 @@ class CrudController extends AdminAppController {
     }
 
     /**
+     * Export all the records in the model as CSV
+     */
+    public function export() {
+        if ($this->overrideAction('export')) {
+            return;
+        }
+
+        $this->paginate = array_merge(array(
+            'limit' => 99999,
+            'order' => array($this->Model->alias . '.' . $this->Model->displayField => 'ASC'),
+            'contain' => array_keys($this->Model->belongsTo)
+        ), $this->Model->admin['export']);
+
+        // Filters
+        if (!empty($this->request->params['named'])) {
+            $conditions = $this->AdminToolbar->parseFilterConditions($this->Model, $this->request->params['named']);
+        }
+
+        // Output
+        $results = $this->paginate($this->Model);
+        $this->CsvView = $this->Components->load('CsvView.CsvView');
+        $this->CsvView->startup($this);
+        $this->CsvView->quickExport($results);
+    }
+
+    /**
      * Create a new record.
      */
     public function create() {
@@ -311,7 +337,7 @@ class CrudController extends AdminAppController {
         $action = $this->action;
 
         // Allow non-crud actions
-        if (in_array($action, array('type_ahead', 'proxy', 'process_behavior', 'process_model'))) {
+        if (in_array($action, array('type_ahead', 'proxy', 'process_behavior', 'process_model', 'export'))) {
             return true;
 
         // Index counts as a read
