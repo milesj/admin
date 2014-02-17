@@ -2,6 +2,7 @@
     <?php
     if ($this->action === 'index') {
         echo $this->element('Admin.button/filter');
+        echo $this->element('Admin.button/export');
         echo $this->element('Admin.button/process_behavior');
     }
 

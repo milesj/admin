@@ -76,6 +76,7 @@ Configure::write('Admin.modelDefaults', array(
     'editorFields' => array('content'),
     'editorElement' => '',
     'paginate' => array(),
+    'export' => array(),
     'associationLimit' => 75,
     'batchProcess' => true,
     'actionButtons' => true,
