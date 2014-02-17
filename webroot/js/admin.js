@@ -140,7 +140,7 @@ $(function() {
         animation: 'slide-in-top'
     });
 
-    $('.js-dropdown').dropdown();
+    $('.js-drop').drop();
 
     $('.js-tooltip').tooltip({
         position: 'topCenter'
@@ -152,5 +152,7 @@ $(function() {
         selector: '.panel'
     });
 
-    $('form').input();
+    $('form').input({
+        native: true
+    });
 });

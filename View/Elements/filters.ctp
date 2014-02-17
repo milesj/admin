@@ -49,11 +49,11 @@
                     $compValue = isset($this->data[$model->alias][$field . '_filter']) ? $this->data[$model->alias][$field . '_filter'] : '='; ?>
 
                     <div class="button-group">
-                        <button type="button" data-dropdown="#filter-<?php echo $field; ?>" class="button js-dropdown">
+                        <button type="button" data-drop="#filter-<?php echo $field; ?>" class="button js-drop">
                             <?php echo $compValue; ?>
                         </button>
 
-                        <ul class="dropdown" id="filter-<?php echo $field; ?>">
+                        <ul class="drop--down" id="filter-<?php echo $field; ?>">
                             <li><a href="javascript:;" data-filter="="><?php echo __d('admin', 'Equals'); ?></a></li>
                             <li><a href="javascript:;" data-filter="!="><?php echo __d('admin', 'Not Equals'); ?></a></li>
                             <li><a href="javascript:;" data-filter=">"><?php echo __d('admin', 'Greater Than'); ?></a></li>

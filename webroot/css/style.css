@@ -29,6 +29,7 @@ table { width: 100%; }
 .nav-buttons { float: right; padding-top: 8px; }
 .nav-buttons .button { margin-left: 7px; }
 .nav-buttons .button-group { margin-right: -4px; }
+.nav-buttons .avatar { width: 25px; height: 25px; margin: -.4rem .5rem -.4rem 0; }
 .nav-brand { vertical-align: top; display: inline-block; margin-right: 1.5rem; height: 60px; line-height: 60px; font-size: 1.2rem; color: #fff; }
 .nav-brand:hover { color: #fff; }
 .nav-menu { vertical-align: top; display: inline-block; list-style: none; margin: 0; padding: 0; }
@@ -51,7 +52,7 @@ table { width: 100%; }
 .table thead th { white-space: nowrap; }
 .table .no-results { text-align: center; padding: 25px; }
 .table.is-clickable tbody tr { cursor: pointer; }
-.table.is-sortable thead a { color: #000; }
+.table.is-sortable thead a { color: #000; height: 43px; overflow: hidden; vertical-align: middle; }
 .table.is-sortable thead a.desc,
 .table.is-sortable thead a.asc { background: #d9d9d9; }
 
@@ -76,6 +77,9 @@ table { width: 100%; }
 .panels .panel { display: inline-block; margin-right: 1.5rem; vertical-align: top; width: 23%; }
 
 .matrix.no-columns .panel { display: block; width: 100%; margin-right: 0; margin-bottom: 1.5rem; }
+
+.modal-inner { border-radius: .3rem; }
+.modal-head { border-top-left-radius: .3rem; border-top-right-radius: .3rem; }
 
 /*------------------ Forms ------------------*/
 
