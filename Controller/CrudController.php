@@ -5,6 +5,8 @@
  * @link        http://milesj.me/code/cakephp/admin
  */
 
+App::uses('Admin', 'Admin.Lib');
+
 class CrudController extends AdminAppController {
 
     /**
@@ -318,7 +320,11 @@ class CrudController extends AdminAppController {
         } else if ($action === 'index') {
             $action = 'read';
         }
-
+        
+        if (Admin::isSuperAdmin()) {
+            return true;
+        }
+        
         if ($this->Acl->check(array(USER_MODEL => $user), $class, $action)) {
             return true;
         }
