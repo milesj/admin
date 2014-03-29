@@ -341,6 +341,21 @@ class CrudController extends AdminAppController {
             }
         }
 
+        if (isset($this->Model->validate)) {
+            foreach ($this->Model->validate as $field => &$rules) {
+                if (!is_array($rules)) {
+                    // covert simple rules to more complicated ones
+                    $rules = array(array($rules => array('rule' => $rules)));
+                }
+                foreach ($rules as $ruleName => &$rule) {
+                    if (!is_array($rule)) {
+                        $rule = array('rule' => $rule);
+                    }
+                    $rule['allowEmpty'] = true;
+                }
+            }
+        }
+
         // Parse request and set null fields to null
         if ($data = $this->request->data) {
             foreach ($data as $model => $fields) {
